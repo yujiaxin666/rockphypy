@@ -9,7 +9,7 @@
 '''
 
 
-## Effective models for calculating the elastic properties of granular medium.
+## Effective contact-based models blended with elasic bounds for calculating the elastic properties of granular medium.
 
 import numpy as np
 from utils import write_VTI_matrix,poi

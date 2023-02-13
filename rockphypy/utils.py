@@ -121,6 +121,70 @@ def write_VTI_matrix(C11,C33,C13,C44,C66):
             [0,0,0,0,C44,0],
             [0,0,0,0,0,C66]])
     return C
+def write_matrix(C11,C22,C33,C12,C13,C23,C44,C55,C66):
+    """formulate general 6x6 stiffness matrix in Voigt notation
 
+    Args:
+        Cij (GPa): stiffness     
+    Returns:
+        C: 6x6 stiffness matrix
+    """   
+    C=np.array([[C11,C12,C13,0,0,0],
+            [C12,C22,C23,0,0,0],
+            [C13,C23,C33,0,0,0],
+            [0,0,0,C44,0,0],
+            [0,0,0,0,C55,0],
+            [0,0,0,0,0,C66]])
+    return C
+def write_iso(K,G):
+    """formulate isotropic 6x6 stiffness matrix in Voigt notation
+
+    Args:
+        Cij (GPa): stiffness     
+    Returns:
+        C: 6x6 stiffness matrix
+    """   
+    lamda = K - 2*G/3
+
+    C=np.array([[lamda+2*G,lamda,lamda,0,0,0],
+            [lamda,lamda+2*G,lamda,0,0,0],
+            [lamda,lamda,lamda+2*G,0,0,0],
+            [0,0,0,G,0,0],
+            [0,0,0,0,G,0],
+            [0,0,0,0,0,G]])
+    return C
+def crack_por(crd, alpha):
+    """compute crack porosity from crack aspect ratio and crack density
+
+    Args:
+        crd (unitless): crack density
+        alpha (unitless): crack aspect ratio
+
+    Returns:
+        cpor (frac): crack porosity 
+    """    
+    cpor= 4*np.pi*alpha*crd/3
+    return cpor
+def v_to_c_VTI(Vp0,Vp45,Vp90,Vs0,Vsh90,den):
+    """_summary_
+
+    Args:
+        Vp0, Vp45, Vp90, Vs0, Vsh90 (km/s): indident angle dependent velocity measurements 
+        den (g/cm3):density of the sample 
+
+    Returns:
+        C: VTI stiffness matrix 
+    """    
+
+    C11 = den*Vp90**2
+    C12 = C11-2*den*Vsh90**2
+    C33 = den*Vp0**2
+    C44 = den*Vs0**2
+    M = 4*den**2*Vp45**4-2*den*Vp45**2*(C11+C33+2*C44)+(C11+C44)*(C33+C44)
+    C13 = -C44+np.sqrt(M)
+    C66 = 0.5*(C11-C12)
+    C = write_VTI_matrix(C11,C33,C13,C44,C66)
+
+    return C
 
 
