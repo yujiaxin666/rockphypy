@@ -15,31 +15,47 @@ import numpy as np
 from rockphypy.utils import utils
 
 
-class GM(utils): 
-    """_summary_
+class GM: 
+    """
+    Contact based granular medium models and extensions.
+    
     """    
     
     def contactcement(K0, G0, Kc, Gc, phi, phic, Cn,  scheme):
         """Compute dry elastic moduli of cemented sandstone via Contact cement model by Dvorkin &Nur (1996).
 
-        Args:
-            K0 (GPa): Bulk modulus of grain material
-            G0 (GPa): shear modulus of grain material
-            Kc (GPa): Bulk modulus of cement
-            Gc (GPa): shear modulus of cement
-            phi (float or array-like): Porosity
-            phic (frac): depositional porosity. Defaults to 0.4.
-            Cn (unitless): coordination number Defaults to 8.6.
-            scheme: Scheme of cement deposition
+        Parameters
+        ----------
+        K0 : float
+            Bulk modulus of grain material in GPa
+        G0 : float
+            Shear modulus of grain material in GPa
+        Kc : float
+            Bulk modulus of cement
+        Gc : float
+            Shear modulus of cement
+        phi : float or array-like
+            Porosity
+        phic : float
+            Critical Porosity
+        Cn : float
+            coordination number
+        scheme : int
+            Scheme of cement deposition
                     1=cement deposited at grain contacts
                     2=cement deposited at grain surfaces
-        Returns:
+
+        Returns
+        -------
+        _type_
             K_dry, G_dry (GPa): Effective elastic moduli of dry rock
-        Ref: 
-            Dvorkin & Nur, 1996, Geophysics, 61, 1363-1370
+
+        References
+        ----------
+        - Dvorkin & Nur, 1996, Geophysics, 61, 1363-1370
         
-        Written by Jiaxin Yu (July 2021)
-        """    
+        """        
+        
         nu_0=(3*K0-2*G0)/(6*K0+2*G0) # Poisson's ratio of grain material
         nu_c = (3*Kc-2*Gc)/(6*Kc+2*Gc) # Poisson's ratio of cement
         if scheme == 1: # scheme 1: cement deposited at grain contacts
@@ -62,23 +78,36 @@ class GM(utils):
 
     def hertzmindlin( K0, G0, phic, Cn, sigma, f):
         """Compute effective dry elastic moduli of granular packing under hydrostatic pressure condition via Hertz-Mindlin approach. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented.
-        Args:
-            K0 (GPa): bulk modulus of grain material
-            G0 (GPa): shear modulus of grain material
-            phic (GPa): critical porosity
-            Cn (unitless): coordination number
-            sigma (MPa): effective stress
-            f (unitless): reduced shear factor, 0=dry pack with inifinitely rough spheres; 1=dry pack with infinitely smooth spheres
 
-        Returns:
-            K_dry, G_dry: effective elastic moduli of dry pack
-        Refs: 
-            Rock physics handbook section 5.5
-            Bachrach, R. and Avseth, P. (2008) Geophysics, 73(6), E197–E209
+        Parameters
+        ----------
+        K0 : float
+            Bulk modulus of grain material in GPa
+        G0 : float
+            Shear modulus of grain material in GPa
+	    phic : float
+            Critical Porosity
+        Cn : float
+            coordination number
+        sigma : float or array-like
+            effective stress
+        f : float
+            reduced shear factor between 0 and 1
+            0=dry pack with inifinitely rough spheres; 
+            1=dry pack with infinitely smooth spheres
 
-        Written by Jiaxin Yu (July 2021)
-        """    
-        
+        Returns
+        -------
+        K_dry, G_dry : float or array-like
+            effective elastic moduli of dry pack
+
+        References
+	    ----------
+        - Rock physics handbook section 5.5.
+        - Bachrach, R. and Avseth, P. (2008) Geophysics, 73(6), E197–E209.
+
+        """        
+    
         sigma =sigma/1000 # converts pressure unit to GPa
         nu=(3*K0-2*G0)/(6*K0+2*G0) # poisson's ratio of mineral mixture
         K_dry = (sigma*(Cn**2*(1-phic)**2*G0**2) / (18*np.pi**2*(1-nu)**2))**(1/3)
@@ -89,21 +118,36 @@ class GM(utils):
     def softsand(K0, G0, phi, phic, Cn, sigma, f):
         """Soft-sand (unconsolidated sand) model: model the porosity-sorting effects using the lower Hashin-Shtrikman-Walpole bound. (Also referred to as the 'friable-sand model' in Avseth et al. (2010). 
 
-        Args:
-            K0 (GPa): Bulk modulus of grain material
-            G0 (GPa): shear modulus of grain material
-            phi (float or array-like): Porosity
-            phic (frac): depositional porosity, Defaults to 0.4.
-            Cn (unitless): coordination number Defaults to 8.6.
-            sigma (MPa): effective stress. 
-            f (unitless): reduced shear factor. 0=dry pack with inifinitely rough spheres; 1=dry pack with infinitely smooth spheres
-        Returns:
+        Parameters
+        ----------
+        K0 : float
+            Bulk modulus of grain material in GPa
+        G0 : float
+            Shear modulus of grain material in GPa
+        phi : float or array like
+            Porosity
+	    phic : float
+            Critical Porosity
+        Cn : float
+            coordination number
+        sigma : float or array-like
+            effective stress
+        f : float
+            reduced shear factor between 0 and 1
+            0=dry pack with inifinitely rough spheres; 
+            1=dry pack with infinitely smooth spheres
+
+        Returns
+        -------
+        float or array-like
             K_dry, G_dry (GPa): Effective elastic moduli of dry pack
-        Refs:
-            The Uncemented (Soft) Sand Model in Rock physics handbook section 5.5
-            Avseth, P.; Mukerji, T. & Mavko, G. Cambridge university press, 2010
-        Written by Jiaxin Yu (July 2021)
-        """   
+        
+        References
+	    ----------
+        - The Uncemented (Soft) Sand Model in Rock physics handbook section 5.5
+        - Avseth, P.; Mukerji, T. & Mavko, G. Cambridge university press, 2010
+        """        
+           
         K_HM, G_HM = GM.hertzmindlin(K0, G0, phic, Cn, sigma, f)
         K_dry =-4/3*G_HM + (((phi/phic)/(K_HM+4/3*G_HM)) + ((1-phi/phic)/(K0+4/3*G_HM)))**-1
         aux = G_HM/6*((9*K_HM+8*G_HM) / (K_HM+2*G_HM)) # auxiliary variable 
@@ -111,21 +155,37 @@ class GM(utils):
         return K_dry, G_dry
 
     def Walton(K0, G0, phic, Cn, sigma, f):
-        """ Compute dry rock elastic moduli of sphere packs based on the Walton (1987)' thoery. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented. 
+        """Compute dry rock elastic moduli of sphere packs based on the Walton (1987)' thoery. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented. 
 
-        Args:
-            K0 (GPa): Bulk modulus of grain material
-            G0 (GPa): shear modulus of grain material
-            phic (frac): depositional porosity, Defaults to 0.4.
-            Cn (unitless): coordination number Defaults to 8.6.
-            sigma (MPa): effective stress. Defaults to 10.
-            f (unitless): reduced shear factor. 0=dry pack with inifinitely rough spheres; 1=dry pack with infinitely smooth spheres
-        Refs: 
-            Walton model in Rock physics handbook section 5.5
-            Walton, K., 1987, J. Mech. Phys. Solids, vol.35, p213-226.
-            Bachrach, R. and Avseth, P. (2008) Geophysics, 73(6), E197–E209
-        Written by Jiaxin Yu (July 2021)
-        """   
+        Parameters
+        ----------
+        K0 : float
+            Bulk modulus of grain material in GPa
+        G0 : float
+            Shear modulus of grain material in GPa
+	    phic : float
+            Critical Porosity
+        Cn : float
+            coordination number
+        sigma : float or array-like
+            effective stress
+        f : float
+            reduced shear factor between 0 and 1
+            0=dry pack with inifinitely rough spheres; 
+            1=dry pack with infinitely smooth spheres
+
+        Returns
+        -------
+        float or array-like
+            K_w, G_w: Effective elastic moduli of dry pack
+        
+        References
+	    ----------
+        - Walton model in Rock physics handbook section 5.5
+        - Walton, K., 1987, J. Mech. Phys. Solids, vol.35, p213-226.
+        - Bachrach, R. and Avseth, P. (2008) Geophysics, 73(6), E197–E209
+        """        
+           
         sigma= sigma/1e3 # convert Mpa to Gpa 
         lamda = K0- 2*G0/3  # Lamé’s coefficient of the grain material.  
         B = 1/(4*np.pi) *(1/G0+1/(G0+lamda))
@@ -139,30 +199,41 @@ class GM(utils):
         return K_w, G_w
 
     def johnson(K0, G0,n, phi, epsilon, epsilon_axial, path='together'):
-        """ effective theory for stress-induced anisotropy in sphere packs. The transversely isotropic strain is considered as a combination of hydrostatic strain and uniaxial strain. 
+        """effective theory for stress-induced anisotropy in sphere packs. The transversely isotropic strain is considered as a combination of hydrostatic strain and uniaxial strain.
 
-        Args:
-            K0 (GPa): bulk modulus of grain material
-            G0 (GPa): shear modulus of grain material
-            n (unitless): coordination number
-            phi (frac): porosity
-            epsilon (_type_): hydrostatic strain (negative in compression)
-            epsilon_axial (_type_): uniaxial strain (along 3-axis)
-            path (str, optional): Defaults to 'together'.
-                'together': the hydrostatic and uniaxial strains are applied simultaneously
-                'uni_iso': the uniaxial strain is applied first followed by a hydrostatic strain
-                'iso_uni': the hydrostatic strain is applied first followed by a uniaxial strain
-        Refs:
-            Norris, A. N., and Johnson, D. L., 1997, ASME Journal of Applied Mechanics, 64, 39-49.
+        Parameters
+        ----------
+        K0 : float
+            Bulk modulus of grain material in GPa
+        G0 : float
+            Shear modulus of grain material in GPa
+        n : float
+            coordination number
+        phi : float or array like
+            porosity
+        epsilon : float or array like
+            hydrostatic strain (negative in compression)
+        epsilon_axial : float or array like
+            uniaxial strain (along 3-axis)
+        path : str, optional
+            'together': the hydrostatic and uniaxial strains are applied simultaneously
+            'uni_iso': the uniaxial strain is applied first followed by a hydrostatic strain
+            'iso_uni': the hydrostatic strain is applied first followed by a uniaxial strain by default 'together'
 
-            Johnson, D.L., Schwartz, L.M., Elata, D., et al., 1998. Transactions ASME, 65, 380–388.
-        Returns:
+        Returns
+        -------
+        array and float 
             C: (matrix): VTI stiffness matrix
             sigma33: non zero stress tensor component
             sigma11: non zero stress tensor component, sigma11=sigma22
-        Written by Jiaxin Yu (Jan 2022)
-        """
         
+        References
+	    ----------
+        - Norris, A. N., and Johnson, D. L., 1997, ASME Journal of Applied Mechanics, 64, 39-49.
+        - Johnson, D.L., Schwartz, L.M., Elata, D., et al., 1998. Transactions ASME, 65, 380–388.
+        
+        """        
+                
         # factors
         nu0 =  utils.poi(K0, G0)
         Cn = 4*G0/(1-nu0)
@@ -204,21 +275,31 @@ class GM(utils):
         """Stiff-sand model:  Modified Hashin-Shtrikman upper bound with Hertz-Mindlin end point, counterpart to soft sand model. 
         model the porosity-sorting effects using the lower Hashin–Shtrikman–Walpole bound. 
 
-        Args:
-            K0 (GPa): Bulk modulus of grain material
-            G0 (GPa): shear modulus of grain material
-            phi (float or array-like): Porosity
-            phic (frac): depositional porosity, Defaults to 0.4.
-            Cn (unitless): coordination number Defaults to 8.6.
-            sigma (MPa): effective stress. 
-            f (unitless): reduced shear factor. 0=dry pack with inifinitely rough spheres; 1=dry pack with infinitely smooth spheres
+        Parameters
+        ----------
+        K0 : float
+            Bulk modulus of grain material in GPa
+        G0 : float
+            Shear modulus of grain material in GPa
+        phi : float or array like
+            Porosity
+	    phic : float
+            Critical Porosity
+        Cn : float
+            coordination number
+        sigma : float or array-like
+            effective stress
+        f : float
+            reduced shear factor between 0 and 1
+            0=dry pack with inifinitely rough spheres; 
+            1=dry pack with infinitely smooth spheres
 
-        Returns:
+        Returns
+        -------
+        float or array-like
             K_dry, G_dry (GPa): Effective elastic moduli of dry pack
-        Refs:
-            Stiff sand model in Rock physics handbook section 5.5
-        Written by Jiaxin Yu (July 2021)
-        """    
+        """        
+          
         K_HM, G_HM = GM.hertzmindlin(K0, G0, phic, Cn, sigma, f)
         K_dry = -4/3*G0 + (((phi/phic)/(K_HM+4/3*G0)) + ((1-phi/phic)/(K0+4/3*G0)))**-1
         aux = G0/6*((9*K0+8*G0) / (K0+2*G0))
@@ -228,24 +309,40 @@ class GM(utils):
     def constantcement(phi_b, K0, G0, Kc, Gc,phi, phic, Cn,scheme):
         """Constant cement (constant depth) model according to Avseth (2000)
 
-        Args:
-            phi_b (frac): adjusted high porosity end memeber
-            K0 (GPa): Bulk modulus of grain material
-            G0 (GPa): shear modulus of grain material
-            Kc (GPa): Bulk modulus of cement
-            Gc (GPa): shear modulus of cement
-            phi (float or array-like): Porosity
-            phic (frac): depositional porosity, Defaults to 0.4.
-            Cn (unitless): coordination number Defaults to 8.6.
-            scheme: Scheme of cement deposition
+        Parameters
+        ----------
+        phi_b : _type_
+            adjusted high porosity end memeber
+        K0 : float
+            Bulk modulus of grain material in GPa
+        G0 : float
+            Shear modulus of grain material in GPa
+        Kc : float
+            Bulk modulus of cement
+        Gc : float
+            Shear modulus of cement
+        phi : float or array-like
+            Porosity
+        phic : float
+            Critical Porosity
+        Cn : float
+            coordination number
+        scheme : int
+            Scheme of cement deposition
                     1=cement deposited at grain contacts
                     2=cement deposited at grain surfaces
-        Returns:
+
+        Returns
+        -------
+        float or array-like
             K_dry, G_dry (GPa): Effective elastic moduli of dry rock
-        Refs:
-            Avseth, P.; Dvorkin, J.; Mavko, G. & Rykkje, J. Geophysical Research Letters, Wiley Online Library, 2000, 27, 2761-2764
-        Written by Jiaxin Yu (July 2021)
-        """    
+
+        References
+	    ----------
+        - Avseth, P.; Dvorkin, J.; Mavko, G. & Rykkje, J. Geophysical Research Letters, Wiley Online Library, 2000, 27, 2761-2764
+
+        """        
+            
         K_b,G_b=GM.contactcement(K0, G0, Kc, Gc, phi_b, phic, Cn,  scheme)
         T=phi/phi_b
         Z=(G_b/6)*(9*K_b+8*G_b)/(K_b+2*G_b)
@@ -256,25 +353,41 @@ class GM(utils):
         
     def MUHS(K0, G0, Kc,Gc,phi, phi_b,phic, Cn,scheme):
         """Increasing cement model: Modified Hashin-Strikmann upper bound blend with contact cement model. For elastically stiff sandstone modelling.
+
+        Parameters
+        ----------
+        K0 : float
+            Bulk modulus of grain material in GPa
+        G0 : float
+            Shear modulus of grain material in GPa
+        Kc : float
+            Bulk modulus of cement
+        Gc : float
+            Shear modulus of cement
+        phi : float or array-like
+            Porosity
+        phi_b : _type_
+            adjusted high porosity end memeber
+        phic : float
+            Critical Porosity
+        Cn : float
+            coordination number
+        scheme : int
+            Scheme of cement deposition
+                    1=cement deposited at grain contacts
+                    2=cement deposited at grain surfaces
+
+        Returns
+        -------
+        float or array-like
+            K_dry, G_dry (GPa): Effective elastic moduli of dry rock
+
+        References
+	    ----------
+        - Avseth, P.; Mukerji, T. & Mavko, G. Cambridge university press, 2010
         
-            Args:
-                K0 (GPa): Bulk modulus of grain material
-                G0 (GPa): shear modulus of grain material
-                Kc (GPa): Bulk modulus of cement
-                Gc (GPa): shear modulus of cement
-                phi (float or array-like): Porosity
-                phi_b (frac): adjusted high porosity end memeber
-                phic (frac): depositional porosity, Defaults to 0.4.
-                Cn (unitless): coordination number Defaults to 8.6.
-                scheme: Scheme of cement deposition
-                        1=cement deposited at grain contacts
-                        2=cement deposited at grain surfaces
-            Returns:
-                K_dry, G_dry (GPa): Effective elastic moduli of dry rock
-            Refs: 
-                Avseth, P.; Mukerji, T. & Mavko, G. Cambridge university press, 2010
-            Written by Jiaxin Yu (July 2021)
-        """   
+        """        
+         
         # adjusted high porosity end memeber 
         K_b, G_b=GM.contactcement(K0, G0, Kc, Gc, phi_b, phic, Cn, scheme)
         # interpolation between the high-porosity end member Kb, Gb and the mineral point. 
@@ -284,22 +397,33 @@ class GM(utils):
         return K_dry, G_dry
 
     def Digby(K0, G0, phi, Cn, sigma, a_R):
-        """Compute Keff and Geff using Digby's model 
+        """Compute Keff and Geff using Digby's model
 
-        Args:
-            K0 (GPa): _description_
-            G0 (Gpa): _description_
-            phi (frac): _description_
-            Cn (unitless): _description_
-            sigma (Mpa): _description_
+        Parameters
+        ----------
+        K0 : float
+            Bulk modulus of grain material in GPa
+        G0 : float
+            Shear modulus of grain material in GPa
+        phi : float
+            Porosity
+        Cn : float
+            coordination number
+        sigma : float or array-like
+            stress
+        a_R : float
             a_R (unitless): ratio of the radius of the initially bonded area to the grain radius
 
-        Returns:
+        Returns
+        -------
+        float or array-like
             Keff, Geff (Gpa): effective medium stiffness
-        Refs: 
-            Digby, P.J., 1981. Journal of Applied Mechanics, 48, 803–808.
-        Written by Jiaxin Yu (May 2022)
-        """    
+
+        References
+	    ----------
+        - Digby, P.J., 1981. Journal of Applied Mechanics, 48, 803–808.
+        """        
+           
         sigma =sigma/1000 # converts pressure unit to GPa
         nu=(3*K0-2*G0)/(6*K0+2*G0) # poisson's ratio of mineral mixture
         
@@ -317,31 +441,54 @@ class GM(utils):
     def pcm(f,sigma, K0,G0,phi, phic, v_cem,v_ci, Kc,Gc, Cn, mode,scheme,f_):
         """Computes effective elastic moduli of patchy cemented sandstone according to Avseth (2016). 
 
-        Args:
-        
-            f (frac):volume fraction of cemented rock in the binary mixture
-            sigma: effective stress
-            K0 (Gpa): bulk modulus of solid grain
-            G0 (Gpa): shear modulus of solid grain
-            phi: porosity
-            phic (frac):depositional/critical porosity
-            v_cem: cement fraction in contact cement model. phi_cem= phic-vcem        
-            v_ci: at which increasing cement model is applied 
-            Kc (Gpa): bulk modulus of cement
-            Gc (Gpa): shear modulus of cement
-            Cn (float, optional): coordination number. Defaults to 8.6.
-            mode (str, optional): 'stiff' or 'soft'. stiffest mixing or softest mixing. Defaults to 'stiff'.
-            scheme (int, optional): contact cement scheme. Defaults to 2.
-            f_ (float, optional): slip factor in HM modelling. Defaults to 0.5.
+        Parameters
+        ----------
+        f : float 
+            volume fraction of cemented rock in the binary mixture    
+        sigma : float or array-like
+            effective stress
+        K0 : float
+            Bulk modulus of grain material in GPa
+        G0 : float
+            Shear modulus of grain material in GPa
+        phi : float
+            Porosity
+        phic : float
+            Critical Porosity
+        v_cem : float
+            cement fraction in contact cement model. phi_cem= phic-vcem 
+        v_ci : float
+            cement threshold above which increasing cement model is applied 
+        Kc : float
+            bulk modulus of cement
+        Gc : float
+            shear modulus of cement
+        Cn : float
+            coordination number
+        mode : str
+            'stiff' or 'soft'. stiffest mixing or softest mixing. Defaults to 'stiff'.
+        scheme : int
+            contact cement scheme. 
+            1=cement deposited at grain contacts
+            2=cement deposited at grain surfaces
+        f_ : float
+            slip factor in HM modelling. Defaults to 0.5.
 
-        Note:  
+        Note
+        ----
             (Avseth,2016): If 10% is chosen as the “critical” cement limit, the  increasing cement model can be used in addition to the contact cement model. (Torset, 2020): with the increasing cement model appended at 4% cement"
-        Refs:
-            Avseth, P.; Skjei, N. & Mavko, G. The Leading Edge, GeoScienceWorld, 2016, 35, 868-87
+
         Returns
+        -------
+        float or array-like
             K_DRY, G_DRY (GPa): effective elastic moduli of the dry rock
-        Written by Jiaxin Yu (Feb 2021)
-        """     
+
+        References
+	    ----------
+            - Avseth, P.; Skjei, N. & Mavko, G. The Leading Edge, GeoScienceWorld, 2016, 35, 868-87.
+
+        """        
+          
         #------------------------------------------------
         # compute the unconsolidated end member
         #------------------------------------------------

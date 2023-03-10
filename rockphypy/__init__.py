@@ -11,7 +11,7 @@ from rockphypy.Fluid import Fluid
 from rockphypy.EM import EM
 from rockphypy.Emp import Empirical
 
-#_version__ = "1.1.0"
+__version__ = "0.0.1"
 __author__ = "jiaxinyu"
 
 __all__ = ['Anisotropy','AVO','BW','Emp',"EM", 'GM','Perm',"utils"]

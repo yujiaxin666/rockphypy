@@ -11,24 +11,33 @@
 import numpy as np
 
 class AVO:
-    """_summary_
+    """Exact and approximations of reflectivity in isotropic and anisotropic media.  
     """    
 
     def AVO_HTI(D1,D2,C1,C2,theta,azimuth):
-
         """Compute azimuth dependent PP reflectivity for wealy anisotropic HTI media using Ruger's approximation
 
-        Args:
-            D1 (g/cm3): density of the upper medium 
-            D2 (g/cm3): density of the lower medium 
-            C1 (matrix): stiffness matrix of the upper medium 
-            C2 (matrix): stiffness matrix of the lower medium 
-            theta (num or array like):  incident angle, in degree unit
-            azimuth (num or array like): azimuth angle, in degree unit 
+        Parameters
+        ----------
+        D1 : float or array-like
+            density of the upper medium g/cm3
+        D2 : float or array-like
+            density of the lower medium g/cm3
+        C1 : 2D array
+            stiffness matrix of the upper medium 
+        C2 : 2D array
+            stiffness matrix of the lower medium 
+        theta : float or array-like
+            incident angle, in degree unit
+        azimuth : float or array-like
+           azimuth angle, in degree unit 
 
-        Returns:
-            Rpp: PP reflectivities
-        """    
+        Returns
+        -------
+        float or array-like
+            PP reflectivities
+        """        
+
         theta = np.radians(theta)
         azimuth = np.radians(azimuth)
         C11_1=C1[0,0]
@@ -87,22 +96,32 @@ class AVO:
     def Aki_Richard(theta, vp1,vp2,vs1,vs2,den1,den2):
         """Aki-Richard approximation to PP reflectivity. 
 
-        Args:
-            theta (degree): incident angle
-            vp1 (m/s): P wave velocity of layer 1
-            vp2 (m/s): P wave velocity of layer 2
-            vs1 (m/s): S wave velocity of layer 1
-            vs2 (m/s): S wave velocity of layer 2
-            den1 (kg/m3): density of layer 1
-            den2 (kg/m3): density of layer 2
+        Parameters
+        ----------
+        theta : float or array-like
+            incident angle, degree
+        vp1 : float or array-like
+            P wave velocity of layer 1, m/s
+        vp2 : float or array-like
+            P wave velocity of layer 2, m/s
+        vs1 : float or array-like
+            S wave velocity of layer 1, m/s
+        vs2 : float or array-like
+            S wave velocity of layer 2, m/s
+        den1 : float or array-like
+            density of layer 1, kg/m3
+        den2 : float or array-like
+            density of layer 2, kg/m3
 
-        Returns:
+        Returns
+        -------
+        float or array-like
             R_pp: P wave reflectivity
             R_ps: PS reflectivity
             Rpp0: intercept
             gradient
-        Written by Jiaxin Yu
-        """   
+        """        
+  
         theta=np.deg2rad(theta) # convert angle in degree to angle in radian
         delta_den=den2-den1
         delta_vp=vp2-vp1
@@ -124,23 +143,31 @@ class AVO:
         return R_pp,R_ps, Rpp0, gradient
 
     def zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta):
-        """Reflection & Transmission coefficients calculated using full Zoeppritz
-        equations.
+        """Reflection & Transmission coefficients calculated using full Zoeppritz equations.
 
-        Args:
-        theta, vp1,vp2,vs1,vs2,den1,den2
-            theta (degree): incident angle
-            vp1 (m/s): P wave velocity of layer 1
-            vp2 (m/s): P wave velocity of layer 2
-            vs1 (m/s): S wave velocity of layer 1
-            vs2 (m/s): S wave velocity of layer 2
-            den1 (kg/m3): density of layer 1
-            den2 (kg/m3): density of layer 2
+        Parameters
+        ----------
+        vp1 : float or array-like
+            P wave velocity of layer 1, m/s
+        vs1 : float or array-like
+            S wave velocity of layer 1, m/s
+        rho1 : float or array-like
+            density of layer 1, kg/m3
+        vp2 : float or array-like
+            P wave velocity of layer 2, m/s
+        vs2 : float or array-like
+            S wave velocity of layer 2, m/s
+        rho2 : float or array-like
+            density of layer 2, kg/m3
+        theta : float or array-like
+            incident angle, degree
 
-
-        Returns:
+        Returns
+        -------
+        float or array-like
             Rpp,Rps: PP and PS reflectivity
-        """    
+        """        
+   
         theta1 = np.deg2rad(theta)
         p = np.sin(theta)/vp1 # Ray parameter
         # Transmission angle of P-wave
@@ -180,26 +207,30 @@ class AVO:
         #     ])
         return Rpp, Rps
 
-    def AVO_abe(vp1,vs1,d1,vp2,vs2,d2):
-        """ Copied from RPT matlab tools func: avo_abe
-        Calculates AVO parameters:
-            A: Intercept (P-P) i.e. normal incidence reflectivity
-            B1, B2: P-P Gradient using different approximations
-            E1, E2: P-S Gradient using different approximations
-            B1 Shuey's paper (2terms->B Castag)
-            B2 Castagna's paper->Shuey
-            (note: both are Shuey's approximation, but B2 is using Castagna's "way" to calculate them. The results are slightly different)
-            E1 Ezequiel Gonzalez approximation
-            E2 Alejandro & Reinaldo approx
 
-        Args:
-            vp1 (m/s): P wave velocity of layer 1
-            vs1 (m/s): S wave velocity of layer 1
-            d1 (kg/m3): density of layer 1
-            vp2 (m/s):P wave velocity of layer 2
-            vs2 (m/s): S wave velocity of layer 2
-            d2 (kg/m3): density of layer 2
-        """	
+    def AVO_abe(vp1,vs1,d1,vp2,vs2,d2):
+        """Copied from RPT matlab tools func: avo_abe
+
+        Parameters
+        ----------
+        vp1 : float or array-like
+            P wave velocity of layer 1, m/s
+        vs1 : float or array-like
+            S wave velocity of layer 1, m/s
+        d1 : float or array-like
+            density of layer 1, kg/m3
+        vp2 : float or array-like
+            P wave velocity of layer 2, m/s
+        vs2 : float or array-like
+            S wave velocity of layer 2, m/s
+        d2 : float or array-like
+            density of layer 2, kg/m3
+
+        Returns
+        -------
+        float or array-like
+            different linear AVO approximations
+        """        
 
         da=(d1+d2)/2     
         Dd=(d2-d1)
@@ -229,25 +260,41 @@ class AVO:
 
         return A,B1,B2,E1,E2
 
+
     def EI_ref(Vp,Vs,rho,theta,SP,norm=True):
         """Compute elastic impedance of an isotropic, flat-layered Earth 
 
-        Args:
-            Vp (scalar/array): _description_
-            Vs (scalar/array): _description_
-            rho (scalar/array): _description_
-            theta (_type_): incident angle 
-            SP (cons.): constant ratio of Vs to Vp, can be taken as the average of input Vs/Vp, i.e. SP= VS.mean()/VP.mean()
-            norm (bool, optional): True: normalized input velocities and density such that the units and dimension match with acoustic impedance. Defaults to True.
+        Parameters
+        ----------
+        vp1 : float or array-like
+            P wave velocity of layer 1, m/s
+        vs1 : float or array-like
+            S wave velocity of layer 1, m/s
+        d1 : float or array-like
+            density of layer 1, kg/m3
 
-        Returns:
+        Vp : float or array-like
+            P wave velocity
+        Vs : float or array-like
+            S wave velocity
+        rho : float or array-like
+            density
+        theta : float or array-like
+            incident angle
+        SP : float
+            constant ratio of Vs to Vp, can be taken as the average of input Vs/Vp, i.e. SP= VS.mean()/VP.mean()
+        norm : bool, optional
+            If True: normalized input velocities and density such that the units and dimension match with acoustic impedance. Defaults to True.
+
+        Returns
+        -------
+        float or array-like
             EI_pp: elastic impedance for PP reflection 
             EI_svp: elastic impedance for P-SV reflection 
             EI_psv: elastic impedance for SV-P reflection 
             EI_svsv: elastic impedance for SV-SV reflection 
             EI_shsh: elastic impedance for SH-SH reflection 
-        
-        """    
+        """        
         
         theta = np.deg2rad(theta)
         p=np.sin(theta)
@@ -288,29 +335,49 @@ class AVO:
     def AVO_ortho(a1,b1,e11,d11,e12,d12,g1,rho1,a2,b2,e21,d21,e22,d22,g2,rho2,the):
         """calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media  
 
-        Args:
-            a1 (_type_): _description_
-            b1 (_type_): _description_
-            e11 (_type_): _description_
-            d11 (_type_): _description_
-            e12 (_type_): _description_
-            d12 (_type_): _description_
-            g1 (_type_): _description_
-            rho1 (_type_): _description_
-            a2 (_type_): _description_
-            b2 (_type_): _description_
-            e21 (_type_): _description_
-            d21 (_type_): _description_
-            e22 (_type_): _description_
-            d22 (_type_): _description_
-            g2 (_type_): _description_
-            rho2 (_type_): _description_
-            the (_type_): _description_
+        Parameters
+        ----------
+        a1 : _type_
+            _description_
+        b1 : _type_
+            _description_
+        e11 : _type_
+            _description_
+        d11 : _type_
+            _description_
+        e12 : _type_
+            _description_
+        d12 : _type_
+            _description_
+        g1 : _type_
+            _description_
+        rho1 : _type_
+            _description_
+        a2 : _type_
+            _description_
+        b2 : _type_
+            _description_
+        e21 : _type_
+            _description_
+        d21 : _type_
+            _description_
+        e22 : _type_
+            _description_
+        d22 : _type_
+            _description_
+        g2 : _type_
+            _description_
+        rho2 : _type_
+            _description_
+        the : _type_
+            _description_
 
-        Returns:
-            _type_: _description_
-        """    
-
+        Returns
+        -------
+        _type_
+            _description_
+        """        
+  
         Z1=rho1*a1
         Z2=rho2*a2
         G1=rho1*b1*b1

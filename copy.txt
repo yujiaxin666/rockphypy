@@ -1,0 +1,32 @@
+float or array-like
+
+References
+	    -------
+        -
+
+np.asanyarray
+
+"""Dispersion and Attenuation of partial saturation using White and Dutta–Odé Model. 
+
+        Args:
+            Kdry (GPa): bulk modulus of the dry rock 
+            Gdry (GPa): shear modulus of the dry rock 
+            K0 (GPa): Isotropic mineral bulk modulus
+            phi (frac): porosity
+            rho0 (g/cm3): mineral density
+            rhofl1 (g/cm3): density of the fluid opcupying the central sphere
+            rhofl2 (g/cm3): density of the fluid opcupying the outer sphere
+            Kfl1 (GPa): bulk modulus of the fluid opcupying the central sphere
+            Kfl2 (GPa): bulk modulus of the fluid opcupying the outer sphere
+            eta1 (poise): viscousity of the fluid opcupying the central sphere
+            eta2 (poise): viscousity of the fluid opcupying the outer sphere
+            kapa (cm2): absolute permeability of the rock
+            a (cm): radius of central sphere , sg=a3/b3
+            sg (frac): saturation of fluid opcupying the central sphere
+            freq (scalar or array): frequencies 
+
+        Returns:
+            Vp (m/s): P wave velocity 
+            a_w: attenuation coefficient
+            K_star: complex bulk modulus 
+        """    

@@ -12,7 +12,8 @@
 import numpy as np
 
 class utils: 
-    """_summary_
+    """
+    Basic calculations for velocities, moduli and stiffness matrix.
     """    
     def V(K, G, rho):
         """Compute velocity given density and elastic moduli. 
@@ -208,7 +209,7 @@ class utils:
         M = 4*den**2*Vp45**4-2*den*Vp45**2*(C11+C33+2*C44)+(C11+C44)*(C33+C44)
         C13 = -C44+np.sqrt(M)
         C66 = 0.5*(C11-C12)
-        C = write_VTI_matrix(C11,C33,C13,C44,C66)
+        C = utils.write_VTI_matrix(C11,C33,C13,C44,C66)
 
         return C
 

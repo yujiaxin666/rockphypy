@@ -11,26 +11,28 @@
 import numpy as np
 
 class Anisotropy:
-    """_summary_
+    """Effective models, coordinate transform, anisotropic parameters and phase velocities that can be applied to anisotropic media.  
     """    
 
     
     def Thomsen(C11, C33, C13, C44, C66, den, theta):
-        """Computes  three phase velocities for weak VTI anisotropy using Thomsen’s parameters.
+        """Compute thomsen parameters and three phase velocities for weak anisotropic TI media with vertical symmetry axis. 
 
-        Args:
-            C11 (GPa): stiffness
-            C33 (GPa): stiffness
-            C13 (GPa): stiffness
-            C44 (GPa): stiffness
-            C66 (GPa): stiffness
-            den (g/cm3): density of the effective medium, for backus average, the effective density can be computed using VRH method for Voigt average. 
-            theta (degree): angle of incidence
+        Parameters
+        ----------
+        Cij : float
+            Stiffnesses in GPa
+        den : float
+            density of the effective medium, for backus average, the effective density can be computed using VRH method for Voigt average. 
+        theta : float or array-like
+            angle of incidence
 
-        Returns:
+        Returns
+        -------
+        float or array-like
             VP, VSV, VSH: wave velocities propagating along given direction
-        Written by Jiaxin Yu
-        """    
+        """        
+            
         alpha= np.sqrt(C33/den) *1e3
         beta= np.sqrt(C44/den) *1e3
         epsilon= 0.5* (C11-C33)/C33
@@ -43,13 +45,19 @@ class Anisotropy:
         return VP, VSV, VSH, epsilon,gamma,delta
 
     def Thomsen_Tsvankin(C11,C22,C33,C12,C13,C23,C44,C55,C66):
-        """ Elastic constants of an orthorhombic elastic medium defined by Tsvankin’s notation for weak elastic anisotropy assuming the vertical symmetry axis is along the x3 direction.
+        """Elastic constants of an orthorhombic elastic medium defined by Tsvankin’s notation for weak elastic anisotropy assuming the vertical symmetry axis is along the x3 direction.
 
-        Args:
-            Cij (GPa): Stiffnesses
-            
-        Returns: Thomsen-Tsvankin parameters 
-        """    
+        Parameters
+        ----------
+        Cij : float
+            Stiffnesses in GPa
+
+        Returns
+        -------
+        floats
+            Thomsen-Tsvankin parameters 
+        """        
+    
         # defined in the symmetry plane with normal in x1 direction);
         epsilon_1 = (C22-C33)/(2*C33) 
 
@@ -71,21 +79,31 @@ class Anisotropy:
     def Backus(V,lamda, G ):
         """Computes stiffnesses of a layered medium using backus average model. 
 
-        Args:
-            V (num or array-like, frac): volumetric fractions of N isotropic layering materials
-            lamda (num or array-like): Lamé coefficients of N isotropic layering materials
-            G (num or array-like, GPa): shear moduli of N isotropic layering materials
-        Returns:
-            C11,C33,C13,C44,C66 (num or array-like, GPa): Elastic moduli of the anisotropic layered media
-        Written by Jiaxin Yu
-        """    
-        if isinstance(V, ( np.ndarray)) is False:
-            V=np.array(V)
-        V=V/np.sum(V) # normalize 
-        if isinstance(lamda, ( np.ndarray)) is False:
-            lamda=np.array(lamda)
-        if isinstance(G, ( np.ndarray)) is False:
-            G=np.array(G)
+        Parameters
+        ----------
+        V : float or array-like
+            volumetric fractions of N isotropic layering materials
+        lamda : float or array-like
+            Lamé coefficients of N isotropic layering materials
+        G : float or array-like
+            shear moduli of N isotropic layering materials
+
+        Returns
+        -------
+        float or array-like
+            C11,C33,C13,C44,C66:Elastic moduli of the anisotropic layered media
+        """        
+        V= np.asanyarray(V)
+        V=V/np.sum(V) # normalize
+        lamda= np.asanyarray(lamda)
+        G= np.asanyarray(G)
+        # if isinstance(V, ( np.ndarray)) is False:
+        #     V=np.array(V)
+        # V=V/np.sum(V) # normalize 
+        # if isinstance(lamda, ( np.ndarray)) is False:
+        #     lamda=np.array(lamda)
+        # if isinstance(G, ( np.ndarray)) is False:
+        #     G=np.array(G)
         
         C33=np.dot(V, 1/(lamda+2*G)) **-1
         C44=np.dot(V, 1/G)**-1
@@ -97,19 +115,25 @@ class Anisotropy:
 
     
     def Backus_log(Vp,Vs,Den,Depth):
-        """ Computes Backus Average from log data, notice that the Depth is 1d Vector including each top depth of layer and also the bottom of last layer. 
+        """Computes Backus Average from log data, notice that the Depth is 1d Vector including each top depth of layer and also the bottom of last layer. 
 
-        Args:
-            Vp (array): P wave velocities of layers [Vp1,Vp2...Vpn], size N
-            Vs (array): S wave velocities of layers [Vs1,Vs2...Vsn], size N
-            Den (array): Densities of layers, size N
-            Depth (array): 1d depth, ATTENTION: each depth point
-            corresponds to the top of thin isotropic layer, the bottom of the sedimentary package is the last depth point. [dep1,dep2,,,,,,depn, depn+1], size N+1
+        Parameters
+        ----------
+        Vp : array 
+            P wave velocities of layers [Vp1,Vp2...Vpn], size N
+        Vs : array
+            S wave velocities of layers [Vs1,Vs2...Vsn], size N
+        Den : array
+            Densities of layers, size N
+        Depth : array
+            1d depth, ATTENTION: each depth point corresponds to the top of thin isotropic layer, the bottom of the sedimentary package is the last depth point. [dep1,dep2,,,,,,depn, depn+1], size N+1
 
-        Returns:
+        Returns
+        -------
+        array-like
             Stiffness coeffs and averaged density
-        """    
-
+        """        
+ 
         # compute lame constants from log data 
         G = Den*Vs**2
         lamda = Den*Vp**2 - 2*G
@@ -126,16 +150,23 @@ class Anisotropy:
         return C11,C33,C13,C44,C66, den
 
     def vel_azi_HTI(C,Den,azimuth):
-        """ Given stiffnesses and density of the HTI medium, compute the azimuth dependent phase velocities.
+        """Given stiffnesses and density of the HTI medium, compute the azimuth dependent phase velocities.
 
-        Args:
-            C (GPa): stiffness matrix of the HTI medium
-            Den (g/cm3): density of the fractured medium 
-            azimuth (degree): azimuth angle
+        Parameters
+        ----------
+        C : 2d array
+            stiffness matrix of the HTI medium
+        Den : float
+            density of the fractured medium
+        azimuth : float or array like
+            azimuth angle, degree
 
-        Returns:
+        Returns
+        -------
+        float or array like
             VP,VSH, VSV: phase velocities 
-        """    
+        """        
+  
         azimuth= np.radians(azimuth)
         C11=C[0,0]
         C12=C[0,1]
@@ -152,17 +183,23 @@ class Anisotropy:
         return VP,VSH, VSV
 
     def vel_azi_VTI(C,Den,azimuth):
-        """ Given stiffnesses and density of the VTI medium, compute the azimuth dependent phase velocities.
+        """Given stiffnesses and density of the VTI medium, compute the azimuth dependent phase velocities.
 
+        Parameters
+        ----------
+        C : 2d array
+            stiffness matrix of the VTI medium
+        Den : float
+            density of the fractured medium
+        azimuth : float or array like
+            azimuth angle, degree
 
-        Args:
-            C (GPa): stiffness matrix of the VTI medium
-            Den (g/cm3): density of the fractured medium 
-            azimuth (degree): azimuth angle
-
-        Returns:
+        Returns
+        -------
+        float or array like
             VP,VSH, VSV: phase velocities 
-        """    
+        """        
+  
         azimuth= np.radians(azimuth)
 
         C11=C[0,0]
@@ -183,21 +220,28 @@ class Anisotropy:
     def Bond_trans(C, theta, axis=3):
         """Coordinate Transformations for stiffness matrix in 6x6 Voigt notation using Bond transformation matrix. 
 
-        Args:
-            C (matrix): original stiffness matrix
-            theta (degree): rotational angle
-            axis (int, optional): 
-                axis=1: fix 1-axis, rotate 2 and 3 axis, examples can be a TTI(Tilted TI) resulted from the rotation of VTI with horizontal aligned fracture sets wrt the vertical x3 axis. In this case, the input C should be a VTI matrix
-                axis=3: fix 3-axis, rotate 1 and 2 axis, E.g. seismic measurements of HTI media e.g caused by vertically aligned fractures. The angle theta may be assigned to be the angle between the fracture normal and a seismic line.
+        Parameters
+        ----------
+        C : 2d array
+            original stiffness matrix
+        theta : float
+            rotational angle
+        axis : int, optional
+            axis=1: fix 1-axis, rotate 2 and 3 axis, examples can be a TTI(Tilted TI) resulted from the rotation of VTI with horizontal aligned fracture sets wrt the vertical x3 axis. In this case, the input C should be a VTI matrix
+            axis=3: fix 3-axis, rotate 1 and 2 axis, E.g. seismic measurements of HTI media e.g caused by vertically aligned fractures. The angle theta may be assigned to be the angle between the fracture normal and a seismic line.
 
-        Returns:
-            C_trans (matrix): new stiffness matrix wrt to the original right-hand rectangular Cartesian coordinates
-        """    
-        """
+
+        Returns
+        -------
+        2d array
+            C_trans, new stiffness matrix wrt to the original right-hand rectangular Cartesian coordinates
+
+        References
+        ----------
+        - Bond, W., Jan. 1943, The mathematics of the physical properties of crystals, The Bell System Technical Journal, 1-72.
         
-        Refs: 
-        Bond, W., Jan. 1943, The mathematics of the physical properties of crystals, The Bell System Technical Journal, 1-72
-        """   
+        """        
+ 
         theta = np.deg2rad(theta)
         # axis 3 is fixed, rotate x1 and x2 axes.
         if axis==3:

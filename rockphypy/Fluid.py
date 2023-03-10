@@ -2,30 +2,52 @@ import scipy.special as sp
 import numpy as np
 from rockphypy.utils import utils
 #from utils import *
-class Fluid(utils):
+class Fluid:
     """
-    
+    Fluid subsitution approaches and models describing velocity dispersion and attenuation due to the fluid effect. 
     """    
+    
     def Biot(Kdry,Gdry,K0,Kfl,rho0,rhofl,eta,phi,kapa,a,alpha,freq):
-        """_summary_
+        """
+        Compute Biot dispersion and velocity attenuation 
 
-        Args:
-            Kdry (scalar or array): dry frame bulk modulus
-            Gdry (scalar or array): dry frame shear modulus
-            K0 (scalar or array):   bulk modulus of mineral material making up rock
-            Kfl (GPa): effective bulk modulus of pore fluid
-            rho0 (g/cm3): grain density
-            rhofl (g/cm3): pore fluid density
-            eta : η is the viscosity of the pore fluid
-            phi (frac): porosity 
-            kapa : κ is the absolute permeability of the rock
-            a : pore-size parameter. Stoll (1974) found that values between 1/6 and 1/7 of the mean grain diameter
-            alpha: tortuosity parameter, always greater than or equal to 1.
+        Parameters
+        ----------
+        Kdry : float or array-like
+            dry frame bulk modulus
+        Gdry : float or array-like
+            dry frame shear modulus
+        K0 : float
+            bulk modulus of mineral material making up rock
+        Kfl : float
+            effective bulk modulus of pore fluid
+        rho0 : float
+            grain density
+        rhofl : float
+            pore fluid density
+        eta : float
+            η is the viscosity of the pore fluid
+        phi : float
+            porosity 
+        kapa : float
+            absolute permeability of the rock
+        a : float
+            pore-size parameter. Stoll (1974) found that values between 1/6 and 1/7 of the mean grain diameter
+        alpha : float
+            tortuosity parameter, always greater than or equal to 1.
+        freq : float or array-like
+            frequency range, e.g 10^-3 to 10^3 Hz
 
-            freq (scalar or array): frequency range, e.g 10^-3 to 10^3 Hz
-
-
-        """    
+        Returns
+        -------
+        float or array-like
+            Vp_fast, fast P-wave velocities at all frequencies
+            Vp_slow, slow P-wave velocities at all frequencies
+            Vs, S-wave velocities
+            QP1_inv, fast P-wave attenuation
+            QP2_inv, slow P-wave attenuation
+            Qs_inv, S-wave attenuation
+        """        
 
         rho=(1-phi)*rho0+phi*rhofl # bulk density
         # poroelastic coefficients
@@ -67,19 +89,31 @@ class Fluid(utils):
     def Biot_HF(Kdry,Gdry,K0,Kfl,rho0,rhofl,phi,alpha):
         """Biot high-frequency limiting velocities in the notation of Johnson and Plona (1982)
 
-        Args:
-            Kdry (scalar or array): dry frame bulk modulus
-            Gdry (scalar or array): dry frame shear modulus
-            K0 (scalar or array):   bulk modulus of mineral material making up rock
-            Kfl (GPa): effective bulk modulus of pore fluid
-            rho0 (g/cm3): grain density
-            rhofl (g/cm3): pore fluid density
-            phi (frac): porosity 
-            alpha: tortuosity parameter, always greater than or equal to 1.
+        Parameters
+        ----------
+        Kdry : float or array-like
+            dry frame bulk modulus
+        Gdry : float or array-like
+            dry frame shear modulus
+        K0 : float
+            bulk modulus of mineral material making up rock 
+        Kfl : float
+            effective bulk modulus of pore fluid
+        rho0 : float
+            grain density
+        rhofl : float
+            pore fluid density
+        phi : float
+            porosity 
+        alpha : float
+            tortuosity parameter, always greater than or equal to 1.
 
-        Returns:
+        Returns
+        -------
+        float or array-like
             Vp_fast,Vp_slow,Vs:  high-frequency limiting velocities
-        """    
+        """        
+      
         rho=(1-phi)*rho0+phi*rhofl # bulk density
         rho12=(1-alpha)*phi*rhofl
         rho22=alpha*phi*rhofl
@@ -99,21 +133,33 @@ class Fluid(utils):
         return Vp_fast,Vp_slow,Vs
 
     def Geertsma_Smit_HF(Kdry,Gdry,K0,Kfl,rho0,rhofl,phi,alpha):
-        """ Approximation of Biot high-frequency limit of the fast P-wave velocity given by Geertsma and Smit (1961), This form predicts velocities that are too high (by about 3%–6%) compared with the actual high-frequency limit.
+        """Approximation of Biot high-frequency limit of the fast P-wave velocity given by Geertsma and Smit (1961), This form predicts velocities that are too high (by about 3%–6%) compared with the actual high-frequency limit.
 
-        Args:
-            Kdry (scalar or array): dry frame bulk modulus
-            Gdry (scalar or array): dry frame shear modulus
-            K0 (scalar or array):   bulk modulus of mineral material making up rock
-            Kfl (GPa): effective bulk modulus of pore fluid
-            rho0 (g/cm3): grain density
-            rhofl (g/cm3): pore fluid density
-            phi (frac): porosity 
-            alpha: tortuosity parameter, always greater than or equal to 1.
+        Parameters
+        ----------
+        Kdry : float or array-like
+            dry frame bulk modulus
+        Gdry : float or array-like
+            dry frame shear modulus
+        K0 : float
+            bulk modulus of mineral material making up rock 
+        Kfl : float
+            effective bulk modulus of pore fluid
+        rho0 : float
+            grain density
+        rhofl : float
+            pore fluid density
+        phi : float
+            porosity 
+        alpha : float
+            tortuosity parameter, always greater than or equal to 1.
 
-        Returns:
+        Returns
+        -------
+        float or array-like
             Vp_fast,Vs: high-frequency limiting velocities
-        """    
+        """        
+           
         rho=(1-phi)*rho0+phi*rhofl # bulk density
         rho_biot= rho0*(1-phi)+phi*rhofl*(1-alpha**-1)
         Hdry= Kdry+4*Gdry/3
@@ -128,18 +174,29 @@ class Fluid(utils):
     def Geertsma_Smit_LF(Vp0,Vpinf, freq,phi, rhofl, kapa, eta):
         """Low and middle-frequency approximations of Biot wave given by Geertsma and Smit (1961). Noticed that mathematically this approximation is valid at moderate-to-low seismic frequencies, i.e. f<fc
 
-        Args:
-            Vp0 (_type_): Biot−Gassmann low-frequency limiting P-wave velocity
-            Vpinf (_type_): Biot highfrequency limiting P-wave velocity
-            freq (_type_): frequency
-            phi (_type_): porosity
-            rhofl (_type_): fluid density
-            kapa (_type_): absolute permeability of the rock.
-            eta (_type_): viscosity of the pore fluid
+        Parameters
+        ----------
+        Vp0 : float
+            Biot−Gassmann low-frequency limiting P-wave velocity
+        Vpinf : float
+            Biot highfrequency limiting P-wave velocity
+        freq : float or array-like
+            frequency
+        phi : float
+            porosity
+        rhofl : float
+            fluid density
+        kapa : float
+            absolute permeability of the rock.
+        eta : float
+            viscosity of the pore fluid
 
-        Returns:
+        Returns
+        -------
+        float or array-like
             Vp: frequency-dependent P-wave velocity of saturated rock
-        """    
+        """        
+           
         # Biot reference frequency
         fc = phi*eta/(2*np.pi*rhofl*kapa)
         # if freq >=fc:
@@ -151,17 +208,25 @@ class Fluid(utils):
     def Gassmann(K_dry,G_dry,K_mat,Kf,phi):
         """Computes saturated elastic moduli of rock via Gassmann equation given dry-rock moduli. 
 
-        Args:
-            K_dry (Gpa): dry frame bulk modulus 
-            G_dry (Gpa): dry frame shear modulus 
-            K_mat (Gpa): matrix bulk modulus
-            Kf (Gpa): fluid bulk modulus
-            phi (frac): porosity
+        Parameters
+        ----------
+        K_dry : float or array-like
+            dry frame bulk modulus 
+        G_dry : float or array-like
+            dry frame shear modulus 
+        K_mat : float
+            matrix bulk modulus
+        Kf : float
+            fluid bulk modulus
+        phi : float or array-like
+            porosity
 
-        Returns:
+        Returns
+        -------
+        float or array-like
             K_sat, G_sat: fluid saturated elastic moduli
-        Written by Jiaxin Yu
-        """    
+        """        
+          
         A=(1-K_dry/K_mat)**2
         B=phi/Kf+(1-phi)/K_mat-K_dry/(K_mat**2)
         K_sat=K_dry+A/B
@@ -170,16 +235,25 @@ class Fluid(utils):
 
     def Gassmann_sub(phi, K0, Ksat1,Kfl1,Kfl2):
         """Fluid subsititution using Gassmann equation, thr rock is initially saturated with a fluid, compute the saturated moduli for tge rock saturated with a different fluid
-        Args:
-            phi (frac): porosity
-            K0 (GPa): mineral modulus
-            Ksat1 (GPa): original bulk modulus of rock saturated with fluid of bulk modulus Kfl1
-            Kfl1 (GPa): original saturant
-            Kfl2 (GPa): new saturant
 
-        Returns:
+        Parameters
+        ----------
+        phi : float or array-like 
+            porosity
+        K0 : float 
+            mineral modulus
+        Ksat1 : float or array-like
+            original bulk modulus of rock saturated with fluid of bulk modulus Kfl1
+        Kfl1 : float 
+            original saturant
+        Kfl2 : float 
+            new saturant
+
+        Returns
+        -------
+        float or array-like
             Ksat2: new satuarted bulk modulus of the rock 
-        """    
+        """       
 
         a=Ksat1/(K0-Ksat1)-Kfl1/(phi*(K0-Kfl1))+Kfl2/(phi*(K0-Kfl2))
         Ksat2= a*K0/(1+a)
@@ -188,20 +262,33 @@ class Fluid(utils):
     def Gassmann_vels(Vp1,Vs1,rho1,rhofl1,Kfl1,rhofl2,Kfl2,K0,phi):
         """Gassmann fluid substituion with velocities 
 
-        Args:
-            Vp1 (_type_): saturated P velocity of rock with fluid 1
-            Vs1 (_type_): saturated S velocity of rock with fluid 1
-            rho1 (_type_): bulk density of saturated rock with fluid 1
-            rhofl1 (_type_):density of fluid 1
-            Kfl1 (_type_): bulk modulus of fluid 1
-            rhofl2 (_type_):density of fluid 2
-            Kfl2 (_type_): bulk modulus of fluid 2
-            K0 (_type_): mineral bulk modulus
-            phi (_type_): porosity
+        Parameters
+        ----------
+        Vp1 : float or array-like
+            saturated P velocity of rock with fluid 1
+        Vs1 : float or array-like
+            saturated S velocity of rock with fluid 1
+        rho1 : float
+            bulk density of saturated rock with fluid 1
+        rhofl1 : float
+            density of fluid 1
+        Kfl1 : float
+            bulk modulus of fluid 1
+        rhofl2 : float
+            density of fluid 2
+        Kfl2 : float
+            bulk modulus of fluid 2
+        K0 : float
+            mineral bulk modulus
+        phi : float or array-like
+            porosity
 
-        Returns:
+        Returns
+        -------
+        float or array-like
             Vp2, Vs2: velocities of rock saturated with fluid 2
-        """    
+        """        
+            
         rho2=rho1 - phi*rhofl1 +phi*rhofl2 # density update
         G1=rho1*Vs1**2 
         Ksat1=rho1*Vp1**2-(4/3)*G1
@@ -213,35 +300,53 @@ class Fluid(utils):
 
 
     def Gassmann_approx(Msat1,M0,Mfl1,phi,Mfl2):
-        """ Perform gassmann fluid subsititution using on p wave modulus 
+        """Perform gassmann fluid subsititution using on p wave modulus 
 
-        Args:
-            Msat1 (GPa): in situ p wave modulus from well log
-            M0 (GPa): mineral modulus
-            Mfl1 (GPa): p wave modulus of in situ fluid 
-            phi (frac): por
-            Mfl2 (GPa): p wave modulus of new fluid after susbtitution
+        Parameters
+        ----------
+        Msat1 : float or array-like
+            in situ saturated p wave modulus from well log data
+        M0 : float
+            mineral modulus
+        Mfl1 : float
+            p wave modulus of in situ fluid 
+        phi : float
+            porosity
+        Mfl2 : float
+            p wave modulus of new fluid for susbtitution
 
-        Returns:
-            Msat2:  p wave modulus of fully saturated rock
-        """    
+        Returns
+        -------
+        float or array-like
+            Msat2:  p wave modulus of rock fully saturated with new fluid
+        """        
+            
         x=Msat1/(M0-Msat1) -Mfl1/(phi*(M0-Mfl1)) +Mfl2/(phi*(M0-Mfl2))
         Msat2=x*M0/(1+x)
         return Msat2
 
     def Brown_Korringa_dry2sat(Sdry,K0,G0,Kfl,phi):
-        """Compute fluid saturated compliances from dry compliance for anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper. 
+        """Compute fluid saturated compliances from dry compliance for anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper.
 
-        Args:
-            Sdry (6x6 matrix): comliance matrix of the dry rock
-            K0 (GPa): Isotropic mineral bulk modulus
-            G0 (GPa): Isotropic mineral shear modulus
-            Kfl (GPa): Isotropic fluid bulk modulus
-            phi (frac): porosity
-        Returns:
+        Parameters
+        ----------
+        Sdry : 2d array
+            comliance matrix of the dry rock
+        K0 : float
+            Isotropic mineral bulk modulus
+        G0 : float
+            Isotropic mineral shear modulus
+        Kfl : float
+            Isotropic fluid bulk modulus
+        phi : float
+            porosity
+
+        Returns
+        -------
+        2d array
             Ssat (6x6 matrix): Saturated compliance of anisotropic rock
-        Written by Jiaxin Yu
-        """    
+        """        
+           
         # Compressibilities of the fluid, mineral, and dry rock, sum over repeted index, e,g, β0 =s0[ααγγ]
         beta0 = 1/K0
         
@@ -259,18 +364,27 @@ class Fluid(utils):
         return Ssat
 
     def Brown_Korringa_sat2dry(Ssat,K0,G0,Kfl,phi):
-        """ Compute dry compliance from fluid saturated compliances for arbitrarily anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper. 
+        """Compute dry compliance from fluid saturated compliances for arbitrarily anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper. 
 
-        Args:
-            Ssat (6x6 matrix): comliance matrix of the saturated rock
-            K0 (GPa): Isotropic mineral bulk modulus
-            G0 (GPa): Isotropic mineral shear modulus
-            Kfl (GPa): Isotropic fluid bulk modulus
-            phi (frac): porosity
-        Returns:
+        Parameters
+        ----------
+        Ssat : 2d array
+            comliance matrix (6x6) of the saturated rock 
+        K0 : float
+            Isotropic mineral bulk modulus
+        G0 : float
+            Isotropic mineral shear modulus
+        Kfl : float
+            Isotropic fluid bulk modulus
+        phi : float
+            porosity
+
+        Returns
+        -------
+        2d array
             Sdry (6x6 matrix): Dry compliance of anisotropic rock
-        Written by Jiaxin Yu
-        """    
+        """        
+      
         # Compressibilities of the fluid, mineral, and dry rock, sum over repeted index, e,g, β0 =s0[ααγγ]
         beta0 = 1/K0
         
@@ -288,19 +402,28 @@ class Fluid(utils):
         return Sdry
 
     def Brown_Korringa_sub(Csat,K0,G0,Kfl1,Kfl2,phi):
-        """ Fluid substitution in arbitrarily anisotropic rock using Brown and Korringa (1975). 
-        the rock is originally saturated by fluid 1. After fluid subsititution, the rock is finally saturated by fluid 2.
-        Args:
-            Ssat (6x6 matrix): comliance matrix of the saturated rock
-            K0 (GPa): Isotropic mineral bulk modulus
-            G0 (GPa): Isotropic mineral shear modulus
-            Kfl1 (GPa): bulk modulus of the original fluid
-            Kfl2 (GPa): bulk modulus of the final fluid
-            phi (frac): porosity
-        Returns:
+        """Fluid substitution in arbitrarily anisotropic rock using Brown and Korringa (1975). the rock is originally saturated by fluid 1. After fluid subsititution, the rock is finally saturated by fluid 2.
+
+        Parameters
+        ----------
+        Csat : 6x6 matrix
+            comliance matrix of the saturated rock
+        K0 : float
+            Isotropic mineral bulk modulus
+        G0 : float
+            Isotropic mineral shear modulus
+        Kfl1 : float
+            bulk modulus of the original fluid
+        Kfl2 : float
+            bulk modulus of the final fluid
+        phi : float
+            porosity
+
+        Returns
+        -------
+        2d array
             Csat2, Ssat2 (6x6 matrix): Dry stiffness and compliance matrix of anisotropic rock saturated with new fluid
-        Written by Jiaxin Yu
-        """    
+        """        
         Ssat = np.linalg.inv(Csat)
         
         Sdry = Fluid.Brown_Korringa_sat2dry(Ssat,K0,G0,Kfl1,phi)
@@ -313,24 +436,35 @@ class Fluid(utils):
     def Mavko_Jizba(Vp_hs, Vs_hs,Vpdry, Vsdry, K0, rhodry, rhofl,Kfl, phi):
         """Predicting the very high-frequency moduli and velocities of saturated rocks from dry rock properties using the Squirt flow model derived by Mavko and Jizba (1991). 
 
-        Args:
-            Vp_hs (scalar): P wave velocity of the dry rock measured at very high effective pressure in the unit of m/s
-            Vs_hs (scalar): S wave velocity of the dry rock  measured at very high effective pressure in the unit of m/s
-            Vpdry (array): P wave velocity of the dry rock measured at different effective pressure in the unit of m/s
-            Vsdry (array): S wave velocity of the dry rock measured at different effective pressure in the unit of m/s
-            K0 (GPa): mineral bulk moduli
-            rhodry (g/cm3): bulk density of the dry rock
-            rhofl (g/cm3): bulk density of the pore fluid
-            Kfl (GPa): bulk moduli of the pore fluid
-            phi (frac): porosity
+        Parameters
+        ----------
+        Vp_hs : float
+            P wave velocity of the dry rock measured at very high effective pressure in the unit of m/s
+        Vs_hs : float
+            S wave velocity of the dry rock  measured at very high effective pressure in the unit of m/s
+        Vpdry : array
+            P wave velocity of the dry rock measured at different effective pressure in the unit of m/s
+        Vsdry : array
+            S wave velocity of the dry rock measured at different effective pressure in the unit of m/s
+        K0 : float
+            mineral bulk moduli
+        rhodry : float
+            bulk density of the dry rock
+        rhofl : float
+            bulk density of the pore fluid
+        Kfl : float
+            bulk moduli of the pore fluid
+        phi : float
+            porosity
 
-        Returns:
-            Kuf_sat (scalar):GPa, predicted high frequency bulk moduli of saturated rock
+        Returns
+        -------
+        _type_
+            Kuf_sat (float):GPa, predicted high frequency bulk moduli of saturated rock
             Guf_sat (array): GPa, predicted high frequency shear moduli of saturated rock at different pressure 
             Vp_hf (array): m/s, predicted high frequency P wave velocities of saturated rock
             Vs_hf (array): m/s, predicted high frequency S wave velocities of saturated rock
-        Written by Jiaxin Yu
-        """    
+        """        
         # dry rock moduli with pressure 
         Kdry,Gdry = utils.M_from_V(rhodry, Vpdry,Vsdry)
         # dry moduli dry rock at high high effective pressure, crack free high pressure moduli
@@ -350,15 +484,18 @@ class Fluid(utils):
     def Squirt_anisotropic(Sdry, Sdry_hp):
         """Predict wet unrelaxed frame compliances at very high frequency from dry frame compliances for transversely isotropic rocks using theoretical formula derived by Mukerji and Mavko, (1994)
 
-        Args:
-            Sdry (array):dry rock compliances [S11 S12 S13 S33 S44]
-            Sdry_hp (array):dry rock compliances at very high effective stress [S11 S12 S13 S33 S44]
+        Parameters
+        ----------
+        Sdry : array
+            dry rock compliances [S11 S12 S13 S33 S44]
+        Sdry_hp : array
+            dry rock compliances at very high effective stress [S11 S12 S13 S33 S44]
 
-        Returns:
-            S_wet (array) : The wet-frame compliances [S11 S12 S13 S33 S44]
-        Refs:
-        Mukerji and Mavko (1994) Geophysics.
-        """    
+        Returns
+        -------
+        array
+            The wet-frame compliances [S11 S12 S13 S33 S44]
+        """        
         Sdry=np.asanyarray(Sdry)
         Sdry_hp=np.asanyarray(Sdry_hp)
         # delta_Sdry_ijkl
@@ -391,32 +528,47 @@ class Fluid(utils):
     def White_Dutta_Ode(Kdry, Gdry, K0, phi, rho0, rhofl1,rhofl2, Kfl1, Kfl2,eta1,eta2,kapa,a,sg,freq ):
         """Dispersion and Attenuation of partial saturation using White and Dutta–Odé Model. 
 
-        Args:
-            Kdry (GPa): bulk modulus of the dry rock 
-            Gdry (GPa): shear modulus of the dry rock 
-            K0 (GPa): Isotropic mineral bulk modulus
-            phi (frac): porosity
-            rho0 (g/cm3): mineral density
-            rhofl1 (g/cm3): density of the fluid opcupying the central sphere
-            rhofl2 (g/cm3): density of the fluid opcupying the outer sphere
-            Kfl1 (GPa): bulk modulus of the fluid opcupying the central sphere
-            Kfl2 (GPa): bulk modulus of the fluid opcupying the outer sphere
-            eta1 (poise): viscousity of the fluid opcupying the central sphere
-            eta2 (poise): viscousity of the fluid opcupying the outer sphere
-            kapa (cm2): absolute permeability of the rock
-            a (cm): radius of central sphere , sg=a3/b3
-            sg (frac): saturation of fluid opcupying the central sphere
-            freq (scalar or array): frequencies 
+        Parameters
+        ----------
+        Kdry : float
+            bulk modulus of the dry rock 
+        Gdry : float
+            shear modulus of the dry rock 
+        K0 : float
+            Isotropic mineral bulk modulus
+        phi : float
+            porosity
+        rho0 : float
+            mineral density
+        rhofl1 : float
+            density of the fluid opcupying the central sphere
+        rhofl2 : float
+            density of the fluid opcupying the outer sphere
+        Kfl1 : float
+            bulk modulus of the fluid opcupying the central sphere
+        Kfl2 : float
+            bulk modulus of the fluid opcupying the outer sphere
+        eta1 : float
+            viscousity of the fluid opcupying the central sphere
+        eta2 : float
+            viscousity of the fluid opcupying the outer sphere
+        kapa : float
+            absolute permeability of the rock
+        a : float
+            radius of central sphere , sg=a3/b3
+        sg : float
+            saturation of fluid opcupying the central sphere
+        freq : float or array-like
+            frequencies 
 
-            
-            
-            
-        Returns:
-            Vp (m/s):
-            a_w: 
-            K_star: _description_
-        """    
-
+        Returns
+        -------
+        float, array-like
+            Vp (m/s): P wave velocity 
+            a_w: attenuation coefficient
+            K_star: complex bulk modulus 
+        """        
+        
         omega= 2*np.pi*freq
         #sg=a3/b3, outer radius b
         b= a/sg**(1/3)

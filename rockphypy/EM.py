@@ -14,21 +14,29 @@ from rockphypy.utils import utils
 #import Anisotropy
 from scipy.optimize import fsolve
 
-class EM(utils):
-    """_summary_
+class EM:
+    """classical bounds and inclusion models. 
     """
     def VRH(volumes,M):
         """Computes Voigt, Reuss, and Hill Average Moduli Estimate.
 
-        Args:
-            volumes (array): volumetric fractions of N phases
-            M (array): elastic modulus of the N phase.
-        Returns:
+        Parameters
+        ----------
+        volumes : list or array-like
+            volumetric fractions of N phases
+        M : list or array-like
+            elastic modulus of the N phase.
+
+        Returns
+        -------
+        float
             M_v: Voigt average
             M_r: Reuss average
             M_0: Hill average
-        Written by Jiaxin Yu (July 2021)
-        """
+        """        
+  
+        volumes= np.asanyarray(volumes)
+        M=np.asanyarray(M)
         M_v=np.dot(volumes,M)
 
         M_r=np.dot(volumes,1/M)**-1
@@ -39,17 +47,23 @@ class EM(utils):
     def cripor(K0, G0, phi, phic):
         """Critical porosity model according to Nur’s modified Voigt average.
 
-        Args:
-            K0 (GPa): mineral bulk modulus
-            G0 (Gpa): mineral shear modulus
-            phi (frac): porosity
-            phic (frac): critical porosity
-        Returns:
+        Parameters
+        ----------
+        K0 : float or array-like
+            mineral bulk modulus in GPa
+        G0 : float or array-like
+            mineral shear modulus in GPa
+        phi : float or array-like
+            porosity in frac
+        phic : float
+            critical porosity in frac
+
+        Returns
+        -------
+        float or array-like
             K_dry,G_dry (GPa): dry elastic moduli of the framework
-        Refs:
-            Section 7.1 Rock physics handbook 2nd edition
-        Written by Jiaxin Yu (July 2021)
-        """
+        """        
+        
         K_dry = K0 * (1-phi/phic)
         G_dry = G0 * (1-phi/phic)
 
@@ -58,18 +72,27 @@ class EM(utils):
     def cripor_reuss(M0, Mf, phic, den=False):
         """In the suspension domain, the effective bulk and shear moduli of the rock can be estimated by using the Reuss (isostress) average.
 
-        Args:
-            M0 (GPa/g.cc): The solid phase modulus or density
-            Mf (GPa/g.cc): The pore filled phase modulus or density
-            phic (frac): critical porosity
-            den (bool, optional): If False: compute the reuss average for effective modulus of two mixing phases. If true, compute avearge density using mass balance, which corresponds to voigt average. Defaults to False.
+        Parameters
+        ----------
+        M0 : float or array-like
+            The solid phase modulus or density
+        Mf : float or array-like
+            The pore filled phase modulus or density
+        phic : float
+            critical porosity
+        den : bool, optional
+            If False: compute the reuss average for effective modulus of two mixing phases. If true, compute avearge density using mass balance, which corresponds to voigt average. Defaults to False.
 
-        Returns:
+        Returns
+        -------
+        float or array-like
             M (GPa/g.cc): average modulus or average density
-        Refs:
-            Section 7.1 Rock physics handbook 2nd edition
-        Written by Jiaxin Yu (July 2021)
-        """
+        
+        References
+        ----------
+        - Section 7.1 Rock physics handbook 2nd edition
+        """        
+
         if den is False:
 
             M = EM.VRH(np.array([M0,Mf]), np.array([(1-phic,phic)]))[1]
@@ -81,17 +104,27 @@ class EM(utils):
     def HS(f, K1, K2,G1, G2, bound='upper'):
         """Compute effective moduli of two-phase composite using hashin-strikmann bounds.
 
-        Args:
-            f (float): 0-1, volume fraction of stiff material
-            K1 (GPa): bulk modulus of stiff phase
-            K2 (GPa): bulk modulus of soft phase
-            G1 (GPa): shear modulus of stiff phase
-            G2 (GPa): shear modulus of soft phase
-            bound (str, optional): upper bound or lower bound. Defaults to 'upper'.
-        Returns:
+        Parameters
+        ----------
+        f : float
+            0-1, volume fraction of stiff material
+        K1 : float or array-like
+            bulk modulus of stiff phase
+        K2 : float or array-like
+            bulk modulus of soft phase
+        G1 : float or array-like
+            shear modulus of stiff phase
+        G2 : float or array-like
+            shear modulus of soft phase
+        bound : str, optional
+            upper bound or lower bound. Defaults to 'upper'.
+
+        Returns
+        -------
+        float or array-like
             K, G (GPa): effective moduli of two-phase composite
-        Written by Jiaxin Yu
-        """
+        """        
+
         if bound == 'upper':
             K=K1+ (1-f)/( (K2-K1)**-1 + f*(K1+4*G1/3)**-1 )
 
@@ -105,22 +138,32 @@ class EM(utils):
         return K, G
 
     def Eshelby_Cheng(K, G, phi, alpha, Kf, mat=False):
-        """ Compute the effective anisotropic moduli of a cracked isotropic rock with single set fracture using Eshelby–Cheng Model.
+        """Compute the effective anisotropic moduli of a cracked isotropic rock with single set fracture using Eshelby–Cheng Model.
 
-        Args:
-            K (GPa): bulk modulus of the isotropic matrix
-            G (GPa): shear modulus of the isotropic matrix
-            phi (frac): (crack) porosity
-            alpha (unitless): aspect ratio of crack
-            Kf (GPa):  bulk modulus of the fluid. For dry cracks use fluid bulk modulus 0
-            mat (bool, optional): If true: the output is in matrix form, otherwise  is numpy array. Defaults to False.
+        Parameters
+        ----------
+        K : float
+            bulk modulus of the isotropic matrix GPa
+        G : float
+            shear modulus of the isotropic matrix GPa
+        phi : float
+            (crack) porosity
+        alpha : float
+            aspect ratio of crack
+        Kf : float
+            bulk modulus of the fluid. For dry cracks use fluid bulk modulus 0
+        mat : bool, optional
+            If true: the output is in matrix form, otherwise  is numpy array. Defaults to False.
 
-        Returns:
+        Returns
+        -------
+        _type_
             C_eff: effective moduli of cracked, transversely isotropic rocks
-        Refs:
-            section 4.14 in The Rock Physics Handbook
-        Written by Jiaxin Yu
-        """
+
+        References
+        ----------
+        - section 4.14 in The Rock Physics Handbook
+        """        
 
         lamda = K-2*G/3
 
@@ -158,51 +201,68 @@ class EM(utils):
             C_eff = utils.write_VTI_matrix(C11,C33,C13,C44,C66)
         return C_eff
 
-    def Backus(V,lamda, G ):
-        """Compute stiffnesses of a layered medium composed of thin isotropic layers using backus average model.
+    # def Backus(V,lamda, G ):
+    #     """Compute stiffnesses of a layered medium composed of thin isotropic layers using backus average model.
 
-        Args:
-            V (num or array-like, frac): volumetric fractions of N isotropic layering materials
-            lamda (num or array-like): Lamé coefficients of N isotropic layering materials
-            G (num or array-like, GPa): shear moduli of N isotropic layering materials
-        Returns:
-            C11,C33,C13,C44,C66 (num or array-like, GPa): Elastic moduli of the anisotropic layered media
+    #     Parameters
+    #     ----------
+    #     V : float or array-like
+    #         volumetric fractions of N isotropic layering materials
+    #     lamda : float or array-like
+    #         Lamé coefficients of N isotropic layering materials
+    #     G : float or array-like
+    #         shear moduli of N isotropic layering materials
 
-        Written by Jiaxin Yu
-        """
-        C33=np.dot(V, 1/(lamda+2*G)) **-1
-        C44=np.dot(V, 1/G)**-1
-        C66=np.dot(V, G)
-        C13=np.dot(V, 1/(lamda+2*G)) **-1 * np.dot(V, lamda/(lamda+2*G))
-        C11=np.dot(V, 4*G*(lamda+G)/(lamda+2*G))+np.dot(V, 1/(lamda+2*G))**-1 * np.dot(V, lamda/(lamda+2*G))**2
+    #     Returns
+    #     -------
+    #     float or array-like
+    #         C11,C33,C13,C44,C66: Elastic moduli of the anisotropic layered media
+    #     """        
 
-        return C11,C33,C13,C44,C66
+    #     C33=np.dot(V, 1/(lamda+2*G)) **-1
+    #     C44=np.dot(V, 1/G)**-1
+    #     C66=np.dot(V, G)
+    #     C13=np.dot(V, 1/(lamda+2*G)) **-1 * np.dot(V, lamda/(lamda+2*G))
+    #     C11=np.dot(V, 4*G*(lamda+G)/(lamda+2*G))+np.dot(V, 1/(lamda+2*G))**-1 * np.dot(V, lamda/(lamda+2*G))**2
+
+    #     return C11,C33,C13,C44,C66
 
 
 
     def hudson(K, G, Ki, Gi, alpha, crd, order=1, axis=3):
-        """  Hudson’s effective crack model assuming weak inclusion for media with single crack set with all normals aligned along 1 or 3-axis. First and Second order corrections are both implemented. Notice that the second order correction has limitation. See Cheng (1993).
+        """Hudson’s effective crack model assuming weak inclusion for media with single crack set with all normals aligned along 1 or 3-axis. First and Second order corrections are both implemented. Notice that the second order correction has limitation. See Cheng (1993).
 
-        Args:
-            K (GPa): bulk modulus of isotropic background
-            G (GPa): shear modulus of isotropic background
-            Ki (GPa): bulk modulus of the inclusion material. For dry cracks: Ki=0
-            Gi (GPa): shear modulus of the inclusion material
-            alpha (unitless): crack aspect ratio
-            crd (unitless): crack density
-            order (int, optional): approximation order.
+        Parameters
+        ----------
+        K : float 
+            bulk modulus of isotropic background
+        G : float 
+            shear modulus of isotropic background
+        Ki : float 
+            bulk modulus of the inclusion material. For dry cracks: Ki=0
+        Gi : float 
+            shear modulus of the inclusion material
+        alpha : float 
+            crack aspect ratio
+        crd : float 
+            crack density
+        order : int, optional
+            approximation order.
                 1: Hudson's model with first order correction.
                 2: Hudson's model with first order correction.
                 Defaults to 1.
-            axis (int, optional): axis of symmetry.
+        axis : int, optional
+            axis of symmetry.
                 1: crack normals aligned along 1-axis, output HTI
                 3: crack normals aligned along 3-axis, output VTI
                 Defaults to 3
 
-        Returns:
+        Returns
+        -------
+        _type_
             C_eff: effective moduli in 6x6 matrix form.
-        """
-
+        """        
+  
         lamda = K-2*G/3
         kapa = (Ki+4*Gi/3)*(lamda+2*G)/(np.pi*alpha*G*(lamda+G))
         M = 4*Gi*(lamda+G)/(np.pi*alpha*G*(3*lamda+4*G))
@@ -243,17 +303,27 @@ class EM(utils):
     def hudson_rand(K, G, Ki, Gi, alpha, crd):
         """Hudson's crack model of a material containing randomly oriented inclusions. The model results agree with the consistent results of Budiansky and O’Connell (1976).
 
-        Args:
-            K (GPa): bulk modulus of isotropic background
-            G (GPa): shear modulus of isotropic background
-            Ki (GPa): bulk modulus of the inclusion material. For dry cracks: Ki=0
-            Gi (GPa): shear modulus of the inclusion material, for fluid, Gi=0
-            alpha (unitless): crack aspect ratio
-            crd (unitless): crack density
+        Parameters
+        ----------
+        K : float or array-like
+            bulk modulus of isotropic background
+        G : float or array-like
+            shear modulus of isotropic background
+        Ki : float 
+            bulk modulus of the inclusion material. For dry cracks: Ki=0
+        Gi : float 
+            shear modulus of the inclusion material, for fluid, Gi=0
+        alpha : float 
+            crack aspect ratio
+        crd : float 
+            crack density
 
-        Returns:
+        Returns
+        -------
+        float or array-like
             K_eff, G_eff (GPa): effective moduli of the medium with randomly oriented inclusions
-        """
+        """        
+        
         lamda = K-2*G/3
         kapa = (Ki+4*Gi/3)*(lamda+2*G)/(np.pi*alpha*G*(lamda+G))
         M = 4*Gi*(lamda+G)/(np.pi*alpha*G*(3*lamda+4*G))
@@ -268,24 +338,33 @@ class EM(utils):
         return K_eff,G_eff
 
     def hudson_ortho(K, G, Ki, Gi, alpha, crd):
-        """  Hudson’s first order effective crack model assuming weak inclusion for media with three crack sets with normals aligned along 1 2, and 3-axis respectively.  Model is valid for small crack density and aspect ratios.
+        """Hudson’s first order effective crack model assuming weak inclusion for media with three crack sets with normals aligned along 1 2, and 3-axis respectively.  Model is valid for small crack density and aspect ratios.
 
-        Args:
-            K (GPa): bulk modulus of isotropic background
-            G (GPa): shear modulus of isotropic background
-            Ki (GPa): bulk modulus of the inclusion material. For dry cracks: Ki=0
-            Gi (GPa): shear modulus of the inclusion material
-            alpha (nd array with size 3):
-                [alpha1, alpha2,alpha3] aspect ratios of  three crack sets
-            crd (nd array with size 3):
-                [crd1, crd2, crd3] crack densities of three crack sets
+        Parameters
+        ----------
+        K : float 
+            bulk modulus of isotropic background
+        G : float 
+            shear modulus of isotropic background
+        Ki : float 
+            bulk modulus of the inclusion material. For dry cracks: Ki=0
+        Gi : float 
+            shear modulus of the inclusion material, for fluid, Gi=0
+        alpha : nd array with size 3
+            [alpha1, alpha2,alpha3] aspect ratios of  three crack sets
+        crd : nd array with size 3
+            [crd1, crd2, crd3] crack densities of three crack sets
 
-        Returns:
+        Returns
+        -------
+        2d array
             C_eff: effective moduli in 6x6 matrix form.
-        """
-        if type(alpha) == 'list' or type(crd) == 'list' :
-            raise Exception("need python array as input for alpha and crd")
-
+        """        
+        
+        # if type(alpha) == 'list' or type(crd) == 'list' :
+        #     raise Exception("need python array as input for alpha and crd")
+        alpha= np.asanyarray(alpha)
+        crd= np.asanyarray(crd)
         lamda = K-2*G/3
         kapa = (Ki+4*Gi/3)*(lamda+2*G)/(np.pi*alpha*G*(lamda+G))
         M = 4*Gi*(lamda+G)/(np.pi*alpha*G*(3*lamda+4*G))
@@ -313,19 +392,31 @@ class EM(utils):
         return C_eff
 
     def hudson_cone(K, G, Ki, Gi, alpha, crd, theta):
-        """  Hudson’s first order effective crack model assuming weak inclusion for media with crack normals randomly distributed at a fixed angle from the TI symmetry axis 3 forming a cone;
+        """Hudson’s first order effective crack model assuming weak inclusion for media with crack normals randomly distributed at a fixed angle from the TI symmetry axis 3 forming a cone;
 
-        Args:
-            K (GPa): bulk modulus of isotropic background
-            G (GPa): shear modulus of isotropic background
-            Ki (GPa): bulk modulus of the inclusion material. For dry cracks: Ki=0
-            Gi (GPa): shear modulus of the inclusion material
-            alpha (unitless): aspect ratios of crack sets
-            crd (unitless): total crack density
-            theta (degree): the fixed angle between the crack normam and the symmetry axis x3.
-        Returns:
+        Parameters
+        ----------
+        K : float 
+            bulk modulus of isotropic background
+        G : float 
+            shear modulus of isotropic background
+        Ki : float 
+            bulk modulus of the inclusion material. For dry cracks: Ki=0
+        Gi : float 
+            shear modulus of the inclusion material, for fluid, Gi=0
+        alpha : float 
+            aspect ratios of crack sets
+        crd : float 
+            total crack density
+        theta : float 
+            the fixed angle between the crack normam and the symmetry axis x3. degree unit.
+
+        Returns
+        -------
+        2d array
             C_eff: effective moduli of TI medium in 6x6 matrix form.
-        """
+        """        
+        
         theta= np.deg2rad(theta)
         lamda = K-2*G/3
         kapa = (Ki+4*Gi/3)*(lamda+2*G)/(np.pi*alpha*G*(lamda+G))
@@ -362,37 +453,49 @@ class EM(utils):
         return C_eff
 
     def Berrymann_sc(K,G,X,Alpha):
-        """ Effective elastic moduli for multi-component composite using Berryman's Consistent (Coherent Potential Approximation) method.
+        """Effective elastic moduli for multi-component composite using Berryman's Consistent (Coherent Potential Approximation) method.See also: PQ_vectorize, Berrymann_func
 
-        Args:
-            K (array): 1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]
-            G (array): 1d array of shear moduli of N constituent phases, [G1,G2,...Gn]
-            X (array): 1d array of volume fractions of N constituent phases, [x1,...xn], Sum(X) = 1.
-            Alpha (array): aspect ratios of N constituent phases. Note that α <1 for oblate spheroids and α > 1 for prolate spheroids, α = 1 for spherical pores,[α1,α2...αn]
-        See also: PQ_vectorize, Berrymann_func
-        Returns:
+        Parameters
+        ----------
+        K : array-like
+            1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]
+        G : array-like
+            1d array of shear moduli of N constituent phases, [G1,G2,...Gn]
+        X : array-like
+            1d array of volume fractions of N constituent phases, [x1,...xn], Sum(X) = 1.
+        Alpha : array-like
+            aspect ratios of N constituent phases. Note that α <1 for oblate spheroids and α > 1 for prolate spheroids, α = 1 for spherical pores,[α1,α2...αn]
+
+        Returns
+        -------
+        array-like
             K_sc,G_sc: Effective bulk and shear moduli of the composite
-        Written by Jiaxin Yu (July 2021)
-        """
+        """        
 
         K_sc,G_sc=  fsolve(EM.Berrymann_func, (K.mean(), G.mean()), args = (K,G,X,Alpha))
         return K_sc,G_sc
 
     def PQ_vectorize(Km,Gm, Ki,Gi, alpha):
-        """ compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980).
+        """compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980).See also: Berrymann_sc, Berrymann_func
 
-        Args:
-            Km (GPa): Shear modulus of matrix phase. For Berrymann SC       approach, this corresponds to the effective moduli of the composite.
-            Gm (GPa): Bulk modulus of matrix phase. For Berrymann SC approach, this corresponds to the effective moduli of the composite.
-            Ki (array): 1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]
-            Gi (array): 1d array of shear moduli of N constituent phases, [G1,G2,...Gn]
-            alpha (array): aspect ratios of N constituent phases. Note that α <1 for oblate spheroids and α > 1 for prolate spheroids, α = 1 for spherical pores,[α1,α2...αn]
+        Parameters
+        ----------
+        Km : float
+            Shear modulus of matrix phase. For Berrymann SC       approach, this corresponds to the effective moduli of the composite.
+        Gm : float
+            Bulk modulus of matrix phase. For Berrymann SC approach, this corresponds to the effective moduli of the composite.
+        Ki : array-like
+            1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]
+        Gi : array-like
+            1d array of shear moduli of N constituent phases, [G1,G2,...Gn]
+        alpha : array-like
+            aspect ratios of N constituent phases. Note that α <1 for oblate spheroids and α > 1 for prolate spheroids, α = 1 for spherical pores,[α1,α2...αn]
 
-        Returns:
+        Returns
+        -------
+        array-like
             P,Q (array): geometric strain concentration factors, [P1,,,Pn],[Q1,,,Qn]
-        See also: Berrymann_sc, Berrymann_func
-        Written by Jiaxin Yu (July 2021)
-        """
+        """        
         dim = Ki.size
         P = np.empty(dim)
         Q = np.empty(dim)
@@ -428,21 +531,27 @@ class EM(utils):
         Q[alpha==1]= (Gm+kesai)/(Gi[alpha==1]+kesai)
         return P, Q
     def Berrymann_func(params, K,G,X,Alpha ):
-        """Form the system of equastions to solve. See 4.11.14 and 4.11.15 in Rock physics handbook 2020
+        """Form the system of equastions to solve. See 4.11.14 and 4.11.15 in Rock physics handbook 2020. See also: Berrymann_sc
 
-        Args:
-            params: Parameters to solve, K_sc, G_sc
+        Parameters
+        ----------
+        params : 
+            Parameters to solve, K_sc, G_sc
+        K : array
+            1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]
+        G : array
+            1d array of shear moduli of N constituent phases, [G1,G2,...Gn]
+        X : array
+            1d array of volume fractions of N constituent phases, [x1,...xn]
+        Alpha : array
+            aspect ratios of N constituent phases. Note that α <1 for oblate spheroids and α > 1 for prolate spheroids, α = 1 for spherical pores,[α1,α2...αn]
 
-            K (array): 1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]
-            G (array): 1d array of shear moduli of N constituent phases, [G1,G2,...Gn]
-            X (array): 1d array of volume fractions of N constituent phases, [x1,...xn]
-            Alpha (array): aspect ratios of N constituent phases. Note that α <1 for oblate spheroids and α > 1 for prolate spheroids, α = 1 for spherical pores,[α1,α2...αn]
-        See also: Berrymann_sc
-        Written by Jiaxin Yu (July 2021)
-        Returns:
+        Returns
+        -------
+        equation
             Eqs to be solved
-        """
-
+        """        
+       
         K_sc, G_sc = params
         P, Q = EM.PQ_vectorize(K_sc,G_sc, K,G, Alpha)
         eq1 = np.sum(X*(K-K_sc)*P)
@@ -453,14 +562,21 @@ class EM(utils):
     def OConnell_Budiansky(K0,G0,crd):
         """consistent approximation  effective bulk and shear moduli of a cracked medium with randomly oriented dry penny-shaped cracks,  aspect ratio goes to 0
 
-        Args:
-            K0 (GPa): bulk modulus of background medium
-            G0 (GPa): shear modulus of background medium
-            crd (unitless): crack density
+        Parameters
+        ----------
+        K0 : float
+            bulk modulus of background medium
+        G0 : float
+            shear modulus of background medium
+        crd : float
+            crack density
 
-        Returns:
+        Returns
+        -------
+        float
             K_dry,G_dry: dry elastic moduli of cracked medium
-        """
+        """        
+    
         nu0 = (3*K0-2*G0)/(6*K0+2*G0)#  Poisson ratio of the uncracked solid
 
         nu_eff = nu0*(1-16*crd/9) # approximation of the effective poisson'ratio of cracked solid
@@ -469,22 +585,31 @@ class EM(utils):
         return K_dry,G_dry
 
     def OConnell_Budiansky_fl(K0,G0,Kfl,crd, alpha):
-        """ Saturated effective elastic moduli using the O’Connell and Budiansky Consistent (SC) formulations under the constraints of small aspect ratio cracks with soft-fluid saturation.
+        """Saturated effective elastic moduli using the O’Connell and Budiansky Consistent (SC) formulations under the constraints of small aspect ratio cracks with soft-fluid saturation.
 
-        Args:
-            K0 (GPa): bulk modulus of background medium
-            G0 (GPa): shear modulus of background medium
-            Kfl (GPa): bulk modulus of soft fluid inclusion, e.g gas
-            crd (unitless): crack density
-            alpha (unitless): aspect ratio
+        Parameters
+        ----------
+        K0 : float
+            bulk modulus of background medium
+        G0 : float
+            shear modulus of background medium
+        Kfl : float
+            bulk modulus of soft fluid inclusion, e.g gas
+        crd : float
+            crack density
+        alpha : float
+            aspect ratio
 
-        Returns:
+        Returns
+        -------
+        float
             K_sat,G_sat: elastic moduli of cracked background fully saturated by soft fluid.
 
-        Refs:
-            O’Connell and Budiansky, (1974)
-        """
-
+        References
+	    ----------
+        - O’Connell and Budiansky, (1974)
+        """        
+        
         nu0 = (3*K0-2*G0)/(6*K0+2*G0)#  Poisson ratio of the uncracked solid
         w = Kfl/alpha/K0
         # given crack density and w, solve for the D and nu_eff simulaneously using equations 23 and 25 in O’Connell and Budiansky, (1974)
@@ -497,16 +622,23 @@ class EM(utils):
     def OC_R_funcs(params, crd,nu_0,w ): # crd, nu_0,w
         """Form the system of equastions to solve. Given crack density and w, solve for the D and nu_eff simulaneously using equations 23 and 25 in O’Connell and Budiansky, (1974)
 
-        Args:
-            params : Parameters to solve, in the form of [nu_eff, D]
-            crd (unitless): crack density
-            nu_0 (num): Poisson's ratio of background medium
-            w (unitless): softness indicator of fluid filled crack, w=Kfl/alpha/K0, soft fluid saturation is w is the order of 1
+        Parameters
+        ----------
+        params : 
+            Parameters to solve
+        crd : float
+            crack density
+        nu_0 : float
+            Poisson's ratio of background medium
+        w : float
+            softness indicator of fluid filled crack, w=Kfl/alpha/K0, soft fluid saturation is w is the order of 1
 
-        Returns:
+        Returns
+        -------
+        equation
             eqs to be solved
-
-        """
+        """        
+    
         nu_eff, D = params
 
         eq1 = 45/16 * (nu_0-nu_eff)/(1-nu_eff**2)*(2-nu_eff)/(D*(1+3*nu_0)*(2-nu_eff)-2*(1-2*nu_0)) - crd   # eq 23 in OC&R, 1974
