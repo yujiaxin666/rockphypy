@@ -13,6 +13,8 @@ pip install rockphypy
 
 ## Example code and documentation
 
+Below is an simple example showing the comparison between critical porosity model and elastic bounds computed by  Hashin-Strikmann bounds. See the [documentation](https://rockphypy.readthedocs.io/en/latest/) for more examples.
+
 ```python
 from rockphypy import EM
 from rockphypy import Fluid

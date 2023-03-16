@@ -13,4 +13,4 @@ jobs:
           pip install sphinx sphinx_rtd_theme sphinx-autoapi
       - name: Build Docs
         run: |
-          sphinx-build docs/build/html -W
+          sphinx-build docs/source
