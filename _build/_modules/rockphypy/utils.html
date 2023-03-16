@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+
+<html lang="English">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rockphypy.utils &#8212; rockphypy  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for rockphypy.utils</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*-coding:utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">@File    :   utils.py</span>
+<span class="sd">@Time    :   2023/01/16 12:06:24</span>
+<span class="sd">@Author  :   Jiaxin Yu </span>
+<span class="sd">@Contact :   yujiaxin666@outlook.com</span>
+<span class="sd">@License :   (C)Copyright 2020-2021, Jiaxin Yu</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># moduli transfor and velocity calculation</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="utils"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils">[docs]</a><span class="k">class</span> <span class="nc">utils</span><span class="p">:</span> 
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Basic calculations for velocities, moduli and stiffness matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+<div class="viewcode-block" id="utils.V"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.V">[docs]</a>    <span class="k">def</span> <span class="nf">V</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">rho</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute velocity given density and elastic moduli. </span>
+<span class="sd">        Args:</span>
+<span class="sd">            K (GPa): bulk modulus</span>
+<span class="sd">            G (GPa): shear moulus</span>
+<span class="sd">            rho (g/m3): density of the frame </span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Vp, Vs (m/s): velocity</span>
+<span class="sd">        Written by Jiaxin Yu (July 2021)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>    
+        <span class="n">Vp</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">K</span><span class="o">+</span><span class="mf">4.</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G</span><span class="p">)</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span><span class="o">*</span><span class="mf">1e3</span>
+        <span class="n">Vs</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">G</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span><span class="o">*</span><span class="mf">1e3</span>
+        <span class="k">return</span> <span class="n">Vp</span><span class="p">,</span> <span class="n">Vs</span></div>
+
+<div class="viewcode-block" id="utils.poi"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.poi">[docs]</a>    <span class="k">def</span> <span class="nf">poi</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">G</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute poisson&#39;s ratio from K an G</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            K (GPa): bulk modulus</span>
+<span class="sd">            G (GPa): shear modulus</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            nu: Poisson&#39;s ratio</span>
+<span class="sd">        Written by Jiaxin Yu (July 2021)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>    
+        <span class="n">nu</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">G</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">K</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">nu</span></div>
+
+<div class="viewcode-block" id="utils.lame"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.lame">[docs]</a>    <span class="k">def</span> <span class="nf">lame</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">G</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute lame constant lamdba from K an G</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            K (GPa): bulk modulus</span>
+<span class="sd">            G (GPa): shear modulus</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            nu: Poisson&#39;s ratio</span>
+<span class="sd">        Written by Jiaxin Yu (July 2021)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>    
+        <span class="n">lamda</span><span class="o">=</span> <span class="n">K</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">G</span><span class="o">/</span><span class="mi">3</span>
+        <span class="k">return</span> <span class="n">lamda</span></div>
+
+<div class="viewcode-block" id="utils.M_from_V"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.M_from_V">[docs]</a>    <span class="k">def</span> <span class="nf">M_from_V</span><span class="p">(</span><span class="n">den</span><span class="p">,</span> <span class="n">vp</span><span class="p">,</span><span class="n">vs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute K and G from velocities and density</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            den (g/cm3): bulk density</span>
+<span class="sd">            vp (m/s): p wave velocity</span>
+<span class="sd">            vs (m/s): s wave velocity</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            K, G (GPa):bulk and shear moduli</span>
+<span class="sd">        Written by Jiaxin Yu (July 2021)</span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+
+        <span class="n">K</span><span class="o">=</span><span class="n">den</span><span class="o">*</span><span class="mi">1000</span><span class="o">*</span><span class="p">(</span><span class="n">vp</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">vs</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">G</span><span class="o">=</span><span class="n">den</span><span class="o">*</span><span class="mi">1000</span><span class="o">*</span><span class="n">vs</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">K</span><span class="o">=</span><span class="n">K</span><span class="o">/</span><span class="mi">10</span><span class="o">**</span><span class="mi">9</span>
+        <span class="n">G</span><span class="o">=</span><span class="n">G</span><span class="o">/</span><span class="mi">10</span><span class="o">**</span><span class="mi">9</span>
+        <span class="k">return</span> <span class="n">K</span><span class="p">,</span> <span class="n">G</span></div>
+
+<div class="viewcode-block" id="utils.write_HTI_matrix"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.write_HTI_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">write_HTI_matrix</span><span class="p">(</span><span class="n">C11</span><span class="p">,</span><span class="n">C33</span><span class="p">,</span><span class="n">C13</span><span class="p">,</span><span class="n">C44</span><span class="p">,</span><span class="n">C55</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;formulate HTI stiffness matrix </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            C11 (GPa): stiffness</span>
+<span class="sd">            C13 (GPa): stiffness</span>
+<span class="sd">            C23 (GPa): stiffness</span>
+<span class="sd">            C33 (GPa): stiffness</span>
+<span class="sd">            C44 (GPa): stiffness</span>
+<span class="sd">            C55 (GPa): stiffness</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            C: 6x6 stiffness matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>   
+        <span class="n">C23</span><span class="o">=</span> <span class="n">C33</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">C44</span>
+        <span class="n">C</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">C11</span><span class="p">,</span><span class="n">C13</span><span class="p">,</span><span class="n">C13</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">C13</span><span class="p">,</span><span class="n">C33</span><span class="p">,</span><span class="n">C23</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">C13</span><span class="p">,</span><span class="n">C23</span><span class="p">,</span><span class="n">C33</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">C44</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">C55</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">C55</span><span class="p">]])</span>
+        <span class="k">return</span> <span class="n">C</span></div>
+<div class="viewcode-block" id="utils.write_VTI_compliance"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.write_VTI_compliance">[docs]</a>    <span class="k">def</span> <span class="nf">write_VTI_compliance</span><span class="p">(</span><span class="n">S11</span><span class="p">,</span><span class="n">S12</span><span class="p">,</span><span class="n">S13</span><span class="p">,</span><span class="n">S33</span><span class="p">,</span><span class="n">S44</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;formulate VTI compliance matrix </span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            S11 (GPa): compliance</span>
+<span class="sd">            S12 (GPa): compliance</span>
+<span class="sd">            S13 (GPa): compliance</span>
+<span class="sd">            S33 (GPa): compliance</span>
+<span class="sd">            S44 (GPa): compliance</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            _type_: _description_</span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+
+        <span class="n">S66</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">S11</span><span class="o">-</span><span class="n">S12</span><span class="p">)</span> <span class="c1"># attention, this is different from Stiffness matrix</span>
+        <span class="n">S</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">S11</span><span class="p">,</span><span class="n">S12</span><span class="p">,</span><span class="n">S13</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">S12</span><span class="p">,</span><span class="n">S11</span><span class="p">,</span><span class="n">S13</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">S13</span><span class="p">,</span><span class="n">S13</span><span class="p">,</span><span class="n">S33</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">S44</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">S44</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">S66</span><span class="p">]])</span>
+        <span class="k">return</span> <span class="n">S</span></div>
+
+<div class="viewcode-block" id="utils.write_VTI_matrix"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.write_VTI_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">write_VTI_matrix</span><span class="p">(</span><span class="n">C11</span><span class="p">,</span><span class="n">C33</span><span class="p">,</span><span class="n">C13</span><span class="p">,</span><span class="n">C44</span><span class="p">,</span><span class="n">C66</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;formulate VTI stiffness matrix </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            C11 (GPa): stiffness</span>
+<span class="sd">            C33 (GPa): stiffness</span>
+<span class="sd">            C13 (GPa): stiffness</span>
+<span class="sd">            C44 (GPa): stiffness</span>
+<span class="sd">            C65 (GPa): stiffness</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            C: 6x6 stiffness matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>   
+        <span class="n">C12</span><span class="o">=</span> <span class="n">C11</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">C66</span>
+        <span class="n">C</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">C11</span><span class="p">,</span><span class="n">C12</span><span class="p">,</span><span class="n">C13</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">C12</span><span class="p">,</span><span class="n">C11</span><span class="p">,</span><span class="n">C13</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">C13</span><span class="p">,</span><span class="n">C13</span><span class="p">,</span><span class="n">C33</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">C44</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">C44</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">C66</span><span class="p">]])</span>
+        <span class="k">return</span> <span class="n">C</span></div>
+<div class="viewcode-block" id="utils.write_matrix"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.write_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">write_matrix</span><span class="p">(</span><span class="n">C11</span><span class="p">,</span><span class="n">C22</span><span class="p">,</span><span class="n">C33</span><span class="p">,</span><span class="n">C12</span><span class="p">,</span><span class="n">C13</span><span class="p">,</span><span class="n">C23</span><span class="p">,</span><span class="n">C44</span><span class="p">,</span><span class="n">C55</span><span class="p">,</span><span class="n">C66</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;formulate general 6x6 stiffness matrix in Voigt notation</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            Cij (GPa): stiffness     </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            C: 6x6 stiffness matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>   
+        <span class="n">C</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">C11</span><span class="p">,</span><span class="n">C12</span><span class="p">,</span><span class="n">C13</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">C12</span><span class="p">,</span><span class="n">C22</span><span class="p">,</span><span class="n">C23</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">C13</span><span class="p">,</span><span class="n">C23</span><span class="p">,</span><span class="n">C33</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">C44</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">C55</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">C66</span><span class="p">]])</span>
+        <span class="k">return</span> <span class="n">C</span></div>
+<div class="viewcode-block" id="utils.write_iso"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.write_iso">[docs]</a>    <span class="k">def</span> <span class="nf">write_iso</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">G</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;formulate isotropic 6x6 stiffness matrix in Voigt notation</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            Cij (GPa): stiffness     </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            C: 6x6 stiffness matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>   
+        <span class="n">lamda</span> <span class="o">=</span> <span class="n">K</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">G</span><span class="o">/</span><span class="mi">3</span>
+
+        <span class="n">C</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">lamda</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G</span><span class="p">,</span><span class="n">lamda</span><span class="p">,</span><span class="n">lamda</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">lamda</span><span class="p">,</span><span class="n">lamda</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G</span><span class="p">,</span><span class="n">lamda</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">lamda</span><span class="p">,</span><span class="n">lamda</span><span class="p">,</span><span class="n">lamda</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">G</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">G</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">G</span><span class="p">]])</span>
+        <span class="k">return</span> <span class="n">C</span></div>
+<div class="viewcode-block" id="utils.crack_por"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.crack_por">[docs]</a>    <span class="k">def</span> <span class="nf">crack_por</span><span class="p">(</span><span class="n">crd</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;compute crack porosity from crack aspect ratio and crack density</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            crd (unitless): crack density</span>
+<span class="sd">            alpha (unitless): crack aspect ratio</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            cpor (frac): crack porosity </span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+        <span class="n">cpor</span><span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">alpha</span><span class="o">*</span><span class="n">crd</span><span class="o">/</span><span class="mi">3</span>
+        <span class="k">return</span> <span class="n">cpor</span></div>
+<div class="viewcode-block" id="utils.v_to_c_VTI"><a class="viewcode-back" href="../../autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.v_to_c_VTI">[docs]</a>    <span class="k">def</span> <span class="nf">v_to_c_VTI</span><span class="p">(</span><span class="n">Vp0</span><span class="p">,</span><span class="n">Vp45</span><span class="p">,</span><span class="n">Vp90</span><span class="p">,</span><span class="n">Vs0</span><span class="p">,</span><span class="n">Vsh90</span><span class="p">,</span><span class="n">den</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            Vp0, Vp45, Vp90, Vs0, Vsh90 (km/s): indident angle dependent velocity measurements </span>
+<span class="sd">            den (g/cm3):density of the sample </span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            C: VTI stiffness matrix </span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+
+        <span class="n">C11</span> <span class="o">=</span> <span class="n">den</span><span class="o">*</span><span class="n">Vp90</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">C12</span> <span class="o">=</span> <span class="n">C11</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">den</span><span class="o">*</span><span class="n">Vsh90</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">C33</span> <span class="o">=</span> <span class="n">den</span><span class="o">*</span><span class="n">Vp0</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">C44</span> <span class="o">=</span> <span class="n">den</span><span class="o">*</span><span class="n">Vs0</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">den</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">Vp45</span><span class="o">**</span><span class="mi">4</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">den</span><span class="o">*</span><span class="n">Vp45</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">C11</span><span class="o">+</span><span class="n">C33</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">C44</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">C11</span><span class="o">+</span><span class="n">C44</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">C33</span><span class="o">+</span><span class="n">C44</span><span class="p">)</span>
+        <span class="n">C13</span> <span class="o">=</span> <span class="o">-</span><span class="n">C44</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+        <span class="n">C66</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">C11</span><span class="o">-</span><span class="n">C12</span><span class="p">)</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">write_VTI_matrix</span><span class="p">(</span><span class="n">C11</span><span class="p">,</span><span class="n">C33</span><span class="p">,</span><span class="n">C13</span><span class="p">,</span><span class="n">C44</span><span class="p">,</span><span class="n">C66</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">C</span></div></div>
+
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">rockphypy</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=yujiaxin666&repo=RockPhysicsPy&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, jiaxin yu.
+      
+    </div>
+
+    
+    <a href="https://github.com/yujiaxin666/RockPhysicsPy" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

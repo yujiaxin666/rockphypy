@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+
+<html lang="English">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>About &#8212; rockphypy  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="autoapi/index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <p>Welcome to rockphypy's documentation!</p>
+<section id="about">
+<h1>About<a class="headerlink" href="#about" title="Permalink to this heading">¶</a></h1>
+<section id="open-source-rock-physic-toolboxs-in-python">
+<h2>Open-source rock physic toolboxs in Python.<a class="headerlink" href="#open-source-rock-physic-toolboxs-in-python" title="Permalink to this heading">¶</a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">rockphypy</span></code> is a Python-based <strong>open-source rock physics modelling library</strong> created for people who are interested in Rock physics and want to applied rock physics tools in their work and research.</p>
+<p>The library refactor most of rock physics models in <a class="reference external" href="https://github.com/StanfordRockPhysics/SRBToolbox">Stanford SRB tools</a> from Matlab to Python.
+In addition, more functions and various practical workflows are created. <code class="docutils literal notranslate"><span class="pre">rockphypy</span></code> provides a bunch of usefel classes, i.e. <cite>Anisotropy</cite>, <cite>AVO</cite>, <cite>BW (Batzle&amp;Wang)</cite>,`EM(Effective medium)`,`Empirical`, <cite>Fluid</cite>,`GM(Granular Medium)`,`Permeability`and <cite>utils</cite>. See the API Documentation for further details.</p>
+<p>From the ground up, <code class="docutils literal notranslate"><span class="pre">rockphypy</span></code> is designed to be easily embedded in various workflows i.e, machine learning, probabilistic frameworks, bayesian inversion that leverage the rich resources of python open-source.</p>
+<p>Since a constant state of development and growth is aimed, please feel free to contribute by <a class="reference external" href="https://github.com/yujiaxin666/RockPhysicsPy/pulls">pulling request</a> or pose your questions and requests by <a class="reference external" href="https://github.com/yujiaxin666/RockPhysicsPy/issues">creating issues</a>.</p>
+</section>
+<section id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">rockphypy</span></code> is available through <code class="docutils literal notranslate"><span class="pre">PyPI</span></code> and may be installed using <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install rockphypy
+</pre></div>
+</div>
+</section>
+<section id="example-code">
+<h3>Example code<a class="headerlink" href="#example-code" title="Permalink to this heading">¶</a></h3>
+<p>Here's an example showing the usage of <a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM" title="rockphypy.EM.EM"><code class="xref py py-class docutils literal notranslate"><span class="pre">EM</span></code></a> and <a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid" title="rockphypy.Fluid.Fluid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fluid</span></code></a> for creating saturated elastic bounds.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rockphypy</span> <span class="kn">import</span> <span class="n">EM</span>
+<span class="kn">from</span> <span class="nn">rockphypy</span> <span class="kn">import</span> <span class="n">Fluid</span>
+
+<span class="c1"># specify model parameters</span>
+<span class="n">phi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># solid volume fraction = 1-phi</span>
+<span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="o">=</span> <span class="mi">37</span><span class="p">,</span><span class="mi">44</span> <span class="c1"># moduli of grain material</span>
+<span class="n">Kw</span><span class="p">,</span> <span class="n">Gw</span><span class="o">=</span> <span class="mf">2.2</span><span class="p">,</span><span class="mi">0</span> <span class="c1"># moduli of water</span>
+<span class="c1"># VRH bounds</span>
+<span class="n">volumes</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">,</span><span class="n">phi</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="n">M</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">K0</span><span class="p">,</span><span class="n">Kw</span><span class="p">])</span>
+<span class="n">K_v</span><span class="p">,</span><span class="n">K_r</span><span class="p">,</span><span class="n">K_h</span><span class="o">=</span><span class="n">EM</span><span class="o">.</span><span class="n">VRH</span><span class="p">(</span><span class="n">volumes</span><span class="p">,</span><span class="n">M</span><span class="p">)</span>
+<span class="c1"># Hashin-Strikmann bound</span>
+<span class="n">K_UHS</span><span class="p">,</span><span class="n">G_UHS</span><span class="o">=</span> <span class="n">EM</span><span class="o">.</span><span class="n">HS</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">,</span> <span class="n">K0</span><span class="p">,</span> <span class="n">Kw</span><span class="p">,</span><span class="n">G0</span><span class="p">,</span><span class="n">Gw</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s1">&#39;upper&#39;</span><span class="p">)</span>
+<span class="c1"># Critical porosity model</span>
+<span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span> <span class="c1"># Critical porosity</span>
+<span class="n">phi_</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span><span class="n">phic</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># solid volume fraction = 1-phi</span>
+<span class="n">K_dry</span><span class="p">,</span> <span class="n">G_dry</span><span class="o">=</span> <span class="n">EM</span><span class="o">.</span><span class="n">cripor</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi_</span><span class="p">,</span> <span class="n">phic</span><span class="p">)</span><span class="c1"># Compute dry-rock moduli</span>
+<span class="n">Ksat</span><span class="p">,</span> <span class="n">Gsat</span> <span class="o">=</span> <span class="n">Fluid</span><span class="o">.</span><span class="n">Gassmann</span><span class="p">(</span><span class="n">K_dry</span><span class="p">,</span><span class="n">G_dry</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">Kw</span><span class="p">,</span><span class="n">phi_</span><span class="p">)</span><span class="c1"># saturate rock with water</span>
+
+<span class="c1"># plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Porosity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Bulk modulus [GPa]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;V, R, VRH, HS bounds&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">K_v</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;K Voigt&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">K_r</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;K Reuss = K HS-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">K_h</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;K VRH&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">K_UHS</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;K HS+&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi_</span><span class="p">,</span> <span class="n">Ksat</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;K CriPor&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//index-1.py">Source code</a>, <a class="reference external" href=".//index-1.png">png</a>, <a class="reference external" href=".//index-1.hires.png">hires.png</a>, <a class="reference external" href=".//index-1.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="_images/index-1.png" class="plot-directive" src="_images/index-1.png" />
+</figure>
+</section>
+<section id="motivation">
+<h3>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">¶</a></h3>
+<p>The motivation comes from author's personal experience in rock physics study and the fact that she is a big fans of python and open source community.
+When she began her phd study working on rock physics, she's looking for an easy to use rock physics library for finishing her head drain exercise for reservoir seismic lectures.
+On the other hand, the author is facinated by the theoretical versaility of rock physics modelling and submerge herself into reading classical books for rock physics and pratical applications.  The rock physics handbook indeed gave here inspriations and help her build a solid understanding of the rock physics. eventually the author did her visit at stanford and finishing the python library as the last piece of her phd work. this is indeed a beautiful experience.</p>
+</section>
+</section>
+</section>
+<section id="table-of-contents">
+<h1>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/rockphypy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/rockphypy/index.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/rockphypy/AVO/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.AVO</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/AVO/index.html#module-contents">Module Contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/AVO/index.html#classes">Classes</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/rockphypy/AVO/index.html#rockphypy.AVO.AVO">AVO</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/AVO/index.html#rockphypy.AVO.AVO.AVO_HTI">AVO_HTI</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/AVO/index.html#rockphypy.AVO.AVO.Aki_Richard">Aki_Richard</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/AVO/index.html#rockphypy.AVO.AVO.zoeppritz">zoeppritz</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/AVO/index.html#rockphypy.AVO.AVO.AVO_abe">AVO_abe</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/AVO/index.html#rockphypy.AVO.AVO.EI_ref">EI_ref</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/AVO/index.html#rockphypy.AVO.AVO.AVO_ortho">AVO_ortho</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/rockphypy/Anisotropy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.Anisotropy</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/Anisotropy/index.html#module-contents">Module Contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/Anisotropy/index.html#classes">Classes</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/rockphypy/Anisotropy/index.html#rockphypy.Anisotropy.Anisotropy">Anisotropy</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Anisotropy/index.html#rockphypy.Anisotropy.Anisotropy.Thomsen">Thomsen</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Anisotropy/index.html#rockphypy.Anisotropy.Anisotropy.Thomsen_Tsvankin">Thomsen_Tsvankin</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Anisotropy/index.html#rockphypy.Anisotropy.Anisotropy.Backus">Backus</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Anisotropy/index.html#rockphypy.Anisotropy.Anisotropy.Backus_log">Backus_log</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Anisotropy/index.html#rockphypy.Anisotropy.Anisotropy.vel_azi_HTI">vel_azi_HTI</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Anisotropy/index.html#rockphypy.Anisotropy.Anisotropy.vel_azi_VTI">vel_azi_VTI</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Anisotropy/index.html#rockphypy.Anisotropy.Anisotropy.Bond_trans">Bond_trans</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/rockphypy/BW/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.BW</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#module-contents">Module Contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#classes">Classes</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#rockphypy.BW.BW">BW</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#rockphypy.BW.BW.dz_dp">dz_dp</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#rockphypy.BW.BW.pseudo_p_t">pseudo_p_t</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#rockphypy.BW.BW.rho_K_co2">rho_K_co2</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#rockphypy.BW.BW.rho_K_gas">rho_K_gas</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#rockphypy.BW.BW.rho_K_oil">rho_K_oil</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#rockphypy.BW.BW.rho_K_go">rho_K_go</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#rockphypy.BW.BW.rho_K_water">rho_K_water</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#rockphypy.BW.BW.v_water">v_water</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#rockphypy.BW.BW.rho_K_brine">rho_K_brine</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/BW/index.html#rockphypy.BW.BW.v_brine">v_brine</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/rockphypy/EM/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.EM</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#module-contents">Module Contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#classes">Classes</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM">EM</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.VRH">VRH</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.cripor">cripor</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.cripor_reuss">cripor_reuss</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.HS">HS</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.Eshelby_Cheng">Eshelby_Cheng</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.hudson">hudson</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.hudson_rand">hudson_rand</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.hudson_ortho">hudson_ortho</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.hudson_cone">hudson_cone</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.Berrymann_sc">Berrymann_sc</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.PQ_vectorize">PQ_vectorize</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.Berrymann_func">Berrymann_func</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.OConnell_Budiansky">OConnell_Budiansky</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.OConnell_Budiansky_fl">OConnell_Budiansky_fl</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/EM/index.html#rockphypy.EM.EM.OC_R_funcs">OC_R_funcs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/rockphypy/Emp/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.Emp</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/Emp/index.html#module-contents">Module Contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/Emp/index.html#classes">Classes</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/rockphypy/Emp/index.html#rockphypy.Emp.Empirical">Empirical</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Emp/index.html#rockphypy.Emp.Empirical.esti_VS">esti_VS</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Emp/index.html#rockphypy.Emp.Empirical.han">han</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.Fluid</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#module-contents">Module Contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#classes">Classes</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid">Fluid</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Biot">Biot</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Biot_HF">Biot_HF</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Geertsma_Smit_HF">Geertsma_Smit_HF</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Geertsma_Smit_LF">Geertsma_Smit_LF</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Gassmann">Gassmann</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Gassmann_sub">Gassmann_sub</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Gassmann_vels">Gassmann_vels</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Gassmann_approx">Gassmann_approx</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Brown_Korringa_dry2sat">Brown_Korringa_dry2sat</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Brown_Korringa_sat2dry">Brown_Korringa_sat2dry</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Brown_Korringa_sub">Brown_Korringa_sub</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Mavko_Jizba">Mavko_Jizba</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Squirt_anisotropic">Squirt_anisotropic</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.White_Dutta_Ode">White_Dutta_Ode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/rockphypy/GM/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.GM</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#module-contents">Module Contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#classes">Classes</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#rockphypy.GM.GM">GM</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#rockphypy.GM.GM.contactcement">contactcement</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#rockphypy.GM.GM.hertzmindlin">hertzmindlin</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#rockphypy.GM.GM.softsand">softsand</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#rockphypy.GM.GM.Walton">Walton</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#rockphypy.GM.GM.johnson">johnson</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#rockphypy.GM.GM.stiffsand">stiffsand</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#rockphypy.GM.GM.constantcement">constantcement</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#rockphypy.GM.GM.MUHS">MUHS</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#rockphypy.GM.GM.Digby">Digby</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/GM/index.html#rockphypy.GM.GM.pcm">pcm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.Perm</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#module-contents">Module Contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#classes">Classes</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#rockphypy.Perm.Permeability">Permeability</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#rockphypy.Perm.Permeability.Kozeny_Carman">Kozeny_Carman</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#rockphypy.Perm.Permeability.Kozeny_Carman_Percolation">Kozeny_Carman_Percolation</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#rockphypy.Perm.Permeability.Owolabi">Owolabi</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#rockphypy.Perm.Permeability.Perm_logs">Perm_logs</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#rockphypy.Perm.Permeability.Panda_Lake">Panda_Lake</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#rockphypy.Perm.Permeability.Panda_Lake_cem">Panda_Lake_cem</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#rockphypy.Perm.Permeability.Revil">Revil</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#rockphypy.Perm.Permeability.Fredrich">Fredrich</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#rockphypy.Perm.Permeability.Bloch">Bloch</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/Perm/index.html#rockphypy.Perm.Permeability.Bernabe">Bernabe</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/rockphypy/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.utils</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#module-contents">Module Contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#classes">Classes</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils">utils</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.V">V</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.poi">poi</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.lame">lame</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.M_from_V">M_from_V</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.write_HTI_matrix">write_HTI_matrix</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.write_VTI_compliance">write_VTI_compliance</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.write_VTI_matrix">write_VTI_matrix</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.write_matrix">write_matrix</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.write_iso">write_iso</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.crack_por">crack_por</a></li>
+<li class="toctree-l8"><a class="reference internal" href="autoapi/rockphypy/utils/index.html#rockphypy.utils.utils.v_to_c_VTI">v_to_c_VTI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/rockphypy/index.html#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/rockphypy/index.html#classes">Classes</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.Anisotropy">Anisotropy</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.Anisotropy.Thomsen">Thomsen</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.Anisotropy.Thomsen_Tsvankin">Thomsen_Tsvankin</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.Anisotropy.Backus">Backus</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.Anisotropy.Backus_log">Backus_log</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.Anisotropy.vel_azi_HTI">vel_azi_HTI</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.Anisotropy.vel_azi_VTI">vel_azi_VTI</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.Anisotropy.Bond_trans">Bond_trans</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.AVO">AVO</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.AVO.AVO_HTI">AVO_HTI</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.AVO.Aki_Richard">Aki_Richard</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.AVO.zoeppritz">zoeppritz</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.AVO.AVO_abe">AVO_abe</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.AVO.EI_ref">EI_ref</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.AVO.AVO_ortho">AVO_ortho</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.BW">BW</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.BW.dz_dp">dz_dp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.BW.pseudo_p_t">pseudo_p_t</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.BW.rho_K_co2">rho_K_co2</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.BW.rho_K_gas">rho_K_gas</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.BW.rho_K_oil">rho_K_oil</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.BW.rho_K_go">rho_K_go</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.BW.rho_K_water">rho_K_water</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.BW.v_water">v_water</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.BW.rho_K_brine">rho_K_brine</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.BW.v_brine">v_brine</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils">utils</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils.V">V</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils.poi">poi</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils.lame">lame</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils.M_from_V">M_from_V</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils.write_HTI_matrix">write_HTI_matrix</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils.write_VTI_compliance">write_VTI_compliance</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils.write_VTI_matrix">write_VTI_matrix</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils.write_matrix">write_matrix</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils.write_iso">write_iso</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils.crack_por">crack_por</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.utils.v_to_c_VTI">v_to_c_VTI</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.GM">GM</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.GM.contactcement">contactcement</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.GM.hertzmindlin">hertzmindlin</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.GM.softsand">softsand</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.GM.Walton">Walton</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.GM.johnson">johnson</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.GM.stiffsand">stiffsand</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.GM.constantcement">constantcement</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.GM.MUHS">MUHS</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.GM.Digby">Digby</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.GM.pcm">pcm</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM">EM</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.VRH">VRH</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.cripor">cripor</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.cripor_reuss">cripor_reuss</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.HS">HS</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.Eshelby_Cheng">Eshelby_Cheng</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.hudson">hudson</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.hudson_rand">hudson_rand</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.hudson_ortho">hudson_ortho</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.hudson_cone">hudson_cone</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.Berrymann_sc">Berrymann_sc</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.PQ_vectorize">PQ_vectorize</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.Berrymann_func">Berrymann_func</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.OConnell_Budiansky">OConnell_Budiansky</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.OConnell_Budiansky_fl">OConnell_Budiansky_fl</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/rockphypy/index.html#rockphypy.EM.OC_R_funcs">OC_R_funcs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="indices">
+<h1>Indices<a class="headerlink" href="#indices" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">rockphypy</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=yujiaxin666&repo=RockPhysicsPy&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="autoapi/index.html" title="next chapter">API Reference</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, jiaxin yu.
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/yujiaxin666/RockPhysicsPy" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

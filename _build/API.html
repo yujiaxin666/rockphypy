@@ -1,0 +1,1739 @@
+
+<!DOCTYPE html>
+
+<html lang="English">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>API Documentation &#8212; rockphypy  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="api-documentation">
+<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this heading">¶</a></h1>
+<section id="anisotropy">
+<h2>Anisotropy<a class="headerlink" href="#anisotropy" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rockphypy.Anisotropy.Anisotropy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rockphypy.Anisotropy.</span></span><span class="sig-name descname"><span class="pre">Anisotropy</span></span><a class="reference internal" href="_modules/rockphypy/Anisotropy.html#Anisotropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Anisotropy.Anisotropy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Effective models, coordinate transform, anisotropic parameters and phase velocities that can be applied to anisotropic media.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Anisotropy.Anisotropy.Backus">
+<span class="sig-name descname"><span class="pre">Backus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lamda</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Anisotropy.html#Anisotropy.Backus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Anisotropy.Anisotropy.Backus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes stiffnesses of a layered medium using backus average model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>V</strong> (<em>float</em><em> or </em><em>array-like</em>) -- volumetric fractions of N isotropic layering materials</p></li>
+<li><p><strong>lamda</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Lamé coefficients of N isotropic layering materials</p></li>
+<li><p><strong>G</strong> (<em>float</em><em> or </em><em>array-like</em>) -- shear moduli of N isotropic layering materials</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- C11,C33,C13,C44,C66:Elastic moduli of the anisotropic layered media</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Anisotropy.Anisotropy.Backus_log">
+<span class="sig-name descname"><span class="pre">Backus_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Vs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Den</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Depth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Anisotropy.html#Anisotropy.Backus_log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Anisotropy.Anisotropy.Backus_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes Backus Average from log data, notice that the Depth is 1d Vector including each top depth of layer and also the bottom of last layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Vp</strong> (<em>array</em>) -- P wave velocities of layers [Vp1,Vp2...Vpn], size N</p></li>
+<li><p><strong>Vs</strong> (<em>array</em>) -- S wave velocities of layers [Vs1,Vs2...Vsn], size N</p></li>
+<li><p><strong>Den</strong> (<em>array</em>) -- Densities of layers, size N</p></li>
+<li><p><strong>Depth</strong> (<em>array</em>) -- 1d depth, ATTENTION: each depth point corresponds to the top of thin isotropic layer, the bottom of the sedimentary package is the last depth point. [dep1,dep2,,,,,,depn, depn+1], size N+1</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>array-like</em> -- Stiffness coeffs and averaged density</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Anisotropy.Anisotropy.Bond_trans">
+<span class="sig-name descname"><span class="pre">Bond_trans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Anisotropy.html#Anisotropy.Bond_trans"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Anisotropy.Anisotropy.Bond_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Coordinate Transformations for stiffness matrix in 6x6 Voigt notation using Bond transformation matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C</strong> (<em>2d array</em>) -- original stiffness matrix</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) -- rotational angle</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) -- axis=1: fix 1-axis, rotate 2 and 3 axis, examples can be a TTI(Tilted TI) resulted from the rotation of VTI with horizontal aligned fracture sets wrt the vertical x3 axis. In this case, the input C should be a VTI matrix
+axis=3: fix 3-axis, rotate 1 and 2 axis, E.g. seismic measurements of HTI media e.g caused by vertically aligned fractures. The angle theta may be assigned to be the angle between the fracture normal and a seismic line.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>2d array</em> -- C_trans, new stiffness matrix wrt to the original right-hand rectangular Cartesian coordinates</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>Bond, W., Jan. 1943, The mathematics of the physical properties of crystals, The Bell System Technical Journal, 1-72.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Anisotropy.Anisotropy.Thomsen">
+<span class="sig-name descname"><span class="pre">Thomsen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C44</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C66</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Anisotropy.html#Anisotropy.Thomsen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Anisotropy.Anisotropy.Thomsen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute thomsen parameters and three phase velocities for weak anisotropic TI media with vertical symmetry axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Cij</strong> (<em>float</em>) -- Stiffnesses in GPa</p></li>
+<li><p><strong>den</strong> (<em>float</em>) -- density of the effective medium, for backus average, the effective density can be computed using VRH method for Voigt average.</p></li>
+<li><p><strong>theta</strong> (<em>float</em><em> or </em><em>array-like</em>) -- angle of incidence</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- VP, VSV, VSH: wave velocities propagating along given direction</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Anisotropy.Anisotropy.Thomsen_Tsvankin">
+<span class="sig-name descname"><span class="pre">Thomsen_Tsvankin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C22</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C44</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C55</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C66</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Anisotropy.html#Anisotropy.Thomsen_Tsvankin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Anisotropy.Anisotropy.Thomsen_Tsvankin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elastic constants of an orthorhombic elastic medium defined by Tsvankin’s notation for weak elastic anisotropy assuming the vertical symmetry axis is along the x3 direction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Cij</strong> (<em>float</em>) -- Stiffnesses in GPa</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>floats</em> -- Thomsen-Tsvankin parameters</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Anisotropy.Anisotropy.vel_azi_HTI">
+<span class="sig-name descname"><span class="pre">vel_azi_HTI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Den</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">azimuth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Anisotropy.html#Anisotropy.vel_azi_HTI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Anisotropy.Anisotropy.vel_azi_HTI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given stiffnesses and density of the HTI medium, compute the azimuth dependent phase velocities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C</strong> (<em>2d array</em>) -- stiffness matrix of the HTI medium</p></li>
+<li><p><strong>Den</strong> (<em>float</em>) -- density of the fractured medium</p></li>
+<li><p><strong>azimuth</strong> (<em>float</em><em> or </em><em>array like</em>) -- azimuth angle, degree</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array like</em> -- VP,VSH, VSV: phase velocities</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Anisotropy.Anisotropy.vel_azi_VTI">
+<span class="sig-name descname"><span class="pre">vel_azi_VTI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Den</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">azimuth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Anisotropy.html#Anisotropy.vel_azi_VTI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Anisotropy.Anisotropy.vel_azi_VTI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given stiffnesses and density of the VTI medium, compute the azimuth dependent phase velocities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C</strong> (<em>2d array</em>) -- stiffness matrix of the VTI medium</p></li>
+<li><p><strong>Den</strong> (<em>float</em>) -- density of the fractured medium</p></li>
+<li><p><strong>azimuth</strong> (<em>float</em><em> or </em><em>array like</em>) -- azimuth angle, degree</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array like</em> -- VP,VSH, VSV: phase velocities</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="avo">
+<h2>AVO<a class="headerlink" href="#avo" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rockphypy.AVO.AVO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rockphypy.AVO.</span></span><span class="sig-name descname"><span class="pre">AVO</span></span><a class="reference internal" href="_modules/rockphypy/AVO.html#AVO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.AVO.AVO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exact and approximations of reflectivity in isotropic and anisotropic media.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.AVO.AVO.AVO_HTI">
+<span class="sig-name descname"><span class="pre">AVO_HTI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">D2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">azimuth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/AVO.html#AVO.AVO_HTI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.AVO.AVO.AVO_HTI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute azimuth dependent PP reflectivity for wealy anisotropic HTI media using Ruger's approximation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>D1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- density of the upper medium g/cm3</p></li>
+<li><p><strong>D2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- density of the lower medium g/cm3</p></li>
+<li><p><strong>C1</strong> (<em>2D array</em>) -- stiffness matrix of the upper medium</p></li>
+<li><p><strong>C2</strong> (<em>2D array</em>) -- stiffness matrix of the lower medium</p></li>
+<li><p><strong>theta</strong> (<em>float</em><em> or </em><em>array-like</em>) -- incident angle, in degree unit</p></li>
+<li><p><strong>azimuth</strong> (<em>float</em><em> or </em><em>array-like</em>) -- azimuth angle, in degree unit</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- PP reflectivities</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.AVO.AVO.AVO_abe">
+<span class="sig-name descname"><span class="pre">AVO_abe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vs1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vp2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vs2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/AVO.html#AVO.AVO_abe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.AVO.AVO.AVO_abe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copied from RPT matlab tools func: avo_abe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vp1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- P wave velocity of layer 1, m/s</p></li>
+<li><p><strong>vs1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- S wave velocity of layer 1, m/s</p></li>
+<li><p><strong>d1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- density of layer 1, kg/m3</p></li>
+<li><p><strong>vp2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- P wave velocity of layer 2, m/s</p></li>
+<li><p><strong>vs2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- S wave velocity of layer 2, m/s</p></li>
+<li><p><strong>d2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- density of layer 2, kg/m3</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- different linear AVO approximations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.AVO.AVO.AVO_ortho">
+<span class="sig-name descname"><span class="pre">AVO_ortho</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e22</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d22</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">the</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/AVO.html#AVO.AVO_ortho"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.AVO.AVO.AVO_ortho" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a1</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>b1</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>e11</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>d11</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>e12</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>d12</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>g1</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>rho1</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>a2</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>b2</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>e21</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>d21</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>e22</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>d22</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>g2</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>rho2</strong> (<em>_type_</em>) -- _description_</p></li>
+<li><p><strong>the</strong> (<em>_type_</em>) -- _description_</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>_type_</em> -- _description_</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.AVO.AVO.Aki_Richard">
+<span class="sig-name descname"><span class="pre">Aki_Richard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vp2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vs1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vs2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/AVO.html#AVO.Aki_Richard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.AVO.AVO.Aki_Richard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aki-Richard approximation to PP reflectivity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>theta</strong> (<em>float</em><em> or </em><em>array-like</em>) -- incident angle, degree</p></li>
+<li><p><strong>vp1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- P wave velocity of layer 1, m/s</p></li>
+<li><p><strong>vp2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- P wave velocity of layer 2, m/s</p></li>
+<li><p><strong>vs1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- S wave velocity of layer 1, m/s</p></li>
+<li><p><strong>vs2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- S wave velocity of layer 2, m/s</p></li>
+<li><p><strong>den1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- density of layer 1, kg/m3</p></li>
+<li><p><strong>den2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- density of layer 2, kg/m3</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- R_pp: P wave reflectivity
+R_ps: PS reflectivity
+Rpp0: intercept
+gradient</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.AVO.AVO.EI_ref">
+<span class="sig-name descname"><span class="pre">EI_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Vs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SP</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/AVO.html#AVO.EI_ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.AVO.AVO.EI_ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute elastic impedance of an isotropic, flat-layered Earth</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vp1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- P wave velocity of layer 1, m/s</p></li>
+<li><p><strong>vs1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- S wave velocity of layer 1, m/s</p></li>
+<li><p><strong>d1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- density of layer 1, kg/m3</p></li>
+<li><p><strong>Vp</strong> (<em>float</em><em> or </em><em>array-like</em>) -- P wave velocity</p></li>
+<li><p><strong>Vs</strong> (<em>float</em><em> or </em><em>array-like</em>) -- S wave velocity</p></li>
+<li><p><strong>rho</strong> (<em>float</em><em> or </em><em>array-like</em>) -- density</p></li>
+<li><p><strong>theta</strong> (<em>float</em><em> or </em><em>array-like</em>) -- incident angle</p></li>
+<li><p><strong>SP</strong> (<em>float</em>) -- constant ratio of Vs to Vp, can be taken as the average of input Vs/Vp, i.e. SP= VS.mean()/VP.mean()</p></li>
+<li><p><strong>norm</strong> (<em>bool</em><em>, </em><em>optional</em>) -- If True: normalized input velocities and density such that the units and dimension match with acoustic impedance. Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- EI_pp: elastic impedance for PP reflection
+EI_svp: elastic impedance for P-SV reflection
+EI_psv: elastic impedance for SV-P reflection
+EI_svsv: elastic impedance for SV-SV reflection
+EI_shsh: elastic impedance for SH-SH reflection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.AVO.AVO.zoeppritz">
+<span class="sig-name descname"><span class="pre">zoeppritz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vs1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vp2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vs2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/AVO.html#AVO.zoeppritz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.AVO.AVO.zoeppritz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reflection &amp; Transmission coefficients calculated using full Zoeppritz equations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vp1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- P wave velocity of layer 1, m/s</p></li>
+<li><p><strong>vs1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- S wave velocity of layer 1, m/s</p></li>
+<li><p><strong>rho1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- density of layer 1, kg/m3</p></li>
+<li><p><strong>vp2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- P wave velocity of layer 2, m/s</p></li>
+<li><p><strong>vs2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- S wave velocity of layer 2, m/s</p></li>
+<li><p><strong>rho2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- density of layer 2, kg/m3</p></li>
+<li><p><strong>theta</strong> (<em>float</em><em> or </em><em>array-like</em>) -- incident angle, degree</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- Rpp,Rps: PP and PS reflectivity</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="bw">
+<h2>BW<a class="headerlink" href="#bw" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rockphypy.BW.BW">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rockphypy.BW.</span></span><span class="sig-name descname"><span class="pre">BW</span></span><a class="reference internal" href="_modules/rockphypy/BW.html#BW"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.BW.BW" title="Permalink to this definition">¶</a></dt>
+<dd><p>Effective CO2, natural gas, brine and oil property calculation using original and modified Batzle-Wang equations.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.BW.BW.dz_dp">
+<span class="sig-name descname"><span class="pre">dz_dp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T_pr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/BW.html#BW.dz_dp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.BW.BW.dz_dp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Values for dZ/dPpr obtained from equation 10b in Batzle and Wang (1992).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.BW.BW.pseudo_p_t">
+<span class="sig-name descname"><span class="pre">pseudo_p_t</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/BW.html#BW.pseudo_p_t"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.BW.BW.pseudo_p_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the pseudoreduced temperature and pressure according to Thomas et al. 1970.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>P</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Pressure in MPa</p></li>
+<li><p><strong>T</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Temperature in °C</p></li>
+<li><p><strong>G</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Gas gravity</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- Ta: absolute temperature
+Ppr:pseudoreduced pressure
+Tpr:pseudoreduced temperature</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.BW.BW.rho_K_brine">
+<span class="sig-name descname"><span class="pre">rho_K_brine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/BW.html#BW.rho_K_brine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.BW.BW.rho_K_brine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculation of the density and bulk modulus of brine (NaCl) as a function of temperature, salinity and pressure using Batzle and Wang (1992).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>T</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Temperature in °C</p></li>
+<li><p><strong>P</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Pressure in MPa</p></li>
+<li><p><strong>S</strong> (<em>float</em><em> or </em><em>array-like</em>) -- weight fraction of sodium chloride in ppm/1e6</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- rho_b (g/cm3): the density of brine
+K_b (GPa):bulk modulus of brine</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.BW.BW.rho_K_co2">
+<span class="sig-name descname"><span class="pre">rho_K_co2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/BW.html#BW.rho_K_co2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.BW.BW.rho_K_co2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute CO2 properties as a function of temperature and pressure using modified Batzle-Wang equations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>P</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Pressure in MPa</p></li>
+<li><p><strong>T</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Temperature in °C</p></li>
+<li><p><strong>G</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Gas gravity</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- rho (g/cc): gas density
+K (GPa): bulk modulus</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>Xu, H. (2006). Calculation of CO2 acoustic properties using Batzle-Wang equations. Geophysics, 71(2), F21-F23.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.BW.BW.rho_K_gas">
+<span class="sig-name descname"><span class="pre">rho_K_gas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/BW.html#BW.rho_K_gas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.BW.BW.rho_K_gas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the Gas density and bulk modulus at specific temperature and pressure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>P</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Pressure in MPa</p></li>
+<li><p><strong>T</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Temperature in °C</p></li>
+<li><p><strong>G</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Gas gravity</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- rho: Gas density
+K: Gas bulk modulus</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.BW.BW.rho_K_go">
+<span class="sig-name descname"><span class="pre">rho_K_go</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Rg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/BW.html#BW.rho_K_go"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.BW.BW.rho_K_go" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute density and bulk modulus of live oil.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>P</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Pressure in MPa</p></li>
+<li><p><strong>T</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Temperature in °C</p></li>
+<li><p><strong>den</strong> (<em>float</em><em> or </em><em>array-like</em>) -- oil density in g/cm3</p></li>
+<li><p><strong>G</strong> (<em>float</em><em> or </em><em>array-like</em>) -- gas gravity</p></li>
+<li><p><strong>Rg</strong> (<em>float</em><em> or </em><em>array-like</em>) -- the volume ratio of liberated gas to remaining oil at atmospheric pressure and 15.6°C, Liter/Liter</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- v (m/s): velocity
+rho_g (g/cm3): true density of live oil at saturation
+K (GPa): true bulk modulus of live oil at saturation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.BW.BW.rho_K_oil">
+<span class="sig-name descname"><span class="pre">rho_K_oil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/BW.html#BW.rho_K_oil"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.BW.BW.rho_K_oil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the oil density and bulk modulus at specific temperature and pressure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>P</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Pressure in MPa</p></li>
+<li><p><strong>T</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Temperature in °C</p></li>
+<li><p><strong>den</strong> (<em>float</em><em> or </em><em>array-like</em>) -- oil density in g/cm3</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- rho: oil density
+K: oil bulk modulus</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.BW.BW.rho_K_water">
+<span class="sig-name descname"><span class="pre">rho_K_water</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/BW.html#BW.rho_K_water"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.BW.BW.rho_K_water" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the density and bulk modulus of pure water as a function of temperature and pressure using Batzle and Wang (1992).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>T</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Temperature in °C</p></li>
+<li><p><strong>P</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Pressure in MPa</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- rho_w (g/cm3): density of pure water</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.BW.BW.v_brine">
+<span class="sig-name descname"><span class="pre">v_brine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/BW.html#BW.v_brine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.BW.BW.v_brine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculte the acoustic velocity of brine as a function of temperature, salinity and pressure using Batzle and Wang (1992).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>T</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Temperature in °C</p></li>
+<li><p><strong>P</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Pressure in MPa</p></li>
+<li><p><strong>S</strong> (<em>float</em><em> or </em><em>array-like</em>) -- weight fraction of sodium chloride in ppm/1e6</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- v_b (m/s): the velocity of brine</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.BW.BW.v_water">
+<span class="sig-name descname"><span class="pre">v_water</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/BW.html#BW.v_water"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.BW.BW.v_water" title="Permalink to this definition">¶</a></dt>
+<dd><p>Acoustic velocity of pure water as a function of temperature
+and pressure using Batzle and Wang (1992).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>T</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Temperature in °C</p></li>
+<li><p><strong>P</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Pressure in MPa</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- v_w (m/s): acoustic velocity of pure water</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="emp">
+<h2>Emp<a class="headerlink" href="#emp" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rockphypy.Emp.Empirical">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rockphypy.Emp.</span></span><span class="sig-name descname"><span class="pre">Empirical</span></span><a class="reference internal" href="_modules/rockphypy/Emp.html#Empirical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Emp.Empirical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empirical relations that widely applied</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Emp.Empirical.esti_VS">
+<span class="sig-name descname"><span class="pre">esti_VS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vsh</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Emp.html#Empirical.esti_VS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Emp.Empirical.esti_VS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate, using the Greenberg-Castagna empirical relations, the shearwave velocity in a brine-saturated shaly sandstone with vp
+since we only assume two minearl phases: so L=2, X1= 1-vsh, X2= vsh</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Vp</strong> (<em>float</em><em> or </em><em>array-like</em>) -- compressional velocities, m/s</p></li>
+<li><p><strong>vsh</strong> (<em>float</em><em> or </em><em>array-like</em>) -- shale volume</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float or array-like</em> -- vs (m/s): estimated shear wave velocities</p></li>
+<li><p><em>References</em> -- ----------</p></li>
+<li><p><em>- handbook of rock physics P516</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Emp.Empirical.han">
+<span class="sig-name descname"><span class="pre">han</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Emp.html#Empirical.han"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Emp.Empirical.han" title="Permalink to this definition">¶</a></dt>
+<dd><p>Han (1986) found empirical regressions relating ultrasonic (laboratory) velocities to porosity and clay content.effective pressure is 20Mpa</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- porosity</p></li>
+<li><p><strong>C</strong> (<em>float</em><em> or </em><em>array-like</em>) -- clay volume fraction</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- P and S wave velocities</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="gm">
+<h2>GM<a class="headerlink" href="#gm" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rockphypy.GM.GM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rockphypy.GM.</span></span><span class="sig-name descname"><span class="pre">GM</span></span><a class="reference internal" href="_modules/rockphypy/GM.html#GM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.GM.GM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contact based granular medium models and extensions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.GM.GM.Digby">
+<span class="sig-name descname"><span class="pre">Digby</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_R</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/GM.html#GM.Digby"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.GM.GM.Digby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Keff and Geff using Digby's model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> (<em>float</em>) -- Bulk modulus of grain material in GPa</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- Shear modulus of grain material in GPa</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) -- Porosity</p></li>
+<li><p><strong>Cn</strong> (<em>float</em>) -- coordination number</p></li>
+<li><p><strong>sigma</strong> (<em>float</em><em> or </em><em>array-like</em>) -- stress</p></li>
+<li><p><strong>a_R</strong> (<em>float</em>) -- a_R (unitless): ratio of the radius of the initially bonded area to the grain radius</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float or array-like</em> -- Keff, Geff (Gpa): effective medium stiffness</p></li>
+<li><p><em>References</em> -- ----------</p></li>
+<li><p><em>- Digby, P.J., 1981. Journal of Applied Mechanics, 48, 803–808.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.GM.GM.MUHS">
+<span class="sig-name descname"><span class="pre">MUHS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/GM.html#GM.MUHS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.GM.GM.MUHS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increasing cement model: Modified Hashin-Strikmann upper bound blend with contact cement model. For elastically stiff sandstone modelling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> (<em>float</em>) -- Bulk modulus of grain material in GPa</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- Shear modulus of grain material in GPa</p></li>
+<li><p><strong>Kc</strong> (<em>float</em>) -- Bulk modulus of cement</p></li>
+<li><p><strong>Gc</strong> (<em>float</em>) -- Shear modulus of cement</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Porosity</p></li>
+<li><p><strong>phi_b</strong> (<em>_type_</em>) -- adjusted high porosity end memeber</p></li>
+<li><p><strong>phic</strong> (<em>float</em>) -- Critical Porosity</p></li>
+<li><p><strong>Cn</strong> (<em>float</em>) -- coordination number</p></li>
+<li><p><strong>scheme</strong> (<em>int</em>) -- <dl class="simple">
+<dt>Scheme of cement deposition</dt><dd><p>1=cement deposited at grain contacts
+2=cement deposited at grain surfaces</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float or array-like</em> -- K_dry, G_dry (GPa): Effective elastic moduli of dry rock</p></li>
+<li><p><em>References</em> -- ----------</p></li>
+<li><p><em>- Avseth, P.; Mukerji, T. &amp; Mavko, G. Cambridge university press, 2010</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.GM.GM.Walton">
+<span class="sig-name descname"><span class="pre">Walton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/GM.html#GM.Walton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.GM.GM.Walton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute dry rock elastic moduli of sphere packs based on the Walton (1987)' thoery. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> (<em>float</em>) -- Bulk modulus of grain material in GPa</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- Shear modulus of grain material in GPa
+phic : float
+Critical Porosity</p></li>
+<li><p><strong>Cn</strong> (<em>float</em>) -- coordination number</p></li>
+<li><p><strong>sigma</strong> (<em>float</em><em> or </em><em>array-like</em>) -- effective stress</p></li>
+<li><p><strong>f</strong> (<em>float</em>) -- reduced shear factor between 0 and 1
+0=dry pack with inifinitely rough spheres;
+1=dry pack with infinitely smooth spheres</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float or array-like</em> -- K_w, G_w: Effective elastic moduli of dry pack</p></li>
+<li><p><em>References</em> -- ----------</p></li>
+<li><p><em>- Walton model in Rock physics handbook section 5.5</em></p></li>
+<li><p><em>- Walton, K., 1987, J. Mech. Phys. Solids, vol.35, p213-226.</em></p></li>
+<li><p><em>- Bachrach, R. and Avseth, P. (2008) Geophysics, 73(6), E197–E209</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.GM.GM.constantcement">
+<span class="sig-name descname"><span class="pre">constantcement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/GM.html#GM.constantcement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.GM.GM.constantcement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constant cement (constant depth) model according to Avseth (2000)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi_b</strong> (<em>_type_</em>) -- adjusted high porosity end memeber</p></li>
+<li><p><strong>K0</strong> (<em>float</em>) -- Bulk modulus of grain material in GPa</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- Shear modulus of grain material in GPa</p></li>
+<li><p><strong>Kc</strong> (<em>float</em>) -- Bulk modulus of cement</p></li>
+<li><p><strong>Gc</strong> (<em>float</em>) -- Shear modulus of cement</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Porosity</p></li>
+<li><p><strong>phic</strong> (<em>float</em>) -- Critical Porosity</p></li>
+<li><p><strong>Cn</strong> (<em>float</em>) -- coordination number</p></li>
+<li><p><strong>scheme</strong> (<em>int</em>) -- <dl class="simple">
+<dt>Scheme of cement deposition</dt><dd><p>1=cement deposited at grain contacts
+2=cement deposited at grain surfaces</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float or array-like</em> -- K_dry, G_dry (GPa): Effective elastic moduli of dry rock</p></li>
+<li><p><em>References</em> -- ----------</p></li>
+<li><p><em>- Avseth, P.; Dvorkin, J.; Mavko, G. &amp; Rykkje, J. Geophysical Research Letters, Wiley Online Library, 2000, 27, 2761-2764</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.GM.GM.contactcement">
+<span class="sig-name descname"><span class="pre">contactcement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/GM.html#GM.contactcement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.GM.GM.contactcement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute dry elastic moduli of cemented sandstone via Contact cement model by Dvorkin &amp;Nur (1996).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> (<em>float</em>) -- Bulk modulus of grain material in GPa</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- Shear modulus of grain material in GPa</p></li>
+<li><p><strong>Kc</strong> (<em>float</em>) -- Bulk modulus of cement</p></li>
+<li><p><strong>Gc</strong> (<em>float</em>) -- Shear modulus of cement</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- Porosity</p></li>
+<li><p><strong>phic</strong> (<em>float</em>) -- Critical Porosity</p></li>
+<li><p><strong>Cn</strong> (<em>float</em>) -- coordination number</p></li>
+<li><p><strong>scheme</strong> (<em>int</em>) -- <dl class="simple">
+<dt>Scheme of cement deposition</dt><dd><p>1=cement deposited at grain contacts
+2=cement deposited at grain surfaces</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>_type_</em> -- K_dry, G_dry (GPa): Effective elastic moduli of dry rock</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>Dvorkin &amp; Nur, 1996, Geophysics, 61, 1363-1370</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.GM.GM.hertzmindlin">
+<span class="sig-name descname"><span class="pre">hertzmindlin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/GM.html#GM.hertzmindlin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.GM.GM.hertzmindlin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute effective dry elastic moduli of granular packing under hydrostatic pressure condition via Hertz-Mindlin approach. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> (<em>float</em>) -- Bulk modulus of grain material in GPa</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- Shear modulus of grain material in GPa
+phic : float
+Critical Porosity</p></li>
+<li><p><strong>Cn</strong> (<em>float</em>) -- coordination number</p></li>
+<li><p><strong>sigma</strong> (<em>float</em><em> or </em><em>array-like</em>) -- effective stress</p></li>
+<li><p><strong>f</strong> (<em>float</em>) -- reduced shear factor between 0 and 1
+0=dry pack with inifinitely rough spheres;
+1=dry pack with infinitely smooth spheres</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>K_dry, G_dry</strong> (<em>float or array-like</em>) -- effective elastic moduli of dry pack</p></li>
+<li><p><em>References</em> -- ----------</p></li>
+<li><p><em>- Rock physics handbook section 5.5.</em></p></li>
+<li><p><em>- Bachrach, R. and Avseth, P. (2008) Geophysics, 73(6), E197–E209.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.GM.GM.johnson">
+<span class="sig-name descname"><span class="pre">johnson</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon_axial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'together'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/GM.html#GM.johnson"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.GM.GM.johnson" title="Permalink to this definition">¶</a></dt>
+<dd><p>effective theory for stress-induced anisotropy in sphere packs. The transversely isotropic strain is considered as a combination of hydrostatic strain and uniaxial strain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> (<em>float</em>) -- Bulk modulus of grain material in GPa</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- Shear modulus of grain material in GPa</p></li>
+<li><p><strong>n</strong> (<em>float</em>) -- coordination number</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array like</em>) -- porosity</p></li>
+<li><p><strong>epsilon</strong> (<em>float</em><em> or </em><em>array like</em>) -- hydrostatic strain (negative in compression)</p></li>
+<li><p><strong>epsilon_axial</strong> (<em>float</em><em> or </em><em>array like</em>) -- uniaxial strain (along 3-axis)</p></li>
+<li><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) -- 'together': the hydrostatic and uniaxial strains are applied simultaneously
+'uni_iso': the uniaxial strain is applied first followed by a hydrostatic strain
+'iso_uni': the hydrostatic strain is applied first followed by a uniaxial strain by default 'together'</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>array and float</em> -- C: (matrix): VTI stiffness matrix
+sigma33: non zero stress tensor component
+sigma11: non zero stress tensor component, sigma11=sigma22</p></li>
+<li><p><em>References</em> -- ----------</p></li>
+<li><p><em>- Norris, A. N., and Johnson, D. L., 1997, ASME Journal of Applied Mechanics, 64, 39-49.</em></p></li>
+<li><p><em>- Johnson, D.L., Schwartz, L.M., Elata, D., et al., 1998. Transactions ASME, 65, 380–388.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.GM.GM.pcm">
+<span class="sig-name descname"><span class="pre">pcm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_cem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_ci</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/GM.html#GM.pcm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.GM.GM.pcm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes effective elastic moduli of patchy cemented sandstone according to Avseth (2016).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> (<em>float</em>) -- volume fraction of cemented rock in the binary mixture</p></li>
+<li><p><strong>sigma</strong> (<em>float</em><em> or </em><em>array-like</em>) -- effective stress</p></li>
+<li><p><strong>K0</strong> (<em>float</em>) -- Bulk modulus of grain material in GPa</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- Shear modulus of grain material in GPa</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) -- Porosity</p></li>
+<li><p><strong>phic</strong> (<em>float</em>) -- Critical Porosity</p></li>
+<li><p><strong>v_cem</strong> (<em>float</em>) -- cement fraction in contact cement model. phi_cem= phic-vcem</p></li>
+<li><p><strong>v_ci</strong> (<em>float</em>) -- cement threshold above which increasing cement model is applied</p></li>
+<li><p><strong>Kc</strong> (<em>float</em>) -- bulk modulus of cement</p></li>
+<li><p><strong>Gc</strong> (<em>float</em>) -- shear modulus of cement</p></li>
+<li><p><strong>Cn</strong> (<em>float</em>) -- coordination number</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) -- 'stiff' or 'soft'. stiffest mixing or softest mixing. Defaults to 'stiff'.</p></li>
+<li><p><strong>scheme</strong> (<em>int</em>) -- contact cement scheme.
+1=cement deposited at grain contacts
+2=cement deposited at grain surfaces</p></li>
+<li><p><strong>f</strong> -- slip factor in HM modelling. Defaults to 0.5.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>(Avseth,2016): If 10% is chosen as the “critical” cement limit, the  increasing cement model can be used in addition to the contact cement model. (Torset, 2020): with the increasing cement model appended at 4% cement&quot;</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>float or array-like</em> -- K_DRY, G_DRY (GPa): effective elastic moduli of the dry rock</p></li>
+<li><p><em>References</em> -- ----------
+- Avseth, P.; Skjei, N. &amp; Mavko, G. The Leading Edge, GeoScienceWorld, 2016, 35, 868-87.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.GM.GM.softsand">
+<span class="sig-name descname"><span class="pre">softsand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/GM.html#GM.softsand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.GM.GM.softsand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Soft-sand (unconsolidated sand) model: model the porosity-sorting effects using the lower Hashin-Shtrikman-Walpole bound. (Also referred to as the 'friable-sand model' in Avseth et al. (2010).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> (<em>float</em>) -- Bulk modulus of grain material in GPa</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- Shear modulus of grain material in GPa</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array like</em>) -- Porosity
+phic : float
+Critical Porosity</p></li>
+<li><p><strong>Cn</strong> (<em>float</em>) -- coordination number</p></li>
+<li><p><strong>sigma</strong> (<em>float</em><em> or </em><em>array-like</em>) -- effective stress</p></li>
+<li><p><strong>f</strong> (<em>float</em>) -- reduced shear factor between 0 and 1
+0=dry pack with inifinitely rough spheres;
+1=dry pack with infinitely smooth spheres</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float or array-like</em> -- K_dry, G_dry (GPa): Effective elastic moduli of dry pack</p></li>
+<li><p><em>References</em> -- ----------</p></li>
+<li><p><em>- The Uncemented (Soft) Sand Model in Rock physics handbook section 5.5</em></p></li>
+<li><p><em>- Avseth, P.; Mukerji, T. &amp; Mavko, G. Cambridge university press, 2010</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.GM.GM.stiffsand">
+<span class="sig-name descname"><span class="pre">stiffsand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/GM.html#GM.stiffsand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.GM.GM.stiffsand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stiff-sand model:  Modified Hashin-Shtrikman upper bound with Hertz-Mindlin end point, counterpart to soft sand model.
+model the porosity-sorting effects using the lower Hashin–Shtrikman–Walpole bound.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> (<em>float</em>) -- Bulk modulus of grain material in GPa</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- Shear modulus of grain material in GPa</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array like</em>) -- Porosity
+phic : float
+Critical Porosity</p></li>
+<li><p><strong>Cn</strong> (<em>float</em>) -- coordination number</p></li>
+<li><p><strong>sigma</strong> (<em>float</em><em> or </em><em>array-like</em>) -- effective stress</p></li>
+<li><p><strong>f</strong> (<em>float</em>) -- reduced shear factor between 0 and 1
+0=dry pack with inifinitely rough spheres;
+1=dry pack with infinitely smooth spheres</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- K_dry, G_dry (GPa): Effective elastic moduli of dry pack</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="em">
+<h2>EM<a class="headerlink" href="#em" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rockphypy.EM.EM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rockphypy.EM.</span></span><span class="sig-name descname"><span class="pre">EM</span></span><a class="reference internal" href="_modules/rockphypy/EM.html#EM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM" title="Permalink to this definition">¶</a></dt>
+<dd><p>classical bounds and inclusion models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.Berrymann_func">
+<span class="sig-name descname"><span class="pre">Berrymann_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.Berrymann_func"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.Berrymann_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Form the system of equastions to solve. See 4.11.14 and 4.11.15 in Rock physics handbook 2020. See also: Berrymann_sc</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> -- Parameters to solve, K_sc, G_sc</p></li>
+<li><p><strong>K</strong> (<em>array</em>) -- 1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]</p></li>
+<li><p><strong>G</strong> (<em>array</em>) -- 1d array of shear moduli of N constituent phases, [G1,G2,...Gn]</p></li>
+<li><p><strong>X</strong> (<em>array</em>) -- 1d array of volume fractions of N constituent phases, [x1,...xn]</p></li>
+<li><p><strong>Alpha</strong> (<em>array</em>) -- aspect ratios of N constituent phases. Note that α &lt;1 for oblate spheroids and α &gt; 1 for prolate spheroids, α = 1 for spherical pores,[α1,α2...αn]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>equation</em> -- Eqs to be solved</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.Berrymann_sc">
+<span class="sig-name descname"><span class="pre">Berrymann_sc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.Berrymann_sc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.Berrymann_sc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Effective elastic moduli for multi-component composite using Berryman's Consistent (Coherent Potential Approximation) method.See also: PQ_vectorize, Berrymann_func</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K</strong> (<em>array-like</em>) -- 1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]</p></li>
+<li><p><strong>G</strong> (<em>array-like</em>) -- 1d array of shear moduli of N constituent phases, [G1,G2,...Gn]</p></li>
+<li><p><strong>X</strong> (<em>array-like</em>) -- 1d array of volume fractions of N constituent phases, [x1,...xn], Sum(X) = 1.</p></li>
+<li><p><strong>Alpha</strong> (<em>array-like</em>) -- aspect ratios of N constituent phases. Note that α &lt;1 for oblate spheroids and α &gt; 1 for prolate spheroids, α = 1 for spherical pores,[α1,α2...αn]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>array-like</em> -- K_sc,G_sc: Effective bulk and shear moduli of the composite</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.Eshelby_Cheng">
+<span class="sig-name descname"><span class="pre">Eshelby_Cheng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.Eshelby_Cheng"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.Eshelby_Cheng" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the effective anisotropic moduli of a cracked isotropic rock with single set fracture using Eshelby–Cheng Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K</strong> (<em>float</em>) -- bulk modulus of the isotropic matrix GPa</p></li>
+<li><p><strong>G</strong> (<em>float</em>) -- shear modulus of the isotropic matrix GPa</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) -- (crack) porosity</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) -- aspect ratio of crack</p></li>
+<li><p><strong>Kf</strong> (<em>float</em>) -- bulk modulus of the fluid. For dry cracks use fluid bulk modulus 0</p></li>
+<li><p><strong>mat</strong> (<em>bool</em><em>, </em><em>optional</em>) -- If true: the output is in matrix form, otherwise  is numpy array. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>_type_</em> -- C_eff: effective moduli of cracked, transversely isotropic rocks</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>section 4.14 in The Rock Physics Handbook</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.HS">
+<span class="sig-name descname"><span class="pre">HS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'upper'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.HS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.HS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute effective moduli of two-phase composite using hashin-strikmann bounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> (<em>float</em>) -- 0-1, volume fraction of stiff material</p></li>
+<li><p><strong>K1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- bulk modulus of stiff phase</p></li>
+<li><p><strong>K2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- bulk modulus of soft phase</p></li>
+<li><p><strong>G1</strong> (<em>float</em><em> or </em><em>array-like</em>) -- shear modulus of stiff phase</p></li>
+<li><p><strong>G2</strong> (<em>float</em><em> or </em><em>array-like</em>) -- shear modulus of soft phase</p></li>
+<li><p><strong>bound</strong> (<em>str</em><em>, </em><em>optional</em>) -- upper bound or lower bound. Defaults to 'upper'.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- K, G (GPa): effective moduli of two-phase composite</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.OC_R_funcs">
+<span class="sig-name descname"><span class="pre">OC_R_funcs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.OC_R_funcs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.OC_R_funcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Form the system of equastions to solve. Given crack density and w, solve for the D and nu_eff simulaneously using equations 23 and 25 in O’Connell and Budiansky, (1974)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> -- Parameters to solve</p></li>
+<li><p><strong>crd</strong> (<em>float</em>) -- crack density</p></li>
+<li><p><strong>nu_0</strong> (<em>float</em>) -- Poisson's ratio of background medium</p></li>
+<li><p><strong>w</strong> (<em>float</em>) -- softness indicator of fluid filled crack, w=Kfl/alpha/K0, soft fluid saturation is w is the order of 1</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>equation</em> -- eqs to be solved</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.OConnell_Budiansky">
+<span class="sig-name descname"><span class="pre">OConnell_Budiansky</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.OConnell_Budiansky"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.OConnell_Budiansky" title="Permalink to this definition">¶</a></dt>
+<dd><p>consistent approximation  effective bulk and shear moduli of a cracked medium with randomly oriented dry penny-shaped cracks,  aspect ratio goes to 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> (<em>float</em>) -- bulk modulus of background medium</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- shear modulus of background medium</p></li>
+<li><p><strong>crd</strong> (<em>float</em>) -- crack density</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float</em> -- K_dry,G_dry: dry elastic moduli of cracked medium</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.OConnell_Budiansky_fl">
+<span class="sig-name descname"><span class="pre">OConnell_Budiansky_fl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kfl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.OConnell_Budiansky_fl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.OConnell_Budiansky_fl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saturated effective elastic moduli using the O’Connell and Budiansky Consistent (SC) formulations under the constraints of small aspect ratio cracks with soft-fluid saturation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> (<em>float</em>) -- bulk modulus of background medium</p></li>
+<li><p><strong>G0</strong> (<em>float</em>) -- shear modulus of background medium</p></li>
+<li><p><strong>Kfl</strong> (<em>float</em>) -- bulk modulus of soft fluid inclusion, e.g gas</p></li>
+<li><p><strong>crd</strong> (<em>float</em>) -- crack density</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) -- aspect ratio</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float</em> -- K_sat,G_sat: elastic moduli of cracked background fully saturated by soft fluid.</p></li>
+<li><p><em>References</em> -- ----------</p></li>
+<li><p><em>- O’Connell and Budiansky, (1974)</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.PQ_vectorize">
+<span class="sig-name descname"><span class="pre">PQ_vectorize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Gm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ki</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.PQ_vectorize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.PQ_vectorize" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980).See also: Berrymann_sc, Berrymann_func</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Km</strong> (<em>float</em>) -- Shear modulus of matrix phase. For Berrymann SC       approach, this corresponds to the effective moduli of the composite.</p></li>
+<li><p><strong>Gm</strong> (<em>float</em>) -- Bulk modulus of matrix phase. For Berrymann SC approach, this corresponds to the effective moduli of the composite.</p></li>
+<li><p><strong>Ki</strong> (<em>array-like</em>) -- 1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]</p></li>
+<li><p><strong>Gi</strong> (<em>array-like</em>) -- 1d array of shear moduli of N constituent phases, [G1,G2,...Gn]</p></li>
+<li><p><strong>alpha</strong> (<em>array-like</em>) -- aspect ratios of N constituent phases. Note that α &lt;1 for oblate spheroids and α &gt; 1 for prolate spheroids, α = 1 for spherical pores,[α1,α2...αn]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>array-like</em> -- P,Q (array): geometric strain concentration factors, [P1,,,Pn],[Q1,,,Qn]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.VRH">
+<span class="sig-name descname"><span class="pre">VRH</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.VRH"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.VRH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes Voigt, Reuss, and Hill Average Moduli Estimate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>volumes</strong> (<em>list</em><em> or </em><em>array-like</em>) -- volumetric fractions of N phases</p></li>
+<li><p><strong>M</strong> (<em>list</em><em> or </em><em>array-like</em>) -- elastic modulus of the N phase.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float</em> -- M_v: Voigt average
+M_r: Reuss average
+M_0: Hill average</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.cripor">
+<span class="sig-name descname"><span class="pre">cripor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.cripor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.cripor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Critical porosity model according to Nur’s modified Voigt average.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> (<em>float</em><em> or </em><em>array-like</em>) -- mineral bulk modulus in GPa</p></li>
+<li><p><strong>G0</strong> (<em>float</em><em> or </em><em>array-like</em>) -- mineral shear modulus in GPa</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- porosity in frac</p></li>
+<li><p><strong>phic</strong> (<em>float</em>) -- critical porosity in frac</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- K_dry,G_dry (GPa): dry elastic moduli of the framework</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.cripor_reuss">
+<span class="sig-name descname"><span class="pre">cripor_reuss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Mf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.cripor_reuss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.cripor_reuss" title="Permalink to this definition">¶</a></dt>
+<dd><p>In the suspension domain, the effective bulk and shear moduli of the rock can be estimated by using the Reuss (isostress) average.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>M0</strong> (<em>float</em><em> or </em><em>array-like</em>) -- The solid phase modulus or density</p></li>
+<li><p><strong>Mf</strong> (<em>float</em><em> or </em><em>array-like</em>) -- The pore filled phase modulus or density</p></li>
+<li><p><strong>phic</strong> (<em>float</em>) -- critical porosity</p></li>
+<li><p><strong>den</strong> (<em>bool</em><em>, </em><em>optional</em>) -- If False: compute the reuss average for effective modulus of two mixing phases. If true, compute avearge density using mass balance, which corresponds to voigt average. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- M (GPa/g.cc): average modulus or average density</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>Section 7.1 Rock physics handbook 2nd edition</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.hudson">
+<span class="sig-name descname"><span class="pre">hudson</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ki</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.hudson"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.hudson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hudson’s effective crack model assuming weak inclusion for media with single crack set with all normals aligned along 1 or 3-axis. First and Second order corrections are both implemented. Notice that the second order correction has limitation. See Cheng (1993).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K</strong> (<em>float</em>) -- bulk modulus of isotropic background</p></li>
+<li><p><strong>G</strong> (<em>float</em>) -- shear modulus of isotropic background</p></li>
+<li><p><strong>Ki</strong> (<em>float</em>) -- bulk modulus of the inclusion material. For dry cracks: Ki=0</p></li>
+<li><p><strong>Gi</strong> (<em>float</em>) -- shear modulus of the inclusion material</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) -- crack aspect ratio</p></li>
+<li><p><strong>crd</strong> (<em>float</em>) -- crack density</p></li>
+<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em>) -- <dl class="simple">
+<dt>approximation order.</dt><dd><p>1: Hudson's model with first order correction.
+2: Hudson's model with first order correction.
+Defaults to 1.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) -- <dl class="simple">
+<dt>axis of symmetry.</dt><dd><p>1: crack normals aligned along 1-axis, output HTI
+3: crack normals aligned along 3-axis, output VTI
+Defaults to 3</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>_type_</em> -- C_eff: effective moduli in 6x6 matrix form.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.hudson_cone">
+<span class="sig-name descname"><span class="pre">hudson_cone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ki</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.hudson_cone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.hudson_cone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hudson’s first order effective crack model assuming weak inclusion for media with crack normals randomly distributed at a fixed angle from the TI symmetry axis 3 forming a cone;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K</strong> (<em>float</em>) -- bulk modulus of isotropic background</p></li>
+<li><p><strong>G</strong> (<em>float</em>) -- shear modulus of isotropic background</p></li>
+<li><p><strong>Ki</strong> (<em>float</em>) -- bulk modulus of the inclusion material. For dry cracks: Ki=0</p></li>
+<li><p><strong>Gi</strong> (<em>float</em>) -- shear modulus of the inclusion material, for fluid, Gi=0</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) -- aspect ratios of crack sets</p></li>
+<li><p><strong>crd</strong> (<em>float</em>) -- total crack density</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) -- the fixed angle between the crack normam and the symmetry axis x3. degree unit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>2d array</em> -- C_eff: effective moduli of TI medium in 6x6 matrix form.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.hudson_ortho">
+<span class="sig-name descname"><span class="pre">hudson_ortho</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ki</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.hudson_ortho"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.hudson_ortho" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hudson’s first order effective crack model assuming weak inclusion for media with three crack sets with normals aligned along 1 2, and 3-axis respectively.  Model is valid for small crack density and aspect ratios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K</strong> (<em>float</em>) -- bulk modulus of isotropic background</p></li>
+<li><p><strong>G</strong> (<em>float</em>) -- shear modulus of isotropic background</p></li>
+<li><p><strong>Ki</strong> (<em>float</em>) -- bulk modulus of the inclusion material. For dry cracks: Ki=0</p></li>
+<li><p><strong>Gi</strong> (<em>float</em>) -- shear modulus of the inclusion material, for fluid, Gi=0</p></li>
+<li><p><strong>alpha</strong> (<em>nd array with size 3</em>) -- [alpha1, alpha2,alpha3] aspect ratios of  three crack sets</p></li>
+<li><p><strong>crd</strong> (<em>nd array with size 3</em>) -- [crd1, crd2, crd3] crack densities of three crack sets</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>2d array</em> -- C_eff: effective moduli in 6x6 matrix form.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.EM.EM.hudson_rand">
+<span class="sig-name descname"><span class="pre">hudson_rand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ki</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/EM.html#EM.hudson_rand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.EM.EM.hudson_rand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hudson's crack model of a material containing randomly oriented inclusions. The model results agree with the consistent results of Budiansky and O’Connell (1976).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K</strong> (<em>float</em><em> or </em><em>array-like</em>) -- bulk modulus of isotropic background</p></li>
+<li><p><strong>G</strong> (<em>float</em><em> or </em><em>array-like</em>) -- shear modulus of isotropic background</p></li>
+<li><p><strong>Ki</strong> (<em>float</em>) -- bulk modulus of the inclusion material. For dry cracks: Ki=0</p></li>
+<li><p><strong>Gi</strong> (<em>float</em>) -- shear modulus of the inclusion material, for fluid, Gi=0</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) -- crack aspect ratio</p></li>
+<li><p><strong>crd</strong> (<em>float</em>) -- crack density</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- K_eff, G_eff (GPa): effective moduli of the medium with randomly oriented inclusions</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="perm">
+<h2>Perm<a class="headerlink" href="#perm" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rockphypy.Perm.Permeability">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rockphypy.Perm.</span></span><span class="sig-name descname"><span class="pre">Permeability</span></span><a class="reference internal" href="_modules/rockphypy/Perm.html#Permeability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Perm.Permeability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Different permeability models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Perm.Permeability.Bernabe">
+<span class="sig-name descname"><span class="pre">Bernabe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Perm.html#Permeability.Bernabe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Perm.Permeability.Bernabe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bernabe models permit to compute the permeability and porosity of strongly pressure dependent pores such as cracks and approximately constant pores associated with tubes and nodal pores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- total porosity</p></li>
+<li><p><strong>crf</strong> (<em>float</em>) -- crack fraction in pore volume</p></li>
+<li><p><strong>w</strong> (<em>float</em>) -- width or aperture of the equivalent crack in um</p></li>
+<li><p><strong>r</strong> (<em>float</em>) -- radius of the tube in um</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float or array-like</em> -- k (md): total permeability</p></li>
+<li><p><em>References</em> -- ----------</p></li>
+<li><p><em>- Bernabe, Y. (1991). Pore geometry and pressure dependence of the transport properties in sandstones. Geophysics, 56(4), 436-446.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Perm.Permeability.Bloch">
+<span class="sig-name descname"><span class="pre">Bloch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Perm.html#Permeability.Bloch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Perm.Permeability.Bloch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict porosity and permeability in sandstones prior to drilling using Bloch empirical relations obtain in Yacheng field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>S</strong> (<em>float</em>) -- Trask sorting coefficient</p></li>
+<li><p><strong>C</strong> (<em>float</em>) -- Rigid grain content in frac</p></li>
+<li><p><strong>D</strong> (<em>float</em>) -- Grain size in mm</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- phi, k: porosity (frac) and permeability (mD), respectively</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Perm.Permeability.Fredrich">
+<span class="sig-name descname"><span class="pre">Fredrich</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Perm.html#Permeability.Fredrich"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Perm.Permeability.Fredrich" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute permability considering Pore Geometry and Transport Properties of Fontainebleau Sandstone</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- porosity&gt;10%</p></li>
+<li><p><strong>d</strong> (<em>float</em>) -- _description_</p></li>
+<li><p><strong>b</strong> (<em>float</em>) -- shape factor b is equal to 2 for circular tubes and equal to 3 for cracks.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float or array-like</em> -- k (md): permeability</p></li>
+<li><p><em>References</em> -- ----------</p></li>
+<li><p><em>- Fredrich, J. T., Greaves, K. H., &amp; Martin, J. W. (1993, December). Pore geometry and transport properties of Fontainebleau sandstone. In International journal of rock mechanics and mining sciences &amp; geomechanics abstracts (Vol. 30, No. 7, pp. 691-697). Pergamon.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Perm.Permeability.Kozeny_Carman">
+<span class="sig-name descname"><span class="pre">Kozeny_Carman</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Perm.html#Permeability.Kozeny_Carman"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Perm.Permeability.Kozeny_Carman" title="Permalink to this definition">¶</a></dt>
+<dd><p>Describe the permeability in a porous medium using Kozeny-Carman equation assuming the turtuosity tau=sqrt(2), 1/B=2.5 for unconsolidated monomodal sphere pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- porosity</p></li>
+<li><p><strong>d</strong> (<em>float</em>) -- pore diameter in m.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.35</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">=</span> <span class="mi">250</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">k</span><span class="o">=</span> <span class="n">Kozeny_Carman</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">k</span> <span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><em>float or array-like</em> -- k (m^2): the resulting permeability is in the same units as d^2</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Perm.Permeability.Kozeny_Carman_Percolation">
+<span class="sig-name descname"><span class="pre">Kozeny_Carman_Percolation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Perm.html#Permeability.Kozeny_Carman_Percolation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Perm.Permeability.Kozeny_Carman_Percolation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Kozeny−Carman relations incorporating the percolation effect</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- porosity</p></li>
+<li><p><strong>phic</strong> (<em>float</em>) -- percolation porosity</p></li>
+<li><p><strong>d</strong> (<em>float</em>) -- pore diameter</p></li>
+<li><p><strong>B</strong> (<em>float</em>) -- geometric factor that partly accounts for the irregularities of pore shapes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- k (m^2): the resulting permeability is in the same units as d^2</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Perm.Permeability.Owolabi">
+<span class="sig-name descname"><span class="pre">Owolabi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Swi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Perm.html#Permeability.Owolabi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Perm.Permeability.Owolabi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the permeability in uncosonlidated sands of Pleistocene to Oligocene age in Eastern Niger Delta from log derived porosityand irreducible water saturation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- porosity</p></li>
+<li><p><strong>Swi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- irreducible water-saturation from welllogs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- k_oil, k_gas: permeabilities in mD for oil and gas sand reservoir, respectively</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Perm.Permeability.Panda_Lake">
+<span class="sig-name descname"><span class="pre">Panda_Lake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Perm.html#Permeability.Panda_Lake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Perm.Permeability.Panda_Lake" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modified Kozeny-carman relation incorpating the contribution of grain size variation and sorting using Manmath N. Panda and Larry W. Lake relation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> (<em>float</em>) -- mean particles size in um.</p></li>
+<li><p><strong>C</strong> (<em>float</em>) -- coefficient of variation of particles size distribution</p></li>
+<li><p><strong>S</strong> (<em>float</em>) -- skewness of particles size distribution</p></li>
+<li><p><strong>tau</strong> (<em>float</em>) -- tortuosity factor</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- porosity</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- k (md): permeability</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>Estimation of Single-Phase permeability from parameters of particle-Size Distribution, Manmath N. Panda and Larry W. Lake, AAPG 1994.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Perm.Permeability.Panda_Lake_cem">
+<span class="sig-name descname"><span class="pre">Panda_Lake_cem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Perm.html#Permeability.Panda_Lake_cem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Perm.Permeability.Panda_Lake_cem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quantify the effects of cements on the single phase permeability estimate of unconsolidated sand using Panda &amp; Lake model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- porosity</p></li>
+<li><p><strong>d</strong> (<em>float</em>) -- mean particles size in um</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- k (md): permeability</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Perm.Permeability.Perm_logs">
+<span class="sig-name descname"><span class="pre">Perm_logs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Swi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Perm.html#Permeability.Perm_logs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Perm.Permeability.Perm_logs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Various empirical correlations of between permeability, porosity and irreducible water-saturation from welllogs. Models includs Tixier, Timur, Coates and Coates-Dumanoir.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- porosity</p></li>
+<li><p><strong>Swi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- irreducible water-saturation from welllogs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float or array-like</em> -- k_tixier, k_Timur , k_coates, k_coates_Dumanoir: different permeability estimations, in the unit of mD</p></li>
+<li><p><em>Assumptions</em></p></li>
+<li><p><em>-----------</em></p></li>
+<li><p><em>- The functional forms used in these equations have to be calibrated, whenever possible, to site-specific data.</em></p></li>
+<li><p><em>- The rock is isotropic.</em></p></li>
+<li><p><em>- Fluid-bearing rock is completely saturated.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.Perm.Permeability.Revil">
+<span class="sig-name descname"><span class="pre">Revil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/Perm.html#Permeability.Revil"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.Perm.Permeability.Revil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate permeability in very shaly rock using Revil et al. 1997</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array-like</em>) -- porosity</p></li>
+<li><p><strong>d</strong> (<em>float</em>) -- mean particles size in um</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float or array-like</em> -- k (md): permeability</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="utils">
+<h2>utils<a class="headerlink" href="#utils" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rockphypy.utils.utils">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rockphypy.utils.</span></span><span class="sig-name descname"><span class="pre">utils</span></span><a class="reference internal" href="_modules/rockphypy/utils.html#utils"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic calculations for velocities, moduli and stiffness matrix.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.M_from_V">
+<span class="sig-name descname"><span class="pre">M_from_V</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/utils.html#utils.M_from_V"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.M_from_V" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute K and G from velocities and density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>den</strong> (<em>g/cm3</em>) -- bulk density</p></li>
+<li><p><strong>vp</strong> (<em>m/s</em>) -- p wave velocity</p></li>
+<li><p><strong>vs</strong> (<em>m/s</em>) -- s wave velocity</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>K, G (GPa)</em> -- bulk and shear moduli</p>
+</dd>
+</dl>
+<p>Written by Jiaxin Yu (July 2021)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.V">
+<span class="sig-name descname"><span class="pre">V</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/utils.html#utils.V"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.V" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute velocity given density and elastic moduli.
+:param K: bulk modulus
+:type K: GPa
+:param G: shear moulus
+:type G: GPa
+:param rho: density of the frame
+:type rho: g/m3</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><em>Vp, Vs (m/s)</em> -- velocity</p>
+</dd>
+</dl>
+<p>Written by Jiaxin Yu (July 2021)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.crack_por">
+<span class="sig-name descname"><span class="pre">crack_por</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/utils.html#utils.crack_por"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.crack_por" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute crack porosity from crack aspect ratio and crack density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crd</strong> (<em>unitless</em>) -- crack density</p></li>
+<li><p><strong>alpha</strong> (<em>unitless</em>) -- crack aspect ratio</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>cpor (frac)</em> -- crack porosity</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.lame">
+<span class="sig-name descname"><span class="pre">lame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/utils.html#utils.lame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.lame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute lame constant lamdba from K an G</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K</strong> (<em>GPa</em>) -- bulk modulus</p></li>
+<li><p><strong>G</strong> (<em>GPa</em>) -- shear modulus</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>nu</em> -- Poisson's ratio</p>
+</dd>
+</dl>
+<p>Written by Jiaxin Yu (July 2021)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.poi">
+<span class="sig-name descname"><span class="pre">poi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/utils.html#utils.poi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.poi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute poisson's ratio from K an G</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K</strong> (<em>GPa</em>) -- bulk modulus</p></li>
+<li><p><strong>G</strong> (<em>GPa</em>) -- shear modulus</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>nu</em> -- Poisson's ratio</p>
+</dd>
+</dl>
+<p>Written by Jiaxin Yu (July 2021)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.v_to_c_VTI">
+<span class="sig-name descname"><span class="pre">v_to_c_VTI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Vp45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vp90</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vs0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vsh90</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/utils.html#utils.v_to_c_VTI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.v_to_c_VTI" title="Permalink to this definition">¶</a></dt>
+<dd><p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Vp0</strong> (<em>km/s</em>) -- indident angle dependent velocity measurements</p></li>
+<li><p><strong>Vp45</strong> (<em>km/s</em>) -- indident angle dependent velocity measurements</p></li>
+<li><p><strong>Vp90</strong> (<em>km/s</em>) -- indident angle dependent velocity measurements</p></li>
+<li><p><strong>Vs0</strong> (<em>km/s</em>) -- indident angle dependent velocity measurements</p></li>
+<li><p><strong>Vsh90</strong> (<em>km/s</em>) -- indident angle dependent velocity measurements</p></li>
+<li><p><strong>den</strong> (<em>g/cm3</em>) -- density of the sample</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>C</em> -- VTI stiffness matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.write_HTI_matrix">
+<span class="sig-name descname"><span class="pre">write_HTI_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C44</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C55</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/utils.html#utils.write_HTI_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.write_HTI_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>formulate HTI stiffness matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C11</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C13</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C23</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C33</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C44</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C55</strong> (<em>GPa</em>) -- stiffness</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>C</em> -- 6x6 stiffness matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.write_VTI_compliance">
+<span class="sig-name descname"><span class="pre">write_VTI_compliance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S44</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/utils.html#utils.write_VTI_compliance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.write_VTI_compliance" title="Permalink to this definition">¶</a></dt>
+<dd><p>formulate VTI compliance matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>S11</strong> (<em>GPa</em>) -- compliance</p></li>
+<li><p><strong>S12</strong> (<em>GPa</em>) -- compliance</p></li>
+<li><p><strong>S13</strong> (<em>GPa</em>) -- compliance</p></li>
+<li><p><strong>S33</strong> (<em>GPa</em>) -- compliance</p></li>
+<li><p><strong>S44</strong> (<em>GPa</em>) -- compliance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>_type_</em> -- _description_</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.write_VTI_matrix">
+<span class="sig-name descname"><span class="pre">write_VTI_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C44</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C66</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/utils.html#utils.write_VTI_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.write_VTI_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>formulate VTI stiffness matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C11</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C33</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C13</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C44</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C65</strong> (<em>GPa</em>) -- stiffness</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>C</em> -- 6x6 stiffness matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.write_iso">
+<span class="sig-name descname"><span class="pre">write_iso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/utils.html#utils.write_iso"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.write_iso" title="Permalink to this definition">¶</a></dt>
+<dd><p>formulate isotropic 6x6 stiffness matrix in Voigt notation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Cij</strong> (<em>GPa</em>) -- stiffness</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>C</em> -- 6x6 stiffness matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.write_matrix">
+<span class="sig-name descname"><span class="pre">write_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C22</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C44</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C55</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C66</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rockphypy/utils.html#utils.write_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.write_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>formulate general 6x6 stiffness matrix in Voigt notation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Cij</strong> (<em>GPa</em>) -- stiffness</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>C</em> -- 6x6 stiffness matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">rockphypy</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=yujiaxin666&repo=RockPhysicsPy&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, jiaxin yu.
+      
+      |
+      <a href="_sources/API.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/yujiaxin666/RockPhysicsPy" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

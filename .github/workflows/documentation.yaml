@@ -10,10 +10,11 @@ jobs:
       - uses: actions/setup-python@v3
       - name: Install dependencies
         run: |
-          pip install sphinx sphinx_rtd_theme
-      - name: Sphinx build
+          pip install pip --upgrade
+      - name: Build Docs
         run: |
-          sphinx-build doc _build
+          sudo apt install pandoc -y
+          sphinx-build docs/source _build/html -W
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}

@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+
+<html lang="English">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rockphypy.GM &#8212; rockphypy  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for rockphypy.GM</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*-coding:utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">@File    :   GM.py</span>
+<span class="sd">@Time    :   2023/01/16 10:35:14</span>
+<span class="sd">@Author  :   Jiaxin Yu </span>
+<span class="sd">@Contact :   yujiaxin666@outlook.com</span>
+<span class="sd">@License :   (C)Copyright 2020-2021, Jiaxin Yu</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<span class="c1">## Effective contact-based models blended with elasic bounds for calculating the elastic properties of granular medium.</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">rockphypy.utils</span> <span class="kn">import</span> <span class="n">utils</span>
+
+
+<div class="viewcode-block" id="GM"><a class="viewcode-back" href="../../autoapi/rockphypy/index.html#rockphypy.GM.GM">[docs]</a><span class="k">class</span> <span class="nc">GM</span><span class="p">:</span> 
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Contact based granular medium models and extensions.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    
+<div class="viewcode-block" id="GM.contactcement"><a class="viewcode-back" href="../../autoapi/rockphypy/index.html#rockphypy.GM.GM.contactcement">[docs]</a>    <span class="k">def</span> <span class="nf">contactcement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">Kc</span><span class="p">,</span> <span class="n">Gc</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span>  <span class="n">scheme</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute dry elastic moduli of cemented sandstone via Contact cement model by Dvorkin &amp;Nur (1996).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Bulk modulus of grain material in GPa</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Shear modulus of grain material in GPa</span>
+<span class="sd">        Kc : float</span>
+<span class="sd">            Bulk modulus of cement</span>
+<span class="sd">        Gc : float</span>
+<span class="sd">            Shear modulus of cement</span>
+<span class="sd">        phi : float or array-like</span>
+<span class="sd">            Porosity</span>
+<span class="sd">        phic : float</span>
+<span class="sd">            Critical Porosity</span>
+<span class="sd">        Cn : float</span>
+<span class="sd">            coordination number</span>
+<span class="sd">        scheme : int</span>
+<span class="sd">            Scheme of cement deposition</span>
+<span class="sd">                    1=cement deposited at grain contacts</span>
+<span class="sd">                    2=cement deposited at grain surfaces</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        _type_</span>
+<span class="sd">            K_dry, G_dry (GPa): Effective elastic moduli of dry rock</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        - Dvorkin &amp; Nur, 1996, Geophysics, 61, 1363-1370</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        
+        <span class="n">nu_0</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K0</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">K0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span> <span class="c1"># Poisson&#39;s ratio of grain material</span>
+        <span class="n">nu_c</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">Kc</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">Gc</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">Kc</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">Gc</span><span class="p">)</span> <span class="c1"># Poisson&#39;s ratio of cement</span>
+        <span class="k">if</span> <span class="n">scheme</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># scheme 1: cement deposited at grain contacts</span>
+            <span class="n">alpha</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">((</span><span class="n">phic</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phic</span><span class="p">)))</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># scheme 2: cement evenly deposited on grain surface</span>
+            <span class="n">alpha</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">phic</span><span class="o">-</span><span class="n">phi</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phic</span><span class="p">)))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">LambdaN</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Gc</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">nu_0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">nu_c</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">G0</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">nu_c</span><span class="p">))</span>
+        <span class="n">N1</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.024153</span><span class="o">*</span><span class="n">LambdaN</span><span class="o">**-</span><span class="mf">1.3646</span>
+        <span class="n">N2</span> <span class="o">=</span> <span class="mf">0.20405</span><span class="o">*</span><span class="n">LambdaN</span><span class="o">**-</span><span class="mf">0.89008</span>
+        <span class="n">N3</span> <span class="o">=</span> <span class="mf">0.00024649</span><span class="o">*</span><span class="n">LambdaN</span><span class="o">**-</span><span class="mf">1.9864</span>
+        <span class="n">Sn</span> <span class="o">=</span> <span class="n">N1</span><span class="o">*</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">N2</span><span class="o">*</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">N3</span>
+        <span class="n">LambdaT</span> <span class="o">=</span> <span class="n">Gc</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span>
+        <span class="n">T1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span><span class="o">**-</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mf">2.26</span><span class="o">*</span><span class="n">nu_0</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mf">2.07</span><span class="o">*</span><span class="n">nu_0</span><span class="o">+</span><span class="mf">2.3</span><span class="p">)</span><span class="o">*</span><span class="n">LambdaT</span><span class="o">**</span><span class="p">(</span><span class="mf">0.079</span><span class="o">*</span><span class="n">nu_0</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mf">0.1754</span><span class="o">*</span><span class="n">nu_0</span><span class="o">-</span><span class="mf">1.342</span><span class="p">)</span>
+        <span class="n">T2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0573</span><span class="o">*</span><span class="n">nu_0</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mf">0.0937</span><span class="o">*</span><span class="n">nu_0</span><span class="o">+</span><span class="mf">0.202</span><span class="p">)</span><span class="o">*</span><span class="n">LambdaT</span><span class="o">**</span><span class="p">(</span><span class="mf">0.0274</span><span class="o">*</span><span class="n">nu_0</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mf">0.0529</span><span class="o">*</span><span class="n">nu_0</span><span class="o">-</span><span class="mf">0.8765</span><span class="p">)</span>
+        <span class="n">T3</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="mf">9.654</span><span class="o">*</span><span class="n">nu_0</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mf">4.945</span><span class="o">*</span><span class="n">nu_0</span><span class="o">+</span><span class="mf">3.1</span><span class="p">)</span><span class="o">*</span><span class="n">LambdaT</span><span class="o">**</span><span class="p">(</span><span class="mf">0.01867</span><span class="o">*</span><span class="n">nu_0</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mf">0.4011</span><span class="o">*</span><span class="n">nu_0</span><span class="o">-</span><span class="mf">1.8186</span><span class="p">)</span>
+        <span class="n">St</span> <span class="o">=</span> <span class="n">T1</span><span class="o">*</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">T2</span><span class="o">*</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">T3</span>
+        <span class="n">K_dry</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="o">*</span><span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phic</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Kc</span><span class="o">+</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="n">Gc</span><span class="p">)</span><span class="o">*</span><span class="n">Sn</span>
+        <span class="n">G_dry</span> <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">5</span><span class="o">*</span><span class="n">K_dry</span><span class="o">+</span><span class="mi">3</span><span class="o">/</span><span class="mi">20</span><span class="o">*</span><span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phic</span><span class="p">)</span><span class="o">*</span><span class="n">Gc</span><span class="o">*</span><span class="n">St</span>
+        <span class="k">return</span> <span class="n">K_dry</span><span class="p">,</span> <span class="n">G_dry</span></div>
+
+<div class="viewcode-block" id="GM.hertzmindlin"><a class="viewcode-back" href="../../autoapi/rockphypy/index.html#rockphypy.GM.GM.hertzmindlin">[docs]</a>    <span class="k">def</span> <span class="nf">hertzmindlin</span><span class="p">(</span> <span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute effective dry elastic moduli of granular packing under hydrostatic pressure condition via Hertz-Mindlin approach. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Bulk modulus of grain material in GPa</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Shear modulus of grain material in GPa</span>
+<span class="sd">	    phic : float</span>
+<span class="sd">            Critical Porosity</span>
+<span class="sd">        Cn : float</span>
+<span class="sd">            coordination number</span>
+<span class="sd">        sigma : float or array-like</span>
+<span class="sd">            effective stress</span>
+<span class="sd">        f : float</span>
+<span class="sd">            reduced shear factor between 0 and 1</span>
+<span class="sd">            0=dry pack with inifinitely rough spheres; </span>
+<span class="sd">            1=dry pack with infinitely smooth spheres</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        K_dry, G_dry : float or array-like</span>
+<span class="sd">            effective elastic moduli of dry pack</span>
+
+<span class="sd">        References</span>
+<span class="sd">	    ----------</span>
+<span class="sd">        - Rock physics handbook section 5.5.</span>
+<span class="sd">        - Bachrach, R. and Avseth, P. (2008) Geophysics, 73(6), E197–E209.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>        
+    
+        <span class="n">sigma</span> <span class="o">=</span><span class="n">sigma</span><span class="o">/</span><span class="mi">1000</span> <span class="c1"># converts pressure unit to GPa</span>
+        <span class="n">nu</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K0</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">K0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span> <span class="c1"># poisson&#39;s ratio of mineral mixture</span>
+        <span class="n">K_dry</span> <span class="o">=</span> <span class="p">(</span><span class="n">sigma</span><span class="o">*</span><span class="p">(</span><span class="n">Cn</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phic</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">18</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">nu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">G_dry</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">f</span><span class="o">-</span><span class="n">nu</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">f</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="n">nu</span><span class="p">)))</span> <span class="o">*</span> <span class="p">((</span><span class="n">sigma</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">Cn</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phic</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">nu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">K_dry</span><span class="p">,</span> <span class="n">G_dry</span></div>
+
+
+<div class="viewcode-block" id="GM.softsand"><a class="viewcode-back" href="../../autoapi/rockphypy/index.html#rockphypy.GM.GM.softsand">[docs]</a>    <span class="k">def</span> <span class="nf">softsand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Soft-sand (unconsolidated sand) model: model the porosity-sorting effects using the lower Hashin-Shtrikman-Walpole bound. (Also referred to as the &#39;friable-sand model&#39; in Avseth et al. (2010). </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Bulk modulus of grain material in GPa</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Shear modulus of grain material in GPa</span>
+<span class="sd">        phi : float or array like</span>
+<span class="sd">            Porosity</span>
+<span class="sd">	    phic : float</span>
+<span class="sd">            Critical Porosity</span>
+<span class="sd">        Cn : float</span>
+<span class="sd">            coordination number</span>
+<span class="sd">        sigma : float or array-like</span>
+<span class="sd">            effective stress</span>
+<span class="sd">        f : float</span>
+<span class="sd">            reduced shear factor between 0 and 1</span>
+<span class="sd">            0=dry pack with inifinitely rough spheres; </span>
+<span class="sd">            1=dry pack with infinitely smooth spheres</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            K_dry, G_dry (GPa): Effective elastic moduli of dry pack</span>
+<span class="sd">        </span>
+<span class="sd">        References</span>
+<span class="sd">	    ----------</span>
+<span class="sd">        - The Uncemented (Soft) Sand Model in Rock physics handbook section 5.5</span>
+<span class="sd">        - Avseth, P.; Mukerji, T. &amp; Mavko, G. Cambridge university press, 2010</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+           
+        <span class="n">K_HM</span><span class="p">,</span> <span class="n">G_HM</span> <span class="o">=</span> <span class="n">GM</span><span class="o">.</span><span class="n">hertzmindlin</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">K_dry</span> <span class="o">=-</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G_HM</span> <span class="o">+</span> <span class="p">(((</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K_HM</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G_HM</span><span class="p">))</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K0</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G_HM</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
+        <span class="n">aux</span> <span class="o">=</span> <span class="n">G_HM</span><span class="o">/</span><span class="mi">6</span><span class="o">*</span><span class="p">((</span><span class="mi">9</span><span class="o">*</span><span class="n">K_HM</span><span class="o">+</span><span class="mi">8</span><span class="o">*</span><span class="n">G_HM</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">K_HM</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G_HM</span><span class="p">))</span> <span class="c1"># auxiliary variable </span>
+        <span class="n">G_dry</span> <span class="o">=</span> <span class="o">-</span><span class="n">aux</span> <span class="o">+</span> <span class="p">((</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G_HM</span><span class="o">+</span><span class="n">aux</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G0</span><span class="o">+</span><span class="n">aux</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">K_dry</span><span class="p">,</span> <span class="n">G_dry</span></div>
+
+<div class="viewcode-block" id="GM.Walton"><a class="viewcode-back" href="../../autoapi/rockphypy/index.html#rockphypy.GM.GM.Walton">[docs]</a>    <span class="k">def</span> <span class="nf">Walton</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute dry rock elastic moduli of sphere packs based on the Walton (1987)&#39; thoery. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Bulk modulus of grain material in GPa</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Shear modulus of grain material in GPa</span>
+<span class="sd">	    phic : float</span>
+<span class="sd">            Critical Porosity</span>
+<span class="sd">        Cn : float</span>
+<span class="sd">            coordination number</span>
+<span class="sd">        sigma : float or array-like</span>
+<span class="sd">            effective stress</span>
+<span class="sd">        f : float</span>
+<span class="sd">            reduced shear factor between 0 and 1</span>
+<span class="sd">            0=dry pack with inifinitely rough spheres; </span>
+<span class="sd">            1=dry pack with infinitely smooth spheres</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            K_w, G_w: Effective elastic moduli of dry pack</span>
+<span class="sd">        </span>
+<span class="sd">        References</span>
+<span class="sd">	    ----------</span>
+<span class="sd">        - Walton model in Rock physics handbook section 5.5</span>
+<span class="sd">        - Walton, K., 1987, J. Mech. Phys. Solids, vol.35, p213-226.</span>
+<span class="sd">        - Bachrach, R. and Avseth, P. (2008) Geophysics, 73(6), E197–E209</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+           
+        <span class="n">sigma</span><span class="o">=</span> <span class="n">sigma</span><span class="o">/</span><span class="mf">1e3</span> <span class="c1"># convert Mpa to Gpa </span>
+        <span class="n">lamda</span> <span class="o">=</span> <span class="n">K0</span><span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="o">/</span><span class="mi">3</span>  <span class="c1"># Lamé’s coefficient of the grain material.  </span>
+        <span class="n">B</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">G0</span><span class="o">+</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">G0</span><span class="o">+</span><span class="n">lamda</span><span class="p">))</span>
+        <span class="c1">#A = 1/(4*np.pi) *(1/G0-1/(G0+lamda))</span>
+
+        <span class="n">K_w</span><span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phic</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">Cn</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">4</span><span class="o">*</span><span class="n">B</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">G_dry1</span><span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">5</span> <span class="o">*</span> <span class="n">K_w</span>
+        <span class="n">nu</span> <span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K0</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">K0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span>  <span class="c1"># possion&#39;s ratio</span>
+        <span class="n">G_dry2</span><span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">5</span> <span class="o">*</span> <span class="n">K_w</span> <span class="o">*</span><span class="p">(</span><span class="mi">5</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">nu</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="n">nu</span><span class="p">)</span> <span class="c1"># rought limit is the same as Hertz-Mindlin</span>
+        <span class="n">G_w</span><span class="o">=</span> <span class="n">f</span><span class="o">*</span> <span class="n">G_dry2</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">f</span><span class="p">)</span><span class="o">*</span><span class="n">G_dry1</span>
+        <span class="k">return</span> <span class="n">K_w</span><span class="p">,</span> <span class="n">G_w</span></div>
+
+<div class="viewcode-block" id="GM.johnson"><a class="viewcode-back" href="../../autoapi/rockphypy/index.html#rockphypy.GM.GM.johnson">[docs]</a>    <span class="k">def</span> <span class="nf">johnson</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span><span class="n">n</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">epsilon_axial</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;together&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;effective theory for stress-induced anisotropy in sphere packs. The transversely isotropic strain is considered as a combination of hydrostatic strain and uniaxial strain.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Bulk modulus of grain material in GPa</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Shear modulus of grain material in GPa</span>
+<span class="sd">        n : float</span>
+<span class="sd">            coordination number</span>
+<span class="sd">        phi : float or array like</span>
+<span class="sd">            porosity</span>
+<span class="sd">        epsilon : float or array like</span>
+<span class="sd">            hydrostatic strain (negative in compression)</span>
+<span class="sd">        epsilon_axial : float or array like</span>
+<span class="sd">            uniaxial strain (along 3-axis)</span>
+<span class="sd">        path : str, optional</span>
+<span class="sd">            &#39;together&#39;: the hydrostatic and uniaxial strains are applied simultaneously</span>
+<span class="sd">            &#39;uni_iso&#39;: the uniaxial strain is applied first followed by a hydrostatic strain</span>
+<span class="sd">            &#39;iso_uni&#39;: the hydrostatic strain is applied first followed by a uniaxial strain by default &#39;together&#39;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        array and float </span>
+<span class="sd">            C: (matrix): VTI stiffness matrix</span>
+<span class="sd">            sigma33: non zero stress tensor component</span>
+<span class="sd">            sigma11: non zero stress tensor component, sigma11=sigma22</span>
+<span class="sd">        </span>
+<span class="sd">        References</span>
+<span class="sd">	    ----------</span>
+<span class="sd">        - Norris, A. N., and Johnson, D. L., 1997, ASME Journal of Applied Mechanics, 64, 39-49.</span>
+<span class="sd">        - Johnson, D.L., Schwartz, L.M., Elata, D., et al., 1998. Transactions ASME, 65, 380–388.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+                
+        <span class="c1"># factors</span>
+        <span class="n">nu0</span> <span class="o">=</span>  <span class="n">utils</span><span class="o">.</span><span class="n">poi</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">)</span>
+        <span class="n">Cn</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">G0</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">nu0</span><span class="p">)</span>
+        <span class="n">Ct</span> <span class="o">=</span>  <span class="p">(</span><span class="mi">8</span><span class="o">*</span> <span class="n">G0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="n">nu0</span><span class="p">)</span>
+        <span class="n">Bw</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">Cn</span><span class="p">)</span>
+        <span class="n">Cw</span> <span class="o">=</span> <span class="mi">4</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">Ct</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">Cn</span><span class="p">)</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">32</span> <span class="o">*</span><span class="n">Cn</span><span class="o">*</span><span class="n">Ct</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="n">epsilon</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">epsilon</span><span class="o">/</span><span class="n">epsilon_axial</span><span class="p">)</span>
+        <span class="n">I0</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="p">))</span>
+        <span class="n">I2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">I0</span><span class="p">)</span>
+        <span class="n">I4</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">I2</span><span class="p">)</span>
+        <span class="c1"># stiffnesses</span>
+        <span class="n">C11</span> <span class="o">=</span>  <span class="n">gamma</span><span class="o">/</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">Bw</span><span class="o">/</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">Cw</span><span class="o">/</span><span class="mi">5</span> <span class="o">+</span> <span class="n">epsilon</span><span class="o">/</span><span class="n">epsilon_axial</span> <span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Bw</span><span class="o">/</span><span class="mi">15</span> <span class="o">+</span> <span class="n">Cw</span><span class="o">/</span><span class="mi">35</span><span class="p">))</span>
+        <span class="n">C33</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma</span><span class="o">/</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">Bw</span><span class="o">*</span><span class="n">I2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">Cw</span><span class="o">*</span><span class="n">I4</span><span class="p">)</span>
+
+        <span class="n">C13</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma</span><span class="o">/</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">Cw</span><span class="o">*</span><span class="p">(</span><span class="n">I2</span><span class="o">-</span><span class="n">I4</span><span class="p">)</span>
+        <span class="n">C44</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma</span><span class="o">/</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span> <span class="p">((</span><span class="n">Bw</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">I0</span><span class="o">+</span><span class="n">I2</span><span class="p">)</span> <span class="o">+</span> <span class="n">Cw</span><span class="o">*</span><span class="p">(</span><span class="n">I2</span><span class="o">-</span><span class="n">I4</span><span class="p">))</span>
+        <span class="n">C66</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma</span><span class="o">/</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span> <span class="p">(</span><span class="n">Bw</span><span class="o">*</span><span class="p">(</span><span class="n">I0</span><span class="o">-</span><span class="n">I2</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">Cw</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">I0</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">I2</span><span class="o">+</span><span class="n">I4</span><span class="p">))</span>
+        <span class="c1"># stiffness matrix</span>
+        <span class="n">C</span><span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">write_VTI_matrix</span><span class="p">(</span><span class="n">C11</span><span class="p">,</span><span class="n">C33</span><span class="p">,</span><span class="n">C13</span><span class="p">,</span><span class="n">C44</span><span class="p">,</span><span class="n">C66</span><span class="p">)</span>
+        
+        <span class="c1"># the stress component is path dependent</span>
+        <span class="n">Temp</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="o">-</span><span class="n">epsilon</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">alpha</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="s1">&#39;together&#39;</span><span class="p">:</span><span class="c1"># isotropic and uniaxiala strains are applied simultaneously</span>
+            <span class="n">sigma33</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">Temp</span><span class="o">*</span><span class="p">(</span><span class="n">Ct</span><span class="o">*</span><span class="p">(</span><span class="n">I2</span><span class="o">-</span><span class="n">I4</span><span class="p">)</span><span class="o">+</span><span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">I2</span><span class="o">+</span><span class="n">I4</span><span class="p">))</span>
+            <span class="n">sigma11</span> <span class="o">=</span><span class="n">Temp</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="n">Ct</span><span class="o">*</span><span class="p">(</span><span class="n">I2</span><span class="o">-</span><span class="n">I4</span><span class="p">)</span><span class="o">+</span><span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">I0</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">I2</span><span class="o">-</span><span class="n">I4</span><span class="p">))</span>  
+        <span class="k">elif</span> <span class="n">path</span> <span class="o">==</span> <span class="s1">&#39;uni_iso&#39;</span><span class="p">:</span>
+            <span class="n">sigma33</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">Temp</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">12</span><span class="o">*</span><span class="n">Ct</span><span class="o">+</span><span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">I2</span><span class="o">+</span><span class="n">I4</span><span class="p">))</span>
+            <span class="n">sigma11</span> <span class="o">=</span><span class="n">Temp</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">12</span><span class="o">*</span><span class="n">Ct</span><span class="o">+</span><span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">I0</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">I2</span><span class="o">-</span><span class="n">I4</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">path</span> <span class="o">==</span> <span class="s1">&#39;iso-uni&#39;</span><span class="p">:</span>
+            <span class="n">sigma33</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">Temp</span><span class="o">*</span><span class="p">(</span><span class="n">Ct</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">I0</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">I2</span><span class="o">-</span><span class="n">I4</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">alpha</span><span class="o">**</span><span class="mi">3</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">I2</span><span class="o">+</span><span class="n">I4</span><span class="p">))</span>
+            <span class="n">sigma11</span> <span class="o">=</span> <span class="n">Temp</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="n">Ct</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">I0</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">I2</span><span class="o">-</span><span class="n">I4</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">alpha</span><span class="o">**</span><span class="mi">3</span><span class="o">/</span><span class="mi">3</span><span class="o">+</span><span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">I0</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">I2</span><span class="o">-</span><span class="n">I4</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="n">C</span><span class="p">,</span> <span class="n">sigma33</span><span class="p">,</span><span class="n">sigma11</span></div>
+
+    <span class="c1"># ---------------------more functions added------------------------------#</span>
+
+<div class="viewcode-block" id="GM.stiffsand"><a class="viewcode-back" href="../../autoapi/rockphypy/index.html#rockphypy.GM.GM.stiffsand">[docs]</a>    <span class="k">def</span> <span class="nf">stiffsand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stiff-sand model:  Modified Hashin-Shtrikman upper bound with Hertz-Mindlin end point, counterpart to soft sand model. </span>
+<span class="sd">        model the porosity-sorting effects using the lower Hashin–Shtrikman–Walpole bound. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Bulk modulus of grain material in GPa</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Shear modulus of grain material in GPa</span>
+<span class="sd">        phi : float or array like</span>
+<span class="sd">            Porosity</span>
+<span class="sd">	    phic : float</span>
+<span class="sd">            Critical Porosity</span>
+<span class="sd">        Cn : float</span>
+<span class="sd">            coordination number</span>
+<span class="sd">        sigma : float or array-like</span>
+<span class="sd">            effective stress</span>
+<span class="sd">        f : float</span>
+<span class="sd">            reduced shear factor between 0 and 1</span>
+<span class="sd">            0=dry pack with inifinitely rough spheres; </span>
+<span class="sd">            1=dry pack with infinitely smooth spheres</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            K_dry, G_dry (GPa): Effective elastic moduli of dry pack</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+          
+        <span class="n">K_HM</span><span class="p">,</span> <span class="n">G_HM</span> <span class="o">=</span> <span class="n">GM</span><span class="o">.</span><span class="n">hertzmindlin</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">K_dry</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G0</span> <span class="o">+</span> <span class="p">(((</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K_HM</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G0</span><span class="p">))</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K0</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G0</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
+        <span class="n">aux</span> <span class="o">=</span> <span class="n">G0</span><span class="o">/</span><span class="mi">6</span><span class="o">*</span><span class="p">((</span><span class="mi">9</span><span class="o">*</span><span class="n">K0</span><span class="o">+</span><span class="mi">8</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">K0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">))</span>
+        <span class="n">G_dry</span> <span class="o">=</span> <span class="o">-</span><span class="n">aux</span> <span class="o">+</span> <span class="p">((</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G_HM</span><span class="o">+</span><span class="n">aux</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G0</span><span class="o">+</span><span class="n">aux</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">K_dry</span><span class="p">,</span> <span class="n">G_dry</span></div>
+
+<div class="viewcode-block" id="GM.constantcement"><a class="viewcode-back" href="../../autoapi/rockphypy/index.html#rockphypy.GM.GM.constantcement">[docs]</a>    <span class="k">def</span> <span class="nf">constantcement</span><span class="p">(</span><span class="n">phi_b</span><span class="p">,</span> <span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">Kc</span><span class="p">,</span> <span class="n">Gc</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span><span class="n">scheme</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constant cement (constant depth) model according to Avseth (2000)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phi_b : _type_</span>
+<span class="sd">            adjusted high porosity end memeber</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Bulk modulus of grain material in GPa</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Shear modulus of grain material in GPa</span>
+<span class="sd">        Kc : float</span>
+<span class="sd">            Bulk modulus of cement</span>
+<span class="sd">        Gc : float</span>
+<span class="sd">            Shear modulus of cement</span>
+<span class="sd">        phi : float or array-like</span>
+<span class="sd">            Porosity</span>
+<span class="sd">        phic : float</span>
+<span class="sd">            Critical Porosity</span>
+<span class="sd">        Cn : float</span>
+<span class="sd">            coordination number</span>
+<span class="sd">        scheme : int</span>
+<span class="sd">            Scheme of cement deposition</span>
+<span class="sd">                    1=cement deposited at grain contacts</span>
+<span class="sd">                    2=cement deposited at grain surfaces</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            K_dry, G_dry (GPa): Effective elastic moduli of dry rock</span>
+
+<span class="sd">        References</span>
+<span class="sd">	    ----------</span>
+<span class="sd">        - Avseth, P.; Dvorkin, J.; Mavko, G. &amp; Rykkje, J. Geophysical Research Letters, Wiley Online Library, 2000, 27, 2761-2764</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>        
+            
+        <span class="n">K_b</span><span class="p">,</span><span class="n">G_b</span><span class="o">=</span><span class="n">GM</span><span class="o">.</span><span class="n">contactcement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">Kc</span><span class="p">,</span> <span class="n">Gc</span><span class="p">,</span> <span class="n">phi_b</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span>  <span class="n">scheme</span><span class="p">)</span>
+        <span class="n">T</span><span class="o">=</span><span class="n">phi</span><span class="o">/</span><span class="n">phi_b</span>
+        <span class="n">Z</span><span class="o">=</span><span class="p">(</span><span class="n">G_b</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">9</span><span class="o">*</span><span class="n">K_b</span><span class="o">+</span><span class="mi">8</span><span class="o">*</span><span class="n">G_b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K_b</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G_b</span><span class="p">)</span>
+        <span class="n">Kdry</span><span class="o">=</span><span class="p">(</span><span class="n">T</span><span class="o">/</span><span class="p">(</span><span class="n">K_b</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">G_b</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K0</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">G_b</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">G_b</span><span class="o">/</span><span class="mi">3</span>
+        <span class="n">Gdry</span><span class="o">=</span><span class="p">(</span><span class="n">T</span><span class="o">/</span><span class="p">(</span><span class="n">G_b</span><span class="o">+</span><span class="n">Z</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G0</span><span class="o">+</span><span class="n">Z</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">Z</span>
+
+        <span class="k">return</span> <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span>  </div>
+        
+<div class="viewcode-block" id="GM.MUHS"><a class="viewcode-back" href="../../autoapi/rockphypy/index.html#rockphypy.GM.GM.MUHS">[docs]</a>    <span class="k">def</span> <span class="nf">MUHS</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">Kc</span><span class="p">,</span><span class="n">Gc</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span> <span class="n">phi_b</span><span class="p">,</span><span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span><span class="n">scheme</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Increasing cement model: Modified Hashin-Strikmann upper bound blend with contact cement model. For elastically stiff sandstone modelling.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Bulk modulus of grain material in GPa</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Shear modulus of grain material in GPa</span>
+<span class="sd">        Kc : float</span>
+<span class="sd">            Bulk modulus of cement</span>
+<span class="sd">        Gc : float</span>
+<span class="sd">            Shear modulus of cement</span>
+<span class="sd">        phi : float or array-like</span>
+<span class="sd">            Porosity</span>
+<span class="sd">        phi_b : _type_</span>
+<span class="sd">            adjusted high porosity end memeber</span>
+<span class="sd">        phic : float</span>
+<span class="sd">            Critical Porosity</span>
+<span class="sd">        Cn : float</span>
+<span class="sd">            coordination number</span>
+<span class="sd">        scheme : int</span>
+<span class="sd">            Scheme of cement deposition</span>
+<span class="sd">                    1=cement deposited at grain contacts</span>
+<span class="sd">                    2=cement deposited at grain surfaces</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            K_dry, G_dry (GPa): Effective elastic moduli of dry rock</span>
+
+<span class="sd">        References</span>
+<span class="sd">	    ----------</span>
+<span class="sd">        - Avseth, P.; Mukerji, T. &amp; Mavko, G. Cambridge university press, 2010</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+         
+        <span class="c1"># adjusted high porosity end memeber </span>
+        <span class="n">K_b</span><span class="p">,</span> <span class="n">G_b</span><span class="o">=</span><span class="n">GM</span><span class="o">.</span><span class="n">contactcement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">Kc</span><span class="p">,</span> <span class="n">Gc</span><span class="p">,</span> <span class="n">phi_b</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span> <span class="n">scheme</span><span class="p">)</span>
+        <span class="c1"># interpolation between the high-porosity end member Kb, Gb and the mineral point. </span>
+        <span class="n">K_dry</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G0</span> <span class="o">+</span> <span class="p">(((</span><span class="n">phi</span><span class="o">/</span><span class="n">phi_b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K_b</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G0</span><span class="p">))</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phi_b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K0</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G0</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">G0</span><span class="o">/</span><span class="mi">6</span><span class="o">*</span><span class="p">((</span><span class="mi">9</span><span class="o">*</span><span class="n">K0</span><span class="o">+</span><span class="mi">8</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">K0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">))</span>
+        <span class="n">G_dry</span> <span class="o">=</span> <span class="o">-</span><span class="n">tmp</span> <span class="o">+</span> <span class="p">((</span><span class="n">phi</span><span class="o">/</span><span class="n">phi_b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G_b</span><span class="o">+</span><span class="n">tmp</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phi_b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G0</span><span class="o">+</span><span class="n">tmp</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">K_dry</span><span class="p">,</span> <span class="n">G_dry</span></div>
+
+<div class="viewcode-block" id="GM.Digby"><a class="viewcode-back" href="../../autoapi/rockphypy/index.html#rockphypy.GM.GM.Digby">[docs]</a>    <span class="k">def</span> <span class="nf">Digby</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">a_R</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute Keff and Geff using Digby&#39;s model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Bulk modulus of grain material in GPa</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Shear modulus of grain material in GPa</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            Porosity</span>
+<span class="sd">        Cn : float</span>
+<span class="sd">            coordination number</span>
+<span class="sd">        sigma : float or array-like</span>
+<span class="sd">            stress</span>
+<span class="sd">        a_R : float</span>
+<span class="sd">            a_R (unitless): ratio of the radius of the initially bonded area to the grain radius</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            Keff, Geff (Gpa): effective medium stiffness</span>
+
+<span class="sd">        References</span>
+<span class="sd">	    ----------</span>
+<span class="sd">        - Digby, P.J., 1981. Journal of Applied Mechanics, 48, 803–808.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+           
+        <span class="n">sigma</span> <span class="o">=</span><span class="n">sigma</span><span class="o">/</span><span class="mi">1000</span> <span class="c1"># converts pressure unit to GPa</span>
+        <span class="n">nu</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K0</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">K0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span> <span class="c1"># poisson&#39;s ratio of mineral mixture</span>
+        
+        <span class="n">coeff</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span> <span class="n">a_R</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">nu</span><span class="p">)</span><span class="o">*</span><span class="n">sigma</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">G0</span><span class="p">)])</span> <span class="c1"># coeffs of cubic equation</span>
+        <span class="n">roots</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+        <span class="n">root</span><span class="o">=</span> <span class="n">roots</span><span class="o">.</span><span class="n">real</span><span class="p">[</span><span class="n">roots</span><span class="o">.</span><span class="n">real</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">b_R</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">root</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">a_R</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">Sn_R</span><span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">G0</span><span class="o">*</span><span class="n">b_R</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">nu</span><span class="p">)</span>
+        <span class="n">St_R</span><span class="o">=</span> <span class="mi">8</span><span class="o">*</span><span class="n">G0</span><span class="o">*</span><span class="n">a_R</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="n">nu</span><span class="p">)</span>
+        <span class="n">Keff</span><span class="o">=</span> <span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">Sn_R</span><span class="o">/</span><span class="mi">12</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+        <span class="n">Geff</span><span class="o">=</span> <span class="n">Cn</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Sn_R</span><span class="o">+</span><span class="mf">1.5</span><span class="o">*</span><span class="n">St_R</span><span class="p">)</span><span class="o">/</span><span class="mi">20</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+        <span class="k">return</span> <span class="n">Keff</span><span class="p">,</span> <span class="n">Geff</span></div>
+
+
+<div class="viewcode-block" id="GM.pcm"><a class="viewcode-back" href="../../autoapi/rockphypy/index.html#rockphypy.GM.GM.pcm">[docs]</a>    <span class="k">def</span> <span class="nf">pcm</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span> <span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">v_cem</span><span class="p">,</span><span class="n">v_ci</span><span class="p">,</span> <span class="n">Kc</span><span class="p">,</span><span class="n">Gc</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span><span class="n">scheme</span><span class="p">,</span><span class="n">f_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Computes effective elastic moduli of patchy cemented sandstone according to Avseth (2016). </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        f : float </span>
+<span class="sd">            volume fraction of cemented rock in the binary mixture    </span>
+<span class="sd">        sigma : float or array-like</span>
+<span class="sd">            effective stress</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Bulk modulus of grain material in GPa</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Shear modulus of grain material in GPa</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            Porosity</span>
+<span class="sd">        phic : float</span>
+<span class="sd">            Critical Porosity</span>
+<span class="sd">        v_cem : float</span>
+<span class="sd">            cement fraction in contact cement model. phi_cem= phic-vcem </span>
+<span class="sd">        v_ci : float</span>
+<span class="sd">            cement threshold above which increasing cement model is applied </span>
+<span class="sd">        Kc : float</span>
+<span class="sd">            bulk modulus of cement</span>
+<span class="sd">        Gc : float</span>
+<span class="sd">            shear modulus of cement</span>
+<span class="sd">        Cn : float</span>
+<span class="sd">            coordination number</span>
+<span class="sd">        mode : str</span>
+<span class="sd">            &#39;stiff&#39; or &#39;soft&#39;. stiffest mixing or softest mixing. Defaults to &#39;stiff&#39;.</span>
+<span class="sd">        scheme : int</span>
+<span class="sd">            contact cement scheme. </span>
+<span class="sd">            1=cement deposited at grain contacts</span>
+<span class="sd">            2=cement deposited at grain surfaces</span>
+<span class="sd">        f_ : float</span>
+<span class="sd">            slip factor in HM modelling. Defaults to 0.5.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">            (Avseth,2016): If 10% is chosen as the “critical” cement limit, the  increasing cement model can be used in addition to the contact cement model. (Torset, 2020): with the increasing cement model appended at 4% cement&quot;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            K_DRY, G_DRY (GPa): effective elastic moduli of the dry rock</span>
+
+<span class="sd">        References</span>
+<span class="sd">	    ----------</span>
+<span class="sd">            - Avseth, P.; Skjei, N. &amp; Mavko, G. The Leading Edge, GeoScienceWorld, 2016, 35, 868-87.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>        
+          
+        <span class="c1">#------------------------------------------------</span>
+        <span class="c1"># compute the unconsolidated end member</span>
+        <span class="c1">#------------------------------------------------</span>
+        
+        <span class="n">Kunc</span><span class="p">,</span><span class="n">Gunc</span><span class="o">=</span> <span class="n">GM</span><span class="o">.</span><span class="n">hertzmindlin</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="n">Cn</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">f_</span><span class="p">)</span>
+        <span class="c1">#------------------------------------------------</span>
+        <span class="c1"># compute the cemented end member</span>
+        <span class="c1">#------------------------------------------------</span>
+        <span class="k">if</span> <span class="n">v_cem</span><span class="o">&lt;=</span><span class="n">v_ci</span><span class="p">:</span>
+            <span class="n">Kcem</span><span class="p">,</span><span class="n">Gcem</span><span class="o">=</span> <span class="n">GM</span><span class="o">.</span><span class="n">contactcement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span><span class="n">Kc</span><span class="p">,</span> <span class="n">Gc</span><span class="p">,</span> <span class="n">phic</span><span class="o">-</span><span class="n">v_cem</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="n">Cn</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">scheme</span><span class="p">)</span>
+
+        <span class="c1">#------------------------------------------------</span>
+        <span class="c1"># increasing cement model </span>
+        <span class="c1">#------------------------------------------------</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="n">Kcem</span><span class="p">,</span><span class="n">Gcem</span><span class="o">=</span> <span class="n">GM</span><span class="o">.</span><span class="n">MUHS</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">Kc</span><span class="p">,</span><span class="n">Gc</span><span class="p">,</span><span class="n">phic</span><span class="o">-</span><span class="n">v_cem</span><span class="p">,</span> <span class="n">phic</span><span class="o">-</span><span class="n">v_ci</span><span class="p">,</span><span class="n">phic</span><span class="o">=</span><span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="n">Cn</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">scheme</span><span class="p">)</span>
+
+        <span class="c1">#------------------------------------------------</span>
+        <span class="c1"># first HS </span>
+        <span class="c1">#------------------------------------------------   </span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;stiff&#39;</span><span class="p">:</span> <span class="c1"># stiffest mixing,shelf is cemented sand, inner core is unconsolidated sand  </span>
+            <span class="n">Kp</span><span class="o">=</span><span class="n">Kcem</span><span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">f</span><span class="p">)</span><span class="o">/</span><span class="p">(</span> <span class="p">(</span><span class="n">Kunc</span><span class="o">-</span><span class="n">Kcem</span><span class="p">)</span><span class="o">**-</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f</span><span class="o">*</span><span class="p">(</span><span class="n">Kcem</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">Gcem</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">**-</span><span class="mi">1</span> <span class="p">)</span>
+
+            <span class="n">Temp</span><span class="o">=</span> <span class="p">(</span><span class="n">Kcem</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">Gcem</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">Gcem</span> <span class="o">*</span><span class="p">(</span><span class="n">Kcem</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">Gcem</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
+            <span class="n">Gp</span><span class="o">=</span><span class="n">Gcem</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">f</span><span class="p">)</span><span class="o">/</span><span class="p">(</span> <span class="p">(</span><span class="n">Gunc</span><span class="o">-</span><span class="n">Gcem</span><span class="p">)</span><span class="o">**-</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">f</span><span class="o">*</span><span class="n">Temp</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># soft mixing inner core is cemented sand, outer shelf is unconsolidated sand  </span>
+            <span class="n">Kp</span><span class="o">=</span><span class="n">Kunc</span><span class="o">+</span> <span class="n">f</span><span class="o">/</span><span class="p">(</span> <span class="p">(</span><span class="n">Kcem</span><span class="o">-</span><span class="n">Kunc</span><span class="p">)</span><span class="o">**-</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">f</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Kunc</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">Gunc</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">**-</span><span class="mi">1</span> <span class="p">)</span>
+
+            <span class="n">Temp</span><span class="o">=</span> <span class="p">(</span><span class="n">Kunc</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">Gunc</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">Gunc</span> <span class="o">*</span><span class="p">(</span><span class="n">Kunc</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">Gunc</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
+            <span class="n">Gp</span><span class="o">=</span><span class="n">Gunc</span><span class="o">+</span><span class="n">f</span><span class="o">/</span><span class="p">(</span> <span class="p">(</span><span class="n">Gcem</span><span class="o">-</span><span class="n">Gunc</span><span class="p">)</span><span class="o">**-</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">f</span><span class="p">)</span><span class="o">*</span><span class="n">Temp</span><span class="p">)</span>
+        
+        <span class="c1">#------------------------------------------------Second HS: interpolate the effective high-porosity end member and the mineral point using MLHS bound </span>
+        <span class="c1">#------------------------------------------------</span>
+        <span class="n">K_DRY</span> <span class="o">=-</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">Gp</span> <span class="o">+</span> <span class="p">(((</span><span class="n">phi</span> <span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">Kp</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">Gp</span><span class="p">))</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K0</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">Gp</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">Gp</span><span class="o">/</span><span class="mi">6</span><span class="o">*</span><span class="p">((</span><span class="mi">9</span><span class="o">*</span><span class="n">Kp</span><span class="o">+</span><span class="mi">8</span><span class="o">*</span><span class="n">Gp</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">Kp</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">Gp</span><span class="p">))</span>
+        <span class="n">G_DRY</span> <span class="o">=</span> <span class="o">-</span><span class="n">tmp</span> <span class="o">+</span> <span class="p">((</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">Gp</span><span class="o">+</span><span class="n">tmp</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G0</span><span class="o">+</span><span class="n">tmp</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">K_DRY</span><span class="p">,</span> <span class="n">G_DRY</span></div></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">rockphypy</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=yujiaxin666&repo=RockPhysicsPy&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, jiaxin yu.
+      
+    </div>
+
+    
+    <a href="https://github.com/yujiaxin666/RockPhysicsPy" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

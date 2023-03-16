@@ -1,0 +1,724 @@
+
+<!DOCTYPE html>
+
+<html lang="English">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rockphypy.Fluid &#8212; rockphypy  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for rockphypy.Fluid</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">scipy.special</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">rockphypy.utils</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="c1">#from utils import *</span>
+<div class="viewcode-block" id="Fluid"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid">[docs]</a><span class="k">class</span> <span class="nc">Fluid</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fluid subsitution approaches and models describing velocity dispersion and attenuation due to the fluid effect. </span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    
+<div class="viewcode-block" id="Fluid.Biot"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Biot">[docs]</a>    <span class="k">def</span> <span class="nf">Biot</span><span class="p">(</span><span class="n">Kdry</span><span class="p">,</span><span class="n">Gdry</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">Kfl</span><span class="p">,</span><span class="n">rho0</span><span class="p">,</span><span class="n">rhofl</span><span class="p">,</span><span class="n">eta</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">kapa</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">freq</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute Biot dispersion and velocity attenuation </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Kdry : float or array-like</span>
+<span class="sd">            dry frame bulk modulus</span>
+<span class="sd">        Gdry : float or array-like</span>
+<span class="sd">            dry frame shear modulus</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            bulk modulus of mineral material making up rock</span>
+<span class="sd">        Kfl : float</span>
+<span class="sd">            effective bulk modulus of pore fluid</span>
+<span class="sd">        rho0 : float</span>
+<span class="sd">            grain density</span>
+<span class="sd">        rhofl : float</span>
+<span class="sd">            pore fluid density</span>
+<span class="sd">        eta : float</span>
+<span class="sd">            η is the viscosity of the pore fluid</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            porosity </span>
+<span class="sd">        kapa : float</span>
+<span class="sd">            absolute permeability of the rock</span>
+<span class="sd">        a : float</span>
+<span class="sd">            pore-size parameter. Stoll (1974) found that values between 1/6 and 1/7 of the mean grain diameter</span>
+<span class="sd">        alpha : float</span>
+<span class="sd">            tortuosity parameter, always greater than or equal to 1.</span>
+<span class="sd">        freq : float or array-like</span>
+<span class="sd">            frequency range, e.g 10^-3 to 10^3 Hz</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            Vp_fast, fast P-wave velocities at all frequencies</span>
+<span class="sd">            Vp_slow, slow P-wave velocities at all frequencies</span>
+<span class="sd">            Vs, S-wave velocities</span>
+<span class="sd">            QP1_inv, fast P-wave attenuation</span>
+<span class="sd">            QP2_inv, slow P-wave attenuation</span>
+<span class="sd">            Qs_inv, S-wave attenuation</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+
+        <span class="n">rho</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">rho0</span><span class="o">+</span><span class="n">phi</span><span class="o">*</span><span class="n">rhofl</span> <span class="c1"># bulk density</span>
+        <span class="c1"># poroelastic coefficients</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="n">K0</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">phi</span><span class="o">*</span><span class="p">(</span><span class="n">K0</span><span class="o">/</span><span class="n">Kfl</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">K0</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">D</span><span class="o">-</span><span class="n">Kdry</span><span class="p">)</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="p">(</span><span class="n">K0</span><span class="o">-</span><span class="n">Kdry</span><span class="p">)</span><span class="o">*</span><span class="n">K0</span><span class="o">/</span><span class="p">(</span><span class="n">D</span><span class="o">-</span><span class="n">Kdry</span><span class="p">)</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="n">Kdry</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">Gdry</span><span class="o">/</span><span class="mi">3</span><span class="o">+</span><span class="p">(</span><span class="n">K0</span><span class="o">-</span><span class="n">Kdry</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">D</span><span class="o">-</span><span class="n">Kdry</span><span class="p">)</span>
+        <span class="c1"># angular frequency of the plane wave, ω is the angular frequency of the plane wave.</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">freq</span> 
+        <span class="c1"># viscodynamic operator</span>
+        <span class="n">zeta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">rhofl</span><span class="o">/</span><span class="n">eta</span><span class="p">)</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">zeta</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="c1"># asymptotic values for very high and very low frequencies</span>
+        <span class="c1"># high frequency limit, T-&gt;(1+i)/sqrt(2)</span>
+        <span class="n">T</span><span class="p">[</span><span class="n">zeta</span><span class="o">&lt;=</span><span class="mf">1e3</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">sp</span><span class="o">.</span><span class="n">jv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">zeta</span><span class="p">[</span><span class="n">zeta</span><span class="o">&lt;=</span><span class="mf">1e3</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span> <span class="p">)</span><span class="o">/</span><span class="n">sp</span><span class="o">.</span><span class="n">jv</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">zeta</span><span class="p">[</span><span class="n">zeta</span><span class="o">&lt;=</span><span class="mf">1e3</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span> <span class="p">)</span>
+        <span class="n">T</span><span class="p">[</span><span class="n">zeta</span><span class="o">&gt;</span><span class="mf">1e3</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># low frequency limit F-&gt;1</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">zeta</span><span class="o">*</span><span class="n">T</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">T</span><span class="o">/</span><span class="n">zeta</span><span class="p">))</span>
+        <span class="n">F</span><span class="p">[</span><span class="n">zeta</span><span class="o">&lt;</span><span class="mf">1e-1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">rhofl</span><span class="o">/</span><span class="n">phi</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">eta</span><span class="o">*</span><span class="n">F</span><span class="o">/</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">kapa</span><span class="p">)</span>
+        <span class="c1"># a,b,c terms of the root </span>
+        <span class="n">Ta</span> <span class="o">=</span> <span class="p">(</span><span class="n">C</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">M</span><span class="o">*</span><span class="n">H</span><span class="p">)</span>
+        <span class="n">Tb</span> <span class="o">=</span> <span class="n">H</span><span class="o">*</span><span class="n">q</span><span class="o">+</span><span class="n">M</span><span class="o">*</span><span class="n">rho</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">C</span><span class="o">*</span><span class="n">rhofl</span>
+        <span class="n">Tc</span> <span class="o">=</span> <span class="n">rhofl</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">rho</span><span class="o">*</span><span class="n">q</span>
+        <span class="c1"># slowness squared</span>
+        <span class="n">P1_slowness2</span><span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">Tb</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Tb</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">Ta</span><span class="o">*</span><span class="n">Tc</span><span class="p">)</span> <span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Ta</span><span class="p">)</span>
+        <span class="n">P2_slowness2</span><span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">Tb</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Tb</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">Ta</span><span class="o">*</span><span class="n">Tc</span><span class="p">)</span> <span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Ta</span><span class="p">)</span>
+        <span class="n">S_slowness2</span><span class="o">=</span> <span class="p">(</span><span class="n">rho</span><span class="o">*</span><span class="n">q</span><span class="o">-</span><span class="n">rhofl</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">Gdry</span><span class="o">*</span><span class="n">q</span><span class="p">)</span>
+        <span class="c1"># velocities and attenuations</span>
+        <span class="n">Vp_fast</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">P1_slowness2</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+        <span class="n">Vp_slow</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">P2_slowness2</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+        <span class="n">Vs</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">S_slowness2</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+        <span class="n">QP1_inv</span><span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">P1_slowness2</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">P1_slowness2</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+        <span class="n">QP2_inv</span><span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">P2_slowness2</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">P2_slowness2</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+        <span class="n">Qs_inv</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">S_slowness2</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">S_slowness2</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+
+        <span class="k">return</span> <span class="n">Vp_fast</span><span class="p">,</span><span class="n">Vp_slow</span><span class="p">,</span><span class="n">Vs</span><span class="p">,</span><span class="n">QP1_inv</span><span class="p">,</span><span class="n">QP2_inv</span><span class="p">,</span><span class="n">Qs_inv</span></div>
+        
+<div class="viewcode-block" id="Fluid.Biot_HF"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Biot_HF">[docs]</a>    <span class="k">def</span> <span class="nf">Biot_HF</span><span class="p">(</span><span class="n">Kdry</span><span class="p">,</span><span class="n">Gdry</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">Kfl</span><span class="p">,</span><span class="n">rho0</span><span class="p">,</span><span class="n">rhofl</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">alpha</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Biot high-frequency limiting velocities in the notation of Johnson and Plona (1982)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Kdry : float or array-like</span>
+<span class="sd">            dry frame bulk modulus</span>
+<span class="sd">        Gdry : float or array-like</span>
+<span class="sd">            dry frame shear modulus</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            bulk modulus of mineral material making up rock </span>
+<span class="sd">        Kfl : float</span>
+<span class="sd">            effective bulk modulus of pore fluid</span>
+<span class="sd">        rho0 : float</span>
+<span class="sd">            grain density</span>
+<span class="sd">        rhofl : float</span>
+<span class="sd">            pore fluid density</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            porosity </span>
+<span class="sd">        alpha : float</span>
+<span class="sd">            tortuosity parameter, always greater than or equal to 1.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            Vp_fast,Vp_slow,Vs:  high-frequency limiting velocities</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+      
+        <span class="n">rho</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">rho0</span><span class="o">+</span><span class="n">phi</span><span class="o">*</span><span class="n">rhofl</span> <span class="c1"># bulk density</span>
+        <span class="n">rho12</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">phi</span><span class="o">*</span><span class="n">rhofl</span>
+        <span class="n">rho22</span><span class="o">=</span><span class="n">alpha</span><span class="o">*</span><span class="n">phi</span><span class="o">*</span><span class="n">rhofl</span>
+        <span class="n">rho11</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">rho0</span><span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">phi</span><span class="o">*</span><span class="n">rhofl</span>
+        <span class="c1"># repetative terms</span>
+        <span class="n">T1</span><span class="o">=</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">-</span><span class="n">Kdry</span><span class="o">/</span><span class="n">K0</span>
+        <span class="n">T2</span><span class="o">=</span> <span class="n">phi</span><span class="o">*</span><span class="n">K0</span><span class="o">/</span><span class="n">Kfl</span>
+        <span class="n">R</span><span class="o">=</span><span class="n">phi</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">K0</span><span class="o">/</span><span class="p">(</span><span class="n">T1</span><span class="o">+</span><span class="n">T2</span><span class="p">)</span>
+        <span class="n">Q</span><span class="o">=</span><span class="p">(</span><span class="n">T1</span><span class="o">*</span><span class="n">phi</span><span class="o">*</span><span class="n">K0</span><span class="o">/</span><span class="p">(</span><span class="n">T1</span><span class="o">+</span><span class="n">T2</span><span class="p">))</span>
+        <span class="n">P</span><span class="o">=</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">T1</span><span class="o">*</span><span class="n">K0</span><span class="o">+</span><span class="n">T2</span><span class="o">*</span><span class="n">Kdry</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">T1</span><span class="o">+</span><span class="n">T2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">Gdry</span><span class="o">/</span><span class="mi">3</span>
+        <span class="n">Delta</span><span class="o">=</span> <span class="n">P</span><span class="o">*</span><span class="n">rho22</span><span class="o">+</span><span class="n">R</span><span class="o">*</span><span class="n">rho11</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">Q</span><span class="o">*</span><span class="n">rho12</span>
+        <span class="n">T3</span><span class="o">=</span> <span class="n">rho11</span><span class="o">*</span><span class="n">rho22</span><span class="o">-</span><span class="n">rho12</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">T4</span><span class="o">=</span><span class="n">P</span><span class="o">*</span><span class="n">R</span><span class="o">-</span><span class="n">Q</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">Vp_fast</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">Delta</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Delta</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">T3</span><span class="o">*</span><span class="n">T4</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">T3</span><span class="p">))</span>
+        <span class="n">Vp_slow</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">Delta</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Delta</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">T3</span><span class="o">*</span><span class="n">T4</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">T3</span><span class="p">))</span>
+        <span class="n">Vs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Gdry</span><span class="o">/</span><span class="p">(</span><span class="n">rho</span><span class="o">-</span><span class="n">phi</span><span class="o">*</span><span class="n">rhofl</span><span class="o">*</span><span class="n">alpha</span><span class="o">**-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Vp_fast</span><span class="p">,</span><span class="n">Vp_slow</span><span class="p">,</span><span class="n">Vs</span></div>
+
+<div class="viewcode-block" id="Fluid.Geertsma_Smit_HF"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Geertsma_Smit_HF">[docs]</a>    <span class="k">def</span> <span class="nf">Geertsma_Smit_HF</span><span class="p">(</span><span class="n">Kdry</span><span class="p">,</span><span class="n">Gdry</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">Kfl</span><span class="p">,</span><span class="n">rho0</span><span class="p">,</span><span class="n">rhofl</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">alpha</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Approximation of Biot high-frequency limit of the fast P-wave velocity given by Geertsma and Smit (1961), This form predicts velocities that are too high (by about 3%–6%) compared with the actual high-frequency limit.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Kdry : float or array-like</span>
+<span class="sd">            dry frame bulk modulus</span>
+<span class="sd">        Gdry : float or array-like</span>
+<span class="sd">            dry frame shear modulus</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            bulk modulus of mineral material making up rock </span>
+<span class="sd">        Kfl : float</span>
+<span class="sd">            effective bulk modulus of pore fluid</span>
+<span class="sd">        rho0 : float</span>
+<span class="sd">            grain density</span>
+<span class="sd">        rhofl : float</span>
+<span class="sd">            pore fluid density</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            porosity </span>
+<span class="sd">        alpha : float</span>
+<span class="sd">            tortuosity parameter, always greater than or equal to 1.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            Vp_fast,Vs: high-frequency limiting velocities</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+           
+        <span class="n">rho</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">rho0</span><span class="o">+</span><span class="n">phi</span><span class="o">*</span><span class="n">rhofl</span> <span class="c1"># bulk density</span>
+        <span class="n">rho_biot</span><span class="o">=</span> <span class="n">rho0</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">+</span><span class="n">phi</span><span class="o">*</span><span class="n">rhofl</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">**-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">Hdry</span><span class="o">=</span> <span class="n">Kdry</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">Gdry</span><span class="o">/</span><span class="mi">3</span>
+        <span class="n">T1</span><span class="o">=</span><span class="n">phi</span><span class="o">*</span><span class="n">rho</span><span class="o">/</span><span class="p">(</span><span class="n">rhofl</span><span class="o">*</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">alpha_biot</span><span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">Kdry</span><span class="o">/</span><span class="n">K0</span>
+        <span class="n">Vp_fast</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="mi">1</span><span class="o">/</span><span class="n">rho_biot</span><span class="o">*</span><span class="p">(</span><span class="n">Hdry</span><span class="o">+</span><span class="p">(</span><span class="n">T1</span><span class="o">+</span><span class="n">alpha_biot</span><span class="o">*</span><span class="p">(</span><span class="n">alpha_biot</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">phi</span><span class="o">/</span><span class="n">alpha</span><span class="p">))</span><span class="o">/</span><span class="p">((</span><span class="n">alpha_biot</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">/</span><span class="n">K0</span><span class="o">+</span><span class="n">phi</span><span class="o">/</span><span class="n">Kfl</span> <span class="p">)))</span>
+
+        <span class="n">Vs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Gdry</span><span class="o">/</span><span class="n">rho_biot</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Vp_fast</span><span class="p">,</span><span class="n">Vs</span></div>
+
+<div class="viewcode-block" id="Fluid.Geertsma_Smit_LF"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Geertsma_Smit_LF">[docs]</a>    <span class="k">def</span> <span class="nf">Geertsma_Smit_LF</span><span class="p">(</span><span class="n">Vp0</span><span class="p">,</span><span class="n">Vpinf</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span> <span class="n">rhofl</span><span class="p">,</span> <span class="n">kapa</span><span class="p">,</span> <span class="n">eta</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Low and middle-frequency approximations of Biot wave given by Geertsma and Smit (1961). Noticed that mathematically this approximation is valid at moderate-to-low seismic frequencies, i.e. f&lt;fc</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Vp0 : float</span>
+<span class="sd">            Biot−Gassmann low-frequency limiting P-wave velocity</span>
+<span class="sd">        Vpinf : float</span>
+<span class="sd">            Biot highfrequency limiting P-wave velocity</span>
+<span class="sd">        freq : float or array-like</span>
+<span class="sd">            frequency</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            porosity</span>
+<span class="sd">        rhofl : float</span>
+<span class="sd">            fluid density</span>
+<span class="sd">        kapa : float</span>
+<span class="sd">            absolute permeability of the rock.</span>
+<span class="sd">        eta : float</span>
+<span class="sd">            viscosity of the pore fluid</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            Vp: frequency-dependent P-wave velocity of saturated rock</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+           
+        <span class="c1"># Biot reference frequency</span>
+        <span class="n">fc</span> <span class="o">=</span> <span class="n">phi</span><span class="o">*</span><span class="n">eta</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">rhofl</span><span class="o">*</span><span class="n">kapa</span><span class="p">)</span>
+        <span class="c1"># if freq &gt;=fc:</span>
+        <span class="c1">#     print(&#39;ATTENTION, the input frequency is higher than the reference frequency, the approximation might not be valid!&#39;)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">fc</span><span class="o">/</span><span class="n">freq</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">Vp</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">Vpinf</span><span class="o">**</span><span class="mi">4</span><span class="o">+</span><span class="n">Vp0</span><span class="o">**</span><span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">Vpinf</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">Vp0</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Vp</span></div>
+
+<div class="viewcode-block" id="Fluid.Gassmann"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Gassmann">[docs]</a>    <span class="k">def</span> <span class="nf">Gassmann</span><span class="p">(</span><span class="n">K_dry</span><span class="p">,</span><span class="n">G_dry</span><span class="p">,</span><span class="n">K_mat</span><span class="p">,</span><span class="n">Kf</span><span class="p">,</span><span class="n">phi</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Computes saturated elastic moduli of rock via Gassmann equation given dry-rock moduli. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        K_dry : float or array-like</span>
+<span class="sd">            dry frame bulk modulus </span>
+<span class="sd">        G_dry : float or array-like</span>
+<span class="sd">            dry frame shear modulus </span>
+<span class="sd">        K_mat : float</span>
+<span class="sd">            matrix bulk modulus</span>
+<span class="sd">        Kf : float</span>
+<span class="sd">            fluid bulk modulus</span>
+<span class="sd">        phi : float or array-like</span>
+<span class="sd">            porosity</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            K_sat, G_sat: fluid saturated elastic moduli</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+          
+        <span class="n">A</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">K_dry</span><span class="o">/</span><span class="n">K_mat</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">B</span><span class="o">=</span><span class="n">phi</span><span class="o">/</span><span class="n">Kf</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">/</span><span class="n">K_mat</span><span class="o">-</span><span class="n">K_dry</span><span class="o">/</span><span class="p">(</span><span class="n">K_mat</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">K_sat</span><span class="o">=</span><span class="n">K_dry</span><span class="o">+</span><span class="n">A</span><span class="o">/</span><span class="n">B</span>
+        <span class="n">G_sat</span> <span class="o">=</span> <span class="n">G_dry</span> <span class="c1"># At low frequencies, Gassmann’s relations predict no change in the shear modulus between dry and saturated patches</span>
+        <span class="k">return</span> <span class="n">K_sat</span><span class="p">,</span><span class="n">G_sat</span></div>
+
+<div class="viewcode-block" id="Fluid.Gassmann_sub"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Gassmann_sub">[docs]</a>    <span class="k">def</span> <span class="nf">Gassmann_sub</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">K0</span><span class="p">,</span> <span class="n">Ksat1</span><span class="p">,</span><span class="n">Kfl1</span><span class="p">,</span><span class="n">Kfl2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fluid subsititution using Gassmann equation, thr rock is initially saturated with a fluid, compute the saturated moduli for tge rock saturated with a different fluid</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phi : float or array-like </span>
+<span class="sd">            porosity</span>
+<span class="sd">        K0 : float </span>
+<span class="sd">            mineral modulus</span>
+<span class="sd">        Ksat1 : float or array-like</span>
+<span class="sd">            original bulk modulus of rock saturated with fluid of bulk modulus Kfl1</span>
+<span class="sd">        Kfl1 : float </span>
+<span class="sd">            original saturant</span>
+<span class="sd">        Kfl2 : float </span>
+<span class="sd">            new saturant</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            Ksat2: new satuarted bulk modulus of the rock </span>
+<span class="sd">        &quot;&quot;&quot;</span>       
+
+        <span class="n">a</span><span class="o">=</span><span class="n">Ksat1</span><span class="o">/</span><span class="p">(</span><span class="n">K0</span><span class="o">-</span><span class="n">Ksat1</span><span class="p">)</span><span class="o">-</span><span class="n">Kfl1</span><span class="o">/</span><span class="p">(</span><span class="n">phi</span><span class="o">*</span><span class="p">(</span><span class="n">K0</span><span class="o">-</span><span class="n">Kfl1</span><span class="p">))</span><span class="o">+</span><span class="n">Kfl2</span><span class="o">/</span><span class="p">(</span><span class="n">phi</span><span class="o">*</span><span class="p">(</span><span class="n">K0</span><span class="o">-</span><span class="n">Kfl2</span><span class="p">))</span>
+        <span class="n">Ksat2</span><span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">K0</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Ksat2</span></div>
+<div class="viewcode-block" id="Fluid.Gassmann_vels"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Gassmann_vels">[docs]</a>    <span class="k">def</span> <span class="nf">Gassmann_vels</span><span class="p">(</span><span class="n">Vp1</span><span class="p">,</span><span class="n">Vs1</span><span class="p">,</span><span class="n">rho1</span><span class="p">,</span><span class="n">rhofl1</span><span class="p">,</span><span class="n">Kfl1</span><span class="p">,</span><span class="n">rhofl2</span><span class="p">,</span><span class="n">Kfl2</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">phi</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gassmann fluid substituion with velocities </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Vp1 : float or array-like</span>
+<span class="sd">            saturated P velocity of rock with fluid 1</span>
+<span class="sd">        Vs1 : float or array-like</span>
+<span class="sd">            saturated S velocity of rock with fluid 1</span>
+<span class="sd">        rho1 : float</span>
+<span class="sd">            bulk density of saturated rock with fluid 1</span>
+<span class="sd">        rhofl1 : float</span>
+<span class="sd">            density of fluid 1</span>
+<span class="sd">        Kfl1 : float</span>
+<span class="sd">            bulk modulus of fluid 1</span>
+<span class="sd">        rhofl2 : float</span>
+<span class="sd">            density of fluid 2</span>
+<span class="sd">        Kfl2 : float</span>
+<span class="sd">            bulk modulus of fluid 2</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            mineral bulk modulus</span>
+<span class="sd">        phi : float or array-like</span>
+<span class="sd">            porosity</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            Vp2, Vs2: velocities of rock saturated with fluid 2</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+            
+        <span class="n">rho2</span><span class="o">=</span><span class="n">rho1</span> <span class="o">-</span> <span class="n">phi</span><span class="o">*</span><span class="n">rhofl1</span> <span class="o">+</span><span class="n">phi</span><span class="o">*</span><span class="n">rhofl2</span> <span class="c1"># density update</span>
+        <span class="n">G1</span><span class="o">=</span><span class="n">rho1</span><span class="o">*</span><span class="n">Vs1</span><span class="o">**</span><span class="mi">2</span> 
+        <span class="n">Ksat1</span><span class="o">=</span><span class="n">rho1</span><span class="o">*</span><span class="n">Vp1</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="n">G1</span>
+        <span class="n">k2</span><span class="o">=</span> <span class="n">Fluid</span><span class="o">.</span><span class="n">Gassmann_sub</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">K0</span><span class="p">,</span> <span class="n">Ksat1</span><span class="p">,</span><span class="n">Kfl1</span><span class="p">,</span><span class="n">Kfl2</span><span class="p">)</span>
+        <span class="n">G2</span><span class="o">=</span><span class="n">G1</span>
+        <span class="n">Vp2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">k2</span><span class="o">+</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="n">G2</span><span class="p">)</span><span class="o">/</span><span class="n">rho2</span><span class="p">)</span> 
+        <span class="n">Vs2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">G2</span><span class="o">/</span><span class="n">rho2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Vp2</span><span class="p">,</span> <span class="n">Vs2</span></div>
+
+
+<div class="viewcode-block" id="Fluid.Gassmann_approx"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Gassmann_approx">[docs]</a>    <span class="k">def</span> <span class="nf">Gassmann_approx</span><span class="p">(</span><span class="n">Msat1</span><span class="p">,</span><span class="n">M0</span><span class="p">,</span><span class="n">Mfl1</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">Mfl2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform gassmann fluid subsititution using on p wave modulus </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Msat1 : float or array-like</span>
+<span class="sd">            in situ saturated p wave modulus from well log data</span>
+<span class="sd">        M0 : float</span>
+<span class="sd">            mineral modulus</span>
+<span class="sd">        Mfl1 : float</span>
+<span class="sd">            p wave modulus of in situ fluid </span>
+<span class="sd">        phi : float</span>
+<span class="sd">            porosity</span>
+<span class="sd">        Mfl2 : float</span>
+<span class="sd">            p wave modulus of new fluid for susbtitution</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            Msat2:  p wave modulus of rock fully saturated with new fluid</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+            
+        <span class="n">x</span><span class="o">=</span><span class="n">Msat1</span><span class="o">/</span><span class="p">(</span><span class="n">M0</span><span class="o">-</span><span class="n">Msat1</span><span class="p">)</span> <span class="o">-</span><span class="n">Mfl1</span><span class="o">/</span><span class="p">(</span><span class="n">phi</span><span class="o">*</span><span class="p">(</span><span class="n">M0</span><span class="o">-</span><span class="n">Mfl1</span><span class="p">))</span> <span class="o">+</span><span class="n">Mfl2</span><span class="o">/</span><span class="p">(</span><span class="n">phi</span><span class="o">*</span><span class="p">(</span><span class="n">M0</span><span class="o">-</span><span class="n">Mfl2</span><span class="p">))</span>
+        <span class="n">Msat2</span><span class="o">=</span><span class="n">x</span><span class="o">*</span><span class="n">M0</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Msat2</span></div>
+
+<div class="viewcode-block" id="Fluid.Brown_Korringa_dry2sat"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Brown_Korringa_dry2sat">[docs]</a>    <span class="k">def</span> <span class="nf">Brown_Korringa_dry2sat</span><span class="p">(</span><span class="n">Sdry</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">,</span><span class="n">Kfl</span><span class="p">,</span><span class="n">phi</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute fluid saturated compliances from dry compliance for anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Sdry : 2d array</span>
+<span class="sd">            comliance matrix of the dry rock</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Isotropic mineral bulk modulus</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Isotropic mineral shear modulus</span>
+<span class="sd">        Kfl : float</span>
+<span class="sd">            Isotropic fluid bulk modulus</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            porosity</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        2d array</span>
+<span class="sd">            Ssat (6x6 matrix): Saturated compliance of anisotropic rock</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+           
+        <span class="c1"># Compressibilities of the fluid, mineral, and dry rock, sum over repeted index, e,g, β0 =s0[ααγγ]</span>
+        <span class="n">beta0</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">K0</span>
+        
+        <span class="n">betadry</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Sdry</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span> 
+        <span class="n">betafl</span> <span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">Kfl</span>
+        <span class="c1"># Isotropic mineral compliance tensor</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">write_iso</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">)</span>
+        <span class="n">S0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="c1"># nominator</span>
+        <span class="n">Sprime</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Sdry</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,:],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">S0</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,:],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">Sprime</span> <span class="o">=</span> <span class="n">Sprime</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+        <span class="c1"># denominator</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="p">(</span><span class="n">betafl</span><span class="o">-</span><span class="n">beta0</span><span class="p">)</span><span class="o">*</span><span class="n">phi</span><span class="o">+</span><span class="p">(</span><span class="n">betadry</span><span class="o">-</span><span class="n">beta0</span><span class="p">)</span>
+        <span class="n">Ssat</span><span class="o">=</span><span class="n">Sdry</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Sprime</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">Sprime</span><span class="p">)</span><span class="o">/</span><span class="n">denom</span>
+        <span class="k">return</span> <span class="n">Ssat</span></div>
+
+<div class="viewcode-block" id="Fluid.Brown_Korringa_sat2dry"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Brown_Korringa_sat2dry">[docs]</a>    <span class="k">def</span> <span class="nf">Brown_Korringa_sat2dry</span><span class="p">(</span><span class="n">Ssat</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">,</span><span class="n">Kfl</span><span class="p">,</span><span class="n">phi</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute dry compliance from fluid saturated compliances for arbitrarily anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Ssat : 2d array</span>
+<span class="sd">            comliance matrix (6x6) of the saturated rock </span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Isotropic mineral bulk modulus</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Isotropic mineral shear modulus</span>
+<span class="sd">        Kfl : float</span>
+<span class="sd">            Isotropic fluid bulk modulus</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            porosity</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        2d array</span>
+<span class="sd">            Sdry (6x6 matrix): Dry compliance of anisotropic rock</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+      
+        <span class="c1"># Compressibilities of the fluid, mineral, and dry rock, sum over repeted index, e,g, β0 =s0[ααγγ]</span>
+        <span class="n">beta0</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">K0</span>
+        
+        <span class="n">betasat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Ssat</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span> 
+        <span class="n">betafl</span> <span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">Kfl</span>
+        <span class="c1"># Isotropic mineral compliance tensor</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">write_iso</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">)</span>
+        <span class="n">S0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="c1"># nominator</span>
+        <span class="n">Sprime</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Ssat</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,:],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">S0</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,:],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">Sprime</span> <span class="o">=</span> <span class="n">Sprime</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+        <span class="c1"># denominator</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="p">(</span><span class="n">betafl</span><span class="o">-</span><span class="n">beta0</span><span class="p">)</span><span class="o">*</span><span class="n">phi</span><span class="o">-</span><span class="p">(</span><span class="n">betasat</span><span class="o">-</span><span class="n">beta0</span><span class="p">)</span>
+        <span class="n">Sdry</span><span class="o">=</span><span class="n">Ssat</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Sprime</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">Sprime</span><span class="p">)</span><span class="o">/</span><span class="n">denom</span>
+        <span class="k">return</span> <span class="n">Sdry</span></div>
+
+<div class="viewcode-block" id="Fluid.Brown_Korringa_sub"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Brown_Korringa_sub">[docs]</a>    <span class="k">def</span> <span class="nf">Brown_Korringa_sub</span><span class="p">(</span><span class="n">Csat</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">,</span><span class="n">Kfl1</span><span class="p">,</span><span class="n">Kfl2</span><span class="p">,</span><span class="n">phi</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fluid substitution in arbitrarily anisotropic rock using Brown and Korringa (1975). the rock is originally saturated by fluid 1. After fluid subsititution, the rock is finally saturated by fluid 2.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Csat : 6x6 matrix</span>
+<span class="sd">            comliance matrix of the saturated rock</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Isotropic mineral bulk modulus</span>
+<span class="sd">        G0 : float</span>
+<span class="sd">            Isotropic mineral shear modulus</span>
+<span class="sd">        Kfl1 : float</span>
+<span class="sd">            bulk modulus of the original fluid</span>
+<span class="sd">        Kfl2 : float</span>
+<span class="sd">            bulk modulus of the final fluid</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            porosity</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        2d array</span>
+<span class="sd">            Csat2, Ssat2 (6x6 matrix): Dry stiffness and compliance matrix of anisotropic rock saturated with new fluid</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">Ssat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Csat</span><span class="p">)</span>
+        
+        <span class="n">Sdry</span> <span class="o">=</span> <span class="n">Fluid</span><span class="o">.</span><span class="n">Brown_Korringa_sat2dry</span><span class="p">(</span><span class="n">Ssat</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">,</span><span class="n">Kfl1</span><span class="p">,</span><span class="n">phi</span><span class="p">)</span>
+
+        <span class="n">Ssat2</span> <span class="o">=</span> <span class="n">Fluid</span><span class="o">.</span><span class="n">Brown_Korringa_dry2sat</span><span class="p">(</span><span class="n">Sdry</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">,</span><span class="n">Kfl2</span><span class="p">,</span><span class="n">phi</span><span class="p">)</span>
+        <span class="n">Csat2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Ssat2</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">Csat2</span><span class="p">,</span> <span class="n">Ssat2</span></div>
+
+<div class="viewcode-block" id="Fluid.Mavko_Jizba"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Mavko_Jizba">[docs]</a>    <span class="k">def</span> <span class="nf">Mavko_Jizba</span><span class="p">(</span><span class="n">Vp_hs</span><span class="p">,</span> <span class="n">Vs_hs</span><span class="p">,</span><span class="n">Vpdry</span><span class="p">,</span> <span class="n">Vsdry</span><span class="p">,</span> <span class="n">K0</span><span class="p">,</span> <span class="n">rhodry</span><span class="p">,</span> <span class="n">rhofl</span><span class="p">,</span><span class="n">Kfl</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predicting the very high-frequency moduli and velocities of saturated rocks from dry rock properties using the Squirt flow model derived by Mavko and Jizba (1991). </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Vp_hs : float</span>
+<span class="sd">            P wave velocity of the dry rock measured at very high effective pressure in the unit of m/s</span>
+<span class="sd">        Vs_hs : float</span>
+<span class="sd">            S wave velocity of the dry rock  measured at very high effective pressure in the unit of m/s</span>
+<span class="sd">        Vpdry : array</span>
+<span class="sd">            P wave velocity of the dry rock measured at different effective pressure in the unit of m/s</span>
+<span class="sd">        Vsdry : array</span>
+<span class="sd">            S wave velocity of the dry rock measured at different effective pressure in the unit of m/s</span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            mineral bulk moduli</span>
+<span class="sd">        rhodry : float</span>
+<span class="sd">            bulk density of the dry rock</span>
+<span class="sd">        rhofl : float</span>
+<span class="sd">            bulk density of the pore fluid</span>
+<span class="sd">        Kfl : float</span>
+<span class="sd">            bulk moduli of the pore fluid</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            porosity</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        _type_</span>
+<span class="sd">            Kuf_sat (float):GPa, predicted high frequency bulk moduli of saturated rock</span>
+<span class="sd">            Guf_sat (array): GPa, predicted high frequency shear moduli of saturated rock at different pressure </span>
+<span class="sd">            Vp_hf (array): m/s, predicted high frequency P wave velocities of saturated rock</span>
+<span class="sd">            Vs_hf (array): m/s, predicted high frequency S wave velocities of saturated rock</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="c1"># dry rock moduli with pressure </span>
+        <span class="n">Kdry</span><span class="p">,</span><span class="n">Gdry</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">M_from_V</span><span class="p">(</span><span class="n">rhodry</span><span class="p">,</span> <span class="n">Vpdry</span><span class="p">,</span><span class="n">Vsdry</span><span class="p">)</span>
+        <span class="c1"># dry moduli dry rock at high high effective pressure, crack free high pressure moduli</span>
+        <span class="n">Khs</span><span class="p">,</span> <span class="n">Ghs</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">M_from_V</span><span class="p">(</span><span class="n">rhodry</span><span class="p">,</span> <span class="n">Vp_hs</span><span class="p">,</span><span class="n">Vs_hs</span><span class="p">)</span>
+        <span class="c1"># high-frequency “wet-frame moduli</span>
+        <span class="n">Kuf</span><span class="o">=</span> <span class="n">Khs</span> <span class="c1"># ignore the a first order correction for the difference in fluid and mineral compressibilities. </span>
+        <span class="c1"># high-frequency saturated moduli </span>
+        <span class="n">Kuf_sat</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span>  <span class="n">Fluid</span><span class="o">.</span><span class="n">Gassmann</span><span class="p">(</span><span class="n">Kuf</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">Kfl</span><span class="p">,</span><span class="n">phi</span><span class="p">)</span>
+        <span class="n">Guf_sat_inv</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">Gdry</span> <span class="o">-</span> <span class="mi">4</span><span class="o">/</span><span class="mi">15</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">Kdry</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">Kuf</span><span class="p">)</span>
+        <span class="n">Guf_sat</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">Guf_sat_inv</span>
+        <span class="c1"># predicted high frequency velocities</span>
+        <span class="n">rho_sat</span><span class="o">=</span><span class="n">rhodry</span><span class="o">+</span><span class="n">phi</span><span class="o">*</span><span class="n">rhofl</span> <span class="c1"># saturated bulk density</span>
+        <span class="n">Vp_hf</span><span class="p">,</span><span class="n">Vs_hf</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">V</span><span class="p">(</span><span class="n">Kuf_sat</span><span class="p">,</span> <span class="n">Guf_sat</span><span class="p">,</span> <span class="n">rho_sat</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Kuf_sat</span><span class="p">,</span><span class="n">Guf_sat</span><span class="p">,</span><span class="n">Vp_hf</span><span class="p">,</span><span class="n">Vs_hf</span></div>
+
+
+<div class="viewcode-block" id="Fluid.Squirt_anisotropic"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.Squirt_anisotropic">[docs]</a>    <span class="k">def</span> <span class="nf">Squirt_anisotropic</span><span class="p">(</span><span class="n">Sdry</span><span class="p">,</span> <span class="n">Sdry_hp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict wet unrelaxed frame compliances at very high frequency from dry frame compliances for transversely isotropic rocks using theoretical formula derived by Mukerji and Mavko, (1994)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Sdry : array</span>
+<span class="sd">            dry rock compliances [S11 S12 S13 S33 S44]</span>
+<span class="sd">        Sdry_hp : array</span>
+<span class="sd">            dry rock compliances at very high effective stress [S11 S12 S13 S33 S44]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        array</span>
+<span class="sd">            The wet-frame compliances [S11 S12 S13 S33 S44]</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">Sdry</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">Sdry</span><span class="p">)</span>
+        <span class="n">Sdry_hp</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">Sdry_hp</span><span class="p">)</span>
+        <span class="c1"># delta_Sdry_ijkl</span>
+        <span class="n">DSdry</span><span class="o">=</span><span class="n">Sdry</span><span class="o">-</span><span class="n">Sdry_hp</span>
+        <span class="c1"># delta_Sdry_aabb</span>
+        <span class="n">DSdry_aabb</span><span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">DSdry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">DSdry</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">DSdry</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">DSdry</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="c1">#2*(dss(:,1)+dss(:,2)+2*dss(:,3))+dss(:,4);</span>
+        <span class="c1"># Delta S_tilde </span>
+        <span class="n">D_Sdry</span><span class="o">=</span> <span class="n">DSdry</span><span class="o">/</span><span class="n">DSdry_aabb</span>
+        <span class="c1"># delta_Sdry_abab= 2S11+S33+4S44+2S66</span>
+        <span class="n">D_Sdry_abab</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="n">D_Sdry_abab</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1">#the elements of Gijkl</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">alpha</span>
+        <span class="n">G11</span><span class="o">=</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">alpha</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="p">(</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">G12</span><span class="o">=</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">T</span> 
+        <span class="n">G13</span><span class="o">=</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">T</span>
+        <span class="n">G33</span><span class="o">=</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">-</span><span class="mi">8</span><span class="o">*</span><span class="n">alpha</span><span class="o">*</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">T</span>
+        <span class="n">G44</span><span class="o">=</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">/</span><span class="n">T</span><span class="o">-</span><span class="p">(</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">D_Sdry</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">T</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">G11</span><span class="o">+</span><span class="n">G33</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span>
+        <span class="c1"># G66=2*(G11-G12)</span>
+
+        <span class="n">G</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">G11</span><span class="p">,</span><span class="n">G12</span><span class="p">,</span><span class="n">G13</span><span class="p">,</span><span class="n">G33</span><span class="p">,</span><span class="n">G44</span><span class="p">])</span>
+
+        <span class="c1"># The wet-frame compliance </span>
+        <span class="n">S_wet</span><span class="o">=</span> <span class="n">Sdry</span><span class="o">-</span><span class="n">DSdry_aabb</span><span class="o">*</span><span class="n">G</span>
+        <span class="k">return</span> <span class="n">S_wet</span></div>
+
+<div class="viewcode-block" id="Fluid.White_Dutta_Ode"><a class="viewcode-back" href="../../autoapi/rockphypy/Fluid/index.html#rockphypy.Fluid.Fluid.White_Dutta_Ode">[docs]</a>    <span class="k">def</span> <span class="nf">White_Dutta_Ode</span><span class="p">(</span><span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span><span class="p">,</span> <span class="n">K0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">rhofl1</span><span class="p">,</span><span class="n">rhofl2</span><span class="p">,</span> <span class="n">Kfl1</span><span class="p">,</span> <span class="n">Kfl2</span><span class="p">,</span><span class="n">eta1</span><span class="p">,</span><span class="n">eta2</span><span class="p">,</span><span class="n">kapa</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">sg</span><span class="p">,</span><span class="n">freq</span> <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dispersion and Attenuation of partial saturation using White and Dutta–Odé Model. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Kdry : float</span>
+<span class="sd">            bulk modulus of the dry rock </span>
+<span class="sd">        Gdry : float</span>
+<span class="sd">            shear modulus of the dry rock </span>
+<span class="sd">        K0 : float</span>
+<span class="sd">            Isotropic mineral bulk modulus</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            porosity</span>
+<span class="sd">        rho0 : float</span>
+<span class="sd">            mineral density</span>
+<span class="sd">        rhofl1 : float</span>
+<span class="sd">            density of the fluid opcupying the central sphere</span>
+<span class="sd">        rhofl2 : float</span>
+<span class="sd">            density of the fluid opcupying the outer sphere</span>
+<span class="sd">        Kfl1 : float</span>
+<span class="sd">            bulk modulus of the fluid opcupying the central sphere</span>
+<span class="sd">        Kfl2 : float</span>
+<span class="sd">            bulk modulus of the fluid opcupying the outer sphere</span>
+<span class="sd">        eta1 : float</span>
+<span class="sd">            viscousity of the fluid opcupying the central sphere</span>
+<span class="sd">        eta2 : float</span>
+<span class="sd">            viscousity of the fluid opcupying the outer sphere</span>
+<span class="sd">        kapa : float</span>
+<span class="sd">            absolute permeability of the rock</span>
+<span class="sd">        a : float</span>
+<span class="sd">            radius of central sphere , sg=a3/b3</span>
+<span class="sd">        sg : float</span>
+<span class="sd">            saturation of fluid opcupying the central sphere</span>
+<span class="sd">        freq : float or array-like</span>
+<span class="sd">            frequencies </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float, array-like</span>
+<span class="sd">            Vp (m/s): P wave velocity </span>
+<span class="sd">            a_w: attenuation coefficient</span>
+<span class="sd">            K_star: complex bulk modulus </span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        
+        <span class="n">omega</span><span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">freq</span>
+        <span class="c1">#sg=a3/b3, outer radius b</span>
+        <span class="n">b</span><span class="o">=</span> <span class="n">a</span><span class="o">/</span><span class="n">sg</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+        <span class="c1"># The saturated bulk and shear moduli, Kj and μj of region j</span>
+        <span class="n">K1</span><span class="p">,</span><span class="n">_</span><span class="o">=</span><span class="n">Fluid</span><span class="o">.</span><span class="n">Gassmann</span><span class="p">(</span><span class="n">Kdry</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">Kfl1</span><span class="p">,</span><span class="n">phi</span><span class="p">)</span>
+        <span class="n">K2</span><span class="p">,</span><span class="n">_</span><span class="o">=</span><span class="n">Fluid</span><span class="o">.</span><span class="n">Gassmann</span><span class="p">(</span><span class="n">Kdry</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">Kfl2</span><span class="p">,</span><span class="n">phi</span><span class="p">)</span>
+        <span class="n">G1</span><span class="o">=</span><span class="n">Gdry</span>
+        <span class="n">G2</span><span class="o">=</span><span class="n">G1</span>
+        <span class="c1"># </span>
+        <span class="n">R1</span><span class="o">=</span><span class="p">(</span><span class="n">K1</span><span class="o">-</span><span class="n">Kdry</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Kdry</span><span class="o">/</span><span class="n">K0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K2</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">G2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K2</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">G2</span><span class="p">)</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">G2</span><span class="o">*</span><span class="p">(</span><span class="n">K1</span><span class="o">-</span><span class="n">K2</span><span class="p">)</span><span class="o">*</span><span class="n">sg</span> <span class="p">)</span>
+        <span class="n">R2</span><span class="o">=</span><span class="p">(</span><span class="n">K2</span><span class="o">-</span><span class="n">Kdry</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Kdry</span><span class="o">/</span><span class="n">K0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">G1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K2</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">G2</span><span class="p">)</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">G2</span><span class="o">*</span><span class="p">(</span><span class="n">K1</span><span class="o">-</span><span class="n">K2</span><span class="p">)</span><span class="o">*</span><span class="n">sg</span> <span class="p">)</span>
+        <span class="n">KA1</span><span class="o">=</span><span class="p">(</span><span class="n">phi</span><span class="o">/</span><span class="n">Kfl1</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">/</span><span class="n">K0</span><span class="o">-</span><span class="n">Kdry</span><span class="o">/</span><span class="n">K0</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**-</span><span class="mi">1</span>
+        <span class="n">KA2</span><span class="o">=</span><span class="p">(</span><span class="n">phi</span><span class="o">/</span><span class="n">Kfl2</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">/</span><span class="n">K0</span><span class="o">-</span><span class="n">Kdry</span><span class="o">/</span><span class="n">K0</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**-</span><span class="mi">1</span>
+        <span class="n">KE1</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Kfl1</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">K1</span><span class="o">/</span><span class="n">K0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Kdry</span><span class="o">/</span><span class="n">K0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">phi</span><span class="o">*</span><span class="n">K1</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Kfl1</span><span class="o">/</span><span class="n">K0</span><span class="p">)))</span><span class="o">*</span><span class="n">KA1</span>
+        <span class="n">KE2</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Kfl2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">K2</span><span class="o">/</span><span class="n">K0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Kdry</span><span class="o">/</span><span class="n">K0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">phi</span><span class="o">*</span><span class="n">K2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Kfl2</span><span class="o">/</span><span class="n">K0</span><span class="p">)))</span><span class="o">*</span><span class="n">KA2</span>
+        <span class="n">alpha1</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">omega</span><span class="o">*</span><span class="n">eta1</span><span class="o">/</span><span class="p">(</span><span class="n">kapa</span><span class="o">*</span><span class="n">KE1</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">alpha2</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">omega</span><span class="o">*</span><span class="n">eta2</span><span class="o">/</span><span class="p">(</span><span class="n">kapa</span><span class="o">*</span><span class="n">KE2</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">Z1</span><span class="o">=</span><span class="n">eta1</span><span class="o">*</span><span class="n">a</span><span class="o">/</span><span class="n">kapa</span> <span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">alpha1</span><span class="o">*</span><span class="n">a</span><span class="p">))</span><span class="o">/</span><span class="p">((</span><span class="n">alpha1</span><span class="o">*</span><span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">alpha1</span><span class="o">*</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">alpha1</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>   <span class="p">)</span>
+        <span class="n">Z2</span><span class="o">=-</span><span class="n">eta2</span><span class="o">*</span><span class="n">a</span><span class="o">/</span><span class="n">kapa</span> <span class="o">*</span><span class="p">(</span>   <span class="p">(</span><span class="n">alpha2</span><span class="o">*</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span><span class="p">(</span><span class="n">alpha2</span><span class="o">*</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">alpha2</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span><span class="o">/</span><span class="p">(</span>  <span class="p">(</span><span class="n">alpha2</span><span class="o">*</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span> <span class="p">(</span><span class="n">alpha2</span><span class="o">*</span><span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span> <span class="p">(</span><span class="n">alpha2</span><span class="o">*</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">alpha2</span><span class="o">*</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">alpha2</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">))</span>  <span class="p">)</span>
+        <span class="n">Q1</span><span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Kdry</span><span class="o">/</span><span class="n">K0</span><span class="p">)</span><span class="o">*</span><span class="n">KA1</span><span class="o">/</span><span class="n">K1</span>
+        <span class="n">Q2</span><span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Kdry</span><span class="o">/</span><span class="n">K0</span><span class="p">)</span><span class="o">*</span><span class="n">KA2</span><span class="o">/</span><span class="n">K2</span>
+        <span class="n">W</span><span class="o">=</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">R1</span><span class="o">-</span><span class="n">R2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="n">Q1</span><span class="o">+</span><span class="n">Q2</span><span class="p">)</span><span class="o">/</span> <span class="p">(</span><span class="n">b</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">omega</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">+</span><span class="n">Z2</span><span class="p">)</span> <span class="p">)</span>
+        <span class="n">Kinf</span><span class="o">=</span> <span class="p">(</span><span class="n">K2</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">G2</span><span class="p">)</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">G2</span><span class="o">*</span><span class="p">(</span><span class="n">K1</span><span class="o">-</span><span class="n">K2</span><span class="p">)</span><span class="o">*</span><span class="n">sg</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="mi">3</span><span class="o">*</span><span class="n">K1</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">G2</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">K1</span><span class="o">-</span><span class="n">K2</span><span class="p">)</span><span class="o">*</span><span class="n">sg</span><span class="p">)</span>
+        <span class="n">Klowf</span> <span class="o">=</span> <span class="p">(</span><span class="n">K2</span><span class="o">*</span><span class="p">(</span><span class="n">K1</span><span class="o">-</span><span class="n">Kdry</span><span class="p">)</span><span class="o">+</span><span class="n">sg</span><span class="o">*</span><span class="n">Kdry</span><span class="o">*</span><span class="p">(</span><span class="n">K2</span><span class="o">-</span><span class="n">K1</span><span class="p">))</span><span class="o">/</span><span class="p">((</span><span class="n">K1</span><span class="o">-</span><span class="n">Kdry</span><span class="p">)</span><span class="o">+</span><span class="n">sg</span><span class="o">*</span><span class="p">(</span><span class="n">K2</span><span class="o">-</span><span class="n">K1</span><span class="p">))</span>
+
+        <span class="n">K_star</span> <span class="o">=</span> <span class="n">Kinf</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Kinf</span><span class="o">*</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># when the central sphere is saturated with a very compressible gas</span>
+        <span class="n">K_star_gas</span><span class="o">=</span> <span class="n">Kinf</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">R2</span><span class="o">*</span><span class="n">Q2</span><span class="o">*</span><span class="n">Kinf</span><span class="o">/</span><span class="p">(</span><span class="n">b</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">omega</span><span class="o">*</span><span class="n">Z2</span><span class="p">)</span> <span class="p">)</span>
+
+        <span class="c1"># P wave modulus and density </span>
+        <span class="n">M</span><span class="o">=</span> <span class="n">K_star</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">Gdry</span><span class="o">/</span><span class="mi">3</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">rho0</span><span class="o">+</span><span class="n">phi</span><span class="o">*</span><span class="n">sg</span><span class="o">*</span><span class="n">rhofl1</span><span class="o">+</span><span class="n">phi</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">sg</span><span class="p">)</span><span class="o">*</span><span class="n">rhofl2</span>
+        <span class="c1"># phase angle </span>
+        <span class="n">theta</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">imag</span><span class="o">/</span><span class="n">M</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+        <span class="c1"># velocity and attenuation coefficient, see 3.8.56 in RPH </span>
+        <span class="n">Vp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">M</span><span class="p">)</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">a_w</span><span class="o">=</span> <span class="n">omega</span><span class="o">/</span><span class="n">Vp</span> <span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Vp</span><span class="p">,</span><span class="n">a_w</span><span class="p">,</span> <span class="n">K_star</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">rockphypy</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=yujiaxin666&repo=RockPhysicsPy&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, jiaxin yu.
+      
+    </div>
+
+    
+    <a href="https://github.com/yujiaxin666/RockPhysicsPy" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

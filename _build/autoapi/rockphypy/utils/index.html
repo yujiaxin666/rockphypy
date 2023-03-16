@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+
+<html lang="English">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>rockphypy.utils &#8212; rockphypy  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="rockphypy.Perm" href="../Perm/index.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-rockphypy.utils">
+<span id="rockphypy-utils"></span><h1><a class="reference internal" href="#module-rockphypy.utils" title="rockphypy.utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.utils</span></code></a><a class="headerlink" href="#module-rockphypy.utils" title="Permalink to this heading">¶</a></h1>
+<p>&#64;File    :   utils.py
+&#64;Time    :   2023/01/16 12:06:24
+&#64;Author  :   Jiaxin Yu
+&#64;Contact :   <a class="reference external" href="mailto:yujiaxin666&#37;&#52;&#48;outlook&#46;com">yujiaxin666<span>&#64;</span>outlook<span>&#46;</span>com</a>
+&#64;License :   (C)Copyright 2020-2021, Jiaxin Yu</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rockphypy.utils.utils" title="rockphypy.utils.utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils</span></code></a></p></td>
+<td><p>Basic calculations for velocities, moduli and stiffness matrix.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="rockphypy.utils.utils">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rockphypy.utils.</span></span><span class="sig-name descname"><span class="pre">utils</span></span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic calculations for velocities, moduli and stiffness matrix.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.V">
+<span class="sig-name descname"><span class="pre">V</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils.V"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.V" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute velocity given density and elastic moduli.
+:param K: bulk modulus
+:type K: GPa
+:param G: shear moulus
+:type G: GPa
+:param rho: density of the frame
+:type rho: g/m3</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><em>Vp, Vs (m/s)</em> -- velocity</p>
+</dd>
+</dl>
+<p>Written by Jiaxin Yu (July 2021)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.poi">
+<span class="sig-name descname"><span class="pre">poi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils.poi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.poi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute poisson's ratio from K an G</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K</strong> (<em>GPa</em>) -- bulk modulus</p></li>
+<li><p><strong>G</strong> (<em>GPa</em>) -- shear modulus</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>nu</em> -- Poisson's ratio</p>
+</dd>
+</dl>
+<p>Written by Jiaxin Yu (July 2021)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.lame">
+<span class="sig-name descname"><span class="pre">lame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils.lame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.lame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute lame constant lamdba from K an G</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K</strong> (<em>GPa</em>) -- bulk modulus</p></li>
+<li><p><strong>G</strong> (<em>GPa</em>) -- shear modulus</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>nu</em> -- Poisson's ratio</p>
+</dd>
+</dl>
+<p>Written by Jiaxin Yu (July 2021)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.M_from_V">
+<span class="sig-name descname"><span class="pre">M_from_V</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils.M_from_V"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.M_from_V" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute K and G from velocities and density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>den</strong> (<em>g/cm3</em>) -- bulk density</p></li>
+<li><p><strong>vp</strong> (<em>m/s</em>) -- p wave velocity</p></li>
+<li><p><strong>vs</strong> (<em>m/s</em>) -- s wave velocity</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>K, G (GPa)</em> -- bulk and shear moduli</p>
+</dd>
+</dl>
+<p>Written by Jiaxin Yu (July 2021)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.write_HTI_matrix">
+<span class="sig-name descname"><span class="pre">write_HTI_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C44</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C55</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils.write_HTI_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.write_HTI_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>formulate HTI stiffness matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C11</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C13</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C23</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C33</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C44</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C55</strong> (<em>GPa</em>) -- stiffness</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>C</em> -- 6x6 stiffness matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.write_VTI_compliance">
+<span class="sig-name descname"><span class="pre">write_VTI_compliance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S44</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils.write_VTI_compliance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.write_VTI_compliance" title="Permalink to this definition">¶</a></dt>
+<dd><p>formulate VTI compliance matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>S11</strong> (<em>GPa</em>) -- compliance</p></li>
+<li><p><strong>S12</strong> (<em>GPa</em>) -- compliance</p></li>
+<li><p><strong>S13</strong> (<em>GPa</em>) -- compliance</p></li>
+<li><p><strong>S33</strong> (<em>GPa</em>) -- compliance</p></li>
+<li><p><strong>S44</strong> (<em>GPa</em>) -- compliance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>_type_</em> -- _description_</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.write_VTI_matrix">
+<span class="sig-name descname"><span class="pre">write_VTI_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C44</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C66</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils.write_VTI_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.write_VTI_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>formulate VTI stiffness matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C11</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C33</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C13</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C44</strong> (<em>GPa</em>) -- stiffness</p></li>
+<li><p><strong>C65</strong> (<em>GPa</em>) -- stiffness</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>C</em> -- 6x6 stiffness matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.write_matrix">
+<span class="sig-name descname"><span class="pre">write_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C22</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C44</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C55</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C66</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils.write_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.write_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>formulate general 6x6 stiffness matrix in Voigt notation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Cij</strong> (<em>GPa</em>) -- stiffness</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>C</em> -- 6x6 stiffness matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.write_iso">
+<span class="sig-name descname"><span class="pre">write_iso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils.write_iso"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.write_iso" title="Permalink to this definition">¶</a></dt>
+<dd><p>formulate isotropic 6x6 stiffness matrix in Voigt notation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Cij</strong> (<em>GPa</em>) -- stiffness</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>C</em> -- 6x6 stiffness matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.crack_por">
+<span class="sig-name descname"><span class="pre">crack_por</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils.crack_por"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.crack_por" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute crack porosity from crack aspect ratio and crack density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crd</strong> (<em>unitless</em>) -- crack density</p></li>
+<li><p><strong>alpha</strong> (<em>unitless</em>) -- crack aspect ratio</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>cpor (frac)</em> -- crack porosity</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rockphypy.utils.utils.v_to_c_VTI">
+<span class="sig-name descname"><span class="pre">v_to_c_VTI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Vp45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vp90</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vs0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vsh90</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/rockphypy/utils.html#utils.v_to_c_VTI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rockphypy.utils.utils.v_to_c_VTI" title="Permalink to this definition">¶</a></dt>
+<dd><p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Vp0</strong> (<em>km/s</em>) -- indident angle dependent velocity measurements</p></li>
+<li><p><strong>Vp45</strong> (<em>km/s</em>) -- indident angle dependent velocity measurements</p></li>
+<li><p><strong>Vp90</strong> (<em>km/s</em>) -- indident angle dependent velocity measurements</p></li>
+<li><p><strong>Vs0</strong> (<em>km/s</em>) -- indident angle dependent velocity measurements</p></li>
+<li><p><strong>Vsh90</strong> (<em>km/s</em>) -- indident angle dependent velocity measurements</p></li>
+<li><p><strong>den</strong> (<em>g/cm3</em>) -- density of the sample</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>C</em> -- VTI stiffness matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">rockphypy</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=yujiaxin666&repo=RockPhysicsPy&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../AVO/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.AVO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Anisotropy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.Anisotropy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../BW/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.BW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../EM/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.EM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Emp/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.Emp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Fluid/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.Fluid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../GM/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.GM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Perm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.Perm</span></code></a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.utils</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#classes">Classes</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#rockphypy.utils.utils">utils</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#rockphypy.utils.utils.V">V</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#rockphypy.utils.utils.poi">poi</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#rockphypy.utils.utils.lame">lame</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#rockphypy.utils.utils.M_from_V">M_from_V</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#rockphypy.utils.utils.write_HTI_matrix">write_HTI_matrix</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#rockphypy.utils.utils.write_VTI_compliance">write_VTI_compliance</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#rockphypy.utils.utils.write_VTI_matrix">write_VTI_matrix</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#rockphypy.utils.utils.write_matrix">write_matrix</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#rockphypy.utils.utils.write_iso">write_iso</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#rockphypy.utils.utils.crack_por">crack_por</a></li>
+<li class="toctree-l8"><a class="reference internal" href="#rockphypy.utils.utils.v_to_c_VTI">v_to_c_VTI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">API Reference</a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy</span></code></a><ul>
+      <li>Previous: <a href="../Perm/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rockphypy.Perm</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, jiaxin yu.
+      
+      |
+      <a href="../../../_sources/autoapi/rockphypy/utils/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/yujiaxin666/RockPhysicsPy" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

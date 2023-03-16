@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+
+<html lang="English">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rockphypy.Emp &#8212; rockphypy  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for rockphypy.Emp</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*-coding:utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">@File    :   Emp.py</span>
+<span class="sd">@Time    :   2023/03/03 14:26:59</span>
+<span class="sd">@Author  :   Jiaxin Yu </span>
+<span class="sd">@Contact :   yujiaxin666@outlook.com</span>
+<span class="sd">@License :   (C)Copyright 2020-2021, Jiaxin Yu</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="Empirical"><a class="viewcode-back" href="../../autoapi/rockphypy/Emp/index.html#rockphypy.Emp.Empirical">[docs]</a><span class="k">class</span> <span class="nc">Empirical</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Empirical relations that widely applied </span>
+<span class="sd">    &quot;&quot;&quot;</span>   
+     
+<div class="viewcode-block" id="Empirical.esti_VS"><a class="viewcode-back" href="../../autoapi/rockphypy/Emp/index.html#rockphypy.Emp.Empirical.esti_VS">[docs]</a>    <span class="k">def</span> <span class="nf">esti_VS</span><span class="p">(</span><span class="n">Vp</span><span class="p">,</span> <span class="n">vsh</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Estimate, using the Greenberg-Castagna empirical relations, the shearwave velocity in a brine-saturated shaly sandstone with vp</span>
+<span class="sd">        since we only assume two minearl phases: so L=2, X1= 1-vsh, X2= vsh</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Vp : float or array-like</span>
+<span class="sd">           compressional velocities, m/s</span>
+<span class="sd">        vsh : float or array-like</span>
+<span class="sd">            shale volume</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            vs (m/s): estimated shear wave velocities </span>
+
+<span class="sd">        References</span>
+<span class="sd">	    ----------</span>
+<span class="sd">        - handbook of rock physics P516</span>
+<span class="sd">        &quot;&quot;&quot;</span>           
+        
+        <span class="n">Vs_sand</span><span class="o">=</span> <span class="mf">0.80416</span><span class="o">*</span><span class="n">Vp</span><span class="o">/</span><span class="mi">1000</span> <span class="o">-</span> <span class="mf">0.85588</span> <span class="c1"># km/s</span>
+        <span class="n">Vs_shale</span><span class="o">=</span> <span class="mf">0.76969</span><span class="o">*</span><span class="n">Vp</span><span class="o">/</span><span class="mi">1000</span> <span class="o">-</span> <span class="mf">0.86735</span> <span class="c1">#km/s </span>
+
+        <span class="n">Vs_arith</span><span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">vsh</span><span class="p">)</span><span class="o">*</span><span class="n">Vs_sand</span><span class="o">+</span> <span class="n">vsh</span><span class="o">*</span><span class="n">Vs_shale</span>
+        <span class="n">Vs_harm</span><span class="o">=</span><span class="p">(</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">vsh</span><span class="p">)</span><span class="o">/</span><span class="n">Vs_sand</span> <span class="o">+</span><span class="n">vsh</span><span class="o">/</span><span class="n">Vs_shale</span> <span class="p">)</span><span class="o">**-</span><span class="mi">1</span>
+        <span class="n">Vs</span><span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Vs_arith</span><span class="o">+</span><span class="n">Vs_harm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Vs</span><span class="o">*</span><span class="mi">1000</span></div>
+<div class="viewcode-block" id="Empirical.han"><a class="viewcode-back" href="../../autoapi/rockphypy/Emp/index.html#rockphypy.Emp.Empirical.han">[docs]</a>    <span class="k">def</span> <span class="nf">han</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span><span class="n">C</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Han (1986) found empirical regressions relating ultrasonic (laboratory) velocities to porosity and clay content.effective pressure is 20Mpa</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phi : float or array-like</span>
+<span class="sd">            porosity</span>
+<span class="sd">        C : float or array-like</span>
+<span class="sd">            clay volume fraction</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or array-like</span>
+<span class="sd">            P and S wave velocities</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+             
+        <span class="n">vp</span><span class="o">=</span><span class="mf">5.59</span><span class="o">-</span><span class="mf">6.93</span><span class="o">*</span><span class="n">phi</span><span class="o">-</span><span class="mf">2.81</span><span class="o">*</span><span class="n">C</span>
+        <span class="n">vs</span><span class="o">=</span><span class="mf">3.52</span><span class="o">-</span><span class="mf">4.91</span><span class="o">*</span><span class="n">phi</span><span class="o">-</span><span class="mf">1.89</span><span class="o">*</span><span class="n">C</span>
+        <span class="k">return</span> <span class="n">vp</span><span class="o">*</span><span class="mi">1000</span><span class="p">,</span><span class="n">vs</span><span class="o">*</span><span class="mi">1000</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">rockphypy</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=yujiaxin666&repo=RockPhysicsPy&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, jiaxin yu.
+      
+    </div>
+
+    
+    <a href="https://github.com/yujiaxin666/RockPhysicsPy" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
