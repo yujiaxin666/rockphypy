@@ -30,6 +30,7 @@ extensions = [
     "sphinx.ext.autodoc",
     #"sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
+    'sphinx.ext.inheritance_diagram',
     "autoapi.extension",
     "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
