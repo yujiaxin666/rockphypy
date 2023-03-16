@@ -10,7 +10,7 @@ sphinx:
   configuration: docs/source/conf.py
 
 # Optionally build your docs in additional formats such as PDF and ePub
-formats: all
+# formats: all
 
 # ReadTheDocs.io need to install the dependencies to be able
 # to build the documentation automatically.
