@@ -13,7 +13,6 @@ jobs:
           pip install sphinx sphinx_rtd_theme
       - name: Build Docs
         run: |
-          sudo apt install pandoc -y
           sphinx-build docs _build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
