@@ -5,6 +5,10 @@
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
 
+
+**/source/getting_started/
+**/source/gallery/
+
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 

@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.abspath('../..' ))
 #sys.path.insert(0, os.path.abspath('..'))
 #os.path.abspath(os.path.join('..', '..'))
 
-
+from sphinx_gallery.sorting import FileNameSortKey
 # from rockphypy import __version__
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
@@ -37,6 +37,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.autosummary",
     "sphinx.ext.extlinks",
+    'sphinx_gallery.gen_gallery',
     "numpydoc",
     "nbsphinx",
     #'matplotlib.sphinxext.only_directives',
@@ -60,6 +61,14 @@ autoapi_options = [
     "inherited-members",
 ]
 
+intersphinx_mapping = {
+    'numpy': ('https://numpy.org/doc/stable/', None),
+    'python': ('https://docs.python.org/{.major}'.format(sys.version_info), None),
+    'matplotlib': ('https://matplotlib.org/', None),
+    'sphinx': ('http://www.sphinx-doc.org/en/stable', None),
+    'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
+}
+
 autosummary_generate = True  # Turn on sphinx.ext.autosummary
 numpydoc_show_class_members = False 
 autodoc_typehints = 'none'
@@ -72,15 +81,16 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = ".rst"
+source_suffix = ['.rst']
 
 exclude_patterns = ['_build',  "build", "**.ipynb_checkpoints"]
 
-language = 'English'
+language = 'en'
 
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
+highlight_language = 'python3'
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
@@ -113,3 +123,28 @@ html_theme_options = {
 }
 
 html_show_sphinx = False
+
+
+
+# -- Sphinx Gallery Options
+sphinx_gallery_conf = {
+    # path to your examples scripts
+    "examples_dirs": [
+        "../../examples/getting_started"
+    ],
+    # path where to save gallery generated examples
+    "gallery_dirs": [
+        'getting_started'
+    ],
+     # specify that examples should be ordered according to filename
+    'within_subsection_order': FileNameSortKey,
+    # this case sphinx_gallery and numpy in a tuple of strings.
+    "filename_pattern": r"\.py",
+    # Remove the "Download all examples" button from the top level gallery
+    "download_all_examples": False,
+    # directory where function granular galleries are stored
+    "backreferences_dir": "gallery/generated/backreferences",
+    # Modules for which function level galleries are created.
+    "doc_module": "rockphypy"
+    
+}

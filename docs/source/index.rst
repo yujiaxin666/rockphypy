@@ -84,7 +84,8 @@ Table of contents
 ==================
 .. currentmodule:: rockphypy
 .. toctree::
-
+   
+   getting_started/index
    autoapi/index
 
 Contents:
