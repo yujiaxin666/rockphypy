@@ -143,7 +143,7 @@ sphinx_gallery_conf = {
     # Remove the "Download all examples" button from the top level gallery
     "download_all_examples": False,
     # directory where function granular galleries are stored
-    "backreferences_dir": None,#"gallery/generated/backreferences",
+    "backreferences_dir": "gallery/generated/backreferences",
     # Modules for which function level galleries are created.
     "doc_module": "rockphypy"
     

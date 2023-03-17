@@ -1,0 +1,39 @@
+
+
+Examples using ``rockphypy.EM.cripor``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. start-sphx-glr-thumbnails
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This pages gives a simple examples of using rockphypy to compute Critical porosity model and pe...">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_01_Critical_Porosity_and_Gassmann_Fluidsubtitution_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_getting_started_01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Getting Started</div>
+    </div>
+
+
+.. only:: not html
+
+ * :ref:`sphx_glr_getting_started_01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py`
+
+.. raw:: html
+
+    </div>
+

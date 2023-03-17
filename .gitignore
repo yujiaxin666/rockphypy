@@ -5,9 +5,9 @@
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
 
-
-**/source/getting_started/
-**/source/gallery/
+# apply and remove these folder from github
+#**/source/getting_started/
+#**/source/gallery/
 
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
