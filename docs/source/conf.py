@@ -74,7 +74,7 @@ numpydoc_show_class_members = False
 autodoc_typehints = 'none'
 napoleon_use_rtype = False
 
-
+python_version = "3.8"
 
 templates_path = ['_templates']
 
