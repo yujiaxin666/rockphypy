@@ -69,7 +69,7 @@ intersphinx_mapping = {
     'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
 }
 
-autosummary_generate = True  # Turn on sphinx.ext.autosummary
+autosummary_generate = False  # Turn on sphinx.ext.autosummary
 numpydoc_show_class_members = False 
 autodoc_typehints = 'none'
 napoleon_use_rtype = False
