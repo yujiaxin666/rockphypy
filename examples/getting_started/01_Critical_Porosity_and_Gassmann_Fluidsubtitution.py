@@ -1,8 +1,8 @@
 """
-Getting Started
-===============
+Critical porosity model and Gassmann Fluid substitution
+=======================================================
 
-This pages gives a simple examples of using `rockphypy` to compute Critical porosity model and perform Gassmann Fluid substitution. 
+This pages gives a simple examples of using the classes ``EM`` and ``Fluid`` of ``rockphypy`` to compute Critical porosity model and perform Gassmann Fluid substitution. 
 """
 # %% 
 
@@ -25,7 +25,7 @@ from rockphypy import Fluid
 # ~~~~~~~~~~~~~~~~~~~~~~~
 # 
 # Remember Nur’s hypothesis: There is a critical (structure-dependent)
-# porosity at which the framework stiffness goes to zero! The simple yet 
+# porosity at which the framework stiffness goes to zero. The simple yet 
 # powerful critical porosity model is defined as: 
 # 
 # .. math::
@@ -34,7 +34,7 @@ from rockphypy import Fluid
 # .. math::
 #         \mu_{\text {dry }}=\mu_{0}\left(1-\frac{\phi}{\phi_{\mathrm{c}}}\right)
 # 
-# where K0 and μ0 are the mineral bulk and shear moduli.
+# where :math:`K_0` and :math:`\mu_0` are the mineral bulk and shear moduli.
 # 
 
 # %% 
@@ -42,11 +42,11 @@ from rockphypy import Fluid
 # Gassmann Fluid substitution
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Compute dry frame moduli using rock physics models such as critical porosity 
-# model is straightforward as shown above. It becomes chalenging when it comes # to saturated elastic moduli. The solution is Gassmann' explicit equations for # fluid substition. Gassmann's relations not only allows us to perform fluid 
+# model is straightforward as shown above. To compute saturated elastic moduli, Gassmann's explicit equations for fluid substition can be applied. Gassmann's relations not only allows us to perform fluid 
 # substition (when one fluid is replaced
 # with another), but to predict saturated-rock moduli from dry-rock moduli, and # vice versa. 
 # 
-# Here we show how to compute saturated moduli via GS. 
+# Here we show how to compute saturated moduli via Gassmann thoery. 
 # 
 # The equation we are gonna use is 
 # 
