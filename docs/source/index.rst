@@ -26,10 +26,10 @@ Since a constant state of development and growth is aimed, please feel free to c
 Installation
 ------------
 
-``rockphypy`` is available through ``PyPI`` and may be installed using ``pip``: ::
+``rockphypy`` is available through ``PyPI`` and may be installed using ``pip``: 
 
 
-   $ pip install rockphypy
+   ``$ pip install rockphypy``
 
 Example code
 ------------
