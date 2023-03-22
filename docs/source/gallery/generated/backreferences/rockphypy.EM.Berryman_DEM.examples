@@ -1,0 +1,39 @@
+
+
+Examples using ``rockphypy.EM.Berryman_DEM``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. start-sphx-glr-thumbnails
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Differential Effective Medium (DEM)">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_10_Differential_effective_medium_model_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_getting_started_10_Differential_effective_medium_model.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Differential Effective Medium (DEM)</div>
+    </div>
+
+
+.. only:: not html
+
+ * :ref:`sphx_glr_getting_started_10_Differential_effective_medium_model.py`
+
+.. raw:: html
+
+    </div>
+

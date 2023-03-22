@@ -13,6 +13,7 @@ import numpy as np
 from rockphypy.utils import utils
 #import Anisotropy
 from scipy.optimize import fsolve
+from scipy.integrate import odeint
 
 class EM:
     """classical bounds and inclusion models. 
@@ -452,8 +453,8 @@ class EM:
         C_eff = utils.write_matrix(C11,C11,C33,C12,C13,C13,C44,C44,C66)
         return C_eff
 
-    def Berrymann_sc(K,G,X,Alpha):
-        """Effective elastic moduli for multi-component composite using Berryman's Consistent (Coherent Potential Approximation) method.See also: PQ_vectorize, Berrymann_func
+    def Berryman_sc(K,G,X,Alpha):
+        """Effective elastic moduli for multi-component composite using Berryman's Consistent (Coherent Potential Approximation) method.See also: PQ_vectorize, Berryman_func
 
         Parameters
         ----------
@@ -471,19 +472,22 @@ class EM:
         array-like
             K_sc,G_sc: Effective bulk and shear moduli of the composite
         """        
-
-        K_sc,G_sc=  fsolve(EM.Berrymann_func, (K.mean(), G.mean()), args = (K,G,X,Alpha))
+        K= np.asanyarray(K)
+        G= np.asanyarray(G)
+        X=np.asanyarray(X)
+        Alpha=np.asanyarray(Alpha)
+        K_sc,G_sc=  fsolve(EM.Berryman_func, (K.mean(), G.mean()), args = (K,G,X,Alpha))
         return K_sc,G_sc
 
     def PQ_vectorize(Km,Gm, Ki,Gi, alpha):
-        """compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980).See also: Berrymann_sc, Berrymann_func
+        """compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980).See also: Berryman_sc, Berryman_func
 
         Parameters
         ----------
         Km : float
-            Shear modulus of matrix phase. For Berrymann SC       approach, this corresponds to the effective moduli of the composite.
+            Shear modulus of matrix phase. For Berryman SC       approach, this corresponds to the effective moduli of the composite.
         Gm : float
-            Bulk modulus of matrix phase. For Berrymann SC approach, this corresponds to the effective moduli of the composite.
+            Bulk modulus of matrix phase. For Berryman SC approach, this corresponds to the effective moduli of the composite.
         Ki : array-like
             1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]
         Gi : array-like
@@ -530,8 +534,8 @@ class EM:
         kesai= Gm/6 *(9*Km+8*Gm)/(Km+2*Gm)
         Q[alpha==1]= (Gm+kesai)/(Gi[alpha==1]+kesai)
         return P, Q
-    def Berrymann_func(params, K,G,X,Alpha ):
-        """Form the system of equastions to solve. See 4.11.14 and 4.11.15 in Rock physics handbook 2020. See also: Berrymann_sc
+    def Berryman_func(params, K,G,X,Alpha ):
+        """Form the system of equastions to solve. See 4.11.14 and 4.11.15 in Rock physics handbook 2020. See also: Berryman_sc
 
         Parameters
         ----------
@@ -551,16 +555,85 @@ class EM:
         equation
             Eqs to be solved
         """        
-       
+        
         K_sc, G_sc = params
         P, Q = EM.PQ_vectorize(K_sc,G_sc, K,G, Alpha)
         eq1 = np.sum(X*(K-K_sc)*P)
         eq2 = np.sum(X*(G-G_sc)*Q)
         return  [eq1,eq2]
 
+    def Swiss_cheese(Ks,Gs,phi): # Dilute_incl
+        """Compute effective elastic moduli via "Swiss cheese" model with spherical pores. "Swiss cheese" model assumes a dilute distribution of spherical inclusions embedded in an * *unbounded* * homogenous solid.  It takes the "noninteracting assumption" in which all cavities (pores) are independent so that their contributions can be added.
+
+        Parameters
+        ----------
+        Ks : float 
+            Bulk modulus of matrix in GPa
+        Gs : float 
+            Shear modulus of matrix in GPa
+        phi : float or array-like
+            porosity
+
+        Returns
+        -------
+        float or array-like
+            Kdry,Gdry (GPa): effective elastic moduli
+        """    
+        Kdry=(1/Ks *(1+(1+3*Ks/(4*Gs))*phi))**-1
+        Gdry=(1/Gs * (1+(15*Ks+20*Gs)*phi/(9*Ks+8*Gs)))**-1
+        return Kdry, Gdry
+    def SC(phi,Ks,Gs,iter_n):
+        """Self-Consistent(SC) model with spherical pores considering the critical porosity and the interaction effect between inclusions.
+
+        Parameters
+        ----------
+        phi : float or array-like
+            porosity in frac, note that phi.shape== Ks.shape
+        Ks : float
+            bulk modulus of matrix phase in GPa
+        Gs : float
+            shear modulus of matrix phase in GPa
+        iter_n : int
+            iterations, necessary iterations increases as f increases.
+
+        Returns
+        -------
+        float or array-like
+            K_eff,G_eff (GPa): effective elastic moduli
+        """     
+        K_eff=Ks
+        G_eff=Gs
+        for i in range(iter_n):
+            K_eff = (1/Ks + (1/K_eff+3/(4*G_eff))*phi) **-1
+            G_eff= (1/Gs + (15*K_eff+20*G_eff)/(9*K_eff+8*G_eff) *phi/G_eff )**-1
+        return K_eff,G_eff
+    def Dilute_crack(Ks,Gs,cd):
+        """The non-iteracting randomly oriented crack model.
+
+        Parameters
+        ----------
+        Ks : float
+            bulk modulus of uncracked medium in GPa
+        Gs : float
+            shear modulus of uncracked medium in GPa
+        cd : float or array-like
+            crack density
+
+        Returns
+        -------
+        float or array-like
+            K_eff,G_eff (GPa): effective elastic moduli
+        """    
+    
+        nu= (3*Ks - 2*Gs)/(2*(3*Ks + Gs))  
+        K_eff = ( 1/Ks * (1+16/9 *(1-nu**2)/(1-2*nu)*cd) )**-1
+        G_eff = ( 1/Gs * (1+32*(1-nu)*(5-nu)/ (45*(2-nu)) * cd) )**-1
+
+        return K_eff, G_eff 
+
 
     def OConnell_Budiansky(K0,G0,crd):
-        """consistent approximation  effective bulk and shear moduli of a cracked medium with randomly oriented dry penny-shaped cracks,  aspect ratio goes to 0
+        """O’Connell and Budiansky (1974) presented equations for effective bulk and shear moduli of a cracked medium with randomly oriented dry penny-shaped cracks (in the limiting case when the aspect ratio α goes to 0)
 
         Parameters
         ----------
@@ -646,5 +719,97 @@ class EM:
         return  [eq1,eq2]
 
 
+    def PQ(Km,Gm, Ki,Gi, alpha): 
+        """compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980). See also PQ_vectorize
+
+        Parameters
+        ----------
+        Km : float
+            Bulk modulus of matrix phase
+        Gm : float
+            Shear modulus of matrix phase
+        Ki : float
+            Bulk modulus of inclusion phase
+        Gi : float
+            Shear modulus of inclusion phase
+        alpha : float
+            aspect ratio of the inclusion. Note that α <1 for oblate spheroids and α > 1 for prolate spheroids
+
+        Returns
+        -------
+        float
+            P,Q (unitless): geometric strain concentration factors
+        """       
+        
+        if alpha==1:
+            P= (Km+4*Gm/3)/(Ki+4*Gm/3)
+            kesai= Gm/6 *(9*Km+8*Gm)/(Km+2*Gm)
+            Q= (Gm+kesai)/(Gi+kesai)
+            
+        
+        else:
+
+            if alpha<1:
+                theta= alpha/(1.0 - alpha**2)**(3.0/2.0) * (np.arccos(alpha) - alpha*np.sqrt(1.0 - alpha**2))
+            else:
+                theta= alpha/(alpha**2-1)**(3.0/2.0) * ( alpha*(alpha**2-1)**0.5 -np.cosh(alpha)**-1)
+            f= alpha**2*(3.0*theta - 2.0)/(1.0 - alpha**2)
+            A = Gi/Gm - 1.0
+            B = (Ki/Km - Gi/Gm)/3.0
+            R = Gm/(Km + (4.0/3.0)*Gm) # 
+            F1 = 1.0 + A*(1.5*(f + theta) - R*(1.5*f + 2.5*theta - 4.0/3.0))
+            F2 = 1.0 + A*(1.0 + 1.5*(f + theta) - R*(1.5*f + 2.5*theta)) + B*(3.0 - 4.0*R) + A*(A + 3.0*B)*(1.5 - 2.0*R)*(f + theta - R*(f - theta + 
+            2.0*theta**2))
+            F3 = 1.0 + A*(1.0 - f - 1.5*theta + R*(f + theta))
+            F4 = 1.0 + (A/4.0)*(f + 3.0*theta - R*(f - theta))
+            F5 = A*(-f + R*(f + theta - 4.0/3.0)) + B*theta*(3.0 - 4.0*R)
+            F6 = 1.0 + A*(1.0 + f - R*(f + theta)) + B*(1.0 - theta)*(3.0 - 4.0*R)
+            F7 = 2.0 + (A/4.0)*(3.0*f + 9.0*theta - R*(3.0*f + 5.0*theta)) + B*theta*(3.0 - 4.0*R)
+            F8 = A*(1.0 - 2.0*R + (f/2.0)*(R - 1.0) + (theta/2.0)*(5.0*R - 3.0)) + B*(1.0 - theta)*(3.0 - 4.0*R)
+            F9 = A*((R - 1.0)*f - R*theta) + B*theta*(3.0 - 4.0*R)
+            Tiijj = 3*F1/F2
+            Tijij = Tiijj/3 + 2/F3 + 1/F4 + (F4*F5 + F6*F7 - F8*F9)/(F2*F4)
+            P = Tiijj/3
+            Q = (Tijij - P)/5
+        return P, Q
+    def DEM(y,t, params):
+        '''
+        ODE solver tutorial: https://physics.nyu.edu/pine/pymanual/html/chap9/chap9_scipy.html. 
+        '''
+        K_eff,G_eff=y  # unpack current values of y
+        Gi,Ki,alpha = params # unpack parameters 
+        P, Q= EM.PQ(G_eff,K_eff,Gi,Ki, alpha)
+        derivs = [1/(1-t) * (Ki-K_eff) * P,  1/(1-t) * -G_eff * Q]
+        return derivs
+    def Berryman_DEM(Km,Gm, Ki, Gi, alpha,phi):
+        """Compute elastic moduli of two-phase composites by incrementally adding inclusions of one phase (phase 2) to the matrix phase using Berryman DEM theory
+
+        Parameters
+        ----------
+        Km : float
+            host mineral bulk modulus 
+        Gm : float
+            host mineral shear modulus 
+        Ki : float
+            bulk modulus of inclusion
+        Gi : float
+            shear modulus of inclusion
+        alpha : float
+            aspect ratio of the inclusion phase
+        phi : float
+            desired fraction occupied by the inclusion
+        """    
+        #Bundle parameters for ODE solver
+        params = [Gi,Ki,alpha]
+        #Bundle initial conditions for ODE solver
+        y0 = [Km,Gm]
+        # Make time array for solution
+        tStop = phi
+        tInc = 0.01
+        t = np.arange(0, tStop+tInc, tInc)
+        psoln = odeint(EM.DEM, y0, t, args=(params,))
+        K_dry_dem=psoln[:,0]
+        G_dry_dem=psoln[:,1]
+        return K_dry_dem, G_dry_dem,t
 
 

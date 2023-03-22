@@ -14,24 +14,24 @@ Examples using ``rockphypy.Fluid.Gassmann``
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This pages gives a simple examples of using rockphypy to compute Critical porosity model and pe...">
+    <div class="sphx-glr-thumbcontainer" tooltip="Sand-Shale mixture modelling">
 
 .. only:: html
 
-  .. image:: /getting_started/images/thumb/sphx_glr_01_Critical_Porosity_and_Gassmann_Fluidsubtitution_thumb.png
+  .. image:: /getting_started/images/thumb/sphx_glr_08_Shaly_sand_modelling_thumb.png
     :alt:
 
-  :ref:`sphx_glr_getting_started_01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py`
+  :ref:`sphx_glr_getting_started_08_Shaly_sand_modelling.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Getting Started</div>
+      <div class="sphx-glr-thumbnail-title">Sand-Shale mixture modelling</div>
     </div>
 
 
 .. only:: not html
 
- * :ref:`sphx_glr_getting_started_01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py`
+ * :ref:`sphx_glr_getting_started_08_Shaly_sand_modelling.py`
 
 .. raw:: html
 

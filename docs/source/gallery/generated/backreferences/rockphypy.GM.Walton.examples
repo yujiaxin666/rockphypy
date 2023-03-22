@@ -1,0 +1,39 @@
+
+
+Examples using ``rockphypy.GM.Walton``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. start-sphx-glr-thumbnails
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Hertz-Mindlin and reduced shear factor">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_04_Hertz_Mindlin_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_getting_started_04_Hertz_Mindlin.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Hertz-Mindlin and reduced shear factor</div>
+    </div>
+
+
+.. only:: not html
+
+ * :ref:`sphx_glr_getting_started_04_Hertz_Mindlin.py`
+
+.. raw:: html
+
+    </div>
+

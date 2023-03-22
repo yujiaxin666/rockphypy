@@ -20,7 +20,88 @@ class GM:
     Contact based granular medium models and extensions.
     
     """    
+    def ThomasStieber(phi_sand, phi_sh, vsh):
+        """Thomas-Stieber porosity model for sand-shale system. 
+
+        Parameters
+        ----------
+        phi_sand : float
+            clean sand porosity
+        phi_sh : float
+            shale porosity
+        vsh : float or array-like
+            volume faction of shale in the mixture
+
+        Returns
+        -------
+        float or array-like
+            phi_ABC,phi_AC (frac): porosity line as shown in Fig 5.3.2 in (Mavko,2020)
+        """    
     
+        phi1=phi_sand-(1-phi_sh)*vsh# dirty sand
+        phi2=phi_sh*vsh
+        phi_ABC= np.maximum(phi1,phi2)# take values sitting above 
+        phi_AD=phi_sand+ phi_sh*vsh # structured shale 
+        ##join point A and C
+        m= phi_sh-phi_sand
+        b= phi_sand
+        phi_AC= m*vsh+b
+        return phi_ABC,phi_AC  
+    def silty_shale(C, Kq,Gq, Ksh, Gsh):
+        """Dvorkin–Gutierrez silty shale model: model the elastic moduli of decreasing clay content for shale. 
+
+        Parameters
+        ----------
+        C : float or array-like
+            volume fraction of clay
+        Kq : float
+            bulk modulus of silt grains
+        Gq : float
+            shear modulus of silt grains
+        Ksh : float
+            saturated bulk modulus of pure shale
+        Gsh : float
+            saturated shear modulus of pure shale, * Ksh and Gsh could be derived from well-log measurements of VP, VS and density in a pure shale zone.
+
+        Returns
+        -------
+        float or array-like
+            K_sat, G_sat: elastic moduli of the saturated silty shale.
+        """       
+
+        K_sat = ( C/(Ksh+4*Gsh/3)+ (1-C)/(Kq+4*Gq/3) )**-1 -4*Gsh/3
+        Zsh = Gsh/6 *(9*Ksh+8*Gsh)/(Ksh+2*Gsh)
+        G_sat = (C/(Gsh+Zsh) + (1-C)/(Gq+Zsh))**-1 -Zsh
+        return K_sat,G_sat
+    
+    def shaly_sand(phis, C, Kss,Gss, Kcc, Gcc):
+        """Modeling elastic moduli for sand with increasing clay content using LHS bound rather than using Gassmann relation. 
+
+        Parameters
+        ----------
+        phis : float
+            critical porosity of sand composite
+        C : float or array-like
+            clay content 
+        Kss : float
+            saturated bulk moduli for clean sandstone using e.g. HM
+        Gss : float
+            saturated shear moduli for clean sandstone using e.g. HM
+        Kcc : float
+            saturated bulk moduli calculated from the sandy shale model at critical clay content using silty shale model
+        Gcc : float
+            saturated shear moduli calculated from the sandy shale model at critical clay content using silty shale model
+
+        Returns
+        -------
+        float or array-like
+            K_sat,G_sat: saturated rock moduli of the shaly sand 
+        """    
+    
+        K_sat = ( (1-C/phis)/(Kss+4*Gss/3)+ (C/phis)/(Kcc+4*Gss/3) )**-1 -4*Gss/3
+        Zss = Gss/6 *(9*Kss+8*Gss)/(Kss+2*Gss)
+        G_sat = ((1-C/phis)/(Gss+Zss) + (C/phis)/(Gcc+Zss))**-1 -Zss
+        return K_sat,G_sat
     def contactcement(K0, G0, Kc, Gc, phi, phic, Cn,  scheme):
         """Compute dry elastic moduli of cemented sandstone via Contact cement model by Dvorkin &Nur (1996).
 
