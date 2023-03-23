@@ -2,6 +2,8 @@ import scipy.special as sp
 import numpy as np
 from rockphypy.utils import utils
 #from utils import *
+
+
 class Fluid:
     """
     Fluid subsitution approaches and models describing velocity dispersion and attenuation due to the fluid effect. 

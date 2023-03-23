@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 # -*-coding:utf-8 -*-
-'''
-@File    :   GM.py
-@Time    :   2023/01/16 10:35:14
-@Author  :   Jiaxin Yu 
-@Contact :   yujiaxin666@outlook.com
-@License :   (C)Copyright 2020-2021, Jiaxin Yu
-'''
+
 
 
 ## Effective contact-based models blended with elasic bounds for calculating the elastic properties of granular medium.

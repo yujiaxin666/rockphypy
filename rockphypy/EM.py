@@ -1,12 +1,5 @@
 #!/usr/bin/env python
 # -*-coding:utf-8 -*-
-'''
-@File    :   EM.py
-@Time    :   2023/01/23 16:55:56
-@Author  :   Jiaxin Yu
-@Contact :   yujiaxin666@outlook.com
-@License :   (C)Copyright 2020-2021, Jiaxin Yu
-'''
 
 
 import numpy as np
