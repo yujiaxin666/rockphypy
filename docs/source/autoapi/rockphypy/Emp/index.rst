@@ -3,17 +3,6 @@
 
 .. py:module:: rockphypy.Emp
 
-.. autoapi-nested-parse::
-
-   @File    :   Emp.py
-   @Time    :   2023/03/03 14:26:59
-   @Author  :   Jiaxin Yu
-   @Contact :   yujiaxin666@outlook.com
-   @License :   (C)Copyright 2020-2021, Jiaxin Yu
-
-   ..
-       !! processed by numpydoc !!
-
 
 Module Contents
 ---------------

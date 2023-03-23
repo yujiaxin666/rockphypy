@@ -5,12 +5,6 @@
 
 .. autoapi-nested-parse::
 
-   @File    :   Perm.py
-   @Time    :   2023/02/19 22:11:45
-   @Author  :   Jiaxin Yu
-   @Contact :   yujiaxin666@outlook.com
-
-
    Recreation and modifcations of the Permeabilities models in Rock physics handbook matlab tools.
 
    ..

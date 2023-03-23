@@ -3,17 +3,6 @@
 
 .. py:module:: rockphypy.GM
 
-.. autoapi-nested-parse::
-
-   @File    :   GM.py
-   @Time    :   2023/01/16 10:35:14
-   @Author  :   Jiaxin Yu
-   @Contact :   yujiaxin666@outlook.com
-   @License :   (C)Copyright 2020-2021, Jiaxin Yu
-
-   ..
-       !! processed by numpydoc !!
-
 
 Module Contents
 ---------------

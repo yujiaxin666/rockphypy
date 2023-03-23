@@ -3,17 +3,6 @@
 
 .. py:module:: rockphypy.utils
 
-.. autoapi-nested-parse::
-
-   @File    :   utils.py
-   @Time    :   2023/01/16 12:06:24
-   @Author  :   Jiaxin Yu
-   @Contact :   yujiaxin666@outlook.com
-   @License :   (C)Copyright 2020-2021, Jiaxin Yu
-
-   ..
-       !! processed by numpydoc !!
-
 
 Module Contents
 ---------------

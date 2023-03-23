@@ -3,17 +3,6 @@
 
 .. py:module:: rockphypy.Anisotropy
 
-.. autoapi-nested-parse::
-
-   @File    :   Anisotropy.py
-   @Time    :   2023/02/03 17:15:02
-   @Author  :   Jiaxin Yu
-   @Contact :   yujiaxin666@outlook.com
-   @License :   (C)Copyright 2020-2021, Jiaxin Yu
-
-   ..
-       !! processed by numpydoc !!
-
 
 Module Contents
 ---------------

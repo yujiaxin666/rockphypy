@@ -5,11 +5,7 @@
 
 .. autoapi-nested-parse::
 
-   @File    :   BW.py
-   @Time    :   2022/06/03 14:17:24
-   @Author  :   Jiaxin Yu
-   @Contact :   yujiaxin666@outlook.com
-   @License :   (C)Copyright 2020-2021, Jiaxin Yu
+   Batzle and Wang functionalities
 
    ..
        !! processed by numpydoc !!
