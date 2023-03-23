@@ -15,5 +15,6 @@ sphinx:
 # ReadTheDocs.io need to install the dependencies to be able
 # to build the documentation automatically.
 python:
+  version: 3.8
   install:
     - requirements: requirements.txt
