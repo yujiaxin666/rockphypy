@@ -1,6 +1,6 @@
 # RockPhyPy
 
-This Python 3.8+ package implements most of the rock physics models introduced in the Rock Physics Handbook. The package provides a bunch of usefel classes, i.e. `Anisotropy`, `AVO`, `BW (Batzle&Wang)`,`EM(Effective medium)`,`Empirical`, `Fluid`,`GM(Granular Medium)`,`Permeability`and `utils`, An exhaust list of methods in different classes are given [here](). see the API Documentation for further details.
+This Python 3.8+ package implements most of the rock physics models introduced in the Rock Physics Handbook. The package provides a bunch of usefel classes, i.e. ``Anisotropy``, ``AVO``, ``BW (Batzle&Wang)``, ``EM(Effective medium)``, ``Empirical``, ``Fluid``, ``GM(Granular Medium)``, ``Permeability`` and ``utils``. An exhaust list of methods in different classes are given in  the [API Documentation](https://rockphypy.readthedocs.io/en/latest/autoapi/index.html).
 
 ## Installation
 

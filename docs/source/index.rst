@@ -15,7 +15,7 @@ Overview
 ``rockphypy`` is a Python-based **open-source rock physics modelling library** created for people who are interested in Rock physics and want to applied rock physics tools in their work and research.
 
 The library refactor most of rock physics models in `Stanford SRB tools  <https://github.com/StanfordRockPhysics/SRBToolbox>`_ from Matlab to Python. 
-In addition, more functions and various practical workflows are created. ``rockphypy`` provides a bunch of usefel classes, i.e. `Anisotropy`, `AVO`, `BW (Batzle&Wang)`,`EM(Effective medium)`,`Empirical`, `Fluid`,`GM(Granular Medium)`,`Permeability`and `utils`. See the API Documentation for further details. 
+In addition, more functions and various practical workflows are created. ``rockphypy`` provides a bunch of usefel classes, i.e. ``Anisotropy``, ``AVO``, ``BW (Batzle&Wang)``, ``EM(Effective medium)``, ``Empirical``, ``Fluid``, ``GM(Granular Medium)``, ``Permeability`` and ``utils``. See the API Documentation for further details. 
 
 From the ground up, ``rockphypy`` is designed to be easily embedded in various workflows i.e, machine learning, probabilistic frameworks, bayesian inversion that leverage the rich resources of python open-source. 
 
@@ -33,7 +33,7 @@ Installation
 
 Example code
 ------------
-Here's an example showing the usage of :class:`~rockphypy.EM.EM` and :class:`~rockphypy.Fluid.Fluid` for creating saturated elastic bounds. 
+Here's an example showing the usage of :class:`~rockphypy.EM` and :class:`~rockphypy.Fluid` for creating saturated elastic bounds. 
 
 .. plot::
    :include-source:
@@ -75,10 +75,11 @@ Motivation
 ----------
 
 The motivation comes from author's personal experience in rock physics study and the fact that she is a big fans of python and open source community. 
-When she began her phd study working on rock physics, she's looking for an easy to use rock physics library for finishing her head drain exercise for reservoir seismic lectures. 
-On the other hand, the author is facinated by the theoretical versaility of rock physics modelling and submerge herself into reading classical books for rock physics and pratical applications.  The rock physics handbook indeed gave here inspriations and help her build a solid understanding of the rock physics. eventually the author did her visit at stanford and finishing the python library as the last piece of her phd work. this is indeed a beautiful experience. 
+When she began her phd study about rock physics, she spent days looking for an-easy to-use rock physics library for finishing her head-drain exercise. 
 
+On the other hand, the author is facinated by the theoretical versaility of rock physics modelling and enjoy reading classical papers and books about rock physics modelling and its pratical applications.  
 
+The rock physics handbook helped the author build a solid understanding of the rock physics. Lucily the author did her visit at stanford and finished this python library as the last piece of her phd work. 
 
 Table of contents
 ==================
