@@ -1,7 +1,7 @@
 # This file may be used to create an environment using:
 # $ conda create --name <env> --file <this file>
 # platform: linux-64
-python>=3.8
+# python>=3.8
 numpy>=1.14.2
 numpydoc>=0.7.0
 scipy>=1.0.1
