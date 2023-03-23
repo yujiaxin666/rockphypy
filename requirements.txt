@@ -1,15 +1,15 @@
 # This file may be used to create an environment using:
 # $ conda create --name <env> --file <this file>
 # platform: linux-64
-python>=3.8
-numpy>=1.24.2
-numpydoc>=1.5.0
-scipy>=1.10.1
-nbsphinx>=0.8.12
+numpy>=1.14.2
+numpydoc>=0.7.0
+scipy>=1.0.1
+nbsphinx>=0.3.2
 pytest>=3.6.2
-matplotlib>=3.5.1
-ipython>=7.18.1
+matplotlib>=2.2.2
+ipython>=6.4.0
 cython>=0.29
-setuptools>=58.0.4
+setuptools>=39.2.0
 sphinx-autoapi>=2.0.1
 sphinx_gallery>=0.12.2
+
