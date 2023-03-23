@@ -60,6 +60,7 @@ autoapi_options = [
     "imported-members",
     "inherited-members",
 ]
+autoapi_keep_files = True
 
 intersphinx_mapping = {
     'numpy': ('https://numpy.org/doc/stable/', None),
