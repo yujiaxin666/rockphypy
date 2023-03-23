@@ -5,6 +5,14 @@
 # Required
 version: 2
 
+# Set the version of Python and other tools you might need
+build:
+  tools:
+    python: "3.8"
+    # You can also specify other tool versions:
+    # nodejs: "19"
+    # rust: "1.64"
+    # golang: "1.19"
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
   configuration: docs/source/conf.py
@@ -15,6 +23,5 @@ sphinx:
 # ReadTheDocs.io need to install the dependencies to be able
 # to build the documentation automatically.
 python:
-  version: 3.8
   install:
     - requirements: requirements.txt
