@@ -83,7 +83,7 @@ plt.legend(loc='best')
 
 # %%
 # Walton's theory
-# ~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~
 # Mindlin assumes a partial slip in the contact area. In constrast, Walton assumes that normal and shear deformation of a two-grain combination occur simultaneously.  The slip occurs across the whole area once applied tractions exceed the friction resistance. Spheres maybe infinitely smooth (perfect slip) or infinitely rough (no slip). For the smooth-spheres dry pack: 
 # 
 # .. math::

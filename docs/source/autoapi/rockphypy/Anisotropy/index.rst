@@ -39,7 +39,8 @@ Classes
 
    ..
        !! processed by numpydoc !!
-   .. py:method:: Thomsen(C33, C13, C44, C66, den, theta)
+   .. py:method:: Thomsen(C11, C33, C13, C44, C66, den, theta)
+      :staticmethod:
 
       
       Compute thomsen parameters and three phase velocities for weak anisotropic TI media with vertical symmetry axis.
@@ -70,7 +71,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Thomsen_Tsvankin(C22, C33, C12, C13, C23, C44, C55, C66)
+   .. py:method:: Thomsen_Tsvankin(C11, C22, C33, C12, C13, C23, C44, C55, C66)
+      :staticmethod:
 
       
       Elastic constants of an orthorhombic elastic medium defined by Tsvankin’s notation for weak elastic anisotropy assuming the vertical symmetry axis is along the x3 direction.
@@ -97,7 +99,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Backus(lamda, G)
+   .. py:method:: Backus(V, lamda, G)
+      :staticmethod:
 
       
       Computes stiffnesses of a layered medium using backus average model.
@@ -128,7 +131,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Backus_log(Vs, Den, Depth)
+   .. py:method:: Backus_log(Vp, Vs, Den, Depth)
+      :staticmethod:
 
       
       Computes Backus Average from log data, notice that the Depth is 1d Vector including each top depth of layer and also the bottom of last layer.
@@ -161,7 +165,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: vel_azi_HTI(Den, azimuth)
+   .. py:method:: vel_azi_HTI(C, Den, azimuth)
+      :staticmethod:
 
       
       Given stiffnesses and density of the HTI medium, compute the azimuth dependent phase velocities.
@@ -192,7 +197,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: vel_azi_VTI(Den, azimuth)
+   .. py:method:: vel_azi_VTI(C, Den, azimuth)
+      :staticmethod:
 
       
       Given stiffnesses and density of the VTI medium, compute the azimuth dependent phase velocities.
@@ -223,7 +229,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Bond_trans(theta, axis=3)
+   .. py:method:: Bond_trans(C, theta, axis=3)
+      :staticmethod:
 
       
       Coordinate Transformations for stiffness matrix in 6x6 Voigt notation using Bond transformation matrix.

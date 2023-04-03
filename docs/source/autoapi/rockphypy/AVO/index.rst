@@ -39,7 +39,8 @@ Classes
 
    ..
        !! processed by numpydoc !!
-   .. py:method:: AVO_HTI(D2, C1, C2, theta, azimuth)
+   .. py:method:: AVO_HTI(D1, D2, C1, C2, theta, azimuth)
+      :staticmethod:
 
       
       Compute azimuth dependent PP reflectivity for wealy anisotropic HTI media using Ruger's approximation
@@ -76,7 +77,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Aki_Richard(vp1, vp2, vs1, vs2, den1, den2)
+   .. py:method:: Aki_Richard(theta, vp1, vp2, vs1, vs2, den1, den2)
+      :staticmethod:
 
       
       Aki-Richard approximation to PP reflectivity.
@@ -118,7 +120,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: zoeppritz(vs1, rho1, vp2, vs2, rho2, theta)
+   .. py:method:: zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta)
+      :staticmethod:
 
       
       Reflection & Transmission coefficients calculated using full Zoeppritz equations.
@@ -157,7 +160,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: AVO_abe(vs1, d1, vp2, vs2, d2)
+   .. py:method:: AVO_abe(vp1, vs1, d1, vp2, vs2, d2)
+      :staticmethod:
 
       
       Copied from RPT matlab tools func: avo_abe
@@ -194,7 +198,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: EI_ref(Vs, rho, theta, SP, norm=True)
+   .. py:method:: EI_ref(Vp, Vs, rho, theta, SP, norm=True)
+      :staticmethod:
 
       
       Compute elastic impedance of an isotropic, flat-layered Earth
@@ -241,7 +246,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: AVO_ortho(b1, e11, d11, e12, d12, g1, rho1, a2, b2, e21, d21, e22, d22, g2, rho2, the)
+   .. py:method:: AVO_ortho(a1, b1, e11, d11, e12, d12, g1, rho1, a2, b2, e21, d21, e22, d22, g2, rho2, the)
+      :staticmethod:
 
       
       calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media

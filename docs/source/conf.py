@@ -60,8 +60,8 @@ autoapi_options = [
     "imported-members",
     "inherited-members",
 ]
-autoapi_keep_files = True
 
+#autoapi_python_use_implicit_namespaces = False
 intersphinx_mapping = {
     'numpy': ('https://numpy.org/doc/stable/', None),
     'python': ('https://docs.python.org/{.major}'.format(sys.version_info), None),
@@ -70,6 +70,7 @@ intersphinx_mapping = {
     'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
 }
 
+autoapi_keep_files = True
 autosummary_generate = False  # Turn on sphinx.ext.autosummary
 numpydoc_show_class_members = False 
 autodoc_typehints = 'none'
@@ -131,11 +132,13 @@ html_show_sphinx = False
 sphinx_gallery_conf = {
     # path to your examples scripts
     "examples_dirs": [
-        "../../examples/getting_started"
+        "../../examples/getting_started",
+        "../../examples/advanced_examples"
     ],
     # path where to save gallery generated examples
     "gallery_dirs": [
-        'getting_started'
+        'getting_started',
+        'advanced_examples'
     ],
      # specify that examples should be ordered according to filename
     'within_subsection_order': FileNameSortKey,

@@ -9,6 +9,7 @@ class utils:
     """
     Basic calculations for velocities, moduli and stiffness matrix.
     """    
+    @staticmethod
     def V(K, G, rho):
         """Compute velocity given density and elastic moduli. 
         Args:
@@ -25,6 +26,7 @@ class utils:
         Vs   = np.sqrt(G/rho)*1e3
         return Vp, Vs
 
+    @staticmethod
     def poi(K, G):
         """Compute poisson's ratio from K an G
 
@@ -40,6 +42,7 @@ class utils:
         nu=(3*K-2*G)/(6*K+2*G)
         return nu
 
+    @staticmethod
     def lame(K, G):
         """Compute lame constant lamdba from K an G
 
@@ -54,7 +57,8 @@ class utils:
         """    
         lamda= K-2*G/3
         return lamda
-
+ 
+    @staticmethod
     def M_from_V(den, vp,vs):
         """Compute K and G from velocities and density
 
@@ -73,7 +77,8 @@ class utils:
         K=K/10**9
         G=G/10**9
         return K, G
-
+  
+    @staticmethod
     def write_HTI_matrix(C11,C33,C13,C44,C55):
         """formulate HTI stiffness matrix 
 
@@ -96,6 +101,8 @@ class utils:
                 [0,0,0,0,C55,0],
                 [0,0,0,0,0,C55]])
         return C
+
+    @staticmethod
     def write_VTI_compliance(S11,S12,S13,S33,S44):
         """formulate VTI compliance matrix 
 
@@ -120,6 +127,7 @@ class utils:
                 [0,0,0,0,0,S66]])
         return S
 
+    @staticmethod
     def write_VTI_matrix(C11,C33,C13,C44,C66):
         """formulate VTI stiffness matrix 
 
@@ -141,6 +149,8 @@ class utils:
                 [0,0,0,0,C44,0],
                 [0,0,0,0,0,C66]])
         return C
+
+    @staticmethod
     def write_matrix(C11,C22,C33,C12,C13,C23,C44,C55,C66):
         """formulate general 6x6 stiffness matrix in Voigt notation
 
@@ -156,6 +166,8 @@ class utils:
                 [0,0,0,0,C55,0],
                 [0,0,0,0,0,C66]])
         return C
+
+    @staticmethod
     def write_iso(K,G):
         """formulate isotropic 6x6 stiffness matrix in Voigt notation
 
@@ -173,6 +185,8 @@ class utils:
                 [0,0,0,0,G,0],
                 [0,0,0,0,0,G]])
         return C
+
+    @staticmethod
     def crack_por(crd, alpha):
         """compute crack porosity from crack aspect ratio and crack density
 
@@ -185,6 +199,8 @@ class utils:
         """    
         cpor= 4*np.pi*alpha*crd/3
         return cpor
+
+    @staticmethod
     def v_to_c_VTI(Vp0,Vp45,Vp90,Vs0,Vsh90,den):
         """_summary_
 

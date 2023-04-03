@@ -14,6 +14,7 @@ class GM:
     Contact based granular medium models and extensions.
     
     """    
+    @staticmethod
     def ThomasStieber(phi_sand, phi_sh, vsh):
         """Thomas-Stieber porosity model for sand-shale system. 
 
@@ -41,6 +42,8 @@ class GM:
         b= phi_sand
         phi_AC= m*vsh+b
         return phi_ABC,phi_AC  
+
+    @staticmethod
     def silty_shale(C, Kq,Gq, Ksh, Gsh):
         """Dvorkin–Gutierrez silty shale model: model the elastic moduli of decreasing clay content for shale. 
 
@@ -67,7 +70,8 @@ class GM:
         Zsh = Gsh/6 *(9*Ksh+8*Gsh)/(Ksh+2*Gsh)
         G_sat = (C/(Gsh+Zsh) + (1-C)/(Gq+Zsh))**-1 -Zsh
         return K_sat,G_sat
-    
+
+    @staticmethod    
     def shaly_sand(phis, C, Kss,Gss, Kcc, Gcc):
         """Modeling elastic moduli for sand with increasing clay content using LHS bound rather than using Gassmann relation. 
 
@@ -96,6 +100,8 @@ class GM:
         Zss = Gss/6 *(9*Kss+8*Gss)/(Kss+2*Gss)
         G_sat = ((1-C/phis)/(Gss+Zss) + (C/phis)/(Gcc+Zss))**-1 -Zss
         return K_sat,G_sat
+
+    @staticmethod
     def contactcement(K0, G0, Kc, Gc, phi, phic, Cn,  scheme):
         """Compute dry elastic moduli of cemented sandstone via Contact cement model by Dvorkin &Nur (1996).
 
@@ -151,6 +157,7 @@ class GM:
         G_dry = 3/5*K_dry+3/20*Cn*(1-phic)*Gc*St
         return K_dry, G_dry
 
+    @staticmethod
     def hertzmindlin( K0, G0, phic, Cn, sigma, f):
         """Compute effective dry elastic moduli of granular packing under hydrostatic pressure condition via Hertz-Mindlin approach. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented.
 
@@ -189,7 +196,7 @@ class GM:
         G_dry = ((2+3*f-nu*(1+3*f))/(5*(2-nu))) * ((sigma*(3*Cn**2*(1-phic)**2*G0**2)/(2*np.pi**2*(1-nu)**2)))**(1/3)
         return K_dry, G_dry
 
-
+    @staticmethod
     def softsand(K0, G0, phi, phic, Cn, sigma, f):
         """Soft-sand (unconsolidated sand) model: model the porosity-sorting effects using the lower Hashin-Shtrikman-Walpole bound. (Also referred to as the 'friable-sand model' in Avseth et al. (2010). 
 
@@ -229,6 +236,7 @@ class GM:
         G_dry = -aux + ((phi/phic)/(G_HM+aux) + ((1-phi/phic)/(G0+aux)))**-1
         return K_dry, G_dry
 
+    @staticmethod
     def Walton(K0, G0, phic, Cn, sigma, f):
         """Compute dry rock elastic moduli of sphere packs based on the Walton (1987)' thoery. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented. 
 
@@ -273,6 +281,7 @@ class GM:
         G_w= f* G_dry2+(1-f)*G_dry1
         return K_w, G_w
 
+    @staticmethod
     def johnson(K0, G0,n, phi, epsilon, epsilon_axial, path='together'):
         """effective theory for stress-induced anisotropy in sphere packs. The transversely isotropic strain is considered as a combination of hydrostatic strain and uniaxial strain.
 
@@ -345,7 +354,7 @@ class GM:
         return C, sigma33,sigma11
 
     # ---------------------more functions added------------------------------#
-
+    @staticmethod
     def stiffsand(K0, G0, phi, phic, Cn, sigma, f):
         """Stiff-sand model:  Modified Hashin-Shtrikman upper bound with Hertz-Mindlin end point, counterpart to soft sand model. 
         model the porosity-sorting effects using the lower Hashin–Shtrikman–Walpole bound. 
@@ -381,6 +390,7 @@ class GM:
         G_dry = -aux + ((phi/phic)/(G_HM+aux) + ((1-phi/phic)/(G0+aux)))**-1
         return K_dry, G_dry
 
+    @staticmethod
     def constantcement(phi_b, K0, G0, Kc, Gc,phi, phic, Cn,scheme):
         """Constant cement (constant depth) model according to Avseth (2000)
 
@@ -425,7 +435,8 @@ class GM:
         Gdry=(T/(G_b+Z)+(1-T)/(G0+Z))**(-1)-Z
 
         return Kdry, Gdry  
-        
+
+    @staticmethod        
     def MUHS(K0, G0, Kc,Gc,phi, phi_b,phic, Cn,scheme):
         """Increasing cement model: Modified Hashin-Strikmann upper bound blend with contact cement model. For elastically stiff sandstone modelling.
 
@@ -471,6 +482,7 @@ class GM:
         G_dry = -tmp + ((phi/phi_b)/(G_b+tmp) + ((1-phi/phi_b)/(G0+tmp)))**-1
         return K_dry, G_dry
 
+    @staticmethod
     def Digby(K0, G0, phi, Cn, sigma, a_R):
         """Compute Keff and Geff using Digby's model
 
@@ -512,7 +524,7 @@ class GM:
         Geff= Cn*(1-phi)*(Sn_R+1.5*St_R)/20/np.pi
         return Keff, Geff
 
-
+    @staticmethod
     def pcm(f,sigma, K0,G0,phi, phic, v_cem,v_ci, Kc,Gc, Cn, mode,scheme,f_):
         """Computes effective elastic moduli of patchy cemented sandstone according to Avseth (2016). 
 

@@ -11,6 +11,7 @@ from scipy.integrate import odeint
 class EM:
     """classical bounds and inclusion models. 
     """
+    @staticmethod
     def VRH(volumes,M):
         """Computes Voigt, Reuss, and Hill Average Moduli Estimate.
 
@@ -38,6 +39,7 @@ class EM:
         M_h= 0.5*(M_r+M_v)
         return  M_v,M_r,M_h
 
+    @staticmethod
     def cripor(K0, G0, phi, phic):
         """Critical porosity model according to Nur’s modified Voigt average.
 
@@ -62,7 +64,8 @@ class EM:
         G_dry = G0 * (1-phi/phic)
 
         return K_dry, G_dry
-
+    
+    @staticmethod
     def cripor_reuss(M0, Mf, phic, den=False):
         """In the suspension domain, the effective bulk and shear moduli of the rock can be estimated by using the Reuss (isostress) average.
 
@@ -95,6 +98,7 @@ class EM:
 
         return M
 
+    @staticmethod
     def HS(f, K1, K2,G1, G2, bound='upper'):
         """Compute effective moduli of two-phase composite using hashin-strikmann bounds.
 
@@ -131,6 +135,7 @@ class EM:
             G=G2+f/( (G1-G2)**-1 + 2*(1-f)*Temp)
         return K, G
 
+    @staticmethod
     def Eshelby_Cheng(K, G, phi, alpha, Kf, mat=False):
         """Compute the effective anisotropic moduli of a cracked isotropic rock with single set fracture using Eshelby–Cheng Model.
 
@@ -222,7 +227,7 @@ class EM:
     #     return C11,C33,C13,C44,C66
 
 
-
+    @staticmethod
     def hudson(K, G, Ki, Gi, alpha, crd, order=1, axis=3):
         """Hudson’s effective crack model assuming weak inclusion for media with single crack set with all normals aligned along 1 or 3-axis. First and Second order corrections are both implemented. Notice that the second order correction has limitation. See Cheng (1993).
 
@@ -294,6 +299,7 @@ class EM:
             C_eff = utils.write_HTI_matrix(C33,C11,C13,C66,C44)
         return C_eff
 
+    @staticmethod
     def hudson_rand(K, G, Ki, Gi, alpha, crd):
         """Hudson's crack model of a material containing randomly oriented inclusions. The model results agree with the consistent results of Budiansky and O’Connell (1976).
 
@@ -331,6 +337,7 @@ class EM:
         K_eff = lamda_eff+2*G_eff/3
         return K_eff,G_eff
 
+    @staticmethod
     def hudson_ortho(K, G, Ki, Gi, alpha, crd):
         """Hudson’s first order effective crack model assuming weak inclusion for media with three crack sets with normals aligned along 1 2, and 3-axis respectively.  Model is valid for small crack density and aspect ratios.
 
@@ -385,6 +392,7 @@ class EM:
         C_eff = utils.write_matrix(C11,C22,C33,C12,C13,C23,C44,C55,C66)
         return C_eff
 
+    @staticmethod
     def hudson_cone(K, G, Ki, Gi, alpha, crd, theta):
         """Hudson’s first order effective crack model assuming weak inclusion for media with crack normals randomly distributed at a fixed angle from the TI symmetry axis 3 forming a cone;
 
@@ -446,6 +454,7 @@ class EM:
         C_eff = utils.write_matrix(C11,C11,C33,C12,C13,C13,C44,C44,C66)
         return C_eff
 
+    @staticmethod
     def Berryman_sc(K,G,X,Alpha):
         """Effective elastic moduli for multi-component composite using Berryman's Consistent (Coherent Potential Approximation) method.See also: PQ_vectorize, Berryman_func
 
@@ -472,6 +481,7 @@ class EM:
         K_sc,G_sc=  fsolve(EM.Berryman_func, (K.mean(), G.mean()), args = (K,G,X,Alpha))
         return K_sc,G_sc
 
+    @staticmethod
     def PQ_vectorize(Km,Gm, Ki,Gi, alpha):
         """compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980).See also: Berryman_sc, Berryman_func
 
@@ -527,6 +537,8 @@ class EM:
         kesai= Gm/6 *(9*Km+8*Gm)/(Km+2*Gm)
         Q[alpha==1]= (Gm+kesai)/(Gi[alpha==1]+kesai)
         return P, Q
+
+    @staticmethod
     def Berryman_func(params, K,G,X,Alpha ):
         """Form the system of equastions to solve. See 4.11.14 and 4.11.15 in Rock physics handbook 2020. See also: Berryman_sc
 
@@ -555,6 +567,8 @@ class EM:
         eq2 = np.sum(X*(G-G_sc)*Q)
         return  [eq1,eq2]
 
+
+    @staticmethod
     def Swiss_cheese(Ks,Gs,phi): # Dilute_incl
         """Compute effective elastic moduli via "Swiss cheese" model with spherical pores. "Swiss cheese" model assumes a dilute distribution of spherical inclusions embedded in an * *unbounded* * homogenous solid.  It takes the "noninteracting assumption" in which all cavities (pores) are independent so that their contributions can be added.
 
@@ -575,6 +589,8 @@ class EM:
         Kdry=(1/Ks *(1+(1+3*Ks/(4*Gs))*phi))**-1
         Gdry=(1/Gs * (1+(15*Ks+20*Gs)*phi/(9*Ks+8*Gs)))**-1
         return Kdry, Gdry
+
+    @staticmethod
     def SC(phi,Ks,Gs,iter_n):
         """Self-Consistent(SC) model with spherical pores considering the critical porosity and the interaction effect between inclusions.
 
@@ -600,6 +616,8 @@ class EM:
             K_eff = (1/Ks + (1/K_eff+3/(4*G_eff))*phi) **-1
             G_eff= (1/Gs + (15*K_eff+20*G_eff)/(9*K_eff+8*G_eff) *phi/G_eff )**-1
         return K_eff,G_eff
+
+    @staticmethod
     def Dilute_crack(Ks,Gs,cd):
         """The non-iteracting randomly oriented crack model.
 
@@ -624,7 +642,7 @@ class EM:
 
         return K_eff, G_eff 
 
-
+    @staticmethod
     def OConnell_Budiansky(K0,G0,crd):
         """O’Connell and Budiansky (1974) presented equations for effective bulk and shear moduli of a cracked medium with randomly oriented dry penny-shaped cracks (in the limiting case when the aspect ratio α goes to 0)
 
@@ -650,6 +668,8 @@ class EM:
         G_dry = G0*(1-32*(1-nu_eff)*(5-nu_eff)*crd/(45*(2-nu_eff)))
         return K_dry,G_dry
 
+
+    @staticmethod
     def OConnell_Budiansky_fl(K0,G0,Kfl,crd, alpha):
         """Saturated effective elastic moduli using the O’Connell and Budiansky Consistent (SC) formulations under the constraints of small aspect ratio cracks with soft-fluid saturation.
 
@@ -685,6 +705,7 @@ class EM:
         G_sat = G0*(1-32/45*(1-nu_eff) *(D+ 3/(2-nu_eff))*crd)
         return K_sat,G_sat
 
+    @staticmethod
     def OC_R_funcs(params, crd,nu_0,w ): # crd, nu_0,w
         """Form the system of equastions to solve. Given crack density and w, solve for the D and nu_eff simulaneously using equations 23 and 25 in O’Connell and Budiansky, (1974)
 
@@ -711,7 +732,7 @@ class EM:
         eq2 = crd * D**2-( crd+9/16 * (1-2*nu_eff)/(1-nu_0**2) + 3*w/(4*np.pi))*D + 9/16 * (1-2*nu_eff)/(1-nu_0**2) # eq 23 in OC&R, 1974
         return  [eq1,eq2]
 
-
+    @staticmethod
     def PQ(Km,Gm, Ki,Gi, alpha): 
         """compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980). See also PQ_vectorize
 
@@ -765,6 +786,8 @@ class EM:
             P = Tiijj/3
             Q = (Tijij - P)/5
         return P, Q
+
+    @staticmethod
     def DEM(y,t, params):
         '''
         ODE solver tutorial: https://physics.nyu.edu/pine/pymanual/html/chap9/chap9_scipy.html. 
@@ -774,6 +797,8 @@ class EM:
         P, Q= EM.PQ(G_eff,K_eff,Gi,Ki, alpha)
         derivs = [1/(1-t) * (Ki-K_eff) * P,  1/(1-t) * -G_eff * Q]
         return derivs
+
+    @staticmethod
     def Berryman_DEM(Km,Gm, Ki, Gi, alpha,phi):
         """Compute elastic moduli of two-phase composites by incrementally adding inclusions of one phase (phase 2) to the matrix phase using Berryman DEM theory
 
@@ -805,4 +830,118 @@ class EM:
         G_dry_dem=psoln[:,1]
         return K_dry_dem, G_dry_dem,t
 
+    @staticmethod
+    def SC_dilute(Km, Gm, Ki, Gi, f, mode):
+        """Elastic solids with elastic micro-inclusions. Random distribution of dilute spherical micro-inclusions in a two phase composite.
 
+        Parameters
+        ----------
+        Km : float
+            bulk modulus of matrix
+        Gm : float
+            shear modulus of matrix 
+        Ki : float
+            bulk modulus of inclusion 
+        Gi : float
+            shear modulus of inclusion
+        f : float or array
+            _descripvolume fraction of inclusion phase tion_
+        mode : string
+            'stress' if macro stress is prescribed. 'strain' if macro strain is prescribed.
+
+        References
+        ----------
+        S. Nemat-Nasser and M. Hori (book) : Micromechanics: Overall Properties of Heterogeneous Materials. Sec 8
+
+        Returns
+        -------
+        float or array
+            K, G: effective moduli of the composite 
+        """    
+        
+        nu = 0.5* (3*Km- 2*Gm)/(3*Km+Gm) # Poisson's ratio
+        S1 = 1/3 * (1+nu)/( 1-nu)
+        S2 = 2/15 * (4-5*nu)/(1-nu)
+        if mode == 'stress':
+            K = ( 1+ f * (Km/ (Km-Ki)- S1)**-1)**-1
+            G = ( 1+ f * (Gm/ (Gm-Gi)- S2)**-1)**-1
+        elif mode == 'strain':
+            K = 1-f*(Km/(Km-Ki)-S1)**-1
+            G = 1-f*(Gm/(Gm-Gi)-S2)**-1
+        return K, G
+
+    @staticmethod
+    def SC_flex(f, iter_n, Km, Ki, Gm, Gi):
+        """iteratively solving self consistent model for a two phase compposite consisting random distribution of spherical inclusion, not limited to pore. 
+
+        Parameters
+        ----------
+        f : float or array
+            volumetric fraction, f.shape== Km.shape
+        iter_n : int
+            iterations, necessary iterations increases as f increases.
+        Km : float
+            bulk modulus of matrix phase
+        Ki : float
+            bulk modulus of inclusion phase
+        Gm : float
+            shear modulus of matrix phase
+        Gi : float
+            shear modulus of inclusion phase 
+
+        Reference
+        ---------
+        S. Nemat-Nasser and M. Hori (book) : Micromechanics: Overall Properties of Heterogeneous Materials. Sec 8
+
+        Returns
+        -------
+        float or array
+            K_eff, G_eff (GPa): Effective elastic moduli
+        """    
+        
+        K_eff=Km
+        G_eff=Km
+        for i in range(iter_n):
+            nu = 0.5* (3*K_eff- 2*G_eff)/(3*K_eff+G_eff) # Poisson's ratio
+            S1 = 1/3 * (1+nu)/( 1-nu)
+            S2 = 2/15 * (4-5*nu)/(1-nu)
+            K_eff = (1- f* K_eff*(Km-Ki)/(Km*(K_eff-Ki)) *(K_eff/(K_eff-Ki)-S1)**-1) * Km
+
+            G_eff= (1- f * G_eff*(Gm-Gi)/(Gm*(G_eff-Gi)) *(G_eff/(G_eff-Gi)-S2)**-1 ) *Gm 
+        return K_eff,G_eff
+
+    @staticmethod
+    def MT_average(f, Kmat, Gmat, K1, G1, K2, G2): 
+        """Compute Two-phase composite without matrix using modified Mori-Takana Scheme according to  Iwakuma 2003, one of the inhomogeneities must be considered as a matrix in the limiting model.
+
+        Parameters
+        ----------
+        f : float or array
+            Volume fraction of matrix/inhomogeneity 1. f1=1-f2, (1-f) can be regarded as pseudo crack density.
+        Kmat : float
+            Bulk modulus of matrix/inhomogeneity 1
+        Gmat : float
+            shear modulus of  matrix/ inhomogeneity 1
+        K1 : float
+            Bulk modulus of inhomogeneity 1
+        G1 : float
+            shear modulus of inhomogeneity 1
+        K2 : float
+            Bulk modulus of inhomogeneity 2
+        G2 : float
+            shear modulus of inhomogeneity 2
+
+        Returns
+        -------
+        float or array
+            K_ave, G_ave [GPa]: MT average bulk and shear modulus 
+        """    
+    
+        possion= (3*Kmat -2*Gmat)/(2*(3*Kmat+Gmat)) # possion (unitless): possion's ratio of virtual matrix 
+        
+        alpha=(1+possion) / ( 3*(1-possion) )
+        beta= 2* (4-5*possion) / ( 15* (1-possion) )
+
+        K_ave= (f*Kmat*K1/(Kmat-(Kmat-K1)*alpha) + (1-f)*Kmat*K2/(Kmat-(Kmat-K2)*alpha)) / ( f*Kmat/(Kmat-(Kmat-K1)*alpha) + (1-f)*Kmat/(Kmat-(Kmat-K2)*alpha)  )
+        G_ave= (f*Gmat*G1/(Gmat-(Gmat-G1)*beta) + (1-f)*Gmat*G2/(Gmat-(Gmat-G2)*beta)) / ( f*Gmat/(Gmat-(Gmat-G1)*beta) + (1-f)*Gmat/(Gmat-(Gmat-G2)*beta)  )
+        return K_ave, G_ave

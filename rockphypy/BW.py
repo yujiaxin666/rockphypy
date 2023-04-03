@@ -11,7 +11,8 @@ import warnings
 
 class BW:
     """Effective CO2, natural gas, brine and oil property calculation using original and modified Batzle-Wang equations.
-    """    
+    """  
+    @staticmethod  
     def dz_dp(P_pr,T_pr):
         """Values for dZ/dPpr obtained from equation 10b in Batzle and Wang (1992).
         """    
@@ -23,6 +24,7 @@ class BW:
         return dzdp
 
     #-----------------Pure Gas--------------------------#
+    @staticmethod
     def pseudo_p_t(P,T,G):
         """Calculate the pseudoreduced temperature and pressure according to Thomas et al. 1970.
 
@@ -50,6 +52,7 @@ class BW:
         return Ta,P_pr,T_pr
 
     #-----------------Pure Co2--------------------------#
+    @staticmethod
     def rho_K_co2(P,T,G):
         """Compute CO2 properties as a function of temperature and pressure using modified Batzle-Wang equations
 
@@ -90,6 +93,7 @@ class BW:
         return rho, K/1000
 
     #-----------------Pure Gas--------------------------#
+    @staticmethod
     def rho_K_gas(P, T, G):
         """Estimate the Gas density and bulk modulus at specific temperature and pressure. 
 
@@ -122,7 +126,7 @@ class BW:
         return rho,K/1000
 
     #-----------------Pure Oil--------------------------#
-
+    @staticmethod
     def rho_K_oil(P,T,den):
         """Estimate the oil density and bulk modulus at specific temperature and pressure.
 
@@ -149,7 +153,7 @@ class BW:
         return rho, K
 
     #-----------------Gas satutrated with oil--------------------------#
-
+    @staticmethod
     def rho_K_go(P, T, den,G,Rg):
         """compute density and bulk modulus of live oil. 
 
@@ -188,7 +192,7 @@ class BW:
 
     #-----------------Pure Water--------------------------#
 
-
+    @staticmethod
     def rho_K_water(T, P):
         """Compute the density and bulk modulus of pure water as a function of temperature and pressure using Batzle and Wang (1992).
 
@@ -214,6 +218,7 @@ class BW:
         K_w= rho_w*v_w**2*1e-6
         return rho_w, K_w
 
+    @staticmethod
     def v_water(T, P):
         """Acoustic velocity of pure water as a function of temperature
         and pressure using Batzle and Wang (1992).
@@ -244,6 +249,7 @@ class BW:
         
         return v_w
 
+    @staticmethod
     def rho_K_brine(T,P,S):
         """Calculation of the density and bulk modulus of brine (NaCl) as a function of temperature, salinity and pressure using Batzle and Wang (1992).
 
@@ -270,6 +276,7 @@ class BW:
         K_b = rho_b*v_b**2*1e-6
         return rho_b, K_b
 
+    @staticmethod
     def v_brine(T, P, S):
         """Calculte the acoustic velocity of brine as a function of temperature, salinity and pressure using Batzle and Wang (1992).
 

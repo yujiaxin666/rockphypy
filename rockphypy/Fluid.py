@@ -7,8 +7,33 @@ from rockphypy.utils import utils
 class Fluid:
     """
     Fluid subsitution approaches and models describing velocity dispersion and attenuation due to the fluid effect. 
-    """    
-    
+    """ 
+
+    @staticmethod 
+    def Brie(Kw, Kgas, Sw, e):
+        """Brie empirical fluid mixing law
+
+        Parameters
+        ----------
+        Kw : float
+            bulk modulus of fluid phase
+        Kgas : float
+            bulk modulus of gas phase
+        Sw : float or array
+            water saturation
+        e : int
+            Brie component
+
+        Returns
+        -------
+        float or array
+            Kf: effective fluid propertie
+        """        
+        
+        Kf= (Kw-Kgas)*Sw**e+Kgas 
+        return Kf   
+
+    @staticmethod    
     def Biot(Kdry,Gdry,K0,Kfl,rho0,rhofl,eta,phi,kapa,a,alpha,freq):
         """
         Compute Biot dispersion and velocity attenuation 
@@ -87,7 +112,8 @@ class Fluid:
         Qs_inv = (1/S_slowness2).imag/(1/S_slowness2).real
 
         return Vp_fast,Vp_slow,Vs,QP1_inv,QP2_inv,Qs_inv
-        
+
+    @staticmethod        
     def Biot_HF(Kdry,Gdry,K0,Kfl,rho0,rhofl,phi,alpha):
         """Biot high-frequency limiting velocities in the notation of Johnson and Plona (1982)
 
@@ -134,6 +160,7 @@ class Fluid:
         Vs=np.sqrt(Gdry/(rho-phi*rhofl*alpha**-1))
         return Vp_fast,Vp_slow,Vs
 
+    @staticmethod
     def Geertsma_Smit_HF(Kdry,Gdry,K0,Kfl,rho0,rhofl,phi,alpha):
         """Approximation of Biot high-frequency limit of the fast P-wave velocity given by Geertsma and Smit (1961), This form predicts velocities that are too high (by about 3%–6%) compared with the actual high-frequency limit.
 
@@ -173,6 +200,7 @@ class Fluid:
 
         return Vp_fast,Vs
 
+    @staticmethod
     def Geertsma_Smit_LF(Vp0,Vpinf, freq,phi, rhofl, kapa, eta):
         """Low and middle-frequency approximations of Biot wave given by Geertsma and Smit (1961). Noticed that mathematically this approximation is valid at moderate-to-low seismic frequencies, i.e. f<fc
 
@@ -207,6 +235,7 @@ class Fluid:
         Vp= np.sqrt((Vpinf**4+Vp0**4*a)/(Vpinf**2+Vp0**2*a))
         return Vp
 
+    @staticmethod
     def Gassmann(K_dry,G_dry,K_mat,Kf,phi):
         """Computes saturated elastic moduli of rock via Gassmann equation given dry-rock moduli. 
 
@@ -235,6 +264,7 @@ class Fluid:
         G_sat = G_dry # At low frequencies, Gassmann’s relations predict no change in the shear modulus between dry and saturated patches
         return K_sat,G_sat
 
+    @staticmethod
     def Gassmann_sub(phi, K0, Ksat1,Kfl1,Kfl2):
         """Fluid subsititution using Gassmann equation, thr rock is initially saturated with a fluid, compute the saturated moduli for tge rock saturated with a different fluid
 
@@ -261,6 +291,41 @@ class Fluid:
         Ksat2= a*K0/(1+a)
 
         return Ksat2
+
+    @staticmethod
+    def vels(K_dry,G_dry,K0,D0,Kf,Df,phi):
+        """Computes Vp,Vs and densities of saturated rock using Gassmann relations from elastic moduli of rock. See also `Gassmann_vels`.
+
+        Parameters
+        ----------
+        K_dry : float
+            dry frame bulk modulus
+        G_dry : float
+            dry frame shear modulus
+        K0 : float
+            mineral matrix bulk modulus
+        D0 : float
+            mineral matrix density
+        Kf : float
+            fluid bulk modulus
+        Df : float
+            fluid density in g/cm3
+        phi : float or array
+            porosity
+
+        Returns
+        -------
+        float or array
+            Vp, Vs, rho
+        """        
+         
+        #D0=Dsh*vsh+Dqz*(1-vsh)####
+        rho  = D0*(1-phi)+Df*phi
+        K,_= Fluid.Gassmann(K_dry,G_dry,K0,Kf,phi)
+        Vp   = np.sqrt((K+4./3*G_dry)/rho)*1e3
+        Vs   = np.sqrt(G_dry/rho)*1e3
+        return Vp, Vs, rho
+    @staticmethod
     def Gassmann_vels(Vp1,Vs1,rho1,rhofl1,Kfl1,rhofl2,Kfl2,K0,phi):
         """Gassmann fluid substituion with velocities 
 
@@ -300,7 +365,7 @@ class Fluid:
         Vs2=np.sqrt(G2/rho2)
         return Vp2, Vs2
 
-
+    @staticmethod
     def Gassmann_approx(Msat1,M0,Mfl1,phi,Mfl2):
         """Perform gassmann fluid subsititution using on p wave modulus 
 
@@ -327,6 +392,7 @@ class Fluid:
         Msat2=x*M0/(1+x)
         return Msat2
 
+    @staticmethod
     def Brown_Korringa_dry2sat(Sdry,K0,G0,Kfl,phi):
         """Compute fluid saturated compliances from dry compliance for anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper.
 
@@ -365,6 +431,7 @@ class Fluid:
         Ssat=Sdry-np.dot(Sprime.T,Sprime)/denom
         return Ssat
 
+    @staticmethod
     def Brown_Korringa_sat2dry(Ssat,K0,G0,Kfl,phi):
         """Compute dry compliance from fluid saturated compliances for arbitrarily anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper. 
 
@@ -403,6 +470,7 @@ class Fluid:
         Sdry=Ssat + np.dot(Sprime.T,Sprime)/denom
         return Sdry
 
+    @staticmethod
     def Brown_Korringa_sub(Csat,K0,G0,Kfl1,Kfl2,phi):
         """Fluid substitution in arbitrarily anisotropic rock using Brown and Korringa (1975). the rock is originally saturated by fluid 1. After fluid subsititution, the rock is finally saturated by fluid 2.
 
@@ -435,6 +503,7 @@ class Fluid:
         
         return Csat2, Ssat2
 
+    @staticmethod
     def Mavko_Jizba(Vp_hs, Vs_hs,Vpdry, Vsdry, K0, rhodry, rhofl,Kfl, phi):
         """Predicting the very high-frequency moduli and velocities of saturated rocks from dry rock properties using the Squirt flow model derived by Mavko and Jizba (1991). 
 
@@ -482,7 +551,7 @@ class Fluid:
         Vp_hf,Vs_hf = utils.V(Kuf_sat, Guf_sat, rho_sat)
         return Kuf_sat,Guf_sat,Vp_hf,Vs_hf
 
-
+    @staticmethod
     def Squirt_anisotropic(Sdry, Sdry_hp):
         """Predict wet unrelaxed frame compliances at very high frequency from dry frame compliances for transversely isotropic rocks using theoretical formula derived by Mukerji and Mavko, (1994)
 
@@ -527,6 +596,7 @@ class Fluid:
         S_wet= Sdry-DSdry_aabb*G
         return S_wet
 
+    @staticmethod
     def White_Dutta_Ode(Kdry, Gdry, K0, phi, rho0, rhofl1,rhofl2, Kfl1, Kfl2,eta1,eta2,kapa,a,sg,freq ):
         """Dispersion and Attenuation of partial saturation using White and Dutta–Odé Model. 
 

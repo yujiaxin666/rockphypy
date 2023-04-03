@@ -8,7 +8,7 @@ class Anisotropy:
     """Effective models, coordinate transform, anisotropic parameters and phase velocities that can be applied to anisotropic media.  
     """    
 
-    
+    @staticmethod
     def Thomsen(C11, C33, C13, C44, C66, den, theta):
         """Compute thomsen parameters and three phase velocities for weak anisotropic TI media with vertical symmetry axis. 
 
@@ -38,6 +38,7 @@ class Anisotropy:
         VSH= beta*(1+gamma*np.sin(theta)**2)
         return VP, VSV, VSH, epsilon,gamma,delta
 
+    @staticmethod
     def Thomsen_Tsvankin(C11,C22,C33,C12,C13,C23,C44,C55,C66):
         """Elastic constants of an orthorhombic elastic medium defined by Tsvankin’s notation for weak elastic anisotropy assuming the vertical symmetry axis is along the x3 direction.
 
@@ -69,7 +70,7 @@ class Anisotropy:
 
         return epsilon_1,delta_1, gamma_1, epsilon_2, delta_2,gamma_2, delta_3
 
-    
+    @staticmethod
     def Backus(V,lamda, G ):
         """Computes stiffnesses of a layered medium using backus average model. 
 
@@ -107,7 +108,7 @@ class Anisotropy:
         
         return C11,C33,C13,C44,C66
 
-    
+    @staticmethod
     def Backus_log(Vp,Vs,Den,Depth):
         """Computes Backus Average from log data, notice that the Depth is 1d Vector including each top depth of layer and also the bottom of last layer. 
 
@@ -143,6 +144,7 @@ class Anisotropy:
 
         return C11,C33,C13,C44,C66, den
 
+    @staticmethod
     def vel_azi_HTI(C,Den,azimuth):
         """Given stiffnesses and density of the HTI medium, compute the azimuth dependent phase velocities.
 
@@ -176,6 +178,7 @@ class Anisotropy:
         VSV= np.sqrt(Vsv)
         return VP,VSH, VSV
 
+    @staticmethod
     def vel_azi_VTI(C,Den,azimuth):
         """Given stiffnesses and density of the VTI medium, compute the azimuth dependent phase velocities.
 
@@ -211,6 +214,7 @@ class Anisotropy:
         VSV= np.sqrt(Vsv)
         return VP,VSH, VSV
 
+    @staticmethod
     def Bond_trans(C, theta, axis=3):
         """Coordinate Transformations for stiffness matrix in 6x6 Voigt notation using Bond transformation matrix. 
 

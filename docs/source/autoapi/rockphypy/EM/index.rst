@@ -39,7 +39,8 @@ Classes
 
    ..
        !! processed by numpydoc !!
-   .. py:method:: VRH(M)
+   .. py:method:: VRH(volumes, M)
+      :staticmethod:
 
       
       Computes Voigt, Reuss, and Hill Average Moduli Estimate.
@@ -70,7 +71,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: cripor(G0, phi, phic)
+   .. py:method:: cripor(K0, G0, phi, phic)
+      :staticmethod:
 
       
       Critical porosity model according to Nur’s modified Voigt average.
@@ -103,7 +105,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: cripor_reuss(Mf, phic, den=False)
+   .. py:method:: cripor_reuss(M0, Mf, phic, den=False)
+      :staticmethod:
 
       
       In the suspension domain, the effective bulk and shear moduli of the rock can be estimated by using the Reuss (isostress) average.
@@ -140,7 +143,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: HS(K1, K2, G1, G2, bound='upper')
+   .. py:method:: HS(f, K1, K2, G1, G2, bound='upper')
+      :staticmethod:
 
       
       Compute effective moduli of two-phase composite using hashin-strikmann bounds.
@@ -177,7 +181,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Eshelby_Cheng(G, phi, alpha, Kf, mat=False)
+   .. py:method:: Eshelby_Cheng(K, G, phi, alpha, Kf, mat=False)
+      :staticmethod:
 
       
       Compute the effective anisotropic moduli of a cracked isotropic rock with single set fracture using Eshelby–Cheng Model.
@@ -218,7 +223,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: hudson(G, Ki, Gi, alpha, crd, order=1, axis=3)
+   .. py:method:: hudson(K, G, Ki, Gi, alpha, crd, order=1, axis=3)
+      :staticmethod:
 
       
       Hudson’s effective crack model assuming weak inclusion for media with single crack set with all normals aligned along 1 or 3-axis. First and Second order corrections are both implemented. Notice that the second order correction has limitation. See Cheng (1993).
@@ -267,7 +273,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: hudson_rand(G, Ki, Gi, alpha, crd)
+   .. py:method:: hudson_rand(K, G, Ki, Gi, alpha, crd)
+      :staticmethod:
 
       
       Hudson's crack model of a material containing randomly oriented inclusions. The model results agree with the consistent results of Budiansky and O’Connell (1976).
@@ -304,7 +311,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: hudson_ortho(G, Ki, Gi, alpha, crd)
+   .. py:method:: hudson_ortho(K, G, Ki, Gi, alpha, crd)
+      :staticmethod:
 
       
       Hudson’s first order effective crack model assuming weak inclusion for media with three crack sets with normals aligned along 1 2, and 3-axis respectively.  Model is valid for small crack density and aspect ratios.
@@ -341,7 +349,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: hudson_cone(G, Ki, Gi, alpha, crd, theta)
+   .. py:method:: hudson_cone(K, G, Ki, Gi, alpha, crd, theta)
+      :staticmethod:
 
       
       Hudson’s first order effective crack model assuming weak inclusion for media with crack normals randomly distributed at a fixed angle from the TI symmetry axis 3 forming a cone;
@@ -380,7 +389,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Berryman_sc(G, X, Alpha)
+   .. py:method:: Berryman_sc(K, G, X, Alpha)
+      :staticmethod:
 
       
       Effective elastic moduli for multi-component composite using Berryman's Consistent (Coherent Potential Approximation) method.See also: PQ_vectorize, Berryman_func
@@ -413,7 +423,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: PQ_vectorize(Gm, Ki, Gi, alpha)
+   .. py:method:: PQ_vectorize(Km, Gm, Ki, Gi, alpha)
+      :staticmethod:
 
       
       compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980).See also: Berryman_sc, Berryman_func
@@ -448,7 +459,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Berryman_func(K, G, X, Alpha)
+   .. py:method:: Berryman_func(params, K, G, X, Alpha)
+      :staticmethod:
 
       
       Form the system of equastions to solve. See 4.11.14 and 4.11.15 in Rock physics handbook 2020. See also: Berryman_sc
@@ -482,7 +494,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Swiss_cheese(Gs, phi)
+   .. py:method:: Swiss_cheese(Ks, Gs, phi)
+      :staticmethod:
 
       
       Compute effective elastic moduli via "Swiss cheese" model with spherical pores. "Swiss cheese" model assumes a dilute distribution of spherical inclusions embedded in an * *unbounded* * homogenous solid.  It takes the "noninteracting assumption" in which all cavities (pores) are independent so that their contributions can be added.
@@ -513,7 +526,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: SC(Ks, Gs, iter_n)
+   .. py:method:: SC(phi, Ks, Gs, iter_n)
+      :staticmethod:
 
       
       Self-Consistent(SC) model with spherical pores considering the critical porosity and the interaction effect between inclusions.
@@ -546,7 +560,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Dilute_crack(Gs, cd)
+   .. py:method:: Dilute_crack(Ks, Gs, cd)
+      :staticmethod:
 
       
       The non-iteracting randomly oriented crack model.
@@ -577,7 +592,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: OConnell_Budiansky(G0, crd)
+   .. py:method:: OConnell_Budiansky(K0, G0, crd)
+      :staticmethod:
 
       
       O’Connell and Budiansky (1974) presented equations for effective bulk and shear moduli of a cracked medium with randomly oriented dry penny-shaped cracks (in the limiting case when the aspect ratio α goes to 0)
@@ -608,7 +624,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: OConnell_Budiansky_fl(G0, Kfl, crd, alpha)
+   .. py:method:: OConnell_Budiansky_fl(K0, G0, Kfl, crd, alpha)
+      :staticmethod:
 
       
       Saturated effective elastic moduli using the O’Connell and Budiansky Consistent (SC) formulations under the constraints of small aspect ratio cracks with soft-fluid saturation.
@@ -645,7 +662,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: OC_R_funcs(crd, nu_0, w)
+   .. py:method:: OC_R_funcs(params, crd, nu_0, w)
+      :staticmethod:
 
       
       Form the system of equastions to solve. Given crack density and w, solve for the D and nu_eff simulaneously using equations 23 and 25 in O’Connell and Budiansky, (1974)
@@ -677,7 +695,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: PQ(Gm, Ki, Gi, alpha)
+   .. py:method:: PQ(Km, Gm, Ki, Gi, alpha)
+      :staticmethod:
 
       
       compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980). See also PQ_vectorize
@@ -712,7 +731,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: DEM(t, params)
+   .. py:method:: DEM(y, t, params)
+      :staticmethod:
 
       
       ODE solver tutorial: https://physics.nyu.edu/pine/pymanual/html/chap9/chap9_scipy.html.
@@ -735,7 +755,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Berryman_DEM(Gm, Ki, Gi, alpha, phi)
+   .. py:method:: Berryman_DEM(Km, Gm, Ki, Gi, alpha, phi)
+      :staticmethod:
 
       
       Compute elastic moduli of two-phase composites by incrementally adding inclusions of one phase (phase 2) to the matrix phase using Berryman DEM theory
@@ -752,6 +773,130 @@ Classes
       :type alpha: float
       :param phi: desired fraction occupied by the inclusion
       :type phi: float
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: SC_dilute(Km, Gm, Ki, Gi, f, mode)
+      :staticmethod:
+
+      
+      Elastic solids with elastic micro-inclusions. Random distribution of dilute spherical micro-inclusions in a two phase composite.
+
+      :param Km: bulk modulus of matrix
+      :type Km: float
+      :param Gm: shear modulus of matrix
+      :type Gm: float
+      :param Ki: bulk modulus of inclusion
+      :type Ki: float
+      :param Gi: shear modulus of inclusion
+      :type Gi: float
+      :param f: _descripvolume fraction of inclusion phase tion_
+      :type f: float or array
+      :param mode: 'stress' if macro stress is prescribed. 'strain' if macro strain is prescribed.
+      :type mode: string
+
+      .. rubric:: References
+
+      S. Nemat-Nasser and M. Hori (book) : Micromechanics: Overall Properties of Heterogeneous Materials. Sec 8
+
+      :returns: *float or array* -- K, G: effective moduli of the composite
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: SC_flex(f, iter_n, Km, Ki, Gm, Gi)
+      :staticmethod:
+
+      
+      iteratively solving self consistent model for a two phase compposite consisting random distribution of spherical inclusion, not limited to pore.
+
+      :param f: volumetric fraction, f.shape== Km.shape
+      :type f: float or array
+      :param iter_n: iterations, necessary iterations increases as f increases.
+      :type iter_n: int
+      :param Km: bulk modulus of matrix phase
+      :type Km: float
+      :param Ki: bulk modulus of inclusion phase
+      :type Ki: float
+      :param Gm: shear modulus of matrix phase
+      :type Gm: float
+      :param Gi: shear modulus of inclusion phase
+      :type Gi: float
+      :param Reference:
+      :param ---------:
+      :param S. Nemat-Nasser and M. Hori (book):
+      :type S. Nemat-Nasser and M. Hori (book): Micromechanics: Overall Properties of Heterogeneous Materials. Sec 8
+
+      :returns: *float or array* -- K_eff, G_eff (GPa): Effective elastic moduli
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: MT_average(f, Kmat, Gmat, K1, G1, K2, G2)
+      :staticmethod:
+
+      
+      Compute Two-phase composite without matrix using modified Mori-Takana Scheme according to  Iwakuma 2003, one of the inhomogeneities must be considered as a matrix in the limiting model.
+
+      :param f: Volume fraction of matrix/inhomogeneity 1. f1=1-f2, (1-f) can be regarded as pseudo crack density.
+      :type f: float or array
+      :param Kmat: Bulk modulus of matrix/inhomogeneity 1
+      :type Kmat: float
+      :param Gmat: shear modulus of  matrix/ inhomogeneity 1
+      :type Gmat: float
+      :param K1: Bulk modulus of inhomogeneity 1
+      :type K1: float
+      :param G1: shear modulus of inhomogeneity 1
+      :type G1: float
+      :param K2: Bulk modulus of inhomogeneity 2
+      :type K2: float
+      :param G2: shear modulus of inhomogeneity 2
+      :type G2: float
+
+      :returns: *float or array* -- K_ave, G_ave [GPa]: MT average bulk and shear modulus
 
 
 

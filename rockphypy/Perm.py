@@ -8,7 +8,8 @@ Recreation and modifcations of the Permeabilities models in Rock physics handboo
 class Permeability:
     """
     Different permeability models.
-    """    
+    """  
+    @staticmethod  
     def Kozeny_Carman(phi,d):
         """Describe the permeability in a porous medium using Kozeny-Carman equation assuming the turtuosity tau=sqrt(2), 1/B=2.5 for unconsolidated monomodal sphere pack. 
 
@@ -36,6 +37,7 @@ class Permeability:
 
         return k
 
+    @staticmethod
     def Kozeny_Carman_Percolation(phi,phic, d, B):
         """The Kozeny−Carman relations incorporating the percolation effect 
 
@@ -60,6 +62,7 @@ class Permeability:
 
         return k
 
+    @staticmethod
     def Owolabi(phi, Swi):
         """Estimate the permeability in uncosonlidated sands of Pleistocene to Oligocene age in Eastern Niger Delta from log derived porosityand irreducible water saturation.
 
@@ -82,6 +85,7 @@ class Permeability:
         k_gas = 30.7 + (2655*(phi**2))-(3454*(phi*Swi)**2)
         return k_oil, k_gas 
 
+    @staticmethod
     def Perm_logs(phi, Swi):
         """Various empirical correlations of between permeability, porosity and irreducible water-saturation from welllogs. Models includs Tixier, Timur, Coates and Coates-Dumanoir.
 
@@ -114,7 +118,7 @@ class Permeability:
         
         return k_tixier, k_Timur , k_coates, k_coates_Dumanoir
 
-
+    @staticmethod
     def Panda_Lake(d, C,S,tau,phi):
         """Modified Kozeny-carman relation incorpating the contribution of grain size variation and sorting using Manmath N. Panda and Larry W. Lake relation. 
 
@@ -145,7 +149,7 @@ class Permeability:
 
         return k
 
-
+    @staticmethod
     def Panda_Lake_cem(phi,d):     
         """Quantify the effects of cements on the single phase permeability estimate of unconsolidated sand using Panda & Lake model
 
@@ -165,7 +169,7 @@ class Permeability:
         K =3.34*(d**2)*((phi**3)/(1-phi)**2)
         return K
 
-
+    @staticmethod
     def Revil(phi, d):
         """Estimate permeability in very shaly rock using Revil et al. 1997 
 
@@ -186,6 +190,7 @@ class Permeability:
 
         return k
 
+    @staticmethod
     def Fredrich(phi, d, b):
         """Compute permability considering Pore Geometry and Transport Properties of Fontainebleau Sandstone
 
@@ -216,6 +221,7 @@ class Permeability:
         k= 1/(b*F) * (phi/Sv)**2
         return k
 
+    @staticmethod
     def Bloch(S,C,D):
         """Predict porosity and permeability in sandstones prior to drilling using Bloch empirical relations obtain in Yacheng field.
 
@@ -240,7 +246,7 @@ class Permeability:
         k = 10**(-4.67 + (1.34*D) + (4.08/S)+ 3.42*(C/100))
         return phi, k
 
-
+    @staticmethod
     def Bernabe(phi, crf,w, r):
         """Bernabe models permit to compute the permeability and porosity of strongly pressure dependent pores such as cracks and approximately constant pores associated with tubes and nodal pores.
 

@@ -145,14 +145,14 @@ The effect of reduced shear factor on HM modelling
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x0000018DA7D2E520>
+    <matplotlib.legend.Legend object at 0x000001F826587C70>
 
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 85-102
 
 Walton's theory
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 Mindlin assumes a partial slip in the contact area. In constrast, Walton assumes that normal and shear deformation of a two-grain combination occur simultaneously.  The slip occurs across the whole area once applied tractions exceed the friction resistance. Spheres maybe infinitely smooth (perfect slip) or infinitely rough (no slip). For the smooth-spheres dry pack: 
 
 .. math::
@@ -214,7 +214,7 @@ those between perfectly spherical particles. Hertz–Mindlin theory also fails t
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.133 seconds)
+   **Total running time of the script:** ( 0 minutes  0.163 seconds)
 
 
 .. _sphx_glr_download_getting_started_04_Hertz_Mindlin.py:

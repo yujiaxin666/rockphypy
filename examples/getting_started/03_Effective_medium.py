@@ -28,7 +28,7 @@ from rockphypy import Fluid
 
 # %%
 # Non-interacting inclusion model with spherical pores
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Basic elastic bounds such as Voigt, Reuss and Hashin-Strikmann bounds attempt to define limits of effective elastic moduli without assuming microgeometry of the composite. Inclusion based effective medium models, in contrast, attempt to give direct estimation of elastic moduli given matrix mineralogy, volume fractions and assumption on microgeometry. 
 # 
 # A simple inclusion model is the "Swiss cheese" model assuming a dilute distribution of spherical inclusions embedded in an **unbounded** homogenous solid.  It takes the "noninteracting assumption" in which all cavities (pores) are independent so that their contributions can be added. 

@@ -61,7 +61,7 @@ Inclusion models
 .. GENERATED FROM PYTHON SOURCE LINES 30-113
 
 Non-interacting inclusion model with spherical pores
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Basic elastic bounds such as Voigt, Reuss and Hashin-Strikmann bounds attempt to define limits of effective elastic moduli without assuming microgeometry of the composite. Inclusion based effective medium models, in contrast, attempt to give direct estimation of elastic moduli given matrix mineralogy, volume fractions and assumption on microgeometry. 
 
 A simple inclusion model is the "Swiss cheese" model assuming a dilute distribution of spherical inclusions embedded in an **unbounded** homogenous solid.  It takes the "noninteracting assumption" in which all cavities (pores) are independent so that their contributions can be added. 
@@ -268,7 +268,7 @@ For SC approach: Because the cavities are isolated with respect to flow, this ap
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.262 seconds)
+   **Total running time of the script:** ( 0 minutes  0.765 seconds)
 
 
 .. _sphx_glr_download_getting_started_03_Effective_medium.py:

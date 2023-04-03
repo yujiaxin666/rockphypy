@@ -6,7 +6,7 @@ import numpy as np
 class AVO:
     """Exact and approximations of reflectivity in isotropic and anisotropic media.  
     """    
-
+    @staticmethod
     def AVO_HTI(D1,D2,C1,C2,theta,azimuth):
         """Compute azimuth dependent PP reflectivity for wealy anisotropic HTI media using Ruger's approximation
 
@@ -86,6 +86,7 @@ class AVO:
         Rpp= 0.5*dZ/Z_+0.5*( dalpha/alpha_-(2*beta_/alpha_)**2* dmu/mu_+ (ddelta+2*(2*beta_/alpha_)**2 *dgamma)*np.cos(azimuth)**2)*np.sin(theta)**2 + 0.5*(dalpha/alpha_+depsilon* np.cos(azimuth)**4+ddelta*np.sin(azimuth)**2*np.cos(azimuth)**2)*np.sin(theta)**2*np.tan(theta)**2
         return Rpp
 
+    @staticmethod
     def Aki_Richard(theta, vp1,vp2,vs1,vs2,den1,den2):
         """Aki-Richard approximation to PP reflectivity. 
 
@@ -135,6 +136,7 @@ class AVO:
         R_ps=-0.5*p*vp_mean/cos_theta_s*((1-2*vs_mean**2*p**2+2*vs_mean**2*np.cos(theta)/vp_mean*cos_theta_s/vs_mean)*delta_den/rho_mean-(4*p**2*vs_mean**2-4*vs_mean**2*np.cos(theta)/vp_mean*cos_theta_s/vs_mean)*delta_vs/vs_mean)
         return R_pp,R_ps, Rpp0, gradient
 
+    @staticmethod
     def zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta):
         """Reflection & Transmission coefficients calculated using full Zoeppritz equations.
 
@@ -200,7 +202,7 @@ class AVO:
         #     ])
         return Rpp, Rps
 
-
+    @staticmethod
     def AVO_abe(vp1,vs1,d1,vp2,vs2,d2):
         """Copied from RPT matlab tools func: avo_abe
 
@@ -253,7 +255,7 @@ class AVO:
 
         return A,B1,B2,E1,E2
 
-
+    @staticmethod
     def EI_ref(Vp,Vs,rho,theta,SP,norm=True):
         """Compute elastic impedance of an isotropic, flat-layered Earth 
 
@@ -325,6 +327,7 @@ class AVO:
         EI_shsh= isn*Vs**B*rho**C
         return EI_pp,EI_psv,EI_svp,EI_svsv,EI_shsh
 
+    @staticmethod
     def AVO_ortho(a1,b1,e11,d11,e12,d12,g1,rho1,a2,b2,e21,d21,e22,d22,g2,rho2,the):
         """calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media  
 

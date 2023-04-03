@@ -87,8 +87,10 @@ Table of contents
 .. toctree::
    
    getting_started/index
+   advanced_examples/index
    autoapi/index
-
+   errata
+   
 Contents:
 
 .. toctree::

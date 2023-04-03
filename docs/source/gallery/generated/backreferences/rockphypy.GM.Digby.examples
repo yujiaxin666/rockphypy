@@ -1,0 +1,39 @@
+
+
+Examples using ``rockphypy.GM.Digby``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. start-sphx-glr-thumbnails
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Digby model">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_15_Digby_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_getting_started_15_Digby.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Digby model</div>
+    </div>
+
+
+.. only:: not html
+
+ * :ref:`sphx_glr_getting_started_15_Digby.py`
+
+.. raw:: html
+
+    </div>
+

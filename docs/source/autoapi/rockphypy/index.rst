@@ -18,6 +18,7 @@ Submodules
    Fluid/index.rst
    GM/index.rst
    Perm/index.rst
+   QI/index.rst
    utils/index.rst
 
 
@@ -61,7 +62,8 @@ Classes
 
    ..
        !! processed by numpydoc !!
-   .. py:method:: Thomsen(C33, C13, C44, C66, den, theta)
+   .. py:method:: Thomsen(C11, C33, C13, C44, C66, den, theta)
+      :staticmethod:
 
       
       Compute thomsen parameters and three phase velocities for weak anisotropic TI media with vertical symmetry axis.
@@ -92,7 +94,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Thomsen_Tsvankin(C22, C33, C12, C13, C23, C44, C55, C66)
+   .. py:method:: Thomsen_Tsvankin(C11, C22, C33, C12, C13, C23, C44, C55, C66)
+      :staticmethod:
 
       
       Elastic constants of an orthorhombic elastic medium defined by Tsvankin’s notation for weak elastic anisotropy assuming the vertical symmetry axis is along the x3 direction.
@@ -119,7 +122,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Backus(lamda, G)
+   .. py:method:: Backus(V, lamda, G)
+      :staticmethod:
 
       
       Computes stiffnesses of a layered medium using backus average model.
@@ -150,7 +154,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Backus_log(Vs, Den, Depth)
+   .. py:method:: Backus_log(Vp, Vs, Den, Depth)
+      :staticmethod:
 
       
       Computes Backus Average from log data, notice that the Depth is 1d Vector including each top depth of layer and also the bottom of last layer.
@@ -183,7 +188,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: vel_azi_HTI(Den, azimuth)
+   .. py:method:: vel_azi_HTI(C, Den, azimuth)
+      :staticmethod:
 
       
       Given stiffnesses and density of the HTI medium, compute the azimuth dependent phase velocities.
@@ -214,7 +220,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: vel_azi_VTI(Den, azimuth)
+   .. py:method:: vel_azi_VTI(C, Den, azimuth)
+      :staticmethod:
 
       
       Given stiffnesses and density of the VTI medium, compute the azimuth dependent phase velocities.
@@ -245,7 +252,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Bond_trans(theta, axis=3)
+   .. py:method:: Bond_trans(C, theta, axis=3)
+      :staticmethod:
 
       
       Coordinate Transformations for stiffness matrix in 6x6 Voigt notation using Bond transformation matrix.
@@ -304,7 +312,8 @@ Classes
 
    ..
        !! processed by numpydoc !!
-   .. py:method:: AVO_HTI(D2, C1, C2, theta, azimuth)
+   .. py:method:: AVO_HTI(D1, D2, C1, C2, theta, azimuth)
+      :staticmethod:
 
       
       Compute azimuth dependent PP reflectivity for wealy anisotropic HTI media using Ruger's approximation
@@ -341,7 +350,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Aki_Richard(vp1, vp2, vs1, vs2, den1, den2)
+   .. py:method:: Aki_Richard(theta, vp1, vp2, vs1, vs2, den1, den2)
+      :staticmethod:
 
       
       Aki-Richard approximation to PP reflectivity.
@@ -383,7 +393,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: zoeppritz(vs1, rho1, vp2, vs2, rho2, theta)
+   .. py:method:: zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta)
+      :staticmethod:
 
       
       Reflection & Transmission coefficients calculated using full Zoeppritz equations.
@@ -422,7 +433,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: AVO_abe(vs1, d1, vp2, vs2, d2)
+   .. py:method:: AVO_abe(vp1, vs1, d1, vp2, vs2, d2)
+      :staticmethod:
 
       
       Copied from RPT matlab tools func: avo_abe
@@ -459,7 +471,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: EI_ref(Vs, rho, theta, SP, norm=True)
+   .. py:method:: EI_ref(Vp, Vs, rho, theta, SP, norm=True)
+      :staticmethod:
 
       
       Compute elastic impedance of an isotropic, flat-layered Earth
@@ -506,7 +519,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: AVO_ortho(b1, e11, d11, e12, d12, g1, rho1, a2, b2, e21, d21, e22, d22, g2, rho2, the)
+   .. py:method:: AVO_ortho(a1, b1, e11, d11, e12, d12, g1, rho1, a2, b2, e21, d21, e22, d22, g2, rho2, the)
+      :staticmethod:
 
       
       calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media
@@ -588,7 +602,8 @@ Classes
 
    ..
        !! processed by numpydoc !!
-   .. py:method:: dz_dp(T_pr)
+   .. py:method:: dz_dp(P_pr, T_pr)
+      :staticmethod:
 
       
       Values for dZ/dPpr obtained from equation 10b in Batzle and Wang (1992).
@@ -611,7 +626,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: pseudo_p_t(T, G)
+   .. py:method:: pseudo_p_t(P, T, G)
+      :staticmethod:
 
       
       Calculate the pseudoreduced temperature and pressure according to Thomas et al. 1970.
@@ -644,7 +660,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: rho_K_co2(T, G)
+   .. py:method:: rho_K_co2(P, T, G)
+      :staticmethod:
 
       
       Compute CO2 properties as a function of temperature and pressure using modified Batzle-Wang equations
@@ -680,7 +697,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: rho_K_gas(T, G)
+   .. py:method:: rho_K_gas(P, T, G)
+      :staticmethod:
 
       
       Estimate the Gas density and bulk modulus at specific temperature and pressure.
@@ -712,7 +730,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: rho_K_oil(T, den)
+   .. py:method:: rho_K_oil(P, T, den)
+      :staticmethod:
 
       
       Estimate the oil density and bulk modulus at specific temperature and pressure.
@@ -744,7 +763,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: rho_K_go(T, den, G, Rg)
+   .. py:method:: rho_K_go(P, T, den, G, Rg)
+      :staticmethod:
 
       
       compute density and bulk modulus of live oil.
@@ -781,7 +801,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: rho_K_water(P)
+   .. py:method:: rho_K_water(T, P)
+      :staticmethod:
 
       
       Compute the density and bulk modulus of pure water as a function of temperature and pressure using Batzle and Wang (1992).
@@ -810,7 +831,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: v_water(P)
+   .. py:method:: v_water(T, P)
+      :staticmethod:
 
       
       Acoustic velocity of pure water as a function of temperature
@@ -840,7 +862,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: rho_K_brine(P, S)
+   .. py:method:: rho_K_brine(T, P, S)
+      :staticmethod:
 
       
       Calculation of the density and bulk modulus of brine (NaCl) as a function of temperature, salinity and pressure using Batzle and Wang (1992).
@@ -872,7 +895,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: v_brine(P, S)
+   .. py:method:: v_brine(T, P, S)
+      :staticmethod:
 
       
       Calculte the acoustic velocity of brine as a function of temperature, salinity and pressure using Batzle and Wang (1992).
@@ -926,7 +950,8 @@ Classes
 
    ..
        !! processed by numpydoc !!
-   .. py:method:: V(G, rho)
+   .. py:method:: V(K, G, rho)
+      :staticmethod:
 
       
       Compute velocity given density and elastic moduli.
@@ -958,7 +983,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: poi(G)
+   .. py:method:: poi(K, G)
+      :staticmethod:
 
       
       Compute poisson's ratio from K an G
@@ -989,7 +1015,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: lame(G)
+   .. py:method:: lame(K, G)
+      :staticmethod:
 
       
       Compute lame constant lamdba from K an G
@@ -1020,7 +1047,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: M_from_V(vp, vs)
+   .. py:method:: M_from_V(den, vp, vs)
+      :staticmethod:
 
       
       Compute K and G from velocities and density
@@ -1053,7 +1081,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: write_HTI_matrix(C33, C13, C44, C55)
+   .. py:method:: write_HTI_matrix(C11, C33, C13, C44, C55)
+      :staticmethod:
 
       
       formulate HTI stiffness matrix
@@ -1090,7 +1119,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: write_VTI_compliance(S12, S13, S33, S44)
+   .. py:method:: write_VTI_compliance(S11, S12, S13, S33, S44)
+      :staticmethod:
 
       
       formulate VTI compliance matrix
@@ -1125,7 +1155,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: write_VTI_matrix(C33, C13, C44, C66)
+   .. py:method:: write_VTI_matrix(C11, C33, C13, C44, C66)
+      :staticmethod:
 
       
       formulate VTI stiffness matrix
@@ -1160,7 +1191,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: write_matrix(C22, C33, C12, C13, C23, C44, C55, C66)
+   .. py:method:: write_matrix(C11, C22, C33, C12, C13, C23, C44, C55, C66)
+      :staticmethod:
 
       
       formulate general 6x6 stiffness matrix in Voigt notation
@@ -1187,7 +1219,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: write_iso(G)
+   .. py:method:: write_iso(K, G)
+      :staticmethod:
 
       
       formulate isotropic 6x6 stiffness matrix in Voigt notation
@@ -1214,7 +1247,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: crack_por(alpha)
+   .. py:method:: crack_por(crd, alpha)
+      :staticmethod:
 
       
       compute crack porosity from crack aspect ratio and crack density
@@ -1243,7 +1277,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: v_to_c_VTI(Vp45, Vp90, Vs0, Vsh90, den)
+   .. py:method:: v_to_c_VTI(Vp0, Vp45, Vp90, Vs0, Vsh90, den)
+      :staticmethod:
 
       
       _summary_
@@ -1303,7 +1338,8 @@ Classes
 
    ..
        !! processed by numpydoc !!
-   .. py:method:: ThomasStieber(phi_sh, vsh)
+   .. py:method:: ThomasStieber(phi_sand, phi_sh, vsh)
+      :staticmethod:
 
       
       Thomas-Stieber porosity model for sand-shale system.
@@ -1334,7 +1370,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: silty_shale(Kq, Gq, Ksh, Gsh)
+   .. py:method:: silty_shale(C, Kq, Gq, Ksh, Gsh)
+      :staticmethod:
 
       
       Dvorkin–Gutierrez silty shale model: model the elastic moduli of decreasing clay content for shale.
@@ -1369,7 +1406,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: shaly_sand(C, Kss, Gss, Kcc, Gcc)
+   .. py:method:: shaly_sand(phis, C, Kss, Gss, Kcc, Gcc)
+      :staticmethod:
 
       
       Modeling elastic moduli for sand with increasing clay content using LHS bound rather than using Gassmann relation.
@@ -1406,7 +1444,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: contactcement(G0, Kc, Gc, phi, phic, Cn, scheme)
+   .. py:method:: contactcement(K0, G0, Kc, Gc, phi, phic, Cn, scheme)
+      :staticmethod:
 
       
       Compute dry elastic moduli of cemented sandstone via Contact cement model by Dvorkin &Nur (1996).
@@ -1454,7 +1493,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: hertzmindlin(G0, phic, Cn, sigma, f)
+   .. py:method:: hertzmindlin(K0, G0, phic, Cn, sigma, f)
+      :staticmethod:
 
       
       Compute effective dry elastic moduli of granular packing under hydrostatic pressure condition via Hertz-Mindlin approach. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented.
@@ -1496,7 +1536,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: softsand(G0, phi, phic, Cn, sigma, f)
+   .. py:method:: softsand(K0, G0, phi, phic, Cn, sigma, f)
+      :staticmethod:
 
       
       Soft-sand (unconsolidated sand) model: model the porosity-sorting effects using the lower Hashin-Shtrikman-Walpole bound. (Also referred to as the 'friable-sand model' in Avseth et al. (2010).
@@ -1540,7 +1581,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Walton(G0, phic, Cn, sigma, f)
+   .. py:method:: Walton(K0, G0, phic, Cn, sigma, f)
+      :staticmethod:
 
       
       Compute dry rock elastic moduli of sphere packs based on the Walton (1987)' thoery. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented.
@@ -1583,7 +1625,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: johnson(G0, n, phi, epsilon, epsilon_axial, path='together')
+   .. py:method:: johnson(K0, G0, n, phi, epsilon, epsilon_axial, path='together')
+      :staticmethod:
 
       
       effective theory for stress-induced anisotropy in sphere packs. The transversely isotropic strain is considered as a combination of hydrostatic strain and uniaxial strain.
@@ -1629,7 +1672,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: stiffsand(G0, phi, phic, Cn, sigma, f)
+   .. py:method:: stiffsand(K0, G0, phi, phic, Cn, sigma, f)
+      :staticmethod:
 
       
       Stiff-sand model:  Modified Hashin-Shtrikman upper bound with Hertz-Mindlin end point, counterpart to soft sand model.
@@ -1671,7 +1715,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: constantcement(K0, G0, Kc, Gc, phi, phic, Cn, scheme)
+   .. py:method:: constantcement(phi_b, K0, G0, Kc, Gc, phi, phic, Cn, scheme)
+      :staticmethod:
 
       
       Constant cement (constant depth) model according to Avseth (2000)
@@ -1719,7 +1764,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: MUHS(G0, Kc, Gc, phi, phi_b, phic, Cn, scheme)
+   .. py:method:: MUHS(K0, G0, Kc, Gc, phi, phi_b, phic, Cn, scheme)
+      :staticmethod:
 
       
       Increasing cement model: Modified Hashin-Strikmann upper bound blend with contact cement model. For elastically stiff sandstone modelling.
@@ -1767,7 +1813,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Digby(G0, phi, Cn, sigma, a_R)
+   .. py:method:: Digby(K0, G0, phi, Cn, sigma, a_R)
+      :staticmethod:
 
       
       Compute Keff and Geff using Digby's model
@@ -1806,7 +1853,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: pcm(sigma, K0, G0, phi, phic, v_cem, v_ci, Kc, Gc, Cn, mode, scheme, f_)
+   .. py:method:: pcm(f, sigma, K0, G0, phi, phic, v_cem, v_ci, Kc, Gc, Cn, mode, scheme, f_)
+      :staticmethod:
 
       
       Computes effective elastic moduli of patchy cemented sandstone according to Avseth (2016).
@@ -1888,7 +1936,8 @@ Classes
 
    ..
        !! processed by numpydoc !!
-   .. py:method:: VRH(M)
+   .. py:method:: VRH(volumes, M)
+      :staticmethod:
 
       
       Computes Voigt, Reuss, and Hill Average Moduli Estimate.
@@ -1919,7 +1968,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: cripor(G0, phi, phic)
+   .. py:method:: cripor(K0, G0, phi, phic)
+      :staticmethod:
 
       
       Critical porosity model according to Nur’s modified Voigt average.
@@ -1952,7 +2002,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: cripor_reuss(Mf, phic, den=False)
+   .. py:method:: cripor_reuss(M0, Mf, phic, den=False)
+      :staticmethod:
 
       
       In the suspension domain, the effective bulk and shear moduli of the rock can be estimated by using the Reuss (isostress) average.
@@ -1989,7 +2040,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: HS(K1, K2, G1, G2, bound='upper')
+   .. py:method:: HS(f, K1, K2, G1, G2, bound='upper')
+      :staticmethod:
 
       
       Compute effective moduli of two-phase composite using hashin-strikmann bounds.
@@ -2026,7 +2078,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Eshelby_Cheng(G, phi, alpha, Kf, mat=False)
+   .. py:method:: Eshelby_Cheng(K, G, phi, alpha, Kf, mat=False)
+      :staticmethod:
 
       
       Compute the effective anisotropic moduli of a cracked isotropic rock with single set fracture using Eshelby–Cheng Model.
@@ -2067,7 +2120,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: hudson(G, Ki, Gi, alpha, crd, order=1, axis=3)
+   .. py:method:: hudson(K, G, Ki, Gi, alpha, crd, order=1, axis=3)
+      :staticmethod:
 
       
       Hudson’s effective crack model assuming weak inclusion for media with single crack set with all normals aligned along 1 or 3-axis. First and Second order corrections are both implemented. Notice that the second order correction has limitation. See Cheng (1993).
@@ -2116,7 +2170,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: hudson_rand(G, Ki, Gi, alpha, crd)
+   .. py:method:: hudson_rand(K, G, Ki, Gi, alpha, crd)
+      :staticmethod:
 
       
       Hudson's crack model of a material containing randomly oriented inclusions. The model results agree with the consistent results of Budiansky and O’Connell (1976).
@@ -2153,7 +2208,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: hudson_ortho(G, Ki, Gi, alpha, crd)
+   .. py:method:: hudson_ortho(K, G, Ki, Gi, alpha, crd)
+      :staticmethod:
 
       
       Hudson’s first order effective crack model assuming weak inclusion for media with three crack sets with normals aligned along 1 2, and 3-axis respectively.  Model is valid for small crack density and aspect ratios.
@@ -2190,7 +2246,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: hudson_cone(G, Ki, Gi, alpha, crd, theta)
+   .. py:method:: hudson_cone(K, G, Ki, Gi, alpha, crd, theta)
+      :staticmethod:
 
       
       Hudson’s first order effective crack model assuming weak inclusion for media with crack normals randomly distributed at a fixed angle from the TI symmetry axis 3 forming a cone;
@@ -2229,7 +2286,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Berryman_sc(G, X, Alpha)
+   .. py:method:: Berryman_sc(K, G, X, Alpha)
+      :staticmethod:
 
       
       Effective elastic moduli for multi-component composite using Berryman's Consistent (Coherent Potential Approximation) method.See also: PQ_vectorize, Berryman_func
@@ -2262,7 +2320,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: PQ_vectorize(Gm, Ki, Gi, alpha)
+   .. py:method:: PQ_vectorize(Km, Gm, Ki, Gi, alpha)
+      :staticmethod:
 
       
       compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980).See also: Berryman_sc, Berryman_func
@@ -2297,7 +2356,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Berryman_func(K, G, X, Alpha)
+   .. py:method:: Berryman_func(params, K, G, X, Alpha)
+      :staticmethod:
 
       
       Form the system of equastions to solve. See 4.11.14 and 4.11.15 in Rock physics handbook 2020. See also: Berryman_sc
@@ -2331,7 +2391,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Swiss_cheese(Gs, phi)
+   .. py:method:: Swiss_cheese(Ks, Gs, phi)
+      :staticmethod:
 
       
       Compute effective elastic moduli via "Swiss cheese" model with spherical pores. "Swiss cheese" model assumes a dilute distribution of spherical inclusions embedded in an * *unbounded* * homogenous solid.  It takes the "noninteracting assumption" in which all cavities (pores) are independent so that their contributions can be added.
@@ -2362,7 +2423,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: SC(Ks, Gs, iter_n)
+   .. py:method:: SC(phi, Ks, Gs, iter_n)
+      :staticmethod:
 
       
       Self-Consistent(SC) model with spherical pores considering the critical porosity and the interaction effect between inclusions.
@@ -2395,7 +2457,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Dilute_crack(Gs, cd)
+   .. py:method:: Dilute_crack(Ks, Gs, cd)
+      :staticmethod:
 
       
       The non-iteracting randomly oriented crack model.
@@ -2426,7 +2489,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: OConnell_Budiansky(G0, crd)
+   .. py:method:: OConnell_Budiansky(K0, G0, crd)
+      :staticmethod:
 
       
       O’Connell and Budiansky (1974) presented equations for effective bulk and shear moduli of a cracked medium with randomly oriented dry penny-shaped cracks (in the limiting case when the aspect ratio α goes to 0)
@@ -2457,7 +2521,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: OConnell_Budiansky_fl(G0, Kfl, crd, alpha)
+   .. py:method:: OConnell_Budiansky_fl(K0, G0, Kfl, crd, alpha)
+      :staticmethod:
 
       
       Saturated effective elastic moduli using the O’Connell and Budiansky Consistent (SC) formulations under the constraints of small aspect ratio cracks with soft-fluid saturation.
@@ -2494,7 +2559,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: OC_R_funcs(crd, nu_0, w)
+   .. py:method:: OC_R_funcs(params, crd, nu_0, w)
+      :staticmethod:
 
       
       Form the system of equastions to solve. Given crack density and w, solve for the D and nu_eff simulaneously using equations 23 and 25 in O’Connell and Budiansky, (1974)
@@ -2526,7 +2592,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: PQ(Gm, Ki, Gi, alpha)
+   .. py:method:: PQ(Km, Gm, Ki, Gi, alpha)
+      :staticmethod:
 
       
       compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980). See also PQ_vectorize
@@ -2561,7 +2628,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: DEM(t, params)
+   .. py:method:: DEM(y, t, params)
+      :staticmethod:
 
       
       ODE solver tutorial: https://physics.nyu.edu/pine/pymanual/html/chap9/chap9_scipy.html.
@@ -2584,7 +2652,8 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Berryman_DEM(Gm, Ki, Gi, alpha, phi)
+   .. py:method:: Berryman_DEM(Km, Gm, Ki, Gi, alpha, phi)
+      :staticmethod:
 
       
       Compute elastic moduli of two-phase composites by incrementally adding inclusions of one phase (phase 2) to the matrix phase using Berryman DEM theory
@@ -2601,6 +2670,130 @@ Classes
       :type alpha: float
       :param phi: desired fraction occupied by the inclusion
       :type phi: float
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: SC_dilute(Km, Gm, Ki, Gi, f, mode)
+      :staticmethod:
+
+      
+      Elastic solids with elastic micro-inclusions. Random distribution of dilute spherical micro-inclusions in a two phase composite.
+
+      :param Km: bulk modulus of matrix
+      :type Km: float
+      :param Gm: shear modulus of matrix
+      :type Gm: float
+      :param Ki: bulk modulus of inclusion
+      :type Ki: float
+      :param Gi: shear modulus of inclusion
+      :type Gi: float
+      :param f: _descripvolume fraction of inclusion phase tion_
+      :type f: float or array
+      :param mode: 'stress' if macro stress is prescribed. 'strain' if macro strain is prescribed.
+      :type mode: string
+
+      .. rubric:: References
+
+      S. Nemat-Nasser and M. Hori (book) : Micromechanics: Overall Properties of Heterogeneous Materials. Sec 8
+
+      :returns: *float or array* -- K, G: effective moduli of the composite
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: SC_flex(f, iter_n, Km, Ki, Gm, Gi)
+      :staticmethod:
+
+      
+      iteratively solving self consistent model for a two phase compposite consisting random distribution of spherical inclusion, not limited to pore.
+
+      :param f: volumetric fraction, f.shape== Km.shape
+      :type f: float or array
+      :param iter_n: iterations, necessary iterations increases as f increases.
+      :type iter_n: int
+      :param Km: bulk modulus of matrix phase
+      :type Km: float
+      :param Ki: bulk modulus of inclusion phase
+      :type Ki: float
+      :param Gm: shear modulus of matrix phase
+      :type Gm: float
+      :param Gi: shear modulus of inclusion phase
+      :type Gi: float
+      :param Reference:
+      :param ---------:
+      :param S. Nemat-Nasser and M. Hori (book):
+      :type S. Nemat-Nasser and M. Hori (book): Micromechanics: Overall Properties of Heterogeneous Materials. Sec 8
+
+      :returns: *float or array* -- K_eff, G_eff (GPa): Effective elastic moduli
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: MT_average(f, Kmat, Gmat, K1, G1, K2, G2)
+      :staticmethod:
+
+      
+      Compute Two-phase composite without matrix using modified Mori-Takana Scheme according to  Iwakuma 2003, one of the inhomogeneities must be considered as a matrix in the limiting model.
+
+      :param f: Volume fraction of matrix/inhomogeneity 1. f1=1-f2, (1-f) can be regarded as pseudo crack density.
+      :type f: float or array
+      :param Kmat: Bulk modulus of matrix/inhomogeneity 1
+      :type Kmat: float
+      :param Gmat: shear modulus of  matrix/ inhomogeneity 1
+      :type Gmat: float
+      :param K1: Bulk modulus of inhomogeneity 1
+      :type K1: float
+      :param G1: shear modulus of inhomogeneity 1
+      :type G1: float
+      :param K2: Bulk modulus of inhomogeneity 2
+      :type K2: float
+      :param G2: shear modulus of inhomogeneity 2
+      :type G2: float
+
+      :returns: *float or array* -- K_ave, G_ave [GPa]: MT average bulk and shear modulus
 
 
 

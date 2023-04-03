@@ -1,9 +1,9 @@
 :orphan:
 
-Getting Started
-===============
+Rock physics basics 
+===================
 
-Here you can see how to run a simple GemPy example.
+Here you can see how to run a simple rockphypy example.
 
 
 .. raw:: html
@@ -183,6 +183,57 @@ Here you can see how to run a simple GemPy example.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Self Consistent (SC) Estimation">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_13_Self_Consistent_Estimation_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_getting_started_13_Self_Consistent_Estimation.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Self Consistent (SC) Estimation</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Modified Mori-Tanaka Scheme">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_14_Mori_Tanaka_scheme_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_getting_started_14_Mori_Tanaka_scheme.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Modified Mori-Tanaka Scheme</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Digby model">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_15_Digby_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_getting_started_15_Digby.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Digby model</div>
+    </div>
+
+
+.. raw:: html
+
     </div>
 
 
@@ -199,6 +250,9 @@ Here you can see how to run a simple GemPy example.
    /getting_started/09_Berrymann_SC
    /getting_started/10_Differential_effective_medium_model
    /getting_started/11_AVO
+   /getting_started/13_Self_Consistent_Estimation
+   /getting_started/14_Mori_Tanaka_scheme
+   /getting_started/15_Digby
 
 
 

@@ -10,6 +10,8 @@ from rockphypy.GM import GM
 from rockphypy.Fluid import Fluid
 from rockphypy.EM import EM
 from rockphypy.Emp import Empirical
+from rockphypy.QI import QI
+
 
 __version__ = "0.0.1"
 __author__ = "jiaxinyu"

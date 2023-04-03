@@ -1,4 +1,4 @@
-Getting Started
-===============
+Rock physics basics 
+===================
 
-Here you can see how to run a simple GemPy example.
+Here you can see how to run a simple rockphypy example.

@@ -14,24 +14,24 @@ Examples using ``rockphypy.GM.hertzmindlin``
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Sand-Shale mixture modelling">
+    <div class="sphx-glr-thumbcontainer" tooltip="Hertz-Mindlin and reduced shear factor">
 
 .. only:: html
 
-  .. image:: /getting_started/images/thumb/sphx_glr_08_Shaly_sand_modelling_thumb.png
+  .. image:: /getting_started/images/thumb/sphx_glr_04_Hertz_Mindlin_thumb.png
     :alt:
 
-  :ref:`sphx_glr_getting_started_08_Shaly_sand_modelling.py`
+  :ref:`sphx_glr_getting_started_04_Hertz_Mindlin.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Sand-Shale mixture modelling</div>
+      <div class="sphx-glr-thumbnail-title">Hertz-Mindlin and reduced shear factor</div>
     </div>
 
 
 .. only:: not html
 
- * :ref:`sphx_glr_getting_started_08_Shaly_sand_modelling.py`
+ * :ref:`sphx_glr_getting_started_04_Hertz_Mindlin.py`
 
 .. raw:: html
 
