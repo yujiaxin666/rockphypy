@@ -138,4 +138,9 @@ for i, val in enumerate(brie):
 
 plt.legend(loc='best')
 
+
 # %%
+# **Reference**
+#
+# - Xu, H. (2006). Calculation of CO2 acoustic properties using Batzle-Wang equations. Geophysics, 71(2), F21-F23.
+#

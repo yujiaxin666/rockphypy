@@ -70,7 +70,7 @@ Berryman's self-consistent approximations for N-phase composites are described b
 
 .. GENERATED FROM PYTHON SOURCE LINES 33-38
 
-The question is as follows: Calculate the self-consistent effective bulk and shear moduli, :math:`K_{eff}^{SC}`and :math:`G_{eff}^{SC}`, for a water-saturated rock consisting of spherical quartz grains (aspect ratio :math:`\alpha` = 1) and total porosity 0.3. The pore space consists of spherical pores :math:`\alpha` = 1 and thin penny-shaped cracks (:math:`\alpha` = 1e^−2). The thin cracks have a porosity of 0.01, whereas the remaining porosity (0.29) is made up of the spherical pores.
+The question is as follows: Calculate the self-consistent effective bulk and shear moduli, :math:`K_{eff}^{SC}` and :math:`G_{eff}^{SC}`, for a water-saturated rock consisting of spherical quartz grains (aspect ratio :math:`\alpha` = 1) and total porosity 0.3. The pore space consists of spherical pores :math:`\alpha` = 1 and thin penny-shaped cracks (:math:`\alpha` = 1e^−2). The thin cracks have a porosity of 0.01, whereas the remaining porosity (0.29) is made up of the spherical pores.
 
 
 There are three phases in the composite, i.e. quartz grain, water filled spherical pore, and water filled thin cracks. We can use the method ``EM.Berryman_sc`` to easily solve this exercise to find the effective moduli of the composite.
@@ -152,7 +152,12 @@ The effective moduli of the two phase composite as a function of the volume frac
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-84
+.. GENERATED FROM PYTHON SOURCE LINES 78-80
+
+sphinx figure 
+sphinx_gallery_thumbnail_number = 1
+
+.. GENERATED FROM PYTHON SOURCE LINES 80-86
 
 .. code-block:: python3
 
@@ -176,11 +181,11 @@ The effective moduli of the two phase composite as a function of the volume frac
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x000001D9C53E6190>
+    <matplotlib.legend.Legend object at 0x0000018241ADF820>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-88
+.. GENERATED FROM PYTHON SOURCE LINES 87-90
 
 As can be shown in the figure, the effective shear modulus of the two phase composite becomes 0 when the volume fraction of the soft phase is approximately 45% for an aspect ratio of 0.1. this prediction is very similar to the critical porosity model which predicts a suspension of grain in the fluid when the porosity exceeds about 0.4. 
 
@@ -189,7 +194,7 @@ However, feel free to change the aspect ratio for the soft phase from 0.1 to 0.0
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.053 seconds)
+   **Total running time of the script:** ( 0 minutes  1.228 seconds)
 
 
 .. _sphx_glr_download_getting_started_09_Berrymann_SC.py:

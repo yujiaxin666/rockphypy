@@ -6,14 +6,14 @@
 
 Computation times
 =================
-**00:03.151** total execution time for **advanced_examples** files:
+**00:00.255** total execution time for **advanced_examples** files:
 
 +-----------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_advanced_examples_CO2_modelling.py` (``CO2_modelling.py``)                           | 00:02.314 | 0.0 MB |
+| :ref:`sphx_glr_advanced_examples_CO2_seismic.py` (``CO2_seismic.py``)                               | 00:00.255 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_advanced_examples_Rock_physics_template.py` (``Rock_physics_template.py``)           | 00:00.591 | 0.0 MB |
+| :ref:`sphx_glr_advanced_examples_CO2_modelling.py` (``CO2_modelling.py``)                           | 00:00.000 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_advanced_examples_CO2_seismic.py` (``CO2_seismic.py``)                               | 00:00.245 | 0.0 MB |
+| :ref:`sphx_glr_advanced_examples_Rock_physics_template.py` (``Rock_physics_template.py``)           | 00:00.000 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_advanced_examples_cement_volume_estimation.py` (``cement_volume_estimation.py``)     | 00:00.000 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------+-----------+--------+

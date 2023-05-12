@@ -6,10 +6,10 @@
 
 Computation times
 =================
-**00:01.053** total execution time for **getting_started** files:
+**00:01.228** total execution time for **getting_started** files:
 
 +---------------------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_getting_started_09_Berrymann_SC.py` (``09_Berrymann_SC.py``)                                                                       | 00:01.053 | 0.0 MB |
+| :ref:`sphx_glr_getting_started_09_Berrymann_SC.py` (``09_Berrymann_SC.py``)                                                                       | 00:01.228 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_getting_started_01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py` (``01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py``) | 00:00.000 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+

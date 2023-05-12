@@ -30,7 +30,7 @@ from rockphypy import Fluid
 #
 
 # %%
-# The question is as follows: Calculate the self-consistent effective bulk and shear moduli, :math:`K_{eff}^{SC}`and :math:`G_{eff}^{SC}`, for a water-saturated rock consisting of spherical quartz grains (aspect ratio :math:`\alpha` = 1) and total porosity 0.3. The pore space consists of spherical pores :math:`\alpha` = 1 and thin penny-shaped cracks (:math:`\alpha` = 1e^−2). The thin cracks have a porosity of 0.01, whereas the remaining porosity (0.29) is made up of the spherical pores.
+# The question is as follows: Calculate the self-consistent effective bulk and shear moduli, :math:`K_{eff}^{SC}` and :math:`G_{eff}^{SC}`, for a water-saturated rock consisting of spherical quartz grains (aspect ratio :math:`\alpha` = 1) and total porosity 0.3. The pore space consists of spherical pores :math:`\alpha` = 1 and thin penny-shaped cracks (:math:`\alpha` = 1e^−2). The thin cracks have a porosity of 0.01, whereas the remaining porosity (0.29) is made up of the spherical pores.
 # 
 #
 # There are three phases in the composite, i.e. quartz grain, water filled spherical pore, and water filled thin cracks. We can use the method ``EM.Berryman_sc`` to easily solve this exercise to find the effective moduli of the composite.
@@ -75,6 +75,8 @@ for i, val in enumerate(frac):
     K_eff[i],G_eff[i]= EM.Berryman_sc(K,G,X,Alpha)
 
 #%%
+# sphinx figure 
+# sphinx_gallery_thumbnail_number = 1
 plt.figure(figsize=(5,5))
 plt.plot(frac,K_eff,'-k',lw=3,label='K_eff')
 plt.plot(frac,G_eff,'-b',lw=2,label='G_eff')

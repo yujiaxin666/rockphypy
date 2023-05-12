@@ -179,7 +179,7 @@ Though the above modelling is quite simplified, we can learn how to use building
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x000001F04968CA30>
+    <matplotlib.legend.Legend object at 0x000001823FA77EB0>
 
 
 
@@ -188,7 +188,7 @@ Though the above modelling is quite simplified, we can learn how to use building
 - Case 3: patchy saturated critical :math:`CO_2` mixed with brine.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-141
+.. GENERATED FROM PYTHON SOURCE LINES 119-142
 
 .. code-block:: python3
 
@@ -217,6 +217,7 @@ Though the above modelling is quite simplified, we can learn how to use building
 
 
 
+
 .. image-sg:: /advanced_examples/images/sphx_glr_CO2_seismic_002.png
    :alt: Patchy saturation
    :srcset: /advanced_examples/images/sphx_glr_CO2_seismic_002.png
@@ -228,14 +229,21 @@ Though the above modelling is quite simplified, we can learn how to use building
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x000001F0495DA2E0>
+    <matplotlib.legend.Legend object at 0x0000018242D86730>
 
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 143-147
+
+**Reference**
+
+- Xu, H. (2006). Calculation of CO2 acoustic properties using Batzle-Wang equations. Geophysics, 71(2), F21-F23.
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.245 seconds)
+   **Total running time of the script:** ( 0 minutes  0.255 seconds)
 
 
 .. _sphx_glr_download_advanced_examples_CO2_seismic.py:
