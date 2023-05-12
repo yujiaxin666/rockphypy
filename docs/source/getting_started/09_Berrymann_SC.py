@@ -75,6 +75,7 @@ for i, val in enumerate(frac):
     K_eff[i],G_eff[i]= EM.Berryman_sc(K,G,X,Alpha)
 
 #%%
+
 # sphinx figure 
 # sphinx_gallery_thumbnail_number = 1
 plt.figure(figsize=(5,5))
