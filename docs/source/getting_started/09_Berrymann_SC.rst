@@ -18,8 +18,8 @@
 .. _sphx_glr_getting_started_09_Berrymann_SC.py:
 
 
-Berryman Self consistent approach
-=================================
+Berryman Self Consistent 
+========================
 Berryman Self consistent approach for calculating the elastic moduli of N phase composite
 
 .. GENERATED FROM PYTHON SOURCE LINES 8-15
@@ -179,7 +179,7 @@ The effective moduli of the two phase composite as a function of the volume frac
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x0000020D3AE28370>
+    <matplotlib.legend.Legend object at 0x000002BF89AEAFA0>
 
 
 
@@ -192,7 +192,7 @@ However, feel free to change the aspect ratio for the soft phase from 0.1 to 0.0
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.996 seconds)
+   **Total running time of the script:** ( 0 minutes  0.966 seconds)
 
 
 .. _sphx_glr_download_getting_started_09_Berrymann_SC.py:

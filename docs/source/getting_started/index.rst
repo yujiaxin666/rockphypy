@@ -132,6 +132,23 @@ Here you can see how to run a simple rockphypy example.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Berryman Self Consistent">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_09_Berrymann_SC_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_getting_started_09_Berrymann_SC.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Berryman Self Consistent</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Differential Effective Medium (DEM)">
 
 .. only:: html
@@ -230,6 +247,7 @@ Here you can see how to run a simple rockphypy example.
    /getting_started/06_Anisotropy
    /getting_started/07_Soft_Stiff_Cemented_sand_models
    /getting_started/08_Shaly_sand_modelling
+   /getting_started/09_Berrymann_SC
    /getting_started/10_Differential_effective_medium_model
    /getting_started/11_AVO
    /getting_started/13_Self_Consistent_Estimation
