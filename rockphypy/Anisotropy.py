@@ -115,9 +115,9 @@ class Anisotropy:
         Parameters
         ----------
         Vp : array 
-            P wave velocities of layers [Vp1,Vp2...Vpn], size N
+            P wave velocities of layers [Vp1,Vp2...Vpn], Km/s, size N
         Vs : array
-            S wave velocities of layers [Vs1,Vs2...Vsn], size N
+            S wave velocities of layers [Vs1,Vs2...Vsn],Km/s size N
         Den : array
             Densities of layers, size N
         Depth : array
@@ -128,7 +128,7 @@ class Anisotropy:
         array-like
             Stiffness coeffs and averaged density
         """        
- 
+        Vp, Vs, Den, Depth= np.asanyarray(Vp),np.asanyarray(Vs), np.asanyarray(Den),np.asanyarray(Depth)
         # compute lame constants from log data 
         G = Den*Vs**2
         lamda = Den*Vp**2 - 2*G
@@ -277,8 +277,7 @@ class Anisotropy:
             b12*b33+b13*b32, b11*b33+b13*b31, b11*b32+b12*b31,
             b22*b13+b12*b23, b11*b23+b13*b21, b22*b11+b12*b21]).reshape((3,3))
 
-        M = np.bmat([[M1, M2], [M3, M4]])
-
+        M = np.block([[M1, M2], [M3, M4]])
         C_trans= M @ C @ M.T # matrix multiplication
         return C_trans
 

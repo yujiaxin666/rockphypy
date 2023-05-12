@@ -20,9 +20,9 @@ class AVO:
             stiffness matrix of the upper medium 
         C2 : 2D array
             stiffness matrix of the lower medium 
-        theta : float or array-like
+        theta :  array-like
             incident angle, in degree unit
-        azimuth : float or array-like
+        azimuth :  array-like
            azimuth angle, in degree unit 
 
         Returns
@@ -33,6 +33,9 @@ class AVO:
 
         theta = np.radians(theta)
         azimuth = np.radians(azimuth)
+
+        # full azimuth 
+        theta, azimuth=np.meshgrid(theta,azimuth)
         C11_1=C1[0,0]
         C13_1=C1[0,2]
         C33_1=C1[2,2]
@@ -82,8 +85,13 @@ class AVO:
         dgamma=gamma_2-gamma_1
         depsilon=epsilon_v_2-epsilon_v_1
 
+        # beta_v_= (beta_v_1+beta_v_2)/2
+        # dmu_v=mu_v_2-mu_v_1
+        # mu_v_=(mu_v_1+mu_v_2)/2
+
         # full azimuth Rüger (1996)
         Rpp= 0.5*dZ/Z_+0.5*( dalpha/alpha_-(2*beta_/alpha_)**2* dmu/mu_+ (ddelta+2*(2*beta_/alpha_)**2 *dgamma)*np.cos(azimuth)**2)*np.sin(theta)**2 + 0.5*(dalpha/alpha_+depsilon* np.cos(azimuth)**4+ddelta*np.sin(azimuth)**2*np.cos(azimuth)**2)*np.sin(theta)**2*np.tan(theta)**2
+   
         return Rpp
 
     @staticmethod
@@ -94,17 +102,17 @@ class AVO:
         ----------
         theta : float or array-like
             incident angle, degree
-        vp1 : float or array-like
+        vp1 : float 
             P wave velocity of layer 1, m/s
-        vp2 : float or array-like
+        vp2 : float 
             P wave velocity of layer 2, m/s
-        vs1 : float or array-like
+        vs1 : float 
             S wave velocity of layer 1, m/s
-        vs2 : float or array-like
+        vs2 : float 
             S wave velocity of layer 2, m/s
-        den1 : float or array-like
+        den1 : float 
             density of layer 1, kg/m3
-        den2 : float or array-like
+        den2 : float 
             density of layer 2, kg/m3
 
         Returns
@@ -115,7 +123,15 @@ class AVO:
             Rpp0: intercept
             gradient
         """        
-  
+        # vectorize
+        if isinstance(vp1, np.ndarray):
+            vp1=vp1[:, np.newaxis]
+            vp2=vp2[:, np.newaxis]
+            vs1=vs1[:, np.newaxis]
+            vs2=vs2[:, np.newaxis]
+            den1=den1[:, np.newaxis]
+            den2=den2[:, np.newaxis]
+
         theta=np.deg2rad(theta) # convert angle in degree to angle in radian
         delta_den=den2-den1
         delta_vp=vp2-vp1
@@ -127,7 +143,8 @@ class AVO:
         Rpp0=0.5*(delta_den/rho_mean+delta_vp/vp_mean)# intercept
         M= -2*(vs_mean/vp_mean)**2*(2*delta_vs/vs_mean+delta_den/rho_mean)
         N= 0.5* delta_vp/vp_mean
-        R_pp= Rpp0+ M *np.sin(theta)**2 + N * np.tan(theta)**2
+
+        R_pp= Rpp0+ M *np.sin(theta)**2+ N * np.tan(theta)**2
         gradient= M+N
         p=np.sin(theta)/vp1 # ray parameter
 
@@ -142,17 +159,17 @@ class AVO:
 
         Parameters
         ----------
-        vp1 : float or array-like
+        vp1 : float 
             P wave velocity of layer 1, m/s
-        vs1 : float or array-like
+        vs1 : float 
             S wave velocity of layer 1, m/s
-        rho1 : float or array-like
+        rho1 : float
             density of layer 1, kg/m3
-        vp2 : float or array-like
+        vp2 : float 
             P wave velocity of layer 2, m/s
-        vs2 : float or array-like
+        vs2 : float
             S wave velocity of layer 2, m/s
-        rho2 : float or array-like
+        rho2 : float
             density of layer 2, kg/m3
         theta : float or array-like
             incident angle, degree
@@ -204,7 +221,7 @@ class AVO:
 
     @staticmethod
     def AVO_abe(vp1,vs1,d1,vp2,vs2,d2):
-        """Copied from RPT matlab tools func: avo_abe
+        """Different approximations AVO terms 
 
         Parameters
         ----------
@@ -274,8 +291,8 @@ class AVO:
             S wave velocity
         rho : float or array-like
             density
-        theta : float or array-like
-            incident angle
+        theta : array-like
+            incident angles
         SP : float
             constant ratio of Vs to Vp, can be taken as the average of input Vs/Vp, i.e. SP= VS.mean()/VP.mean()
         norm : bool, optional
@@ -290,9 +307,13 @@ class AVO:
             EI_svsv: elastic impedance for SV-SV reflection 
             EI_shsh: elastic impedance for SH-SH reflection 
         """        
+        if isinstance(Vp, np.ndarray):
+            Vp=Vp[:, np.newaxis]
+            Vs=Vs[:, np.newaxis]
+            rho= rho[:, np.newaxis]
         
         theta = np.deg2rad(theta)
-        p=np.sin(theta)
+        p=np.sin(theta)/Vp # ray parameter
         theta_s = np.arcsin(p*Vs)
         ipn=1 
         isn=1 
@@ -329,49 +350,49 @@ class AVO:
 
     @staticmethod
     def AVO_ortho(a1,b1,e11,d11,e12,d12,g1,rho1,a2,b2,e21,d21,e22,d22,g2,rho2,the):
-        """calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media  
-
+        """calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media, refactered from srb toolbox written by Diana Sava. 
         Parameters
         ----------
-        a1 : _type_
-            _description_
-        b1 : _type_
-            _description_
-        e11 : _type_
-            _description_
-        d11 : _type_
-            _description_
-        e12 : _type_
-            _description_
-        d12 : _type_
-            _description_
-        g1 : _type_
-            _description_
-        rho1 : _type_
-            _description_
-        a2 : _type_
-            _description_
-        b2 : _type_
-            _description_
-        e21 : _type_
-            _description_
-        d21 : _type_
-            _description_
-        e22 : _type_
-            _description_
-        d22 : _type_
-            _description_
-        g2 : _type_
-            _description_
-        rho2 : _type_
-            _description_
-        the : _type_
-            _description_
+        a1 : float or array-like
+            P-wave vertical velocities of upper medium (1) 
+        b1 : float or array-like
+            S-wave vertical velocities of upper medium (1) 
+        e11 : float or array-like
+            epsilon in the two symmetry planes of the orthorhombic medium for the upper medium (first index indicates the upper medium (1), second index indicates the plane of symmetry (1 - plane perpendicular to x, 2 - plane perpendicular to y);
+        d11 : float or array-like
+            delta in the two symmetry planes of the orthorhombic medium for the upper medium 
+        e12 : float or array-like
+            epsilon in the two symmetry planes of the orthorhombic medium for the upper medium
+        d12 : float or array-like
+            delta in the two symmetry planes of the orthorhombic medium for the upper medium 
+        g1 : float or array-like
+            vertical shear wave splitting parameter for the upper medium (1)
+        rho1 : float or array-like
+            density of the upper medium 
+        a2 : float or array-like
+            P-wave vertical velocities of lower medium (2) 
+        b2 : float or array-like
+            S-wave vertical velocities of lower medium (2) 
+        e21 : float or array-like
+            epsilon in the two symmetry planes of the orthorhombic medium for the lower medium
+        d21 : float or array-like
+            delta in the two symmetry planes of the orthorhombic medium for the lower medium
+        e22 : float or array-like
+            epsilon in the two symmetry planes of the orthorhombic medium for the lower medium
+        d22 : float or array-like
+            delta in the two symmetry planes of the orthorhombic medium for the lower medium
+        g2 : float or array-like
+            vertical shear wave splitting parameter for the upper medium (2)
+        rho2 : float or array-like
+            density of the lower medium 
+        the : float or array-like
+            incident angle 
 
         Returns
         -------
-        _type_
-            _description_
+        array-like
+            Rxy: PP reflectivity as a function of angle of incidence in xz plane (13).
+            Ryz: PP reflectivity as a function of angle of incidence in yz plane (23)
         """        
   
         Z1=rho1*a1

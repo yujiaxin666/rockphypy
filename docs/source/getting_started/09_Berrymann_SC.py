@@ -57,3 +57,32 @@ K_sc,G_sc= EM.Berryman_sc(K,G,X,Alpha)
 
 print('K_eff and G_eff of the composite are {:.2f} GPa and {:.2f} GPa, respectively'.format(K_sc,G_sc))
 
+#%%
+# The effective moduli of the two phase composite as a function of the volume fraction of the soft fluid filled crack can be calculated as follow:  
+#
+
+# two phase K=[K1,K2]
+K=[37,2.25]
+# G=[G1,G2]
+G=[44,0,]
+Alpha=[1,0.1]
+
+frac = np.linspace(0,1,50)
+K_eff = np.zeros(frac.size)
+G_eff = np.zeros(frac.size)
+for i, val in enumerate(frac):
+    X=[1-val, val]
+    K_eff[i],G_eff[i]= EM.Berryman_sc(K,G,X,Alpha)
+
+#%%
+plt.figure(figsize=(5,5))
+plt.plot(frac,K_eff,'-k',lw=3,label='K_eff')
+plt.plot(frac,G_eff,'-b',lw=2,label='G_eff')
+plt.xlabel('Volume fraction of soft phase')
+plt.ylabel('Effective modulus')
+plt.legend()
+# %%
+# As can be shown in the figure, the effective shear modulus of the two phase composite becomes 0 when the volume fraction of the soft phase is approximately 45% for an aspect ratio of 0.1. this prediction is very similar to the critical porosity model which predicts a suspension of grain in the fluid when the porosity exceeds about 0.4. 
+# 
+# However, feel free to change the aspect ratio for the soft phase from 0.1 to 0.01, then the modelling results of the effective shear modulus becomes zero when the volume fraction of the soft phase is approximately 12%. 
+#

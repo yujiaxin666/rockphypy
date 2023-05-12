@@ -137,9 +137,9 @@ Classes
       
       Computes Backus Average from log data, notice that the Depth is 1d Vector including each top depth of layer and also the bottom of last layer.
 
-      :param Vp: P wave velocities of layers [Vp1,Vp2...Vpn], size N
+      :param Vp: P wave velocities of layers [Vp1,Vp2...Vpn], Km/s, size N
       :type Vp: array
-      :param Vs: S wave velocities of layers [Vs1,Vs2...Vsn], size N
+      :param Vs: S wave velocities of layers [Vs1,Vs2...Vsn],Km/s size N
       :type Vs: array
       :param Den: Densities of layers, size N
       :type Den: array

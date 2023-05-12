@@ -14,3 +14,4 @@ setuptools>=39.2.0
 sphinx-autoapi>=2.0.1
 sphinx_gallery>=0.12.2
 pandas>=1.1.1
+KDE-diffusion>= 1.0.4

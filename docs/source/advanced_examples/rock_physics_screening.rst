@@ -42,7 +42,7 @@ Rock physics data screening
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 18-24
+.. GENERATED FROM PYTHON SOURCE LINES 18-26
 
 .. code-block:: python3
 
@@ -59,30 +59,16 @@ Rock physics data screening
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-30
-
-.. code-block:: python3
 
 
-
-    import matplotlib.colors
-    cmap1 = matplotlib.colors.LinearSegmentedColormap.from_list("", ["green","orange","yellow"])
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 31-35
+.. GENERATED FROM PYTHON SOURCE LINES 27-31
 
 Given tons of petrophysical properties meaured or derived e.g. from well logs, data screening is inevitably required for later intepretation and scenerial modelling. The purpose of data screening is to identify and address any errors, inconsistencies, or missing data in the dataset before any analysis is conducted. 
 
 Avseth et al. (2020) proposed a rock physics model-based data screening approach. Several contact based elastic models are used to generate elastic bounds for high-porosity sands and sandstones (typical reservoir sandstone). These elastic bounds can tell if data comply with physics. Rock physics diagnostic models used are ``friable sand model``,``contact cement model`` and ``increasing cement model``, ``rockphypy`` provides all the implementations. In addition, ``rockphypy`` has written the code used to plot the elastic bounds as a function ``QI.screening``, ``QI`` stands for Quantitative Intepretation. There are many practically useful functionalities in this submodule.  
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-57
+.. GENERATED FROM PYTHON SOURCE LINES 33-54
 
 .. code-block:: python3
 
@@ -113,22 +99,35 @@ Avseth et al. (2020) proposed a rock physics model-based data screening approach
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-71
+
+.. GENERATED FROM PYTHON SOURCE LINES 55-59
+
+Applied to field data 
+^^^^^^^^^^^^^^^^^^^^^
+Let's import some synthetic well log data and apply the rock physics screening to the well log data 
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 61-79
 
 .. code-block:: python3
 
 
+    # read data
+    data = pd.read_csv('../../data/well/sandstone.csv',index_col=0)
 
+    # compute the elastic bounds
     phi,vp1,vp2,vp3,vs1,vs2,vs3 = QI.screening(Dqz,Kqz,Gqz,Dsh,Ksh,Gsh,Dc,Kc,Gc,Db,Kb,phib_p,phi_c,sigma,vsh,scheme,f, Cn)
 
-    fig,ax=plt.subplots()
-    fig.set_size_inches(7, 6)
-    ax.plot(phi,vp3,'-k', lw=4, alpha=0.7)
-    ax.plot(phi,vp1,'--k', lw=2, alpha=0.7)
-    ax.plot(phi,vp2,'-k',lw=4, alpha=0.7)
-    ax.set_ylabel('Vp (m/s)')
-    ax.set_xlabel('porosity')
-    ax.grid(ls='--',alpha=0.7)
+    # create an object with data 
+    qi= QI(data.VP,phi=data.PHIT_ND,Vsh= data.VSH_GR)
+
+    # call the screening plot method 
+    fig=qi.screening_plot(phi,vp1,vp2,vp3)
+    plt.ylim([1900,6100])
+    plt.yticks(np.arange(2000,6200, 1000),[2,3,4,5,6])
+    plt.ylabel('Vp (Km/s)')
+    plt.xlim(-0.01,0.51)
+
 
 
 
@@ -139,66 +138,16 @@ Avseth et al. (2020) proposed a rock physics model-based data screening approach
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+
+    (-0.01, 0.51)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-76
-
-Applied to field data 
-^^^^^^^^^^^^^^^^^^^^^
-Let's import a example synthetic well log data and apply the rock physics screening to the well log data 
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 78-83
-
-.. code-block:: python3
-
-
-
-    data = pd.read_csv('../../data/well/example_well.csv')
-
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 84-101
-
-.. code-block:: python3
-
-
-    # sphinx_gallery_thumbnail_number = 2
-    fig,ax=plt.subplots()
-    fig.set_size_inches(7, 6)
-    ax.plot(phi,vp3,'-k', lw=4, alpha=0.7)
-    ax.plot(phi,vp1,'--k', lw=2, alpha=0.7)
-    ax.plot(phi,vp2,'-k',lw=4, alpha=0.7)
-    ax.set_ylabel('Vp (m/s)')
-    ax.set_xlabel('Porosity')
-    ax.grid(ls='--',alpha=0.7)
-
-
-    plt.scatter(data.PHIT_D,data.VP*1000,c=1-data.VSH_GR,vmin=0, vmax=1,edgecolors='grey',s=100,alpha=1,cmap=cmap1)
-
-    cbar=plt.colorbar()
-    cbar.set_label(r'$V_{\rm Sand}$')
-
-
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_rock_physics_screening_002.png
-   :alt: rock physics screening
-   :srcset: /advanced_examples/images/sphx_glr_rock_physics_screening_002.png
-   :class: sphx-glr-single-img
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 102-104
+.. GENERATED FROM PYTHON SOURCE LINES 80-82
 
 **Reference** 
 - Avseth, P., Lehocki, I., Kjøsnes, Ø., & Sandstad, O. (2021). Data‐driven rock physics analysis of North Sea tertiary reservoir sands. Geophysical Prospecting, 69(3), 608-621.
@@ -206,7 +155,7 @@ Let's import a example synthetic well log data and apply the rock physics screen
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.477 seconds)
+   **Total running time of the script:** ( 0 minutes  0.164 seconds)
 
 
 .. _sphx_glr_download_advanced_examples_rock_physics_screening.py:

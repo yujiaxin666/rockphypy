@@ -324,7 +324,7 @@ class GM:
         Ct =  (8* G0)/(2-nu0)
         Bw = 2/(np.pi*Cn)
         Cw = 4/np.pi * (1/Ct -1/Cn)
-        gamma = 3/32 *Cn*Ct*n*(1-phi)*np.sqrt(-epsilon)
+        gamma = (3/32) *Cn*Ct*n*(1-phi)*np.sqrt(-epsilon)
         alpha = np.sqrt(epsilon/epsilon_axial)
         I0 = (1/2)*(np.sqrt(1+alpha**2)+ alpha**2*np.log(1+np.sqrt(1+alpha**2)/alpha))
         I2 = (1/4)*((1+alpha**2)**(3/2)-alpha**2*I0)
@@ -333,7 +333,7 @@ class GM:
         C11 =  gamma/alpha*(4*Bw/3 + 2*Cw/5 + epsilon/epsilon_axial *(2*Bw/15 + Cw/35))
         C33 = (gamma/alpha)* (4*Bw*I2 + 2*Cw*I4)
 
-        C13 = (gamma/alpha)*Cw*(I2-I4)
+        C13 = (gamma/alpha)* Cw*(I2-I4)
         C44 = (gamma/alpha)* ((Bw/2)*(I0+I2) + Cw*(I2-I4))
         C66 = (gamma/alpha)* (Bw*(I0-I2) + (Cw/4)*(I0-2*I2+I4))
         # stiffness matrix

@@ -14,7 +14,7 @@ Examples using ``rockphypy.GM.softsand``
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="CO2 seismic properties">
+    <div class="sphx-glr-thumbcontainer" tooltip="Improved CO2 properties modelling using Batzle-Wang">
 
 .. only:: html
 
@@ -25,13 +25,34 @@ Examples using ``rockphypy.GM.softsand``
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">CO2 seismic properties</div>
+      <div class="sphx-glr-thumbnail-title">Improved CO2 properties modelling using Batzle-Wang</div>
     </div>
 
 
 .. only:: not html
 
  * :ref:`sphx_glr_advanced_examples_CO2_modelling.py`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="CO2 seismic properties">
+
+.. only:: html
+
+  .. image:: /advanced_examples/images/thumb/sphx_glr_CO2_seismic_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_advanced_examples_CO2_seismic.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">CO2 seismic properties</div>
+    </div>
+
+
+.. only:: not html
+
+ * :ref:`sphx_glr_advanced_examples_CO2_seismic.py`
 
 .. raw:: html
 

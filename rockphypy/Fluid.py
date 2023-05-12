@@ -68,9 +68,9 @@ class Fluid:
         Returns
         -------
         float or array-like
-            Vp_fast, fast P-wave velocities at all frequencies
-            Vp_slow, slow P-wave velocities at all frequencies
-            Vs, S-wave velocities
+            Vp_fast, fast P-wave velocities at all frequencies,km/s
+            Vp_slow, slow P-wave velocities at all frequencies,km/s
+            Vs, S-wave velocities,km/s
             QP1_inv, fast P-wave attenuation
             QP2_inv, slow P-wave attenuation
             Qs_inv, S-wave attenuation
@@ -139,7 +139,7 @@ class Fluid:
         Returns
         -------
         float or array-like
-            Vp_fast,Vp_slow,Vs:  high-frequency limiting velocities
+            Vp_fast,Vp_slow,Vs:  high-frequency limiting velocities,km/s
         """        
       
         rho=(1-phi)*rho0+phi*rhofl # bulk density
@@ -186,7 +186,7 @@ class Fluid:
         Returns
         -------
         float or array-like
-            Vp_fast,Vs: high-frequency limiting velocities
+            Vp_fast,Vs: high-frequency limiting velocities, km/s
         """        
            
         rho=(1-phi)*rho0+phi*rhofl # bulk density
@@ -207,9 +207,9 @@ class Fluid:
         Parameters
         ----------
         Vp0 : float
-            Biot−Gassmann low-frequency limiting P-wave velocity
+            Biot−Gassmann low-frequency limiting P-wave velocity, km/s or m/s
         Vpinf : float
-            Biot highfrequency limiting P-wave velocity
+            Biot highfrequency limiting P-wave velocity, km/s or m/s
         freq : float or array-like
             frequency
         phi : float
@@ -367,14 +367,14 @@ class Fluid:
 
     @staticmethod
     def Gassmann_approx(Msat1,M0,Mfl1,phi,Mfl2):
-        """Perform gassmann fluid subsititution using on p wave modulus 
+        """Perform gassmann fluid subsititution using p wave modulus only
 
         Parameters
         ----------
         Msat1 : float or array-like
             in situ saturated p wave modulus from well log data
         M0 : float
-            mineral modulus
+            p wave modulus of mineral 
         Mfl1 : float
             p wave modulus of in situ fluid 
         phi : float
@@ -530,7 +530,7 @@ class Fluid:
 
         Returns
         -------
-        _type_
+        float or array-like
             Kuf_sat (float):GPa, predicted high frequency bulk moduli of saturated rock
             Guf_sat (array): GPa, predicted high frequency shear moduli of saturated rock at different pressure 
             Vp_hf (array): m/s, predicted high frequency P wave velocities of saturated rock
@@ -557,7 +557,7 @@ class Fluid:
 
         Parameters
         ----------
-        Sdry : array
+        Sdry : list or array
             dry rock compliances [S11 S12 S13 S33 S44]
         Sdry_hp : array
             dry rock compliances at very high effective stress [S11 S12 S13 S33 S44]
@@ -636,7 +636,7 @@ class Fluid:
         Returns
         -------
         float, array-like
-            Vp (m/s): P wave velocity 
+            Vp (m/s): P wave velocity km/s
             a_w: attenuation coefficient
             K_star: complex bulk modulus 
         """        

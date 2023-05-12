@@ -8,7 +8,7 @@ Batzle and Wang functionalities
 '''
 import numpy as np
 import warnings
-
+from rockphypy.Fluid import Fluid
 class BW:
     """Effective CO2, natural gas, brine and oil property calculation using original and modified Batzle-Wang equations.
     """  
@@ -34,7 +34,7 @@ class BW:
             Pressure in MPa
         T : float or array-like
             Temperature in °C
-        G : float or array-like
+        G : float 
             Gas gravity
 
         Returns
@@ -62,7 +62,7 @@ class BW:
             Pressure in MPa
         T : float or array-like
             Temperature in °C
-        G : float or array-like
+        G : float 
             Gas gravity
 
         Returns
@@ -103,14 +103,14 @@ class BW:
             Pressure in MPa
         T : float or array-like
             Temperature in °C
-        G : float or array-like
+        G : float 
             Gas gravity
 
         Returns
         -------
         float or array-like
-            rho: Gas density
-            K: Gas bulk modulus
+            rho: Gas density (g/cm3)
+            K: Gas bulk modulus (GPa)
         """        
    
         R=8.3145 # J.mol-1K-1 gas constant 
@@ -136,21 +136,21 @@ class BW:
             Pressure in MPa
         T : float or array-like
             Temperature in °C
-        den : float or array-like
+        den : float 
             oil density in g/cm3
 
         Returns
         -------
         float or array-like
-            rho: oil density
-            K: oil bulk modulus
+            rho: oil density (g/cm3)
+            K: oil bulk modulus (GPa)
         """        
             
         rho_p=den+(0.00277*P-1.71*0.0000001*P**3)*(den-1.15)**2+3.49*0.0001*P
         rho=rho_p/(0.972+3.81*0.0001*(T+17.78)**1.175)
         v=2096*(den/(2.6-den))**0.5-3.7*T+4.64*P+0.0115*(4.12*(1.08/den-1)**0.5-1)*T*P
         K=rho*v**2
-        return rho, K
+        return rho, K/1e6
 
     #-----------------Gas satutrated with oil--------------------------#
     @staticmethod
@@ -163,17 +163,16 @@ class BW:
             Pressure in MPa
         T : float or array-like
             Temperature in °C
-        den : float or array-like
+        den : float
             oil density in g/cm3
-        G : float or array-like
+        G : float 
             gas gravity 
-        Rg : float or array-like
+        Rg : float 
             the volume ratio of liberated gas to remaining oil at atmospheric pressure and 15.6°C, Liter/Liter
 
         Returns
         -------
         float or array-like
-            v (m/s): velocity
             rho_g (g/cm3): true density of live oil at saturation
             K (GPa): true bulk modulus of live oil at saturation
         """          
@@ -188,7 +187,7 @@ class BW:
         rho_g=(den+0.0012*G*Rg)/B
         K=rho_g*v**2
         # return v
-        return rho_g, K
+        return rho_g, K/1e6
 
     #-----------------Pure Water--------------------------#
 
@@ -207,6 +206,7 @@ class BW:
         -------
         float or array-like
             rho_w (g/cm3): density of pure water
+            K_w (Gpa): bulk modulus of pure water
         """        
    
         #pressure=pressure*1e6
@@ -245,7 +245,7 @@ class BW:
                     [-4.78300e-02,  2.74700e-04, -2.13500e-06,  1.23700e-08],
                     [ 1.48700e-04, -6.50300e-07, -1.45500e-08,  1.32700e-10],
                     [-2.19700e-07,  7.98700e-10,  5.23000e-11, -4.61400e-13]])
-        v_w=np.sum(w[i, j] * T**i * P**j for i in range(5) for j in range(4))
+        v_w=sum(w[i, j] * T**i * P**j for i in range(5) for j in range(4))
         
         return v_w
 
@@ -259,7 +259,7 @@ class BW:
             Temperature in °C
         P : float or array-like
             Pressure in MPa
-        S : float or array-like
+        S : float 
             weight fraction of sodium chloride in ppm/1e6
 
         Returns
@@ -286,7 +286,7 @@ class BW:
             Temperature in °C
         P : float or array-like
             Pressure in MPa
-        S : float or array-like
+        S : float 
             weight fraction of sodium chloride in ppm/1e6
 
         Returns
@@ -302,4 +302,39 @@ class BW:
         v_b = v_w + s1 * S + s15 * S**1.5 + s2 * S**2
         return v_b
 
+    @staticmethod
+    def co2_brine(temperature, pressure, salinity, Sco2, brie_component=None, bw=False):
+        """compute the effective properties of critical Co2 brine mixture depending on temperature, pressure and salinity of the brine, as well as the saturation state.
 
+        Args:
+            temperature (degree)
+            pressure (Mpa): pore pressure, not effective stress
+            salinity (ppm): The weight fraction of NaCl, e.g. 35e-3
+                for 35 parts per thousand, or 3.5% (the salinity of
+                seawater).
+            Sco2 (frac): Co2 saturation
+            brie_component (num): if None: uniform saturation. otherwise patchy saturation according to brie mixing
+
+        Returns:
+            den_mix (g/cc): mixture density
+            Kf_mix (GPa): bulk modulus 
+        """
+        G = 1.5349
+        if bw is True:
+            rho_co2, K_co2 = BW.rho_K_gas(pressure, temperature, G)
+        else:
+            rho_co2, K_co2 = BW.rho_K_co2(pressure, temperature, G)
+
+        rho_brine, K_b = BW.rho_K_brine(temperature, pressure, salinity)
+
+        den_mix = (1-Sco2)*rho_brine+Sco2*rho_co2
+
+        if brie_component == None:
+            Kf_mix = ((1-Sco2)/K_b+Sco2/K_co2)**-1  # Woods formula
+
+        else:
+            # patchy saturation
+            Kf_mix = Fluid.Brie(K_b, K_co2, 1-Sco2, brie_component)
+        # print('Kco2',K_co2,'K_b', K_b)
+        # print('density',den_mix,'moduli',Kf_mix)
+        return den_mix, Kf_mix

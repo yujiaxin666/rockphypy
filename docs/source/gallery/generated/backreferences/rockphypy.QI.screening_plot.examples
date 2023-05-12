@@ -1,0 +1,39 @@
+
+
+Examples using ``rockphypy.QI.screening_plot``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. start-sphx-glr-thumbnails
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Rock physics data screening">
+
+.. only:: html
+
+  .. image:: /advanced_examples/images/thumb/sphx_glr_rock_physics_screening_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_advanced_examples_rock_physics_screening.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rock physics data screening</div>
+    </div>
+
+
+.. only:: not html
+
+ * :ref:`sphx_glr_advanced_examples_rock_physics_screening.py`
+
+.. raw:: html
+
+    </div>
+

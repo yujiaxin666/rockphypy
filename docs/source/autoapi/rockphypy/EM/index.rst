@@ -112,9 +112,9 @@ Classes
       In the suspension domain, the effective bulk and shear moduli of the rock can be estimated by using the Reuss (isostress) average.
 
       :param M0: The solid phase modulus or density
-      :type M0: float or array-like
+      :type M0: float
       :param Mf: The pore filled phase modulus or density
-      :type Mf: float or array-like
+      :type Mf: float
       :param phic: critical porosity
       :type phic: float
       :param den: If False: compute the reuss average for effective modulus of two mixing phases. If true, compute avearge density using mass balance, which corresponds to voigt average. Defaults to False.
@@ -200,7 +200,7 @@ Classes
       :param mat: If true: the output is in matrix form, otherwise  is numpy array. Defaults to False.
       :type mat: bool, optional
 
-      :returns: *_type_* -- C_eff: effective moduli of cracked, transversely isotropic rocks
+      :returns: *1d or 2d array* -- C_eff: effective moduli of cracked, transversely isotropic rocks
 
       .. rubric:: References
 
@@ -254,7 +254,7 @@ Classes
                        Defaults to 3
       :type axis: int, optional
 
-      :returns: *_type_* -- C_eff: effective moduli in 6x6 matrix form.
+      :returns: *2d array* -- C_eff: effective moduli in 6x6 matrix form.
 
 
 
@@ -429,9 +429,9 @@ Classes
       
       compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980).See also: Berryman_sc, Berryman_func
 
-      :param Km: Shear modulus of matrix phase. For Berryman SC       approach, this corresponds to the effective moduli of the composite.
+      :param Km: bulk modulus of matrix phase. For Berryman SC       approach, this corresponds to the effective moduli of the composite.
       :type Km: float
-      :param Gm: Bulk modulus of matrix phase. For Berryman SC approach, this corresponds to the effective moduli of the composite.
+      :param Gm: shear modulus of matrix phase. For Berryman SC approach, this corresponds to the effective moduli of the composite.
       :type Gm: float
       :param Ki: 1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]
       :type Ki: array-like
@@ -501,9 +501,9 @@ Classes
       Compute effective elastic moduli via "Swiss cheese" model with spherical pores. "Swiss cheese" model assumes a dilute distribution of spherical inclusions embedded in an * *unbounded* * homogenous solid.  It takes the "noninteracting assumption" in which all cavities (pores) are independent so that their contributions can be added.
 
       :param Ks: Bulk modulus of matrix in GPa
-      :type Ks: float
+      :type Ks: float or array-like
       :param Gs: Shear modulus of matrix in GPa
-      :type Gs: float
+      :type Gs: float or array-like
       :param phi: porosity
       :type phi: float or array-like
 
@@ -603,9 +603,9 @@ Classes
       :param G0: shear modulus of background medium
       :type G0: float
       :param crd: crack density
-      :type crd: float
+      :type crd: float or array-like
 
-      :returns: *float* -- K_dry,G_dry: dry elastic moduli of cracked medium
+      :returns: *float or array-like* -- K_dry,G_dry: dry elastic moduli of cracked medium
 
 
 
@@ -805,7 +805,7 @@ Classes
       :type Ki: float
       :param Gi: shear modulus of inclusion
       :type Gi: float
-      :param f: _descripvolume fraction of inclusion phase tion_
+      :param f: volume fraction of inclusion phases
       :type f: float or array
       :param mode: 'stress' if macro stress is prescribed. 'strain' if macro strain is prescribed.
       :type mode: string

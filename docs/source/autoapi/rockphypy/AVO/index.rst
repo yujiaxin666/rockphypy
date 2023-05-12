@@ -54,9 +54,9 @@ Classes
       :param C2: stiffness matrix of the lower medium
       :type C2: 2D array
       :param theta: incident angle, in degree unit
-      :type theta: float or array-like
+      :type theta: array-like
       :param azimuth: azimuth angle, in degree unit
-      :type azimuth: float or array-like
+      :type azimuth: array-like
 
       :returns: *float or array-like* -- PP reflectivities
 
@@ -86,17 +86,17 @@ Classes
       :param theta: incident angle, degree
       :type theta: float or array-like
       :param vp1: P wave velocity of layer 1, m/s
-      :type vp1: float or array-like
+      :type vp1: float
       :param vp2: P wave velocity of layer 2, m/s
-      :type vp2: float or array-like
+      :type vp2: float
       :param vs1: S wave velocity of layer 1, m/s
-      :type vs1: float or array-like
+      :type vs1: float
       :param vs2: S wave velocity of layer 2, m/s
-      :type vs2: float or array-like
+      :type vs2: float
       :param den1: density of layer 1, kg/m3
-      :type den1: float or array-like
+      :type den1: float
       :param den2: density of layer 2, kg/m3
-      :type den2: float or array-like
+      :type den2: float
 
       :returns: *float or array-like* -- R_pp: P wave reflectivity
                 R_ps: PS reflectivity
@@ -127,17 +127,17 @@ Classes
       Reflection & Transmission coefficients calculated using full Zoeppritz equations.
 
       :param vp1: P wave velocity of layer 1, m/s
-      :type vp1: float or array-like
+      :type vp1: float
       :param vs1: S wave velocity of layer 1, m/s
-      :type vs1: float or array-like
+      :type vs1: float
       :param rho1: density of layer 1, kg/m3
-      :type rho1: float or array-like
+      :type rho1: float
       :param vp2: P wave velocity of layer 2, m/s
-      :type vp2: float or array-like
+      :type vp2: float
       :param vs2: S wave velocity of layer 2, m/s
-      :type vs2: float or array-like
+      :type vs2: float
       :param rho2: density of layer 2, kg/m3
-      :type rho2: float or array-like
+      :type rho2: float
       :param theta: incident angle, degree
       :type theta: float or array-like
 
@@ -164,7 +164,7 @@ Classes
       :staticmethod:
 
       
-      Copied from RPT matlab tools func: avo_abe
+      Different approximations AVO terms
 
       :param vp1: P wave velocity of layer 1, m/s
       :type vp1: float or array-like
@@ -216,8 +216,8 @@ Classes
       :type Vs: float or array-like
       :param rho: density
       :type rho: float or array-like
-      :param theta: incident angle
-      :type theta: float or array-like
+      :param theta: incident angles
+      :type theta: array-like
       :param SP: constant ratio of Vs to Vp, can be taken as the average of input Vs/Vp, i.e. SP= VS.mean()/VP.mean()
       :type SP: float
       :param norm: If True: normalized input velocities and density such that the units and dimension match with acoustic impedance. Defaults to True.
@@ -250,44 +250,44 @@ Classes
       :staticmethod:
 
       
-      calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media
+      calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media, refactered from srb toolbox written by Diana Sava.
+      :param a1: P-wave vertical velocities of upper medium (1)
+      :type a1: float or array-like
+      :param b1: S-wave vertical velocities of upper medium (1)
+      :type b1: float or array-like
+      :param e11: epsilon in the two symmetry planes of the orthorhombic medium for the upper medium (first index indicates the upper medium (1), second index indicates the plane of symmetry (1 - plane perpendicular to x, 2 - plane perpendicular to y);
+      :type e11: float or array-like
+      :param d11: delta in the two symmetry planes of the orthorhombic medium for the upper medium
+      :type d11: float or array-like
+      :param e12: epsilon in the two symmetry planes of the orthorhombic medium for the upper medium
+      :type e12: float or array-like
+      :param d12: delta in the two symmetry planes of the orthorhombic medium for the upper medium
+      :type d12: float or array-like
+      :param g1: vertical shear wave splitting parameter for the upper medium (1)
+      :type g1: float or array-like
+      :param rho1: density of the upper medium
+      :type rho1: float or array-like
+      :param a2: P-wave vertical velocities of lower medium (2)
+      :type a2: float or array-like
+      :param b2: S-wave vertical velocities of lower medium (2)
+      :type b2: float or array-like
+      :param e21: epsilon in the two symmetry planes of the orthorhombic medium for the lower medium
+      :type e21: float or array-like
+      :param d21: delta in the two symmetry planes of the orthorhombic medium for the lower medium
+      :type d21: float or array-like
+      :param e22: epsilon in the two symmetry planes of the orthorhombic medium for the lower medium
+      :type e22: float or array-like
+      :param d22: delta in the two symmetry planes of the orthorhombic medium for the lower medium
+      :type d22: float or array-like
+      :param g2: vertical shear wave splitting parameter for the upper medium (2)
+      :type g2: float or array-like
+      :param rho2: density of the lower medium
+      :type rho2: float or array-like
+      :param the: incident angle
+      :type the: float or array-like
 
-      :param a1: _description_
-      :type a1: _type_
-      :param b1: _description_
-      :type b1: _type_
-      :param e11: _description_
-      :type e11: _type_
-      :param d11: _description_
-      :type d11: _type_
-      :param e12: _description_
-      :type e12: _type_
-      :param d12: _description_
-      :type d12: _type_
-      :param g1: _description_
-      :type g1: _type_
-      :param rho1: _description_
-      :type rho1: _type_
-      :param a2: _description_
-      :type a2: _type_
-      :param b2: _description_
-      :type b2: _type_
-      :param e21: _description_
-      :type e21: _type_
-      :param d21: _description_
-      :type d21: _type_
-      :param e22: _description_
-      :type e22: _type_
-      :param d22: _description_
-      :type d22: _type_
-      :param g2: _description_
-      :type g2: _type_
-      :param rho2: _description_
-      :type rho2: _type_
-      :param the: _description_
-      :type the: _type_
-
-      :returns: *_type_* -- _description_
+      :returns: *array-like* -- Rxy: PP reflectivity as a function of angle of incidence in xz plane (13).
+                Ryz: PP reflectivity as a function of angle of incidence in yz plane (23)
 
 
 

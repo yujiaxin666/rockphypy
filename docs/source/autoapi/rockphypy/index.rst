@@ -160,9 +160,9 @@ Classes
       
       Computes Backus Average from log data, notice that the Depth is 1d Vector including each top depth of layer and also the bottom of last layer.
 
-      :param Vp: P wave velocities of layers [Vp1,Vp2...Vpn], size N
+      :param Vp: P wave velocities of layers [Vp1,Vp2...Vpn], Km/s, size N
       :type Vp: array
-      :param Vs: S wave velocities of layers [Vs1,Vs2...Vsn], size N
+      :param Vs: S wave velocities of layers [Vs1,Vs2...Vsn],Km/s size N
       :type Vs: array
       :param Den: Densities of layers, size N
       :type Den: array
@@ -327,9 +327,9 @@ Classes
       :param C2: stiffness matrix of the lower medium
       :type C2: 2D array
       :param theta: incident angle, in degree unit
-      :type theta: float or array-like
+      :type theta: array-like
       :param azimuth: azimuth angle, in degree unit
-      :type azimuth: float or array-like
+      :type azimuth: array-like
 
       :returns: *float or array-like* -- PP reflectivities
 
@@ -359,17 +359,17 @@ Classes
       :param theta: incident angle, degree
       :type theta: float or array-like
       :param vp1: P wave velocity of layer 1, m/s
-      :type vp1: float or array-like
+      :type vp1: float
       :param vp2: P wave velocity of layer 2, m/s
-      :type vp2: float or array-like
+      :type vp2: float
       :param vs1: S wave velocity of layer 1, m/s
-      :type vs1: float or array-like
+      :type vs1: float
       :param vs2: S wave velocity of layer 2, m/s
-      :type vs2: float or array-like
+      :type vs2: float
       :param den1: density of layer 1, kg/m3
-      :type den1: float or array-like
+      :type den1: float
       :param den2: density of layer 2, kg/m3
-      :type den2: float or array-like
+      :type den2: float
 
       :returns: *float or array-like* -- R_pp: P wave reflectivity
                 R_ps: PS reflectivity
@@ -400,17 +400,17 @@ Classes
       Reflection & Transmission coefficients calculated using full Zoeppritz equations.
 
       :param vp1: P wave velocity of layer 1, m/s
-      :type vp1: float or array-like
+      :type vp1: float
       :param vs1: S wave velocity of layer 1, m/s
-      :type vs1: float or array-like
+      :type vs1: float
       :param rho1: density of layer 1, kg/m3
-      :type rho1: float or array-like
+      :type rho1: float
       :param vp2: P wave velocity of layer 2, m/s
-      :type vp2: float or array-like
+      :type vp2: float
       :param vs2: S wave velocity of layer 2, m/s
-      :type vs2: float or array-like
+      :type vs2: float
       :param rho2: density of layer 2, kg/m3
-      :type rho2: float or array-like
+      :type rho2: float
       :param theta: incident angle, degree
       :type theta: float or array-like
 
@@ -437,7 +437,7 @@ Classes
       :staticmethod:
 
       
-      Copied from RPT matlab tools func: avo_abe
+      Different approximations AVO terms
 
       :param vp1: P wave velocity of layer 1, m/s
       :type vp1: float or array-like
@@ -489,8 +489,8 @@ Classes
       :type Vs: float or array-like
       :param rho: density
       :type rho: float or array-like
-      :param theta: incident angle
-      :type theta: float or array-like
+      :param theta: incident angles
+      :type theta: array-like
       :param SP: constant ratio of Vs to Vp, can be taken as the average of input Vs/Vp, i.e. SP= VS.mean()/VP.mean()
       :type SP: float
       :param norm: If True: normalized input velocities and density such that the units and dimension match with acoustic impedance. Defaults to True.
@@ -523,44 +523,44 @@ Classes
       :staticmethod:
 
       
-      calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media
+      calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media, refactered from srb toolbox written by Diana Sava.
+      :param a1: P-wave vertical velocities of upper medium (1)
+      :type a1: float or array-like
+      :param b1: S-wave vertical velocities of upper medium (1)
+      :type b1: float or array-like
+      :param e11: epsilon in the two symmetry planes of the orthorhombic medium for the upper medium (first index indicates the upper medium (1), second index indicates the plane of symmetry (1 - plane perpendicular to x, 2 - plane perpendicular to y);
+      :type e11: float or array-like
+      :param d11: delta in the two symmetry planes of the orthorhombic medium for the upper medium
+      :type d11: float or array-like
+      :param e12: epsilon in the two symmetry planes of the orthorhombic medium for the upper medium
+      :type e12: float or array-like
+      :param d12: delta in the two symmetry planes of the orthorhombic medium for the upper medium
+      :type d12: float or array-like
+      :param g1: vertical shear wave splitting parameter for the upper medium (1)
+      :type g1: float or array-like
+      :param rho1: density of the upper medium
+      :type rho1: float or array-like
+      :param a2: P-wave vertical velocities of lower medium (2)
+      :type a2: float or array-like
+      :param b2: S-wave vertical velocities of lower medium (2)
+      :type b2: float or array-like
+      :param e21: epsilon in the two symmetry planes of the orthorhombic medium for the lower medium
+      :type e21: float or array-like
+      :param d21: delta in the two symmetry planes of the orthorhombic medium for the lower medium
+      :type d21: float or array-like
+      :param e22: epsilon in the two symmetry planes of the orthorhombic medium for the lower medium
+      :type e22: float or array-like
+      :param d22: delta in the two symmetry planes of the orthorhombic medium for the lower medium
+      :type d22: float or array-like
+      :param g2: vertical shear wave splitting parameter for the upper medium (2)
+      :type g2: float or array-like
+      :param rho2: density of the lower medium
+      :type rho2: float or array-like
+      :param the: incident angle
+      :type the: float or array-like
 
-      :param a1: _description_
-      :type a1: _type_
-      :param b1: _description_
-      :type b1: _type_
-      :param e11: _description_
-      :type e11: _type_
-      :param d11: _description_
-      :type d11: _type_
-      :param e12: _description_
-      :type e12: _type_
-      :param d12: _description_
-      :type d12: _type_
-      :param g1: _description_
-      :type g1: _type_
-      :param rho1: _description_
-      :type rho1: _type_
-      :param a2: _description_
-      :type a2: _type_
-      :param b2: _description_
-      :type b2: _type_
-      :param e21: _description_
-      :type e21: _type_
-      :param d21: _description_
-      :type d21: _type_
-      :param e22: _description_
-      :type e22: _type_
-      :param d22: _description_
-      :type d22: _type_
-      :param g2: _description_
-      :type g2: _type_
-      :param rho2: _description_
-      :type rho2: _type_
-      :param the: _description_
-      :type the: _type_
-
-      :returns: *_type_* -- _description_
+      :returns: *array-like* -- Rxy: PP reflectivity as a function of angle of incidence in xz plane (13).
+                Ryz: PP reflectivity as a function of angle of incidence in yz plane (23)
 
 
 
@@ -637,7 +637,7 @@ Classes
       :param T: Temperature in °C
       :type T: float or array-like
       :param G: Gas gravity
-      :type G: float or array-like
+      :type G: float
 
       :returns: *float or array-like* -- Ta: absolute temperature
                 Ppr:pseudoreduced pressure
@@ -671,7 +671,7 @@ Classes
       :param T: Temperature in °C
       :type T: float or array-like
       :param G: Gas gravity
-      :type G: float or array-like
+      :type G: float
 
       :returns: *float or array-like* -- rho (g/cc): gas density
                 K (GPa): bulk modulus
@@ -708,10 +708,10 @@ Classes
       :param T: Temperature in °C
       :type T: float or array-like
       :param G: Gas gravity
-      :type G: float or array-like
+      :type G: float
 
-      :returns: *float or array-like* -- rho: Gas density
-                K: Gas bulk modulus
+      :returns: *float or array-like* -- rho: Gas density (g/cm3)
+                K: Gas bulk modulus (GPa)
 
 
 
@@ -741,10 +741,10 @@ Classes
       :param T: Temperature in °C
       :type T: float or array-like
       :param den: oil density in g/cm3
-      :type den: float or array-like
+      :type den: float
 
-      :returns: *float or array-like* -- rho: oil density
-                K: oil bulk modulus
+      :returns: *float or array-like* -- rho: oil density (g/cm3)
+                K: oil bulk modulus (GPa)
 
 
 
@@ -774,14 +774,13 @@ Classes
       :param T: Temperature in °C
       :type T: float or array-like
       :param den: oil density in g/cm3
-      :type den: float or array-like
+      :type den: float
       :param G: gas gravity
-      :type G: float or array-like
+      :type G: float
       :param Rg: the volume ratio of liberated gas to remaining oil at atmospheric pressure and 15.6°C, Liter/Liter
-      :type Rg: float or array-like
+      :type Rg: float
 
-      :returns: *float or array-like* -- v (m/s): velocity
-                rho_g (g/cm3): true density of live oil at saturation
+      :returns: *float or array-like* -- rho_g (g/cm3): true density of live oil at saturation
                 K (GPa): true bulk modulus of live oil at saturation
 
 
@@ -813,6 +812,7 @@ Classes
       :type P: float or array-like
 
       :returns: *float or array-like* -- rho_w (g/cm3): density of pure water
+                K_w (Gpa): bulk modulus of pure water
 
 
 
@@ -873,7 +873,7 @@ Classes
       :param P: Pressure in MPa
       :type P: float or array-like
       :param S: weight fraction of sodium chloride in ppm/1e6
-      :type S: float or array-like
+      :type S: float
 
       :returns: *float or array-like* -- rho_b (g/cm3): the density of brine
                 K_b (GPa):bulk modulus of brine
@@ -906,9 +906,48 @@ Classes
       :param P: Pressure in MPa
       :type P: float or array-like
       :param S: weight fraction of sodium chloride in ppm/1e6
-      :type S: float or array-like
+      :type S: float
 
       :returns: *float or array-like* -- v_b (m/s): the velocity of brine
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: co2_brine(temperature, pressure, salinity, Sco2, brie_component=None, bw=False)
+      :staticmethod:
+
+      
+      compute the effective properties of critical Co2 brine mixture depending on temperature, pressure and salinity of the brine, as well as the saturation state.
+
+      :param temperature:
+      :type temperature: degree
+      :param pressure: pore pressure, not effective stress
+      :type pressure: Mpa
+      :param salinity: The weight fraction of NaCl, e.g. 35e-3
+                       for 35 parts per thousand, or 3.5% (the salinity of
+                       seawater).
+      :type salinity: ppm
+      :param Sco2: Co2 saturation
+      :type Sco2: frac
+      :param brie_component: if None: uniform saturation. otherwise patchy saturation according to brie mixing
+      :type brie_component: num
+
+      :returns: *den_mix (g/cc)* -- mixture density
+                Kf_mix (GPa): bulk modulus
 
 
 
@@ -955,16 +994,15 @@ Classes
 
       
       Compute velocity given density and elastic moduli.
-      :param K: bulk modulus
-      :type K: GPa
-      :param G: shear moulus
-      :type G: GPa
-      :param rho: density of the frame
-      :type rho: g/m3
 
-      :returns: *Vp, Vs (m/s)* -- velocity
+      :param K: (GPa): bulk modulus
+      :type K: float or array
+      :param G: (GPa): shear moulus
+      :type G: float or array
+      :param rho: (g/m3): density of the frame
+      :type rho: float or array
 
-      Written by Jiaxin Yu (July 2021)
+      :returns: *float or array* -- Vp, Vs (m/s): velocity
 
 
 
@@ -989,14 +1027,12 @@ Classes
       
       Compute poisson's ratio from K an G
 
-      :param K: bulk modulus
-      :type K: GPa
-      :param G: shear modulus
-      :type G: GPa
+      :param K: (GPa): bulk modulus
+      :type K: float or array
+      :param G: (GPa): shear moulus
+      :type G: float or array
 
-      :returns: *nu* -- Poisson's ratio
-
-      Written by Jiaxin Yu (July 2021)
+      :returns: *float or array* -- Poisson's ratio
 
 
 
@@ -1021,14 +1057,12 @@ Classes
       
       Compute lame constant lamdba from K an G
 
-      :param K: bulk modulus
-      :type K: GPa
-      :param G: shear modulus
-      :type G: GPa
+      :param K: (GPa): bulk modulus
+      :type K: float or array
+      :param G: (GPa): shear moulus
+      :type G: float or array
 
-      :returns: *nu* -- Poisson's ratio
-
-      Written by Jiaxin Yu (July 2021)
+      :returns: *float or array* -- Poisson's ratio
 
 
 
@@ -1051,18 +1085,16 @@ Classes
       :staticmethod:
 
       
-      Compute K and G from velocities and density
+      _summary_
 
-      :param den: bulk density
-      :type den: g/cm3
-      :param vp: p wave velocity
-      :type vp: m/s
-      :param vs: s wave velocity
-      :type vs: m/s
+      :param den: (g/cm3): bulk density
+      :type den: float or array
+      :param vp: (m/s): p wave velocity
+      :type vp: float or array
+      :param vs: (m/s): s wave velocity
+      :type vs: float or array
 
-      :returns: *K, G (GPa)* -- bulk and shear moduli
-
-      Written by Jiaxin Yu (July 2021)
+      :returns: *float or array* -- K, G (GPa):bulk and shear moduli
 
 
 
@@ -1087,20 +1119,18 @@ Classes
       
       formulate HTI stiffness matrix
 
-      :param C11: stiffness
-      :type C11: GPa
-      :param C13: stiffness
-      :type C13: GPa
-      :param C23: stiffness
-      :type C23: GPa
-      :param C33: stiffness
-      :type C33: GPa
-      :param C44: stiffness
-      :type C44: GPa
-      :param C55: stiffness
-      :type C55: GPa
+      :param C11: (GPa): stiffness
+      :type C11: float
+      :param C33: (GPa): stiffness
+      :type C33: float
+      :param C13: (GPa): stiffness
+      :type C13: float
+      :param C44: (GPa): stiffness
+      :type C44: float
+      :param C55: (GPa): stiffness
+      :type C55: float
 
-      :returns: *C* -- 6x6 stiffness matrix
+      :returns: *2d array* -- C: 6x6 stiffness matrix
 
 
 
@@ -1125,18 +1155,18 @@ Classes
       
       formulate VTI compliance matrix
 
-      :param S11: compliance
-      :type S11: GPa
-      :param S12: compliance
-      :type S12: GPa
-      :param S13: compliance
-      :type S13: GPa
-      :param S33: compliance
-      :type S33: GPa
-      :param S44: compliance
-      :type S44: GPa
+      :param S11: (GPa): stiffness
+      :type S11: float
+      :param S12: (GPa): stiffness
+      :type S12: float
+      :param S13: (GPa): stiffness
+      :type S13: float
+      :param S33: (GPa): stiffness
+      :type S33: float
+      :param S44: (GPa): stiffness
+      :type S44: float
 
-      :returns: *_type_* -- _description_
+      :returns: *2d array* -- S: 6x6 compliance matrix
 
 
 
@@ -1161,18 +1191,18 @@ Classes
       
       formulate VTI stiffness matrix
 
-      :param C11: stiffness
-      :type C11: GPa
-      :param C33: stiffness
-      :type C33: GPa
-      :param C13: stiffness
-      :type C13: GPa
-      :param C44: stiffness
-      :type C44: GPa
-      :param C65: stiffness
-      :type C65: GPa
+      :param C11: (GPa): stiffness
+      :type C11: float
+      :param C33: (GPa): stiffness
+      :type C33: float
+      :param C13: (GPa): stiffness
+      :type C13: float
+      :param C44: (GPa): stiffness
+      :type C44: float
+      :param C66: (GPa): stiffness
+      :type C66: float
 
-      :returns: *C* -- 6x6 stiffness matrix
+      :returns: *2d array* -- C: 6x6 stiffness matrix
 
 
 
@@ -1197,10 +1227,26 @@ Classes
       
       formulate general 6x6 stiffness matrix in Voigt notation
 
-      :param Cij: stiffness
-      :type Cij: GPa
+      :param C11: (GPa): stiffness
+      :type C11: float
+      :param C22: (GPa): stiffness
+      :type C22: float
+      :param C33: (GPa): stiffness
+      :type C33: float
+      :param C12: (GPa): stiffness
+      :type C12: float
+      :param C13: (GPa): stiffness
+      :type C13: float
+      :param C23: (GPa): stiffness
+      :type C23: float
+      :param C44: (GPa): stiffness
+      :type C44: float
+      :param C55: (GPa): stiffness
+      :type C55: float
+      :param C66: (GPa): stiffness
+      :type C66: float
 
-      :returns: *C* -- 6x6 stiffness matrix
+      :returns: *2d array* -- C: 6x6 stiffness matrix
 
 
 
@@ -1225,10 +1271,14 @@ Classes
       
       formulate isotropic 6x6 stiffness matrix in Voigt notation
 
-      :param Cij: stiffness
-      :type Cij: GPa
+      :param K:
+      :type K: float or array
 
-      :returns: *C* -- 6x6 stiffness matrix
+          (GPa): bulk modulus
+      G : float or array
+          (GPa): shear moulus
+
+      :returns: *2d array* -- C: 6x6 stiffness matrix
 
 
 
@@ -1253,12 +1303,12 @@ Classes
       
       compute crack porosity from crack aspect ratio and crack density
 
-      :param crd: crack density
-      :type crd: unitless
+      :param crd: (unitless): crack density
+      :type crd: float or array
       :param alpha: crack aspect ratio
-      :type alpha: unitless
+      :type alpha: float or array
 
-      :returns: *cpor (frac)* -- crack porosity
+      :returns: *float or array* -- cpor (frac): crack porosity
 
 
 
@@ -1281,22 +1331,22 @@ Classes
       :staticmethod:
 
       
-      _summary_
+      compute stiffness matrix given velocity measurements along different directions
 
-      :param Vp0: indident angle dependent velocity measurements
-      :type Vp0: km/s
-      :param Vp45: indident angle dependent velocity measurements
-      :type Vp45: km/s
-      :param Vp90: indident angle dependent velocity measurements
-      :type Vp90: km/s
-      :param Vs0: indident angle dependent velocity measurements
-      :type Vs0: km/s
-      :param Vsh90: indident angle dependent velocity measurements
-      :type Vsh90: km/s
-      :param den: density of the sample
-      :type den: g/cm3
+      :param Vp0: (km/s): incident angle dependent velocity measurements
+      :type Vp0: float or array
+      :param Vp45: (km/s): incident angle dependent velocity measurements
+      :type Vp45: float or array
+      :param Vp90: (km/s): incident angle dependent velocity measurements
+      :type Vp90: float or array
+      :param Vs0: (km/s): incident angle dependent velocity measurements
+      :type Vs0: float or array
+      :param Vsh90: (km/s): incident angle dependent velocity measurements
+      :type Vsh90: float or array
+      :param den: (g/cm3):density of the sample
+      :type den: float or array
 
-      :returns: *C* -- VTI stiffness matrix
+      :returns: *2d array* -- C: VTI stiffness matrix
 
 
 
@@ -2009,9 +2059,9 @@ Classes
       In the suspension domain, the effective bulk and shear moduli of the rock can be estimated by using the Reuss (isostress) average.
 
       :param M0: The solid phase modulus or density
-      :type M0: float or array-like
+      :type M0: float
       :param Mf: The pore filled phase modulus or density
-      :type Mf: float or array-like
+      :type Mf: float
       :param phic: critical porosity
       :type phic: float
       :param den: If False: compute the reuss average for effective modulus of two mixing phases. If true, compute avearge density using mass balance, which corresponds to voigt average. Defaults to False.
@@ -2097,7 +2147,7 @@ Classes
       :param mat: If true: the output is in matrix form, otherwise  is numpy array. Defaults to False.
       :type mat: bool, optional
 
-      :returns: *_type_* -- C_eff: effective moduli of cracked, transversely isotropic rocks
+      :returns: *1d or 2d array* -- C_eff: effective moduli of cracked, transversely isotropic rocks
 
       .. rubric:: References
 
@@ -2151,7 +2201,7 @@ Classes
                        Defaults to 3
       :type axis: int, optional
 
-      :returns: *_type_* -- C_eff: effective moduli in 6x6 matrix form.
+      :returns: *2d array* -- C_eff: effective moduli in 6x6 matrix form.
 
 
 
@@ -2326,9 +2376,9 @@ Classes
       
       compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980).See also: Berryman_sc, Berryman_func
 
-      :param Km: Shear modulus of matrix phase. For Berryman SC       approach, this corresponds to the effective moduli of the composite.
+      :param Km: bulk modulus of matrix phase. For Berryman SC       approach, this corresponds to the effective moduli of the composite.
       :type Km: float
-      :param Gm: Bulk modulus of matrix phase. For Berryman SC approach, this corresponds to the effective moduli of the composite.
+      :param Gm: shear modulus of matrix phase. For Berryman SC approach, this corresponds to the effective moduli of the composite.
       :type Gm: float
       :param Ki: 1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]
       :type Ki: array-like
@@ -2398,9 +2448,9 @@ Classes
       Compute effective elastic moduli via "Swiss cheese" model with spherical pores. "Swiss cheese" model assumes a dilute distribution of spherical inclusions embedded in an * *unbounded* * homogenous solid.  It takes the "noninteracting assumption" in which all cavities (pores) are independent so that their contributions can be added.
 
       :param Ks: Bulk modulus of matrix in GPa
-      :type Ks: float
+      :type Ks: float or array-like
       :param Gs: Shear modulus of matrix in GPa
-      :type Gs: float
+      :type Gs: float or array-like
       :param phi: porosity
       :type phi: float or array-like
 
@@ -2500,9 +2550,9 @@ Classes
       :param G0: shear modulus of background medium
       :type G0: float
       :param crd: crack density
-      :type crd: float
+      :type crd: float or array-like
 
-      :returns: *float* -- K_dry,G_dry: dry elastic moduli of cracked medium
+      :returns: *float or array-like* -- K_dry,G_dry: dry elastic moduli of cracked medium
 
 
 
@@ -2702,7 +2752,7 @@ Classes
       :type Ki: float
       :param Gi: shear modulus of inclusion
       :type Gi: float
-      :param f: _descripvolume fraction of inclusion phase tion_
+      :param f: volume fraction of inclusion phases
       :type f: float or array
       :param mode: 'stress' if macro stress is prescribed. 'strain' if macro strain is prescribed.
       :type mode: string

@@ -13,7 +13,7 @@ Here you can see how to run apply rockphypy to solving practical questions.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="CO2 seismic properties">
+    <div class="sphx-glr-thumbcontainer" tooltip="Improved CO2 properties modelling using Batzle-Wang">
 
 .. only:: html
 
@@ -21,6 +21,23 @@ Here you can see how to run apply rockphypy to solving practical questions.
     :alt:
 
   :ref:`sphx_glr_advanced_examples_CO2_modelling.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Improved CO2 properties modelling using Batzle-Wang</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="CO2 seismic properties">
+
+.. only:: html
+
+  .. image:: /advanced_examples/images/thumb/sphx_glr_CO2_seismic_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_advanced_examples_CO2_seismic.py`
 
 .. raw:: html
 
@@ -42,6 +59,23 @@ Here you can see how to run apply rockphypy to solving practical questions.
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Rock Physics Template (RPT)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Cement volume estimation">
+
+.. only:: html
+
+  .. image:: /advanced_examples/images/thumb/sphx_glr_cement_volume_estimation_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_advanced_examples_cement_volume_estimation.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Cement volume estimation</div>
     </div>
 
 
@@ -81,6 +115,23 @@ Here you can see how to run apply rockphypy to solving practical questions.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Rock physics data screening: 2D probability density function (PDF)">
+
+.. only:: html
+
+  .. image:: /advanced_examples/images/thumb/sphx_glr_rock_physics_screening_PDF_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_advanced_examples_rock_physics_screening_PDF.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rock physics data screening: 2D probability density function (PDF)</div>
+    </div>
+
+
+.. raw:: html
+
     </div>
 
 
@@ -88,9 +139,12 @@ Here you can see how to run apply rockphypy to solving practical questions.
    :hidden:
 
    /advanced_examples/CO2_modelling
+   /advanced_examples/CO2_seismic
    /advanced_examples/Rock_physics_template
+   /advanced_examples/cement_volume_estimation
    /advanced_examples/patchy_cement_model
    /advanced_examples/rock_physics_screening
+   /advanced_examples/rock_physics_screening_PDF
 
 
 

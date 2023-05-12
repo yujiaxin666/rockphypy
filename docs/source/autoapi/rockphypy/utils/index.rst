@@ -44,16 +44,15 @@ Classes
 
       
       Compute velocity given density and elastic moduli.
-      :param K: bulk modulus
-      :type K: GPa
-      :param G: shear moulus
-      :type G: GPa
-      :param rho: density of the frame
-      :type rho: g/m3
 
-      :returns: *Vp, Vs (m/s)* -- velocity
+      :param K: (GPa): bulk modulus
+      :type K: float or array
+      :param G: (GPa): shear moulus
+      :type G: float or array
+      :param rho: (g/m3): density of the frame
+      :type rho: float or array
 
-      Written by Jiaxin Yu (July 2021)
+      :returns: *float or array* -- Vp, Vs (m/s): velocity
 
 
 
@@ -78,14 +77,12 @@ Classes
       
       Compute poisson's ratio from K an G
 
-      :param K: bulk modulus
-      :type K: GPa
-      :param G: shear modulus
-      :type G: GPa
+      :param K: (GPa): bulk modulus
+      :type K: float or array
+      :param G: (GPa): shear moulus
+      :type G: float or array
 
-      :returns: *nu* -- Poisson's ratio
-
-      Written by Jiaxin Yu (July 2021)
+      :returns: *float or array* -- Poisson's ratio
 
 
 
@@ -110,14 +107,12 @@ Classes
       
       Compute lame constant lamdba from K an G
 
-      :param K: bulk modulus
-      :type K: GPa
-      :param G: shear modulus
-      :type G: GPa
+      :param K: (GPa): bulk modulus
+      :type K: float or array
+      :param G: (GPa): shear moulus
+      :type G: float or array
 
-      :returns: *nu* -- Poisson's ratio
-
-      Written by Jiaxin Yu (July 2021)
+      :returns: *float or array* -- Poisson's ratio
 
 
 
@@ -140,18 +135,16 @@ Classes
       :staticmethod:
 
       
-      Compute K and G from velocities and density
+      _summary_
 
-      :param den: bulk density
-      :type den: g/cm3
-      :param vp: p wave velocity
-      :type vp: m/s
-      :param vs: s wave velocity
-      :type vs: m/s
+      :param den: (g/cm3): bulk density
+      :type den: float or array
+      :param vp: (m/s): p wave velocity
+      :type vp: float or array
+      :param vs: (m/s): s wave velocity
+      :type vs: float or array
 
-      :returns: *K, G (GPa)* -- bulk and shear moduli
-
-      Written by Jiaxin Yu (July 2021)
+      :returns: *float or array* -- K, G (GPa):bulk and shear moduli
 
 
 
@@ -176,20 +169,18 @@ Classes
       
       formulate HTI stiffness matrix
 
-      :param C11: stiffness
-      :type C11: GPa
-      :param C13: stiffness
-      :type C13: GPa
-      :param C23: stiffness
-      :type C23: GPa
-      :param C33: stiffness
-      :type C33: GPa
-      :param C44: stiffness
-      :type C44: GPa
-      :param C55: stiffness
-      :type C55: GPa
+      :param C11: (GPa): stiffness
+      :type C11: float
+      :param C33: (GPa): stiffness
+      :type C33: float
+      :param C13: (GPa): stiffness
+      :type C13: float
+      :param C44: (GPa): stiffness
+      :type C44: float
+      :param C55: (GPa): stiffness
+      :type C55: float
 
-      :returns: *C* -- 6x6 stiffness matrix
+      :returns: *2d array* -- C: 6x6 stiffness matrix
 
 
 
@@ -214,18 +205,18 @@ Classes
       
       formulate VTI compliance matrix
 
-      :param S11: compliance
-      :type S11: GPa
-      :param S12: compliance
-      :type S12: GPa
-      :param S13: compliance
-      :type S13: GPa
-      :param S33: compliance
-      :type S33: GPa
-      :param S44: compliance
-      :type S44: GPa
+      :param S11: (GPa): stiffness
+      :type S11: float
+      :param S12: (GPa): stiffness
+      :type S12: float
+      :param S13: (GPa): stiffness
+      :type S13: float
+      :param S33: (GPa): stiffness
+      :type S33: float
+      :param S44: (GPa): stiffness
+      :type S44: float
 
-      :returns: *_type_* -- _description_
+      :returns: *2d array* -- S: 6x6 compliance matrix
 
 
 
@@ -250,18 +241,18 @@ Classes
       
       formulate VTI stiffness matrix
 
-      :param C11: stiffness
-      :type C11: GPa
-      :param C33: stiffness
-      :type C33: GPa
-      :param C13: stiffness
-      :type C13: GPa
-      :param C44: stiffness
-      :type C44: GPa
-      :param C65: stiffness
-      :type C65: GPa
+      :param C11: (GPa): stiffness
+      :type C11: float
+      :param C33: (GPa): stiffness
+      :type C33: float
+      :param C13: (GPa): stiffness
+      :type C13: float
+      :param C44: (GPa): stiffness
+      :type C44: float
+      :param C66: (GPa): stiffness
+      :type C66: float
 
-      :returns: *C* -- 6x6 stiffness matrix
+      :returns: *2d array* -- C: 6x6 stiffness matrix
 
 
 
@@ -286,10 +277,26 @@ Classes
       
       formulate general 6x6 stiffness matrix in Voigt notation
 
-      :param Cij: stiffness
-      :type Cij: GPa
+      :param C11: (GPa): stiffness
+      :type C11: float
+      :param C22: (GPa): stiffness
+      :type C22: float
+      :param C33: (GPa): stiffness
+      :type C33: float
+      :param C12: (GPa): stiffness
+      :type C12: float
+      :param C13: (GPa): stiffness
+      :type C13: float
+      :param C23: (GPa): stiffness
+      :type C23: float
+      :param C44: (GPa): stiffness
+      :type C44: float
+      :param C55: (GPa): stiffness
+      :type C55: float
+      :param C66: (GPa): stiffness
+      :type C66: float
 
-      :returns: *C* -- 6x6 stiffness matrix
+      :returns: *2d array* -- C: 6x6 stiffness matrix
 
 
 
@@ -314,10 +321,14 @@ Classes
       
       formulate isotropic 6x6 stiffness matrix in Voigt notation
 
-      :param Cij: stiffness
-      :type Cij: GPa
+      :param K:
+      :type K: float or array
 
-      :returns: *C* -- 6x6 stiffness matrix
+          (GPa): bulk modulus
+      G : float or array
+          (GPa): shear moulus
+
+      :returns: *2d array* -- C: 6x6 stiffness matrix
 
 
 
@@ -342,12 +353,12 @@ Classes
       
       compute crack porosity from crack aspect ratio and crack density
 
-      :param crd: crack density
-      :type crd: unitless
+      :param crd: (unitless): crack density
+      :type crd: float or array
       :param alpha: crack aspect ratio
-      :type alpha: unitless
+      :type alpha: float or array
 
-      :returns: *cpor (frac)* -- crack porosity
+      :returns: *float or array* -- cpor (frac): crack porosity
 
 
 
@@ -370,22 +381,22 @@ Classes
       :staticmethod:
 
       
-      _summary_
+      compute stiffness matrix given velocity measurements along different directions
 
-      :param Vp0: indident angle dependent velocity measurements
-      :type Vp0: km/s
-      :param Vp45: indident angle dependent velocity measurements
-      :type Vp45: km/s
-      :param Vp90: indident angle dependent velocity measurements
-      :type Vp90: km/s
-      :param Vs0: indident angle dependent velocity measurements
-      :type Vs0: km/s
-      :param Vsh90: indident angle dependent velocity measurements
-      :type Vsh90: km/s
-      :param den: density of the sample
-      :type den: g/cm3
+      :param Vp0: (km/s): incident angle dependent velocity measurements
+      :type Vp0: float or array
+      :param Vp45: (km/s): incident angle dependent velocity measurements
+      :type Vp45: float or array
+      :param Vp90: (km/s): incident angle dependent velocity measurements
+      :type Vp90: float or array
+      :param Vs0: (km/s): incident angle dependent velocity measurements
+      :type Vs0: float or array
+      :param Vsh90: (km/s): incident angle dependent velocity measurements
+      :type Vsh90: float or array
+      :param den: (g/cm3):density of the sample
+      :type den: float or array
 
-      :returns: *C* -- VTI stiffness matrix
+      :returns: *2d array* -- C: VTI stiffness matrix
 
 
 

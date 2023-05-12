@@ -71,9 +71,9 @@ class EM:
 
         Parameters
         ----------
-        M0 : float or array-like
+        M0 : float 
             The solid phase modulus or density
-        Mf : float or array-like
+        Mf : float
             The pore filled phase modulus or density
         phic : float
             critical porosity
@@ -92,9 +92,9 @@ class EM:
 
         if den is False:
 
-            M = EM.VRH(np.array([M0,Mf]), np.array([(1-phic,phic)]))[1]
+            M = EM.VRH( np.array([(1-phic,phic)]), np.array([M0,Mf]))[1]
         else:
-            M = EM.VRH(np.array([M0,Mf]), np.array([(1-phic,phic)]))[0]
+            M = EM.VRH(np.array([(1-phic,phic)]),np.array([M0,Mf]))[0]
 
         return M
 
@@ -156,7 +156,7 @@ class EM:
 
         Returns
         -------
-        _type_
+        1d or 2d array
             C_eff: effective moduli of cracked, transversely isotropic rocks
 
         References
@@ -176,7 +176,7 @@ class EM:
         Iaa = np.pi-3*Iac/4
         Iab = Iaa/3
 
-        S11 = Q*Iab+R*Ia
+        S11 = Q*Iaa+R*Ia
         S33 = Q*(4*np.pi/3 - 2*Iac*alpha**2)+Ic*R
         S12 = Q*Iab-R*Ia
         S13 = Q*Iac*alpha**2-R*Ia
@@ -188,44 +188,29 @@ class EM:
         D = S33*S11+S33*S12-2*S31*S13-(S11+S12+S33-1-3*C) - C*(S11+S12+2*(S33-S13-S31))
         E = S33*S11 - S31*S13 - (S33+S11-2*C-1) + C*(S31+S13-S11-S33)
 
-        C11 = lamda*(S31-S33+1) + 2*G*E/ (D*(S12-S11+1))
-        C33 = ((lamda+2*G)*(-S12-S11+1)+2*lamda*S13+4*G*C)/D
-        C13 = ((lamda+2*G)*(S13+S31)-4*G*C+lamda*(S13-S12-S11-S33+2))/(2*D)
-        C44 = G/(1-2*S1313)
-        C66 = G/(1-2*S1212)
+        C11_1 = lamda*(S31-S33+1) + 2*G*E/ (D*(S12-S11+1))
+        C33_1 = ((lamda+2*G)*(-S12-S11+1)+2*lamda*S13+4*G*C)/D
+        C13_1 = ((lamda+2*G)*(S13+S31)-4*G*C+lamda*(S13-S12-S11-S33+2))/(2*D)
+        C44_1 = G/(1-2*S1313)
+        C66_1 = G/(1-2*S1212)
 
+        C11_0 = lamda+2*G
+        C13_0 = lamda
+        C33_0 = C11_0
+        C44_0 = G
+        C66_0 = G
+        # effective moduli
+        C11 = C11_0-phi*C11_1
+        C13 = C13_0-phi*C13_1
+        C33 = C33_0-phi*C33_1
+        C44 = C44_0-phi*C44_1
+        C66 = C66_0-phi*C66_1
+        
         if mat==False:
             C_eff = np.array([C11,C33,C13,C44,C66])
         else:
             C_eff = utils.write_VTI_matrix(C11,C33,C13,C44,C66)
         return C_eff
-
-    # def Backus(V,lamda, G ):
-    #     """Compute stiffnesses of a layered medium composed of thin isotropic layers using backus average model.
-
-    #     Parameters
-    #     ----------
-    #     V : float or array-like
-    #         volumetric fractions of N isotropic layering materials
-    #     lamda : float or array-like
-    #         Lamé coefficients of N isotropic layering materials
-    #     G : float or array-like
-    #         shear moduli of N isotropic layering materials
-
-    #     Returns
-    #     -------
-    #     float or array-like
-    #         C11,C33,C13,C44,C66: Elastic moduli of the anisotropic layered media
-    #     """        
-
-    #     C33=np.dot(V, 1/(lamda+2*G)) **-1
-    #     C44=np.dot(V, 1/G)**-1
-    #     C66=np.dot(V, G)
-    #     C13=np.dot(V, 1/(lamda+2*G)) **-1 * np.dot(V, lamda/(lamda+2*G))
-    #     C11=np.dot(V, 4*G*(lamda+G)/(lamda+2*G))+np.dot(V, 1/(lamda+2*G))**-1 * np.dot(V, lamda/(lamda+2*G))**2
-
-    #     return C11,C33,C13,C44,C66
-
 
     @staticmethod
     def hudson(K, G, Ki, Gi, alpha, crd, order=1, axis=3):
@@ -258,7 +243,7 @@ class EM:
 
         Returns
         -------
-        _type_
+        2d array
             C_eff: effective moduli in 6x6 matrix form.
         """        
   
@@ -488,9 +473,9 @@ class EM:
         Parameters
         ----------
         Km : float
-            Shear modulus of matrix phase. For Berryman SC       approach, this corresponds to the effective moduli of the composite.
+            bulk modulus of matrix phase. For Berryman SC       approach, this corresponds to the effective moduli of the composite.
         Gm : float
-            Bulk modulus of matrix phase. For Berryman SC approach, this corresponds to the effective moduli of the composite.
+            shear modulus of matrix phase. For Berryman SC approach, this corresponds to the effective moduli of the composite.
         Ki : array-like
             1d array of bulk moduli of N constituent phases, [K1,K2,...Kn]
         Gi : array-like
@@ -574,9 +559,9 @@ class EM:
 
         Parameters
         ----------
-        Ks : float 
+        Ks : float or array-like
             Bulk modulus of matrix in GPa
-        Gs : float 
+        Gs : float or array-like
             Shear modulus of matrix in GPa
         phi : float or array-like
             porosity
@@ -586,6 +571,9 @@ class EM:
         float or array-like
             Kdry,Gdry (GPa): effective elastic moduli
         """    
+        if isinstance(Ks, np.ndarray):
+            Ks=Ks[:, np.newaxis]
+            Gs=Gs[:, np.newaxis]
         Kdry=(1/Ks *(1+(1+3*Ks/(4*Gs))*phi))**-1
         Gdry=(1/Gs * (1+(15*Ks+20*Gs)*phi/(9*Ks+8*Gs)))**-1
         return Kdry, Gdry
@@ -652,12 +640,12 @@ class EM:
             bulk modulus of background medium
         G0 : float
             shear modulus of background medium
-        crd : float
+        crd : float or array-like 
             crack density
 
         Returns
         -------
-        float
+        float or array-like 
             K_dry,G_dry: dry elastic moduli of cracked medium
         """        
     
@@ -845,7 +833,7 @@ class EM:
         Gi : float
             shear modulus of inclusion
         f : float or array
-            _descripvolume fraction of inclusion phase tion_
+            volume fraction of inclusion phases
         mode : string
             'stress' if macro stress is prescribed. 'strain' if macro strain is prescribed.
 

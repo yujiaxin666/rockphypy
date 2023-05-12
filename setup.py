@@ -47,5 +47,5 @@ setup(
     ],
     packages=["rockphypy"],
     include_package_data=True,
-    install_requires=["numpy>=1.14.2", "scipy>=1.0.1", "matplotlib>=2.2.0"]
+    install_requires=["numpy>=1.14.2", "scipy>=1.0.1", "matplotlib>=2.2.0","pandas>=1.1.1","KDE-diffusion>= 1.0.4"]
 )

@@ -1,0 +1,39 @@
+
+
+Examples using ``rockphypy.QI.plot_rpt``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. start-sphx-glr-thumbnails
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Rock Physics Template (RPT)">
+
+.. only:: html
+
+  .. image:: /advanced_examples/images/thumb/sphx_glr_Rock_physics_template_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_advanced_examples_Rock_physics_template.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rock Physics Template (RPT)</div>
+    </div>
+
+
+.. only:: not html
+
+ * :ref:`sphx_glr_advanced_examples_Rock_physics_template.py`
+
+.. raw:: html
+
+    </div>
+

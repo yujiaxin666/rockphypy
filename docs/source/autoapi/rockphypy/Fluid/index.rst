@@ -104,9 +104,9 @@ Classes
       :param freq: frequency range, e.g 10^-3 to 10^3 Hz
       :type freq: float or array-like
 
-      :returns: *float or array-like* -- Vp_fast, fast P-wave velocities at all frequencies
-                Vp_slow, slow P-wave velocities at all frequencies
-                Vs, S-wave velocities
+      :returns: *float or array-like* -- Vp_fast, fast P-wave velocities at all frequencies,km/s
+                Vp_slow, slow P-wave velocities at all frequencies,km/s
+                Vs, S-wave velocities,km/s
                 QP1_inv, fast P-wave attenuation
                 QP2_inv, slow P-wave attenuation
                 Qs_inv, S-wave attenuation
@@ -151,7 +151,7 @@ Classes
       :param alpha: tortuosity parameter, always greater than or equal to 1.
       :type alpha: float
 
-      :returns: *float or array-like* -- Vp_fast,Vp_slow,Vs:  high-frequency limiting velocities
+      :returns: *float or array-like* -- Vp_fast,Vp_slow,Vs:  high-frequency limiting velocities,km/s
 
 
 
@@ -193,7 +193,7 @@ Classes
       :param alpha: tortuosity parameter, always greater than or equal to 1.
       :type alpha: float
 
-      :returns: *float or array-like* -- Vp_fast,Vs: high-frequency limiting velocities
+      :returns: *float or array-like* -- Vp_fast,Vs: high-frequency limiting velocities, km/s
 
 
 
@@ -218,9 +218,9 @@ Classes
       
       Low and middle-frequency approximations of Biot wave given by Geertsma and Smit (1961). Noticed that mathematically this approximation is valid at moderate-to-low seismic frequencies, i.e. f<fc
 
-      :param Vp0: Biot−Gassmann low-frequency limiting P-wave velocity
+      :param Vp0: Biot−Gassmann low-frequency limiting P-wave velocity, km/s or m/s
       :type Vp0: float
-      :param Vpinf: Biot highfrequency limiting P-wave velocity
+      :param Vpinf: Biot highfrequency limiting P-wave velocity, km/s or m/s
       :type Vpinf: float
       :param freq: frequency
       :type freq: float or array-like
@@ -412,11 +412,11 @@ Classes
       :staticmethod:
 
       
-      Perform gassmann fluid subsititution using on p wave modulus
+      Perform gassmann fluid subsititution using p wave modulus only
 
       :param Msat1: in situ saturated p wave modulus from well log data
       :type Msat1: float or array-like
-      :param M0: mineral modulus
+      :param M0: p wave modulus of mineral
       :type M0: float
       :param Mfl1: p wave modulus of in situ fluid
       :type Mfl1: float
@@ -579,7 +579,7 @@ Classes
       :param phi: porosity
       :type phi: float
 
-      :returns: *_type_* -- Kuf_sat (float):GPa, predicted high frequency bulk moduli of saturated rock
+      :returns: *float or array-like* -- Kuf_sat (float):GPa, predicted high frequency bulk moduli of saturated rock
                 Guf_sat (array): GPa, predicted high frequency shear moduli of saturated rock at different pressure
                 Vp_hf (array): m/s, predicted high frequency P wave velocities of saturated rock
                 Vs_hf (array): m/s, predicted high frequency S wave velocities of saturated rock
@@ -608,7 +608,7 @@ Classes
       Predict wet unrelaxed frame compliances at very high frequency from dry frame compliances for transversely isotropic rocks using theoretical formula derived by Mukerji and Mavko, (1994)
 
       :param Sdry: dry rock compliances [S11 S12 S13 S33 S44]
-      :type Sdry: array
+      :type Sdry: list or array
       :param Sdry_hp: dry rock compliances at very high effective stress [S11 S12 S13 S33 S44]
       :type Sdry_hp: array
 
@@ -668,7 +668,7 @@ Classes
       :param freq: frequencies
       :type freq: float or array-like
 
-      :returns: *float, array-like* -- Vp (m/s): P wave velocity
+      :returns: *float, array-like* -- Vp (m/s): P wave velocity km/s
                 a_w: attenuation coefficient
                 K_star: complex bulk modulus
 

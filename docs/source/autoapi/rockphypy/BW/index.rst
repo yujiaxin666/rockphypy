@@ -81,7 +81,7 @@ Classes
       :param T: Temperature in °C
       :type T: float or array-like
       :param G: Gas gravity
-      :type G: float or array-like
+      :type G: float
 
       :returns: *float or array-like* -- Ta: absolute temperature
                 Ppr:pseudoreduced pressure
@@ -115,7 +115,7 @@ Classes
       :param T: Temperature in °C
       :type T: float or array-like
       :param G: Gas gravity
-      :type G: float or array-like
+      :type G: float
 
       :returns: *float or array-like* -- rho (g/cc): gas density
                 K (GPa): bulk modulus
@@ -152,10 +152,10 @@ Classes
       :param T: Temperature in °C
       :type T: float or array-like
       :param G: Gas gravity
-      :type G: float or array-like
+      :type G: float
 
-      :returns: *float or array-like* -- rho: Gas density
-                K: Gas bulk modulus
+      :returns: *float or array-like* -- rho: Gas density (g/cm3)
+                K: Gas bulk modulus (GPa)
 
 
 
@@ -185,10 +185,10 @@ Classes
       :param T: Temperature in °C
       :type T: float or array-like
       :param den: oil density in g/cm3
-      :type den: float or array-like
+      :type den: float
 
-      :returns: *float or array-like* -- rho: oil density
-                K: oil bulk modulus
+      :returns: *float or array-like* -- rho: oil density (g/cm3)
+                K: oil bulk modulus (GPa)
 
 
 
@@ -218,14 +218,13 @@ Classes
       :param T: Temperature in °C
       :type T: float or array-like
       :param den: oil density in g/cm3
-      :type den: float or array-like
+      :type den: float
       :param G: gas gravity
-      :type G: float or array-like
+      :type G: float
       :param Rg: the volume ratio of liberated gas to remaining oil at atmospheric pressure and 15.6°C, Liter/Liter
-      :type Rg: float or array-like
+      :type Rg: float
 
-      :returns: *float or array-like* -- v (m/s): velocity
-                rho_g (g/cm3): true density of live oil at saturation
+      :returns: *float or array-like* -- rho_g (g/cm3): true density of live oil at saturation
                 K (GPa): true bulk modulus of live oil at saturation
 
 
@@ -257,6 +256,7 @@ Classes
       :type P: float or array-like
 
       :returns: *float or array-like* -- rho_w (g/cm3): density of pure water
+                K_w (Gpa): bulk modulus of pure water
 
 
 
@@ -317,7 +317,7 @@ Classes
       :param P: Pressure in MPa
       :type P: float or array-like
       :param S: weight fraction of sodium chloride in ppm/1e6
-      :type S: float or array-like
+      :type S: float
 
       :returns: *float or array-like* -- rho_b (g/cm3): the density of brine
                 K_b (GPa):bulk modulus of brine
@@ -350,9 +350,48 @@ Classes
       :param P: Pressure in MPa
       :type P: float or array-like
       :param S: weight fraction of sodium chloride in ppm/1e6
-      :type S: float or array-like
+      :type S: float
 
       :returns: *float or array-like* -- v_b (m/s): the velocity of brine
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: co2_brine(temperature, pressure, salinity, Sco2, brie_component=None, bw=False)
+      :staticmethod:
+
+      
+      compute the effective properties of critical Co2 brine mixture depending on temperature, pressure and salinity of the brine, as well as the saturation state.
+
+      :param temperature:
+      :type temperature: degree
+      :param pressure: pore pressure, not effective stress
+      :type pressure: Mpa
+      :param salinity: The weight fraction of NaCl, e.g. 35e-3
+                       for 35 parts per thousand, or 3.5% (the salinity of
+                       seawater).
+      :type salinity: ppm
+      :param Sco2: Co2 saturation
+      :type Sco2: frac
+      :param brie_component: if None: uniform saturation. otherwise patchy saturation according to brie mixing
+      :type brie_component: num
+
+      :returns: *den_mix (g/cc)* -- mixture density
+                Kf_mix (GPa): bulk modulus
 
 
 

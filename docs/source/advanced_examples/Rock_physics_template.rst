@@ -26,7 +26,7 @@ Rock Physics Template (RPT)
 .. code-block:: python3
 
 
-
+    import pandas as pd 
     import numpy as np 
     import matplotlib.pyplot as plt
     plt.rcParams['font.size']=14
@@ -47,7 +47,7 @@ Rock Physics Template (RPT)
 
 
     #import rockphypy # import the module 
-    from rockphypy import GM, Fluid 
+    from rockphypy import QI, GM, Fluid 
 
 
 
@@ -57,85 +57,12 @@ Rock Physics Template (RPT)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-26
+.. GENERATED FROM PYTHON SOURCE LINES 22-24
 
 Rock physics models can be used to calculate elastic properties with various combination of lithology and fluid parameters. Rock Physics Templates (RPTs) were first presented by Ødegaard and Avseth (2003).  Rock physics templates (RPT) is used to display a reference framework of all the possible variations of a particular rock and use such templates to understand actual well log data (or seismic-derived elastic properties). 
 
-First we write a function to create RPT plot given computed Impedance and Vp/Vs ratio using different rock physics models
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 29-89
-
-.. code-block:: python3
-
-
-
-    def plot_rpt(Kdry,Gdry,K0,D0,Kb,Db,Khc,Dhc,phi,sw):
-        """Create RPT plot given computed Impedance and Vp/Vs ratio. 
-
-        Parameters
-        ----------
-        Kdry : float or array
-            effective bulk modulus given by rock physics model
-        Gdry : float or array
-            effective shear modulus given by rock physics model
-        K0 : float
-            bulk modulus of grain
-        D0 : float
-            density of grain
-        Kb : float
-            bulk moduluf of brine 
-        Db : float
-            density of brine
-        Khc : float
-            bulk modulus of HC
-        Dhc : float
-            density of HC
-        phi : float or array 
-            porosity
-        sw : float or array
-            water saturation
-
-        Returns
-        -------
-        python onject: fig
-            rpt plot
-        """    
-    
-        # setup empty arrays to store Ip and Vp/Vs values
-        IP=np.empty((phi.size,sw.size))
-        PS=np.empty((phi.size,sw.size))
-
-        ## loop over Sw, computes elastic moduli of fluid mixture and saturated rock properties with Gassmann's equation
-    
-        for i,val in enumerate(sw):
-            Kf=(val/Kb+(1-val)/Khc)**-1
-            #Kf_mix(val,Kb,Khc)
-            Df = val*Db+(1-val)*Dhc
-            vp,vs,rho= Fluid.vels(Kdry,Gdry,K0,D0,Kf,Df,phi)
-            IP[:,i]=vp*rho
-            PS[:,i]=vp/vs
-        # plot
-        fig=plt.figure(figsize=(10,8))
-        plt.plot(IP.T, PS.T, '-ok', mec='k', ms=10, mfc='yellow')
-        plt.plot(IP[:,-1], PS[:,-1], '-ok', mec='k', ms=10, mfc='blue')# Brine line 
-
-        plt.xlabel('Acoustic Impedance'), plt.ylabel('Vp/Vs')
-        for i,val in enumerate(phi):
-            plt.text(IP[i,-1],PS[i,-1]+.03,'{:.02f}'.format(val), alpha=1,backgroundcolor='0.9')
-        for i,val in enumerate(sw):
-            plt.text(IP[-1,i]-100,PS[-1,i],'Gas={:.02f}'.format(1-sw[i]),ha='right',alpha=1)
-        return fig
-
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 90-107
+.. GENERATED FROM PYTHON SOURCE LINES 26-43
 
 .. code-block:: python3
 
@@ -163,12 +90,12 @@ First we write a function to create RPT plot given computed Impedance and Vp/Vs 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 108-110
+.. GENERATED FROM PYTHON SOURCE LINES 44-46
 
 - Case 1: create RPT for unconsolidated sand using softsand/friable sand model 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-123
+.. GENERATED FROM PYTHON SOURCE LINES 49-59
 
 .. code-block:: python3
 
@@ -176,7 +103,7 @@ First we write a function to create RPT plot given computed Impedance and Vp/Vs 
 
     # softsand model gas
     Kdry1, Gdry1 = GM.softsand(K0, G0, phi, phi_c, Cn, sigma,f) # soft sand 
-    fig1=plot_rpt(Kdry1,Gdry1,K0,D0,Kb,Db,Kg,Dg,phi,sw) 
+    fig1=QI.plot_rpt(Kdry1,Gdry1,K0,D0,Kb,Db,Kg,Dg,phi,sw) 
     plt.title('Softsand RPT-gas')  
     plt.xlim(1000,10000)
     plt.ylim(1.4,2.4)
@@ -200,14 +127,14 @@ First we write a function to create RPT plot given computed Impedance and Vp/Vs 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-132
+.. GENERATED FROM PYTHON SOURCE LINES 60-68
 
 .. code-block:: python3
 
 
 
     # softsand model oil
-    fig1_=plot_rpt(Kdry1,Gdry1,K0,D0,Kb,Db,Ko,Do,phi,sw) 
+    fig1_=QI.plot_rpt(Kdry1,Gdry1,K0,D0,Kb,Db,Ko,Do,phi,sw) 
     plt.title('Softsand RPT-oil')  
     plt.xlim(1000,10000)
     plt.ylim(1.4,2.4)
@@ -230,19 +157,19 @@ First we write a function to create RPT plot given computed Impedance and Vp/Vs 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-135
+.. GENERATED FROM PYTHON SOURCE LINES 69-71
 
 - Case 2: create RPT for stiff sandstone using stiffsand model 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 137-146
+.. GENERATED FROM PYTHON SOURCE LINES 73-82
 
 .. code-block:: python3
 
 
 
     Kdry2, Gdry2 = GM.stiffsand(K0, G0, phi, phi_c, Cn, sigma, f) # stiff sand
-    fig2=plot_rpt(Kdry2,Gdry2,K0,D0,Kb,Db,Kg,Dg,phi,sw) 
+    fig2=QI.plot_rpt(Kdry2,Gdry2,K0,D0,Kb,Db,Kg,Dg,phi,sw) 
     plt.title('Stiffsand RPT-gas')  
     plt.xlim(1000,14000)
     plt.ylim(1.4,2.3)
@@ -266,18 +193,17 @@ First we write a function to create RPT plot given computed Impedance and Vp/Vs 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 147-156
+.. GENERATED FROM PYTHON SOURCE LINES 83-91
 
 .. code-block:: python3
 
 
 
     # stiffsand model oil
-    fig2_=plot_rpt(Kdry2,Gdry2,K0,D0,Kb,Db,Ko,Do,phi,sw) 
+    fig2_=QI.plot_rpt(Kdry2,Gdry2,K0,D0,Kb,Db,Ko,Do,phi,sw) 
     plt.title('Stiffsand RPT-oil')  
     plt.xlim(1000,14000)
     plt.ylim(1.4,2.3)
-
 
 
 
@@ -297,7 +223,62 @@ First we write a function to create RPT plot given computed Impedance and Vp/Vs 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 157-165
+.. GENERATED FROM PYTHON SOURCE LINES 92-96
+
+Applied to field data 
+^^^^^^^^^^^^^^^^^^^^^
+Let's import the same synthetic well log data and apply the rock physics screening to the well log data 
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 98-124
+
+.. code-block:: python3
+
+
+    # read data
+    data = pd.read_csv('../../data/well/sandstone.csv',index_col=0)
+    # specify model parameters
+    D0, K0, G0 = 2.65, 37, 38
+    Dg, Kg = 0.2, 0.05
+    ### adjustable para
+    phi_c = 0.36
+    phi = np.linspace(0.01,phi_c,10) #define porosity range according to critical porosity
+    sw=np.linspace(0,1,5) # water saturation
+    IP= data.VP*data.DEN
+    PS= data.VP/data.VS 
+    Kdry, Gdry = GM.stiffsand(K0, G0, phi, phi_c, Cn, sigma, f=0) # stiff sand
+
+    # sphinx figure 
+    # sphinx_gallery_thumbnail_number = 5
+    fig=QI.plot_rpt(Kdry,Gdry,K0,D0,Kb,Db,Kg,Dg,phi,sw) 
+    fig.set_size_inches(7, 6)
+    plt.scatter(IP,PS, c=data.eff_stress,edgecolors='grey',s=80,alpha=1,cmap='Greens_r')
+    cbar=plt.colorbar()
+    cbar.set_label(r'$\rm \sigma_{eff}$ (MPa)')
+    plt.xlabel('IP')  
+    plt.xlim(1000,14000)
+    plt.ylim(1.4,2.4)
+    #fig.savefig(path+'./rpt.png',dpi=600,bbox_inches='tight')
+
+
+
+
+.. image-sg:: /advanced_examples/images/sphx_glr_Rock_physics_template_005.png
+   :alt: Rock physics template
+   :srcset: /advanced_examples/images/sphx_glr_Rock_physics_template_005.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+
+    (1.4, 2.4)
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 125-133
 
 **Reference**: 
 
@@ -311,7 +292,7 @@ First we write a function to create RPT plot given computed Impedance and Vp/Vs 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.909 seconds)
+   **Total running time of the script:** ( 0 minutes  0.591 seconds)
 
 
 .. _sphx_glr_download_advanced_examples_Rock_physics_template.py:

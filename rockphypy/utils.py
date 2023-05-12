@@ -12,16 +12,22 @@ class utils:
     @staticmethod
     def V(K, G, rho):
         """Compute velocity given density and elastic moduli. 
-        Args:
-            K (GPa): bulk modulus
-            G (GPa): shear moulus
-            rho (g/m3): density of the frame 
 
-        Returns:
+        Parameters
+        ----------
+        K : float or array
+            (GPa): bulk modulus
+        G : float or array
+            (GPa): shear moulus
+        rho : float or array
+            (g/m3): density of the frame 
+
+        Returns
+        -------
+        float or array
             Vp, Vs (m/s): velocity
-        Written by Jiaxin Yu (July 2021)
-
-        """    
+        """        
+ 
         Vp   = np.sqrt((K+4./3*G)/rho)*1e3
         Vs   = np.sqrt(G/rho)*1e3
         return Vp, Vs
@@ -30,15 +36,19 @@ class utils:
     def poi(K, G):
         """Compute poisson's ratio from K an G
 
-        Args:
-            K (GPa): bulk modulus
-            G (GPa): shear modulus
+        Parameters
+        ----------
+        K : float or array
+            (GPa): bulk modulus
+        G : float or array
+            (GPa): shear moulus
 
-        Returns:
-            nu: Poisson's ratio
-        Written by Jiaxin Yu (July 2021)
-
-        """    
+        Returns
+        -------
+        float or array
+            Poisson's ratio
+        """        
+          
         nu=(3*K-2*G)/(6*K+2*G)
         return nu
 
@@ -46,20 +56,40 @@ class utils:
     def lame(K, G):
         """Compute lame constant lamdba from K an G
 
-        Args:
-            K (GPa): bulk modulus
-            G (GPa): shear modulus
+        Parameters
+        ----------
+        K : float or array
+            (GPa): bulk modulus
+        G : float or array
+            (GPa): shear moulus
 
-        Returns:
-            nu: Poisson's ratio
-        Written by Jiaxin Yu (July 2021)
-
-        """    
+        Returns
+        -------
+        float or array
+            Poisson's ratio
+        """        
+      
         lamda= K-2*G/3
         return lamda
  
     @staticmethod
     def M_from_V(den, vp,vs):
+        """_summary_
+
+        Parameters
+        ----------
+        den : float or array
+            (g/cm3): bulk density
+        vp : float or array
+            (m/s): p wave velocity
+        vs : float or array
+            (m/s): s wave velocity
+
+        Returns
+        -------
+        float or array
+            K, G (GPa):bulk and shear moduli
+        """        
         """Compute K and G from velocities and density
 
         Args:
@@ -82,17 +112,25 @@ class utils:
     def write_HTI_matrix(C11,C33,C13,C44,C55):
         """formulate HTI stiffness matrix 
 
-        Args:
-            C11 (GPa): stiffness
-            C13 (GPa): stiffness
-            C23 (GPa): stiffness
-            C33 (GPa): stiffness
-            C44 (GPa): stiffness
-            C55 (GPa): stiffness
+        Parameters
+        ----------
+        C11 : float
+            (GPa): stiffness
+        C33 : float
+            (GPa): stiffness
+        C13 : float
+            (GPa): stiffness
+        C44 : float
+            (GPa): stiffness
+        C55 : float
+            (GPa): stiffness
 
-        Returns:
+        Returns
+        -------
+        2d array
             C: 6x6 stiffness matrix
-        """   
+        """        
+  
         C23= C33-2*C44
         C=np.array([[C11,C13,C13,0,0,0],
                 [C13,C33,C23,0,0,0],
@@ -106,17 +144,26 @@ class utils:
     def write_VTI_compliance(S11,S12,S13,S33,S44):
         """formulate VTI compliance matrix 
 
+        Parameters
+        ----------
+        S11 : float
+            (GPa): stiffness
+        S12 : float
+            (GPa): stiffness
+        S13 : float
+            (GPa): stiffness
+        S33 : float
+            (GPa): stiffness
+        S44 : float
+            (GPa): stiffness
 
-        Args:
-            S11 (GPa): compliance
-            S12 (GPa): compliance
-            S13 (GPa): compliance
-            S33 (GPa): compliance
-            S44 (GPa): compliance
-
-        Returns:
-            _type_: _description_
-        """    
+        Returns
+        -------
+        2d array
+            S: 6x6 compliance matrix
+        
+        """        
+ 
 
         S66=2*(S11-S12) # attention, this is different from Stiffness matrix
         S=np.array([[S11,S12,S13,0,0,0],
@@ -131,16 +178,26 @@ class utils:
     def write_VTI_matrix(C11,C33,C13,C44,C66):
         """formulate VTI stiffness matrix 
 
-        Args:
-            C11 (GPa): stiffness
-            C33 (GPa): stiffness
-            C13 (GPa): stiffness
-            C44 (GPa): stiffness
-            C65 (GPa): stiffness
+        Parameters
+        ----------
+        C11 : float
+            (GPa): stiffness
+        C33 : float
+            (GPa): stiffness
+        C13 : float
+            (GPa): stiffness
+        C44 : float
+            (GPa): stiffness
+        C66 : float
+            (GPa): stiffness
 
-        Returns:
+        Returns
+        -------
+        2d array
             C: 6x6 stiffness matrix
-        """   
+
+        """        
+         
         C12= C11-2*C66
         C=np.array([[C11,C12,C13,0,0,0],
                 [C12,C11,C13,0,0,0],
@@ -154,11 +211,33 @@ class utils:
     def write_matrix(C11,C22,C33,C12,C13,C23,C44,C55,C66):
         """formulate general 6x6 stiffness matrix in Voigt notation
 
-        Args:
-            Cij (GPa): stiffness     
-        Returns:
+        Parameters
+        ----------
+        C11 : float
+            (GPa): stiffness
+        C22 : float
+            (GPa): stiffness
+        C33 : float
+            (GPa): stiffness
+        C12 : float
+            (GPa): stiffness
+        C13 : float
+            (GPa): stiffness
+        C23 : float
+            (GPa): stiffness
+        C44 : float
+            (GPa): stiffness
+        C55 : float
+            (GPa): stiffness
+        C66 : float
+            (GPa): stiffness
+
+        Returns
+        -------
+        2d array
             C: 6x6 stiffness matrix
-        """   
+        """        
+         
         C=np.array([[C11,C12,C13,0,0,0],
                 [C12,C22,C23,0,0,0],
                 [C13,C23,C33,0,0,0],
@@ -171,11 +250,19 @@ class utils:
     def write_iso(K,G):
         """formulate isotropic 6x6 stiffness matrix in Voigt notation
 
-        Args:
-            Cij (GPa): stiffness     
-        Returns:
+        Parameters
+        ----------
+                K : float or array
+            (GPa): bulk modulus
+        G : float or array
+            (GPa): shear moulus
+
+        Returns
+        -------
+        2d array
             C: 6x6 stiffness matrix
-        """   
+        """        
+       
         lamda = K - 2*G/3
 
         C=np.array([[lamda+2*G,lamda,lamda,0,0,0],
@@ -190,27 +277,47 @@ class utils:
     def crack_por(crd, alpha):
         """compute crack porosity from crack aspect ratio and crack density
 
-        Args:
-            crd (unitless): crack density
-            alpha (unitless): crack aspect ratio
+        Parameters
+        ----------
+        crd : float or array
+            (unitless): crack density
+        alpha : float or array
+            crack aspect ratio
 
-        Returns:
+        Returns
+        -------
+        float or array
             cpor (frac): crack porosity 
-        """    
+        """        
+    
         cpor= 4*np.pi*alpha*crd/3
         return cpor
 
     @staticmethod
     def v_to_c_VTI(Vp0,Vp45,Vp90,Vs0,Vsh90,den):
-        """_summary_
+        """compute stiffness matrix given velocity measurements along different directions
 
-        Args:
-            Vp0, Vp45, Vp90, Vs0, Vsh90 (km/s): indident angle dependent velocity measurements 
-            den (g/cm3):density of the sample 
+        Parameters
+        ----------
+        Vp0 : float or array
+             (km/s): incident angle dependent velocity measurements 
+        Vp45 : float or array
+             (km/s): incident angle dependent velocity measurements 
+        Vp90 : float or array
+             (km/s): incident angle dependent velocity measurements 
+        Vs0 : float or array
+             (km/s): incident angle dependent velocity measurements 
+        Vsh90 : float or array
+             (km/s): incident angle dependent velocity measurements 
+        den : float or array
+            (g/cm3):density of the sample 
 
-        Returns:
+        Returns
+        -------
+        2d array
             C: VTI stiffness matrix 
-        """    
+        """        
+
 
         C11 = den*Vp90**2
         C12 = C11-2*den*Vsh90**2

@@ -26,6 +26,9 @@ author = 'jiaxin yu'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
+#autodoc_mock_imports = ['kde_diffusion']
+
+
 extensions = [
     "sphinx.ext.autodoc",
     #"sphinx.ext.doctest",

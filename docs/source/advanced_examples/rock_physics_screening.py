@@ -21,11 +21,7 @@ plt.rcParams['axes.labelpad'] = 10.0
 from rockphypy import QI
 
 
-# %%
 
-
-import matplotlib.colors
-cmap1 = matplotlib.colors.LinearSegmentedColormap.from_list("", ["green","orange","yellow"])
 
 # %%
 # Given tons of petrophysical properties meaured or derived e.g. from well logs, data screening is inevitably required for later intepretation and scenerial modelling. The purpose of data screening is to identify and address any errors, inconsistencies, or missing data in the dataset before any analysis is conducted. 
@@ -54,49 +50,31 @@ phib_p=0.3
 f= 0.5 # slip factor 
 
 
-# %%
-
-
-phi,vp1,vp2,vp3,vs1,vs2,vs3 = QI.screening(Dqz,Kqz,Gqz,Dsh,Ksh,Gsh,Dc,Kc,Gc,Db,Kb,phib_p,phi_c,sigma,vsh,scheme,f, Cn)
-
-fig,ax=plt.subplots()
-fig.set_size_inches(7, 6)
-ax.plot(phi,vp3,'-k', lw=4, alpha=0.7)
-ax.plot(phi,vp1,'--k', lw=2, alpha=0.7)
-ax.plot(phi,vp2,'-k',lw=4, alpha=0.7)
-ax.set_ylabel('Vp (m/s)')
-ax.set_xlabel('porosity')
-ax.grid(ls='--',alpha=0.7)
 
 # %%
 # Applied to field data 
 # ^^^^^^^^^^^^^^^^^^^^^
-# Let's import a example synthetic well log data and apply the rock physics screening to the well log data 
+# Let's import some synthetic well log data and apply the rock physics screening to the well log data 
 # 
 
 # %%
 
+# read data
+data = pd.read_csv('../../data/well/sandstone.csv',index_col=0)
 
-data = pd.read_csv('../../data/well/example_well.csv')
+# compute the elastic bounds
+phi,vp1,vp2,vp3,vs1,vs2,vs3 = QI.screening(Dqz,Kqz,Gqz,Dsh,Ksh,Gsh,Dc,Kc,Gc,Db,Kb,phib_p,phi_c,sigma,vsh,scheme,f, Cn)
 
+# create an object with data 
+qi= QI(data.VP,phi=data.PHIT_ND,Vsh= data.VSH_GR)
 
-# %%
+# call the screening plot method 
+fig=qi.screening_plot(phi,vp1,vp2,vp3)
+plt.ylim([1900,6100])
+plt.yticks(np.arange(2000,6200, 1000),[2,3,4,5,6])
+plt.ylabel('Vp (Km/s)')
+plt.xlim(-0.01,0.51)
 
-# sphinx_gallery_thumbnail_number = 2
-fig,ax=plt.subplots()
-fig.set_size_inches(7, 6)
-ax.plot(phi,vp3,'-k', lw=4, alpha=0.7)
-ax.plot(phi,vp1,'--k', lw=2, alpha=0.7)
-ax.plot(phi,vp2,'-k',lw=4, alpha=0.7)
-ax.set_ylabel('Vp (m/s)')
-ax.set_xlabel('Porosity')
-ax.grid(ls='--',alpha=0.7)
-
-
-plt.scatter(data.PHIT_D,data.VP*1000,c=1-data.VSH_GR,vmin=0, vmax=1,edgecolors='grey',s=100,alpha=1,cmap=cmap1)
-
-cbar=plt.colorbar()
-cbar.set_label(r'$V_{\rm Sand}$')
 
 # %%
 # **Reference** 
