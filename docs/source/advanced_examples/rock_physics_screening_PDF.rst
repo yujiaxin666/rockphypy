@@ -110,7 +110,7 @@ Let's import the same synthetic well log data and apply the rock physics screeni
 .. code-block:: python3
 
 
-    # read data
+    # read data: fork the repo to get the dataset first and run this example. 
     data = pd.read_csv('../../data/well/sandstone.csv',index_col=0)
 
     # compute the elastic bounds
@@ -140,7 +140,7 @@ Let's import the same synthetic well log data and apply the rock physics screeni
  .. code-block:: none
 
 
-    ([<matplotlib.axis.YTick object at 0x0000018A200F0070>, <matplotlib.axis.YTick object at 0x0000018A45E0BC10>, <matplotlib.axis.YTick object at 0x0000018A44000580>, <matplotlib.axis.YTick object at 0x0000018A42FD5EB0>, <matplotlib.axis.YTick object at 0x0000018A42FD5C70>], [Text(0, 2000, '2'), Text(0, 3000, '3'), Text(0, 4000, '4'), Text(0, 5000, '5'), Text(0, 6000, '6')])
+    ([<matplotlib.axis.YTick object at 0x000001957FEA58E0>, <matplotlib.axis.YTick object at 0x000001957FD10C70>, <matplotlib.axis.YTick object at 0x000001957FE89B20>, <matplotlib.axis.YTick object at 0x000001951C072A30>, <matplotlib.axis.YTick object at 0x000001951C0901C0>], [Text(0, 2000, '2'), Text(0, 3000, '3'), Text(0, 4000, '4'), Text(0, 5000, '5'), Text(0, 6000, '6')])
 
 
 
@@ -157,7 +157,7 @@ As shown by the figure, using a 2D PDF can provide a clearer visualization of th
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.160 seconds)
+   **Total running time of the script:** ( 0 minutes  0.159 seconds)
 
 
 .. _sphx_glr_download_advanced_examples_rock_physics_screening_PDF.py:

@@ -86,7 +86,7 @@ The matrices M and N are given by
 :math:`\theta` and :math:`\theta_s` are the angles of P- and S-wave propagation,respectively. 
 As we can see,  the Zoeppritz equations are complicated and do not give an intuitive feel for how rock properties impact the change of amplitude with angle. So simpler approximations are required.
 
-Aki-Richard approximation to Zeoppritz Equation
+Aki-Richards approximation to Zeoppritz Equation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Aki and Richards (1980) also derived a simplified form by assuming small layer
 contrasts. The results are conveniently expressed in terms of contrasts in VP, VS, and ρ as
@@ -146,7 +146,7 @@ Assume constant vertical velocity in the overburden above a horizontal reflector
     vs2=1473
     den2=2229
     theta=np.linspace(0,90,100)
-    R_pp,R_ps, Rpp0, gradient=AVO.Aki_Richard(theta, vp1,vp2,vs1,vs2,den1,den2)
+    R_pp,R_ps, Rpp0, gradient=AVO.Aki_Richards(theta, vp1,vp2,vs1,vs2,den1,den2)
     # plot
     plt.plot(theta,R_pp,'b-',lw=3,label='Rpp')
 
@@ -174,7 +174,7 @@ Assume constant vertical velocity in the overburden above a horizontal reflector
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x0000018DCD4F5FA0>
+    <matplotlib.legend.Legend object at 0x000001957FD19730>
 
 
 
@@ -186,7 +186,7 @@ Assume constant vertical velocity in the overburden above a horizontal reflector
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.107 seconds)
+   **Total running time of the script:** ( 0 minutes  1.389 seconds)
 
 
 .. _sphx_glr_download_getting_started_11_AVO.py:

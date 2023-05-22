@@ -49,7 +49,7 @@ from rockphypy import Fluid
 # :math:`\theta` and :math:`\theta_s` are the angles of P- and S-wave propagation,respectively. 
 # As we can see,  the Zoeppritz equations are complicated and do not give an intuitive feel for how rock properties impact the change of amplitude with angle. So simpler approximations are required.
 #
-# Aki-Richard approximation to Zeoppritz Equation
+# Aki-Richards approximation to Zeoppritz Equation
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Aki and Richards (1980) also derived a simplified form by assuming small layer
 # contrasts. The results are conveniently expressed in terms of contrasts in VP, VS, and ρ as
@@ -107,7 +107,7 @@ vp2=2760
 vs2=1473
 den2=2229
 theta=np.linspace(0,90,100)
-R_pp,R_ps, Rpp0, gradient=AVO.Aki_Richard(theta, vp1,vp2,vs1,vs2,den1,den2)
+R_pp,R_ps, Rpp0, gradient=AVO.Aki_Richards(theta, vp1,vp2,vs1,vs2,den1,den2)
 # plot
 plt.plot(theta,R_pp,'b-',lw=3,label='Rpp')
 

@@ -95,7 +95,7 @@ class AVO:
         return Rpp
 
     @staticmethod
-    def Aki_Richard(theta, vp1,vp2,vs1,vs2,den1,den2):
+    def Aki_Richards(theta, vp1,vp2,vs1,vs2,den1,den2):
         """Aki-Richard approximation to PP reflectivity. 
 
         Parameters

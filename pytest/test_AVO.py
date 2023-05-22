@@ -30,12 +30,12 @@ class TestAVO:
         [-0.26513677, -0.2327113 , -0.13658373,  0.01998204],
         [-0.26513677, -0.23443248, -0.14341743,  0.00478649]])
         np.allclose(result, expected_result, rtol=1e-6, atol=1e-6)
-    def test_Aki_Richard(self):
+    def test_Aki_Richards(self):
         theta= np.linspace(0,40,10)
         # vp1,vp2,vs1,vs2= np.linspace(1500,2000,3), np.linspace(2500,3000,3), np.linspace(900,1000,3), np.linspace(1000,1200,3)
         # den1,den2= np.linspace(1.5,2.2,3),np.linspace(1.,2.2,3)
         vp1,vp2,vs1,vs2,den1,den2= 2000,3000,1000,1200,2200,2300
-        result= AVO.Aki_Richard(theta, vp1,vp2,vs1,vs2,den1,den2)
+        result= AVO.Aki_Richards(theta, vp1,vp2,vs1,vs2,den1,den2)
         expected_result= (np.array([0.22222222, 0.22248164, 0.22334161, 0.22505294, 0.22805364,
         0.2330032 , 0.24084072, 0.25288048, 0.27096972, 0.29775439]),np.array([-0.        , -0.01942277, -0.03799843, -0.05490899, -0.069394  ,
         -0.08077786, -0.08849507, -0.09211298, -0.09135103, -0.08609571]), 0.22222222222222224,

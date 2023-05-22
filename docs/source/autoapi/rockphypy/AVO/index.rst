@@ -77,7 +77,7 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: Aki_Richard(theta, vp1, vp2, vs1, vs2, den1, den2)
+   .. py:method:: Aki_Richards(theta, vp1, vp2, vs1, vs2, den1, den2)
       :staticmethod:
 
       

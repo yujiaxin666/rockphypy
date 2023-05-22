@@ -57,7 +57,7 @@ f= 0.5 # slip factor
 
 # %%
 
-# read data
+# read data: fork the repo to get the dataset first and run this example. 
 data = pd.read_csv('../../data/well/sandstone.csv',index_col=0)
 
 # compute the elastic bounds
