@@ -3,37 +3,39 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to rockphypy's documentation!
-
 About
 =====
-Open-source rock physic toolboxs in Python.
-*******************************************
-
-Overview
---------
-``rockphypy`` is a Python-based **open-source rock physics modelling library** created for people who are interested in Rock physics and want to applied rock physics tools in their work and research.
-
-The library refactor most of rock physics models in `Stanford SRB tools  <https://github.com/StanfordRockPhysics/SRBToolbox>`_ from Matlab to Python. 
-In addition, more functions and various practical workflows are created. ``rockphypy`` provides a bunch of usefel classes, i.e. ``Anisotropy``, ``AVO``, ``BW (Batzle&Wang)``, ``EM(Effective medium)``, ``Empirical``, ``Fluid``, ``GM(Granular Medium)``, ``Permeability`` and ``utils``. See the API Documentation for further details. 
-
-From the ground up, ``rockphypy`` is designed to be easily embedded in various workflows i.e, machine learning, probabilistic frameworks, bayesian inversion that leverage the rich resources of python open-source. 
-
-Since a constant state of development and growth is aimed, please feel free to contribute by `pulling request <https://github.com/yujiaxin666/RockPhysicsPy/pulls>`_ or pose your questions and requests by `creating issues <https://github.com/yujiaxin666/RockPhysicsPy/issues>`_. 
-
+An extensive Python library for rock physics modelling
+******************************************************
 
 
 Installation
 ------------
 
-``rockphypy`` is available through ``PyPI`` and may be installed using ``pip``: 
+``rockphypy`` is available through `PYPI <https://pypi.org/project/rockphypy/>`_ , and may be installed using ``pip``: 
 
 
    ``$ pip install rockphypy``
 
+
+
+Overview
+--------
+``rockphypy`` is a Python-based **open-source library** dedicated to rock physics modeling. It caters to individuals interested in rock physics and empowers them to apply rock physics tools in their work and research effectively.
+
+Built upon the foundations of `Stanford SRB tools  <https://github.com/StanfordRockPhysics/SRBToolbox>`_ , rockphypy has successfully migrated and optimized a wide range of rock physics models from Stanford SRB Matlab tools to Python. Additionally, it extends the functionality by introducing new functions and practical workflows. Notably, ``rockphypy`` offers a diverse set of valuable modules such as ``Anisotropy``, ``AVO``, ``BW`` (Batzle&Wang), ``EM`` (Effective Medium), ``Empirical``, ``Fluid``, ``GM`` (Granular Medium), ``Permeability``, ``QI``(Quantitative Intepretation) and ``utils``. For a more detailed understanding of each module, please refer to the API Documentation.
+
+From the ground up, ``rockphypy`` is designed to be easily embedded in various workflows i.e, machine learning, probabilistic frameworks, bayesian inversion that leverage the rich resources of python open-source ecosystem.
+
+Driven by a commitment to constant growth and development, rockphypy welcomes contributions from the community. Whether through `pull request <https://github.com/yujiaxin666/RockPhysicsPy/pulls>`_  or by raising questions and making requests via `issue creation <https://github.com/yujiaxin666/RockPhysicsPy/issues>`_. Your active involvement is highly encouraged. Together, we can foster a collaborative and thriving environment for rock physics enthusiasts.
+
+
+
+
 Example code
 ------------
-Here's an example showing the usage of :class:`~rockphypy.EM` and :class:`~rockphypy.Fluid` for creating saturated elastic bounds. 
+Below is a simple example demonstrating the usage of the :class:`~rockphypy.EM` and :class:`~rockphypy.Fluid` from the ``rockphypy`` library to create saturated elastic bounds. For further examples, please explore the **Rock physics basics** and **Applications** tabs on the left.
+
 
 .. plot::
    :include-source:
@@ -74,12 +76,16 @@ Here's an example showing the usage of :class:`~rockphypy.EM` and :class:`~rockp
 Motivation 
 ----------
 
-The motivation comes from author's personal experience in rock physics study and the fact that she is a big fans of python and open source community. 
-When she began her phd study about rock physics, she spent days looking for an-easy to-use rock physics library for finishing her head-drain exercise. 
+The motivation behind the creation of this Python library stems from the Isabella's personal experience and passion for rock physics. As an avid fan of the Python language and the open-source community, Isabella embarked on her PhD journey in rock physics.
 
-On the other hand, the author is facinated by the theoretical versaility of rock physics modelling and enjoy reading classical papers and books about rock physics modelling and its pratical applications.  
+Isabella encountered challenges in finding a user-friendly rock physics library to assist with their head-drain exercise when she began her PhD study at NTNU. This experience sparked the realization of a need for an accessible and convenient rock physics tool.
 
-The rock physics handbook helped the author build a solid understanding of the rock physics. Lucily the author did her visit at stanford and finished this python library as the last piece of her phd work. 
+Simultaneously, Isabella's fascination with the theoretical versatility of rock physics modeling grew, leading she to delve into classical papers and books on the subject. The rock physics handbook and other excellent books and papers (see **literature**) played a significant role in shaping her understanding of rock physics.
+
+Fortuitously, Isabella had the opportunity to visit Stanford during her PhD, where Isabella combined her passion for rock physics with her love for Python and open-source development. This led to the creation of this Python library, serving as the final piece of their PhD work.
+
+The library aims to provide an intuitive and practical solution for rock physics enthusiasts, drawing from the author's firsthand experience and knowledge gained through PhD research.
+
 
 Table of contents
 ==================
