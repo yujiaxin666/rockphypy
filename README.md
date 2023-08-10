@@ -10,7 +10,7 @@ This Python 3.8+ package implements most of the rock physics models introduced i
 
 # Citation 
 
-Please cite as "Yu, Jiaxin and Mukerji, Tapan and Avseth, Per Åge, Rockphypy: An Extensive Python Library for Rock Physics Modeling. Available at SSRN: https://ssrn.com/abstract=4486364 or http://dx.doi.org/10.2139/ssrn.4486364"
+Want to cite rockphypy in your work? Please cite as "Yu, Jiaxin and Mukerji, Tapan and Avseth, Per Åge, Rockphypy: An Extensive Python Library for Rock Physics Modeling. Available at SSRN: https://ssrn.com/abstract=4486364 or http://dx.doi.org/10.2139/ssrn.4486364". 
 
 ## Installation
 
