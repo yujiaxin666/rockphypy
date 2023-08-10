@@ -23,12 +23,16 @@ Overview
 --------
 ``rockphypy`` is a Python-based **open-source library** dedicated to rock physics modeling. It caters to individuals interested in rock physics and empowers them to apply rock physics tools in their work and research effectively.
 
-Built upon the foundations of `Stanford SRB tools  <https://github.com/StanfordRockPhysics/SRBToolbox>`_ , rockphypy has successfully migrated and optimized a wide range of rock physics models from Stanford SRB Matlab tools to Python. Additionally, it extends the functionality by introducing new functions and practical workflows. Notably, ``rockphypy`` offers a diverse set of valuable modules such as ``Anisotropy``, ``AVO``, ``BW`` (Batzle&Wang), ``EM`` (Effective Medium), ``Empirical``, ``Fluid``, ``GM`` (Granular Medium), ``Permeability``, ``QI``(Quantitative Intepretation) and ``utils``. For a more detailed understanding of each module, please refer to the API Documentation.
+Built upon the foundations of `Stanford SRB tools  <https://github.com/StanfordRockPhysics/SRBToolbox>`_ , rockphypy has successfully migrated and optimized a wide range of rock physics models from Stanford SRB Matlab tools to Python. Additionally, it extends the functionality by introducing new functions and practical workflows. Notably, ``rockphypy`` offers a diverse set of valuable modules such as ``Anisotropy``, ``AVO``, ``BW`` (Batzle&Wang), ``EM`` (Effective Medium), ``Empirical``, ``Fluid``, ``GM`` (Granular Medium), ``Permeability``, ``QI`` (Quantitative Intepretation) and ``utils``. For a more detailed understanding of each module, please refer to the API Documentation.
 
 From the ground up, ``rockphypy`` is designed to be easily embedded in various workflows i.e, machine learning, probabilistic frameworks, bayesian inversion that leverage the rich resources of python open-source ecosystem.
 
-Driven by a commitment to constant growth and development, rockphypy welcomes contributions from the community. Whether through `pull request <https://github.com/yujiaxin666/RockPhysicsPy/pulls>`_  or by raising questions and making requests via `issue creation <https://github.com/yujiaxin666/RockPhysicsPy/issues>`_. Your active involvement is highly encouraged. Together, we can foster a collaborative and thriving environment for rock physics enthusiasts.
 
+Contribution and Development
+----------------------------
+See the timeline of ``rockphypy`` `here <https://user-images.githubusercontent.com/45630390/259761842-5689968c-7683-41e4-864a-0dca791a38a0.png>`_  for more details about the development.
+
+Driven by a commitment to constant growth and development, rockphypy welcomes contributions from the community. Whether through `pull request <https://github.com/yujiaxin666/RockPhysicsPy/pulls>`_  or by raising questions and making requests via `issue creation <https://github.com/yujiaxin666/RockPhysicsPy/issues>`_. Your active involvement is highly encouraged. Together, we can foster a collaborative and thriving environment for rock physics enthusiasts.
 
 
 
