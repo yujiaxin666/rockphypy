@@ -78,3 +78,7 @@ Please follow these guidelines:
 - Employ object orientation, but resist the temptation to implement many methods -- stick to the basics.
 - Follow PEP8.
 
+### Timeline 
+
+![2timeline](https://github.com/yujiaxin666/rockphypy/assets/45630390/5689968c-7683-41e4-864a-0dca791a38a0)
+
