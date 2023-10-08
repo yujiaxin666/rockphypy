@@ -616,3 +616,117 @@ class GM:
 
         return K_DRY, G_DRY
 
+    @staticmethod  
+    def diluting(k,sigma0,sigma,m):
+        """stress dependent diluting parameter used in varying patchiness cement model.
+
+        Parameters
+        ----------
+        k : float
+            cement crushing factor. k<=1: no cement crumbling; k>1: cement crumbling.
+        sigma0 : float
+            reference stress, e.g. maximum effective stress, stress at which unloading begins.
+        sigma : array-like
+            effective stress 
+        m : float
+            curvature parameter that defines diluting rate. 
+
+        Returns
+        -------
+        array-like
+            stress dependent diluting parameter
+        """          
+        alpha= k*(1-sigma/sigma0)**m
+        alpha[np.isnan(alpha)]=0
+        return alpha
+
+    @staticmethod
+    def vpcm(alpha, f,sigma, K0,G0,phi, phic, v_cem,v_ci, Kc,Gc, Cn,scheme,f_):
+        """Compute effective elastic moduli using varying patchiness cement model (VPCM) as proposed by Yu et al. (2023).
+
+        Parameters
+        ----------
+        alpha : float or array-like 
+            diluting parameters
+        f : float 
+            volume fraction of cemented rock in the binary mixture    
+        sigma : float or array-like
+            effective stress
+        K0 : float
+            Bulk modulus of grain material in GPa
+        G0 : float
+            Shear modulus of grain material in GPa
+        phi : float
+            Porosity
+        phic : float
+            Critical Porosity
+        v_cem : float
+            cement fraction in contact cement model. phi_cem= phic-vcem 
+        v_ci : float
+            cement threshold above which increasing cement model is applied 
+        Kc : float
+            bulk modulus of cement
+        Gc : float
+            shear modulus of cement
+        Cn : float
+            coordination number
+        scheme : int
+            contact cement scheme. 
+            1=cement deposited at grain contacts
+            2=cement deposited at grain surfaces
+        f_ : float
+            slip factor in HM modelling. 
+        Note:
+            (Avseth,2016): If 10% is chosen as the “critical” cement limit, the increasing cement model can be used in addition to the contact cement model. (Torset, 2020): with the increasing cement model appended at 4% cement"
+        Returns
+        -------
+        array-like
+            K_DRY, G_DRY (GPa): effective elastic moduli of the dry rock
+        """        
+          
+        #------------------------------------------------
+        # compute the unconsolidated end member
+        #------------------------------------------------
+        
+        Kunc,Gunc= GM.hertzmindlin(K0, G0, phic=phic, Cn=Cn, sigma=sigma, f=f_)
+        #------------------------------------------------
+        # compute the cemented end member
+        #------------------------------------------------
+
+        if v_cem<=v_ci:
+            Kcem,Gcem= GM.contactcement(K0, G0,Kc, Gc, phic-v_cem, phic=phic, Cn=Cn, scheme=scheme)
+        
+        #------------------------------------------------
+        # increasing cement model 
+        #------------------------------------------------
+        else: 
+            Kcem,Gcem= GM.MUHS(K0, G0, Kc,Gc,phic-v_cem, phic-v_ci,phic=phic, Cn=Cn, scheme=scheme)
+        #------------------------------------------------
+        # first HS 
+        #------------------------------------------------   
+
+        # stiffest mixing,shelf is cemented sand, inner core is unconsolidated sand   
+        Kp_stiff=Kcem+ (1-f)/( (Kunc-Kcem)**-1 + f*(Kcem+4*Gcem/3)**-1 )
+
+        Temp_stiff= (Kcem+2*Gcem)/(5*Gcem *(Kcem+4*Gcem/3))
+        Gp_stiff=Gcem+(1-f)/( (Gunc-Gcem)**-1 + 2*f*Temp_stiff)
+        # soft mixing inner core is cemented sand, outer shelf is unconsolidated sand  
+        Kp_soft=Kunc+ f/( (Kcem-Kunc)**-1 + (1-f)*(Kunc+4*Gunc/3)**-1 )
+
+        Temp_soft= (Kunc+2*Gunc)/(5*Gunc *(Kunc+4*Gunc/3))
+        Gp_soft=Gunc+f/( (Gcem-Gunc)**-1 + 2*(1-f)*Temp_soft)
+
+        #------------------------------------------------
+        # binary mixing 
+        #------------------------------------------------ 
+    
+        Kp= Kp_stiff*(1-alpha) + Kp_soft *alpha
+        Gp =Gp_stiff*(1-alpha) + Gp_soft *alpha
+
+        #------------------------------------------------Second HS: interpolate the effective high-porosity end member and the mineral point using MLHS bound 
+        #------------------------------------------------
+        K_DRY =-4/3*Gp + (((phi /phic)/(Kp+4/3*Gp)) + ((1-phi/phic)/(K0+4/3*Gp)))**-1
+        tmp = Gp/6*((9*Kp+8*Gp) / (Kp+2*Gp))
+        G_DRY = -tmp + ((phi/phic)/(Gp+tmp) + ((1-phi/phic)/(G0+tmp)))**-1
+
+        return K_DRY, G_DRY  

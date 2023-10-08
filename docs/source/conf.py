@@ -100,7 +100,13 @@ highlight_language = 'python3'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'alabaster'
+html_theme_options = {
+    'logo_only': True,
+    'display_version': False,
+}
 html_static_path = ['_static']
+html_logo = "_static/logo.png"
+html_favicon = '_static/favicon.ico'
 ## adjust the white space between functions 
 
 html_css_files = [

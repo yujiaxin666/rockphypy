@@ -1963,6 +1963,97 @@ Classes
       ..
           !! processed by numpydoc !!
 
+   .. py:method:: diluting(k, sigma0, sigma, m)
+      :staticmethod:
+
+      
+      stress dependent diluting parameter used in varying patchiness cement model.
+
+      :param k: cement crushing factor. k<=1: no cement crumbling; k>1: cement crumbling.
+      :type k: float
+      :param sigma0: reference stress, e.g. maximum effective stress, stress at which unloading begins.
+      :type sigma0: float
+      :param sigma: effective stress
+      :type sigma: array-like
+      :param m: curvature parameter that defines diluting rate.
+      :type m: float
+
+      :returns: *array-like* -- stress dependent diluting parameter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: vpcm(alpha, f, sigma, K0, G0, phi, phic, v_cem, v_ci, Kc, Gc, Cn, scheme, f_)
+      :staticmethod:
+
+      
+      Compute effective elastic moduli using varying patchiness cement model (VPCM) as proposed by Yu et al. (2023).
+
+      :param alpha: diluting parameters
+      :type alpha: float or array-like
+      :param f: volume fraction of cemented rock in the binary mixture
+      :type f: float
+      :param sigma: effective stress
+      :type sigma: float or array-like
+      :param K0: Bulk modulus of grain material in GPa
+      :type K0: float
+      :param G0: Shear modulus of grain material in GPa
+      :type G0: float
+      :param phi: Porosity
+      :type phi: float
+      :param phic: Critical Porosity
+      :type phic: float
+      :param v_cem: cement fraction in contact cement model. phi_cem= phic-vcem
+      :type v_cem: float
+      :param v_ci: cement threshold above which increasing cement model is applied
+      :type v_ci: float
+      :param Kc: bulk modulus of cement
+      :type Kc: float
+      :param Gc: shear modulus of cement
+      :type Gc: float
+      :param Cn: coordination number
+      :type Cn: float
+      :param scheme: contact cement scheme.
+                     1=cement deposited at grain contacts
+                     2=cement deposited at grain surfaces
+      :type scheme: int
+      :param f_: slip factor in HM modelling.
+      :type f_: float
+      :param Note: (Avseth,2016): If 10% is chosen as the “critical” cement limit, the increasing cement model can be used in addition to the contact cement model. (Torset, 2020): with the increasing cement model appended at 4% cement"
+
+      :returns: *array-like* -- K_DRY, G_DRY (GPa): effective elastic moduli of the dry rock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
 
 .. py:class:: EM
 

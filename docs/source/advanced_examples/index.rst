@@ -64,6 +64,23 @@ Here you can see how to run apply rockphypy to solving practical questions.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Varying Patchiness Cement Model(VPCM)">
+
+.. only:: html
+
+  .. image:: /advanced_examples/images/thumb/sphx_glr_VPCM_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_advanced_examples_VPCM.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Varying Patchiness Cement Model(VPCM)</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Cement volume estimation">
 
 .. only:: html
@@ -141,6 +158,7 @@ Here you can see how to run apply rockphypy to solving practical questions.
    /advanced_examples/CO2_modelling
    /advanced_examples/CO2_seismic
    /advanced_examples/Rock_physics_template
+   /advanced_examples/VPCM
    /advanced_examples/cement_volume_estimation
    /advanced_examples/patchy_cement_model
    /advanced_examples/rock_physics_screening

@@ -6,10 +6,10 @@
 
 Computation times
 =================
-**00:00.159** total execution time for **advanced_examples** files:
+**00:01.094** total execution time for **advanced_examples** files:
 
 +-----------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_advanced_examples_rock_physics_screening_PDF.py` (``rock_physics_screening_PDF.py``) | 00:00.159 | 0.0 MB |
+| :ref:`sphx_glr_advanced_examples_VPCM.py` (``VPCM.py``)                                             | 00:01.094 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_advanced_examples_CO2_modelling.py` (``CO2_modelling.py``)                           | 00:00.000 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------+-----------+--------+
@@ -22,4 +22,6 @@ Computation times
 | :ref:`sphx_glr_advanced_examples_patchy_cement_model.py` (``patchy_cement_model.py``)               | 00:00.000 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_advanced_examples_rock_physics_screening.py` (``rock_physics_screening.py``)         | 00:00.000 | 0.0 MB |
++-----------------------------------------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_advanced_examples_rock_physics_screening_PDF.py` (``rock_physics_screening_PDF.py``) | 00:00.000 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------+-----------+--------+
