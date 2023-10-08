@@ -1,4 +1,4 @@
-[![Documentation Status](https://readthedocs.org/projects/rockphypy/badge/?version=latest)](http://rockphypy.readthedocs.io/en/latest/?badge=latest) [![PyPI version](https://badge.fury.io/py/rockphypy.svg)](https://badge.fury.io/py/rockphypy) 
+[![Documentation Status](https://readthedocs.org/projects/rockphypy/badge/?version=latest)](http://rockphypy.readthedocs.io/en/latest/?badge=latest) [![PyPI version](https://badge.fury.io/py/rockphypy.svg)](https://badge.fury.io/py/rockphypy)[![Downloads](https://static.pepy.tech/badge/rockphypy)](https://pepy.tech/project/rockphypy)
 ---------
 
 
