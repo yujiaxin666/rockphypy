@@ -11,10 +11,10 @@ from rockphypy.Fluid import Fluid
 from rockphypy.EM import EM
 from rockphypy.Emp import Empirical
 from rockphypy.QI import QI
-
+from rockphypy.utils import utils
 
 __version__ = "0.0.1"
 __author__ = "jiaxinyu"
 
-__all__ = ['Anisotropy','AVO','BW','Emp',"EM", 'GM','Perm',"utils"]
+__all__ = ['Anisotropy','AVO','BW','Permeability','Fluid','Empirical','QI','Emp',"EM", 'GM','Perm',"utils"]
 
