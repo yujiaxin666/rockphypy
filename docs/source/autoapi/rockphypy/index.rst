@@ -33,9 +33,13 @@ Classes
    rockphypy.Anisotropy
    rockphypy.AVO
    rockphypy.BW
-   rockphypy.utils
+   rockphypy.Permeability
    rockphypy.GM
+   rockphypy.Fluid
    rockphypy.EM
+   rockphypy.Empirical
+   rockphypy.QI
+   rockphypy.utils
 
 
 
@@ -967,10 +971,10 @@ Classes
           !! processed by numpydoc !!
 
 
-.. py:class:: utils
+.. py:class:: Permeability
 
    
-   Basic calculations for velocities, moduli and stiffness matrix.
+   Different permeability models.
 
 
 
@@ -989,20 +993,25 @@ Classes
 
    ..
        !! processed by numpydoc !!
-   .. py:method:: V(K, G, rho)
+   .. py:method:: Kozeny_Carman(phi, d)
       :staticmethod:
 
       
-      Compute velocity given density and elastic moduli.
+      Describe the permeability in a porous medium using Kozeny-Carman equation assuming the turtuosity tau=sqrt(2), 1/B=2.5 for unconsolidated monomodal sphere pack.
 
-      :param K: (GPa): bulk modulus
-      :type K: float or array
-      :param G: (GPa): shear moulus
-      :type G: float or array
-      :param rho: (g/m3): density of the frame
-      :type rho: float or array
+      :param phi: porosity
+      :type phi: float or array-like
+      :param d: pore diameter in m.
+      :type d: float
 
-      :returns: *float or array* -- Vp, Vs (m/s): velocity
+      .. rubric:: Examples
+
+      >>> phi= np.linspace(0.01,0.35,100)
+      >>> d= 250
+      >>> k= Kozeny_Carman(phi, d)
+      >>> plt.semilogy(phi, k )
+
+      :returns: *float or array-like* -- k (m^2): the resulting permeability is in the same units as d^2
 
 
 
@@ -1021,18 +1030,22 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: poi(K, G)
+   .. py:method:: Kozeny_Carman_Percolation(phi, phic, d, B)
       :staticmethod:
 
       
-      Compute poisson's ratio from K an G
+      The Kozeny−Carman relations incorporating the percolation effect
 
-      :param K: (GPa): bulk modulus
-      :type K: float or array
-      :param G: (GPa): shear moulus
-      :type G: float or array
+      :param phi: porosity
+      :type phi: float or array-like
+      :param phic: percolation porosity
+      :type phic: float
+      :param d: pore diameter
+      :type d: float
+      :param B: geometric factor that partly accounts for the irregularities of pore shapes.
+      :type B: float
 
-      :returns: *float or array* -- Poisson's ratio
+      :returns: *float or array-like* -- k (m^2): the resulting permeability is in the same units as d^2
 
 
 
@@ -1051,18 +1064,18 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: lame(K, G)
+   .. py:method:: Owolabi(phi, Swi)
       :staticmethod:
 
       
-      Compute lame constant lamdba from K an G
+      Estimate the permeability in uncosonlidated sands of Pleistocene to Oligocene age in Eastern Niger Delta from log derived porosityand irreducible water saturation.
 
-      :param K: (GPa): bulk modulus
-      :type K: float or array
-      :param G: (GPa): shear moulus
-      :type G: float or array
+      :param phi: porosity
+      :type phi: float or array-like
+      :param Swi: irreducible water-saturation from welllogs
+      :type Swi: float or array-like
 
-      :returns: *float or array* -- Poisson's ratio
+      :returns: *float or array-like* -- k_oil, k_gas: permeabilities in mD for oil and gas sand reservoir, respectively
 
 
 
@@ -1081,20 +1094,23 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: M_from_V(den, vp, vs)
+   .. py:method:: Perm_logs(phi, Swi)
       :staticmethod:
 
       
-      _summary_
+      Various empirical correlations of between permeability, porosity and irreducible water-saturation from welllogs. Models includs Tixier, Timur, Coates and Coates-Dumanoir.
 
-      :param den: (g/cm3): bulk density
-      :type den: float or array
-      :param vp: (m/s): p wave velocity
-      :type vp: float or array
-      :param vs: (m/s): s wave velocity
-      :type vs: float or array
+      :param phi: porosity
+      :type phi: float or array-like
+      :param Swi: irreducible water-saturation from welllogs
+      :type Swi: float or array-like
 
-      :returns: *float or array* -- K, G (GPa):bulk and shear moduli
+      :returns: * *float or array-like* -- k_tixier, k_Timur , k_coates, k_coates_Dumanoir: different permeability estimations, in the unit of mD
+                * *Assumptions*
+                * *-----------*
+                * *- The functional forms used in these equations have to be calibrated, whenever possible, to site-specific data.*
+                * *- The rock is isotropic.*
+                * *- Fluid-bearing rock is completely saturated.*
 
 
 
@@ -1113,24 +1129,28 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: write_HTI_matrix(C11, C33, C13, C44, C55)
+   .. py:method:: Panda_Lake(d, C, S, tau, phi)
       :staticmethod:
 
       
-      formulate HTI stiffness matrix
+      Modified Kozeny-carman relation incorpating the contribution of grain size variation and sorting using Manmath N. Panda and Larry W. Lake relation.
 
-      :param C11: (GPa): stiffness
-      :type C11: float
-      :param C33: (GPa): stiffness
-      :type C33: float
-      :param C13: (GPa): stiffness
-      :type C13: float
-      :param C44: (GPa): stiffness
-      :type C44: float
-      :param C55: (GPa): stiffness
-      :type C55: float
+      :param d: mean particles size in um.
+      :type d: float
+      :param C: coefficient of variation of particles size distribution
+      :type C: float
+      :param S: skewness of particles size distribution
+      :type S: float
+      :param tau: tortuosity factor
+      :type tau: float
+      :param phi: porosity
+      :type phi: float or array-like
 
-      :returns: *2d array* -- C: 6x6 stiffness matrix
+      :returns: *float or array-like* -- k (md): permeability
+
+      .. rubric:: References
+
+      - Estimation of Single-Phase permeability from parameters of particle-Size Distribution, Manmath N. Panda and Larry W. Lake, AAPG 1994.
 
 
 
@@ -1149,24 +1169,18 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: write_VTI_compliance(S11, S12, S13, S33, S44)
+   .. py:method:: Panda_Lake_cem(phi, d)
       :staticmethod:
 
       
-      formulate VTI compliance matrix
+      Quantify the effects of cements on the single phase permeability estimate of unconsolidated sand using Panda & Lake model
 
-      :param S11: (GPa): stiffness
-      :type S11: float
-      :param S12: (GPa): stiffness
-      :type S12: float
-      :param S13: (GPa): stiffness
-      :type S13: float
-      :param S33: (GPa): stiffness
-      :type S33: float
-      :param S44: (GPa): stiffness
-      :type S44: float
+      :param phi: porosity
+      :type phi: float or array-like
+      :param d: mean particles size in um
+      :type d: float
 
-      :returns: *2d array* -- S: 6x6 compliance matrix
+      :returns: *float or array-like* -- k (md): permeability
 
 
 
@@ -1185,24 +1199,18 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: write_VTI_matrix(C11, C33, C13, C44, C66)
+   .. py:method:: Revil(phi, d)
       :staticmethod:
 
       
-      formulate VTI stiffness matrix
+      Estimate permeability in very shaly rock using Revil et al. 1997
 
-      :param C11: (GPa): stiffness
-      :type C11: float
-      :param C33: (GPa): stiffness
-      :type C33: float
-      :param C13: (GPa): stiffness
-      :type C13: float
-      :param C44: (GPa): stiffness
-      :type C44: float
-      :param C66: (GPa): stiffness
-      :type C66: float
+      :param phi: porosity
+      :type phi: float or array-like
+      :param d: mean particles size in um
+      :type d: float
 
-      :returns: *2d array* -- C: 6x6 stiffness matrix
+      :returns: *float or array-like* -- k (md): permeability
 
 
 
@@ -1221,32 +1229,22 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: write_matrix(C11, C22, C33, C12, C13, C23, C44, C55, C66)
+   .. py:method:: Fredrich(phi, d, b)
       :staticmethod:
 
       
-      formulate general 6x6 stiffness matrix in Voigt notation
+      Compute permability considering Pore Geometry and Transport Properties of Fontainebleau Sandstone
 
-      :param C11: (GPa): stiffness
-      :type C11: float
-      :param C22: (GPa): stiffness
-      :type C22: float
-      :param C33: (GPa): stiffness
-      :type C33: float
-      :param C12: (GPa): stiffness
-      :type C12: float
-      :param C13: (GPa): stiffness
-      :type C13: float
-      :param C23: (GPa): stiffness
-      :type C23: float
-      :param C44: (GPa): stiffness
-      :type C44: float
-      :param C55: (GPa): stiffness
-      :type C55: float
-      :param C66: (GPa): stiffness
-      :type C66: float
+      :param phi: porosity>10%
+      :type phi: float or array-like
+      :param d: _description_
+      :type d: float
+      :param b: shape factor b is equal to 2 for circular tubes and equal to 3 for cracks.
+      :type b: float
 
-      :returns: *2d array* -- C: 6x6 stiffness matrix
+      :returns: * *float or array-like* -- k (md): permeability
+                * *References* -- ----------
+                * *- Fredrich, J. T., Greaves, K. H., & Martin, J. W. (1993, December). Pore geometry and transport properties of Fontainebleau sandstone. In International journal of rock mechanics and mining sciences & geomechanics abstracts (Vol. 30, No. 7, pp. 691-697). Pergamon.*
 
 
 
@@ -1265,20 +1263,20 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: write_iso(K, G)
+   .. py:method:: Bloch(S, C, D)
       :staticmethod:
 
       
-      formulate isotropic 6x6 stiffness matrix in Voigt notation
+      Predict porosity and permeability in sandstones prior to drilling using Bloch empirical relations obtain in Yacheng field.
 
-      :param K:
-      :type K: float or array
+      :param S: Trask sorting coefficient
+      :type S: float
+      :param C: Rigid grain content in frac
+      :type C: float
+      :param D: Grain size in mm
+      :type D: float
 
-          (GPa): bulk modulus
-      G : float or array
-          (GPa): shear moulus
-
-      :returns: *2d array* -- C: 6x6 stiffness matrix
+      :returns: *float or array-like* -- phi, k: porosity (frac) and permeability (mD), respectively
 
 
 
@@ -1297,56 +1295,24 @@ Classes
       ..
           !! processed by numpydoc !!
 
-   .. py:method:: crack_por(crd, alpha)
+   .. py:method:: Bernabe(phi, crf, w, r)
       :staticmethod:
 
       
-      compute crack porosity from crack aspect ratio and crack density
+      Bernabe models permit to compute the permeability and porosity of strongly pressure dependent pores such as cracks and approximately constant pores associated with tubes and nodal pores.
 
-      :param crd: (unitless): crack density
-      :type crd: float or array
-      :param alpha: crack aspect ratio
-      :type alpha: float or array
+      :param phi: total porosity
+      :type phi: float or array-like
+      :param crf: crack fraction in pore volume
+      :type crf: float
+      :param w: width or aperture of the equivalent crack in um
+      :type w: float
+      :param r: radius of the tube in um
+      :type r: float
 
-      :returns: *float or array* -- cpor (frac): crack porosity
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      ..
-          !! processed by numpydoc !!
-
-   .. py:method:: v_to_c_VTI(Vp0, Vp45, Vp90, Vs0, Vsh90, den)
-      :staticmethod:
-
-      
-      compute stiffness matrix given velocity measurements along different directions
-
-      :param Vp0: (km/s): incident angle dependent velocity measurements
-      :type Vp0: float or array
-      :param Vp45: (km/s): incident angle dependent velocity measurements
-      :type Vp45: float or array
-      :param Vp90: (km/s): incident angle dependent velocity measurements
-      :type Vp90: float or array
-      :param Vs0: (km/s): incident angle dependent velocity measurements
-      :type Vs0: float or array
-      :param Vsh90: (km/s): incident angle dependent velocity measurements
-      :type Vsh90: float or array
-      :param den: (g/cm3):density of the sample
-      :type den: float or array
-
-      :returns: *2d array* -- C: VTI stiffness matrix
+      :returns: * *float or array-like* -- k (md): total permeability
+                * *References* -- ----------
+                * *- Bernabe, Y. (1991). Pore geometry and pressure dependence of the transport properties in sandstones. Geophysics, 56(4), 436-446.*
 
 
 
@@ -2036,6 +2002,679 @@ Classes
       :param Note: (Avseth,2016): If 10% is chosen as the “critical” cement limit, the increasing cement model can be used in addition to the contact cement model. (Torset, 2020): with the increasing cement model appended at 4% cement"
 
       :returns: *array-like* -- K_DRY, G_DRY (GPa): effective elastic moduli of the dry rock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+.. py:class:: Fluid
+
+   
+   Fluid subsitution approaches and models describing velocity dispersion and attenuation due to the fluid effect.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:method:: Brie(Kw, Kgas, Sw, e)
+      :staticmethod:
+
+      
+      Brie empirical fluid mixing law
+
+      :param Kw: bulk modulus of fluid phase
+      :type Kw: float
+      :param Kgas: bulk modulus of gas phase
+      :type Kgas: float
+      :param Sw: water saturation
+      :type Sw: float or array
+      :param e: Brie component
+      :type e: int
+
+      :returns: *float or array* -- Kf: effective fluid propertie
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Biot(Kdry, Gdry, K0, Kfl, rho0, rhofl, eta, phi, kapa, a, alpha, freq)
+      :staticmethod:
+
+      
+      Compute Biot dispersion and velocity attenuation
+
+      :param Kdry: dry frame bulk modulus
+      :type Kdry: float or array-like
+      :param Gdry: dry frame shear modulus
+      :type Gdry: float or array-like
+      :param K0: bulk modulus of mineral material making up rock
+      :type K0: float
+      :param Kfl: effective bulk modulus of pore fluid
+      :type Kfl: float
+      :param rho0: grain density
+      :type rho0: float
+      :param rhofl: pore fluid density
+      :type rhofl: float
+      :param eta: η is the viscosity of the pore fluid
+      :type eta: float
+      :param phi: porosity
+      :type phi: float
+      :param kapa: absolute permeability of the rock
+      :type kapa: float
+      :param a: pore-size parameter. Stoll (1974) found that values between 1/6 and 1/7 of the mean grain diameter
+      :type a: float
+      :param alpha: tortuosity parameter, always greater than or equal to 1.
+      :type alpha: float
+      :param freq: frequency range, e.g 10^-3 to 10^3 Hz
+      :type freq: float or array-like
+
+      :returns: *float or array-like* -- Vp_fast, fast P-wave velocities at all frequencies,km/s
+                Vp_slow, slow P-wave velocities at all frequencies,km/s
+                Vs, S-wave velocities,km/s
+                QP1_inv, fast P-wave attenuation
+                QP2_inv, slow P-wave attenuation
+                Qs_inv, S-wave attenuation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Biot_HF(Kdry, Gdry, K0, Kfl, rho0, rhofl, phi, alpha)
+      :staticmethod:
+
+      
+      Biot high-frequency limiting velocities in the notation of Johnson and Plona (1982)
+
+      :param Kdry: dry frame bulk modulus
+      :type Kdry: float or array-like
+      :param Gdry: dry frame shear modulus
+      :type Gdry: float or array-like
+      :param K0: bulk modulus of mineral material making up rock
+      :type K0: float
+      :param Kfl: effective bulk modulus of pore fluid
+      :type Kfl: float
+      :param rho0: grain density
+      :type rho0: float
+      :param rhofl: pore fluid density
+      :type rhofl: float
+      :param phi: porosity
+      :type phi: float
+      :param alpha: tortuosity parameter, always greater than or equal to 1.
+      :type alpha: float
+
+      :returns: *float or array-like* -- Vp_fast,Vp_slow,Vs:  high-frequency limiting velocities,km/s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Geertsma_Smit_HF(Kdry, Gdry, K0, Kfl, rho0, rhofl, phi, alpha)
+      :staticmethod:
+
+      
+      Approximation of Biot high-frequency limit of the fast P-wave velocity given by Geertsma and Smit (1961), This form predicts velocities that are too high (by about 3%–6%) compared with the actual high-frequency limit.
+
+      :param Kdry: dry frame bulk modulus
+      :type Kdry: float or array-like
+      :param Gdry: dry frame shear modulus
+      :type Gdry: float or array-like
+      :param K0: bulk modulus of mineral material making up rock
+      :type K0: float
+      :param Kfl: effective bulk modulus of pore fluid
+      :type Kfl: float
+      :param rho0: grain density
+      :type rho0: float
+      :param rhofl: pore fluid density
+      :type rhofl: float
+      :param phi: porosity
+      :type phi: float
+      :param alpha: tortuosity parameter, always greater than or equal to 1.
+      :type alpha: float
+
+      :returns: *float or array-like* -- Vp_fast,Vs: high-frequency limiting velocities, km/s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Geertsma_Smit_LF(Vp0, Vpinf, freq, phi, rhofl, kapa, eta)
+      :staticmethod:
+
+      
+      Low and middle-frequency approximations of Biot wave given by Geertsma and Smit (1961). Noticed that mathematically this approximation is valid at moderate-to-low seismic frequencies, i.e. f<fc
+
+      :param Vp0: Biot−Gassmann low-frequency limiting P-wave velocity, km/s or m/s
+      :type Vp0: float
+      :param Vpinf: Biot highfrequency limiting P-wave velocity, km/s or m/s
+      :type Vpinf: float
+      :param freq: frequency
+      :type freq: float or array-like
+      :param phi: porosity
+      :type phi: float
+      :param rhofl: fluid density
+      :type rhofl: float
+      :param kapa: absolute permeability of the rock.
+      :type kapa: float
+      :param eta: viscosity of the pore fluid
+      :type eta: float
+
+      :returns: *float or array-like* -- Vp: frequency-dependent P-wave velocity of saturated rock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Gassmann(K_dry, G_dry, K_mat, Kf, phi)
+      :staticmethod:
+
+      
+      Computes saturated elastic moduli of rock via Gassmann equation given dry-rock moduli.
+
+      :param K_dry: dry frame bulk modulus
+      :type K_dry: float or array-like
+      :param G_dry: dry frame shear modulus
+      :type G_dry: float or array-like
+      :param K_mat: matrix bulk modulus
+      :type K_mat: float
+      :param Kf: fluid bulk modulus
+      :type Kf: float
+      :param phi: porosity
+      :type phi: float or array-like
+
+      :returns: *float or array-like* -- K_sat, G_sat: fluid saturated elastic moduli
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Gassmann_sub(phi, K0, Ksat1, Kfl1, Kfl2)
+      :staticmethod:
+
+      
+      Fluid subsititution using Gassmann equation, thr rock is initially saturated with a fluid, compute the saturated moduli for tge rock saturated with a different fluid
+
+      :param phi: porosity
+      :type phi: float or array-like
+      :param K0: mineral modulus
+      :type K0: float
+      :param Ksat1: original bulk modulus of rock saturated with fluid of bulk modulus Kfl1
+      :type Ksat1: float or array-like
+      :param Kfl1: original saturant
+      :type Kfl1: float
+      :param Kfl2: new saturant
+      :type Kfl2: float
+
+      :returns: *float or array-like* -- Ksat2: new satuarted bulk modulus of the rock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: vels(K_dry, G_dry, K0, D0, Kf, Df, phi)
+      :staticmethod:
+
+      
+      Computes Vp,Vs and densities of saturated rock using Gassmann relations from elastic moduli of rock. See also `Gassmann_vels`.
+
+      :param K_dry: dry frame bulk modulus
+      :type K_dry: float
+      :param G_dry: dry frame shear modulus
+      :type G_dry: float
+      :param K0: mineral matrix bulk modulus
+      :type K0: float
+      :param D0: mineral matrix density
+      :type D0: float
+      :param Kf: fluid bulk modulus
+      :type Kf: float
+      :param Df: fluid density in g/cm3
+      :type Df: float
+      :param phi: porosity
+      :type phi: float or array
+
+      :returns: *float or array* -- Vp, Vs, rho
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Gassmann_vels(Vp1, Vs1, rho1, rhofl1, Kfl1, rhofl2, Kfl2, K0, phi)
+      :staticmethod:
+
+      
+      Gassmann fluid substituion with velocities
+
+      :param Vp1: saturated P velocity of rock with fluid 1
+      :type Vp1: float or array-like
+      :param Vs1: saturated S velocity of rock with fluid 1
+      :type Vs1: float or array-like
+      :param rho1: bulk density of saturated rock with fluid 1
+      :type rho1: float
+      :param rhofl1: density of fluid 1
+      :type rhofl1: float
+      :param Kfl1: bulk modulus of fluid 1
+      :type Kfl1: float
+      :param rhofl2: density of fluid 2
+      :type rhofl2: float
+      :param Kfl2: bulk modulus of fluid 2
+      :type Kfl2: float
+      :param K0: mineral bulk modulus
+      :type K0: float
+      :param phi: porosity
+      :type phi: float or array-like
+
+      :returns: *float or array-like* -- Vp2, Vs2: velocities of rock saturated with fluid 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Gassmann_approx(Msat1, M0, Mfl1, phi, Mfl2)
+      :staticmethod:
+
+      
+      Perform gassmann fluid subsititution using p wave modulus only
+
+      :param Msat1: in situ saturated p wave modulus from well log data
+      :type Msat1: float or array-like
+      :param M0: p wave modulus of mineral
+      :type M0: float
+      :param Mfl1: p wave modulus of in situ fluid
+      :type Mfl1: float
+      :param phi: porosity
+      :type phi: float
+      :param Mfl2: p wave modulus of new fluid for susbtitution
+      :type Mfl2: float
+
+      :returns: *float or array-like* -- Msat2:  p wave modulus of rock fully saturated with new fluid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Brown_Korringa_dry2sat(Sdry, K0, G0, Kfl, phi)
+      :staticmethod:
+
+      
+      Compute fluid saturated compliances from dry compliance for anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper.
+
+      :param Sdry: comliance matrix of the dry rock
+      :type Sdry: 2d array
+      :param K0: Isotropic mineral bulk modulus
+      :type K0: float
+      :param G0: Isotropic mineral shear modulus
+      :type G0: float
+      :param Kfl: Isotropic fluid bulk modulus
+      :type Kfl: float
+      :param phi: porosity
+      :type phi: float
+
+      :returns: *2d array* -- Ssat (6x6 matrix): Saturated compliance of anisotropic rock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Brown_Korringa_sat2dry(Ssat, K0, G0, Kfl, phi)
+      :staticmethod:
+
+      
+      Compute dry compliance from fluid saturated compliances for arbitrarily anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper.
+
+      :param Ssat: comliance matrix (6x6) of the saturated rock
+      :type Ssat: 2d array
+      :param K0: Isotropic mineral bulk modulus
+      :type K0: float
+      :param G0: Isotropic mineral shear modulus
+      :type G0: float
+      :param Kfl: Isotropic fluid bulk modulus
+      :type Kfl: float
+      :param phi: porosity
+      :type phi: float
+
+      :returns: *2d array* -- Sdry (6x6 matrix): Dry compliance of anisotropic rock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Brown_Korringa_sub(Csat, K0, G0, Kfl1, Kfl2, phi)
+      :staticmethod:
+
+      
+      Fluid substitution in arbitrarily anisotropic rock using Brown and Korringa (1975). the rock is originally saturated by fluid 1. After fluid subsititution, the rock is finally saturated by fluid 2.
+
+      :param Csat: comliance matrix of the saturated rock
+      :type Csat: 6x6 matrix
+      :param K0: Isotropic mineral bulk modulus
+      :type K0: float
+      :param G0: Isotropic mineral shear modulus
+      :type G0: float
+      :param Kfl1: bulk modulus of the original fluid
+      :type Kfl1: float
+      :param Kfl2: bulk modulus of the final fluid
+      :type Kfl2: float
+      :param phi: porosity
+      :type phi: float
+
+      :returns: *2d array* -- Csat2, Ssat2 (6x6 matrix): Dry stiffness and compliance matrix of anisotropic rock saturated with new fluid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Mavko_Jizba(Vp_hs, Vs_hs, Vpdry, Vsdry, K0, rhodry, rhofl, Kfl, phi)
+      :staticmethod:
+
+      
+      Predicting the very high-frequency moduli and velocities of saturated rocks from dry rock properties using the Squirt flow model derived by Mavko and Jizba (1991).
+
+      :param Vp_hs: P wave velocity of the dry rock measured at very high effective pressure in the unit of m/s
+      :type Vp_hs: float
+      :param Vs_hs: S wave velocity of the dry rock  measured at very high effective pressure in the unit of m/s
+      :type Vs_hs: float
+      :param Vpdry: P wave velocity of the dry rock measured at different effective pressure in the unit of m/s
+      :type Vpdry: array
+      :param Vsdry: S wave velocity of the dry rock measured at different effective pressure in the unit of m/s
+      :type Vsdry: array
+      :param K0: mineral bulk moduli
+      :type K0: float
+      :param rhodry: bulk density of the dry rock
+      :type rhodry: float
+      :param rhofl: bulk density of the pore fluid
+      :type rhofl: float
+      :param Kfl: bulk moduli of the pore fluid
+      :type Kfl: float
+      :param phi: porosity
+      :type phi: float
+
+      :returns: *float or array-like* -- Kuf_sat (float):GPa, predicted high frequency bulk moduli of saturated rock
+                Guf_sat (array): GPa, predicted high frequency shear moduli of saturated rock at different pressure
+                Vp_hf (array): m/s, predicted high frequency P wave velocities of saturated rock
+                Vs_hf (array): m/s, predicted high frequency S wave velocities of saturated rock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Squirt_anisotropic(Sdry, Sdry_hp)
+      :staticmethod:
+
+      
+      Predict wet unrelaxed frame compliances at very high frequency from dry frame compliances for transversely isotropic rocks using theoretical formula derived by Mukerji and Mavko, (1994)
+
+      :param Sdry: dry rock compliances [S11 S12 S13 S33 S44]
+      :type Sdry: list or array
+      :param Sdry_hp: dry rock compliances at very high effective stress [S11 S12 S13 S33 S44]
+      :type Sdry_hp: array
+
+      :returns: *array* -- The wet-frame compliances [S11 S12 S13 S33 S44]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: White_Dutta_Ode(Kdry, Gdry, K0, phi, rho0, rhofl1, rhofl2, Kfl1, Kfl2, eta1, eta2, kapa, a, sg, freq)
+      :staticmethod:
+
+      
+      Dispersion and Attenuation of partial saturation using White and Dutta–Odé Model.
+
+      :param Kdry: bulk modulus of the dry rock
+      :type Kdry: float
+      :param Gdry: shear modulus of the dry rock
+      :type Gdry: float
+      :param K0: Isotropic mineral bulk modulus
+      :type K0: float
+      :param phi: porosity
+      :type phi: float
+      :param rho0: mineral density
+      :type rho0: float
+      :param rhofl1: density of the fluid opcupying the central sphere
+      :type rhofl1: float
+      :param rhofl2: density of the fluid opcupying the outer sphere
+      :type rhofl2: float
+      :param Kfl1: bulk modulus of the fluid opcupying the central sphere
+      :type Kfl1: float
+      :param Kfl2: bulk modulus of the fluid opcupying the outer sphere
+      :type Kfl2: float
+      :param eta1: viscousity of the fluid opcupying the central sphere
+      :type eta1: float
+      :param eta2: viscousity of the fluid opcupying the outer sphere
+      :type eta2: float
+      :param kapa: absolute permeability of the rock
+      :type kapa: float
+      :param a: radius of central sphere , sg=a3/b3
+      :type a: float
+      :param sg: saturation of fluid opcupying the central sphere
+      :type sg: float
+      :param freq: frequencies
+      :type freq: float or array-like
+
+      :returns: *float, array-like* -- Vp (m/s): P wave velocity km/s
+                a_w: attenuation coefficient
+                K_star: complex bulk modulus
 
 
 
@@ -2935,6 +3574,1517 @@ Classes
       :type G2: float
 
       :returns: *float or array* -- K_ave, G_ave [GPa]: MT average bulk and shear modulus
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+.. py:class:: Empirical
+
+   
+   Empirical relations that widely applied
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:method:: krief(phi, Kg, Gg)
+      :staticmethod:
+
+      
+      Compute porous background elastic constants as a function of porosity according to Krief model.
+
+      :param phi: porosity in porous rock
+      :type phi: float or array
+      :param Kg: grain bulk modulus
+      :type Kg: float
+      :param Gg: grain shear modulus
+      :type Gg: float
+
+      :returns: *float or array* -- lamda,G,K
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: esti_VS(Vp, vsh)
+      :staticmethod:
+
+      
+      Estimate, using the Greenberg-Castagna empirical relations, the shearwave velocity in a brine-saturated shaly sandstone with vp
+      since we only assume two minearl phases: so L=2, X1= 1-vsh, X2= vsh
+
+      :param Vp: compressional velocities, m/s
+      :type Vp: float or array-like
+      :param vsh: shale volume
+      :type vsh: float or array-like
+
+      :returns: * *float or array-like* -- vs (m/s): estimated shear wave velocities
+                * *References* -- ----------
+                * *- handbook of rock physics P516*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: han(phi, C)
+      :staticmethod:
+
+      
+      Han (1986) found empirical regressions relating ultrasonic (laboratory) velocities to porosity and clay content.effective pressure is 20Mpa
+
+      :param phi: porosity
+      :type phi: float or array-like
+      :param C: clay volume fraction
+      :type C: float or array-like
+
+      :returns: *float or array-like* -- P and S wave velocities
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: ehrenberg(Z)
+      :staticmethod:
+
+      
+      porosity reference trend for Norwegian Sea sandstone. Note that the functional form of the porosity model is not published in Ehrenberg (1990). It is obtained by linear regression of the digitized data point from the original plot in the paper.
+
+      :param Z: burial depth below see floor in Km
+      :type Z: float or array
+
+      .. rubric:: References
+
+      Ehrenberg, S., 1990, Relationship between diagenesis and reservoir quality in sandstones of the Garn Formation, Haltenbanken, mid-Norwegian continental shelf: AAPG bulletin, 74, no. 10, 1538
+
+      :returns: *float or array* -- porosity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: yu_segment_trend(Z)
+      :staticmethod:
+
+      
+      Reference trend for Norwegian sea normally buried clean sandstones
+
+      :param Z: burial depth below see floor in m
+      :type Z: float or array
+
+      :returns: *float or array* -- P wave velocities
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: ramm_porosity(Z, HB=True)
+      :staticmethod:
+
+      
+      porosity reference trend according to Ramm & Bjørlykke (1994)
+
+      :param Z: burial depth wrt. sea floor in m
+      :type Z: float or array
+      :param HB: if True: only show the regression line for halten bakken area porosity data False: The regression line for all porosity from north sea and norwegian sea, by default True
+      :type HB: bool, optional
+
+      :returns: *float or array* -- porosity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: ramm_porosity_segment(Z)
+      :staticmethod:
+
+      
+      segment porosity reference trend according to Ramm & Bjørlykke (1994) considering the mechanical and chemical compaction
+
+      :param Z: burial depth wrt. sea floor in m
+      :type Z: float or array
+
+      :returns: *float or array* -- porosity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: empirical_StPeter(Pe, sample=1)
+      :staticmethod:
+
+      
+      compute the Vp and Vs for st peter sandstone using the empirical relationship in the form of V= A+KPe-Be^(-DPe)
+
+      :param Pe: effective pressure in Kbar, 1kbar= 100Mpa
+      :type Pe: float or array
+      :param sample: 1-sample 1, phi= 0.205. 2-sample 2, phi= 0.187, by default 1
+      :type sample: int, optional
+
+      :returns: *float or array* -- Vp,Vs in km
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Scherbaum(Z)
+      :staticmethod:
+
+      
+      velocity depth trend for Lower and Middle Buntsandstein
+
+      :param Z: burial depth wrt. sea floor in m
+      :type Z: float or array
+
+      .. rubric:: References
+
+      Scherbaum, F., 1982. Seismic velocities in sedimentary rocks—indicators of subsidence and uplift?. Geologische Rundschau, 71(2), pp.519-536.
+
+      :returns: *float or array* -- P wave velocities in m/s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Sclater(phi)
+      :staticmethod:
+
+      
+      Sclater-Christie exponential curve for sandstone
+
+      :param phi: porosity
+      :type phi: float or array
+
+      :returns: **Z** (*float or array*) -- depth wrt. sea floor in km.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Storvoll(Z)
+      :staticmethod:
+
+      
+      Storvoll velocity compaction trend. The trend is for shale and shaly sediments but also used for siliciclastic rock like sandstone
+
+      :param Z: depth wrt. sea floor in m.
+      :type Z: float or array
+
+      :returns: *float or array* -- Vp meters per second
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Hillis(Z)
+      :staticmethod:
+
+      
+      compaction trend for Bunter Sandstone in North sea
+
+      :param Z: depth below sea bed (in kilometers)
+      :type Z: float or array
+
+      :returns: *float or array* -- Vp km/s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Japsen(Z)
+      :staticmethod:
+
+      
+      a segmented linear velocity–depth function, These equations are considered as approximation for bunter sandstone trend although they are originally for bunter shale. proposed by Japsen 1999
+
+      :param Z: depth below sea bed in m.
+      :type Z: float or array
+
+      :returns: *float or array* -- Vp m/s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: hjelstuen(Z)
+      :staticmethod:
+
+      
+      Velocity-depth relationships for the Bjørna-Sørkapp margin deposits. note:  the seismic velocities are not directly comparable with velocities from sonic logs (because of the different frequencies), and the velocity-depth profile of Hjelstuen et al. (1996) has not been corrected for uplift and erosion
+
+      :param Z: Z< 3.8km
+      :type Z: float or array
+
+      :returns: *float or array* -- V: m/s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: Cp(phi)
+      :staticmethod:
+
+      
+      The coordination number n depends on porosity, as shown by
+      Murphy 1982.
+
+      :param phi: total porosity , for a porosity of 0.4, n=8.6
+      :type phi: float or array
+
+      :returns: *float or array* -- coordination number
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+.. py:class:: QI(Vp, phi, **kwargs)
+
+   Useful functionalities for quantitative intepretation and relevant tasks.
+
+
+   initialize the parameters for various QI plots. e.g., phi,den,Vsh,eff_stress, TVD can be given depending on required the input parameters to the plot funtion.
+
+   :param Vp: p wave velocity
+   :type Vp: array
+   :param phi: porosity
+   :type phi: array
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+   .. py:method:: matrix_modulus(vsh, phi_c, phi_0, M_sh, M_g, M_c)
+      :staticmethod:
+
+      
+      Calculate the modulus of rock matrix as a function of porosity variation caused by cementation, Note that the rock matrix contains everything excluding pore space.
+
+      :param vsh: bulk volume fraction of shale, can be derived from well log.
+      :type vsh: float
+      :param phi_c: critical porosity
+      :type phi_c: float
+      :param phi_0: static porosity during cementation ranging between 0.4 to 0 should be phi when phi is an array of porosity
+      :type phi_0: float or array
+      :param M_sh: modulus of shale
+      :type M_sh: float
+      :param M_g: modulus of grain material
+      :type M_g: float
+      :param M_c: modulus of cement
+      :type M_c: float
+
+      :returns: *float or array* -- M_mat: updated matrix modulus
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: den_matrix(vsh, phi_c, phi_0, den_sh, den_g, den_c)
+      :staticmethod:
+
+      
+      Calculate the matrix density as a function of porosity variation caused by cementation.
+
+      :param vsh: bulk volume fraction of shale, can be derived from well log.
+      :type vsh: float
+      :param phi_c: critical porosity
+      :type phi_c: float
+      :param phi_0: static porosity during cementation ranging between 0.4 to 0 should be phi when phi is an array of porosity
+      :type phi_0: float or array
+      :param den_sh: density of the clay
+      :type den_sh: float
+      :param den_g: density of the grain
+      :type den_g: float
+      :param den_c: density of the cement
+      :type den_c: float
+
+      :returns: *float or array* -- den_mat: updated matrix density
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: screening(Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phib_p, phi_c, sigma, vsh, scheme, f, Cn)
+      :staticmethod:
+
+      
+      compute elastic bounds used for rock physics screening, the lower bound is computed using friable sand model, and the upper bound is contact cement model blend with increasing cement model.
+
+      :param K0: Bulk modulus of grain material in GPa
+      :type K0: float
+      :param G0: Shear modulus of grain material in GPa
+      :type G0: float
+      :param Dqz: Density of the grain. not limited to quartz grain
+      :type Dqz: float
+      :param Kqz: Bulk modulus of grain material in GPa
+      :type Kqz: float
+      :param Gqz: Shear modulus of grain material in GPa
+      :type Gqz: float
+      :param Dsh: density the clay
+      :type Dsh: float
+      :param Ksh: bulk modulus of the clay
+      :type Ksh: float
+      :param Gsh: shear modulus of the clay
+      :type Gsh: float
+      :param Dc: density of the cement
+      :type Dc: float
+      :param Kc: Bulk modulus of cement
+      :type Kc: float
+      :param Gc: Shear modulus of cement
+      :type Gc: float
+      :param Db: density of the pore fluid
+      :type Db: float
+      :param Kb: bulk modulus of the pore fluid
+      :type Kb: float
+      :param phib_p: adjusted high porosity end memeber
+      :type phib_p: float
+      :param phic: Critical Porosity
+      :type phic: float
+      :param sigma: effective stress
+      :type sigma: float or array-like
+      :param vsh: _description_
+      :type vsh: _type_
+      :param scheme:
+                     Scheme of cement deposition
+                             1=cement deposited at grain contacts
+                             2=cement deposited at grain surfaces
+      :type scheme: int
+      :param f:
+                reduced shear factor between 0 and 1
+                    0=dry pack with inifinitely rough spheres;
+                    1=dry pack with infinitely smooth spheres
+      :type f: float
+      :param Cn: coordination number
+      :type Cn: float
+
+      :returns: *array* -- phi,vp1,vp2,vp3,vs1,vs2,vs3: porosity and velocities required for elastic diagnostics bounds
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: screening_plot(phi, vp1, vp2, vp3, cmap=cmap_sand)
+
+      
+      plot the rock physics screening crossplot
+
+      :param phi: porosity
+      :type phi: array
+      :param vp1: lower bound velocities modeled using friable sandstone model by default .
+      :type vp1: array
+      :param vp2: upper bound velocities modeled using MUSH model by default.
+      :type vp2: array
+      :param vp3: upper bound velocities modeled using contact cement model by default.
+      :type vp3: array
+      :param cmap: colormap, can be default colormaps in matplotlib, by default using the customized colormap: cmap_sand
+      :type cmap: string, optional
+
+      :returns: *object* -- elastic bounds plot used for rock physics screening
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: normalize(density)
+      :staticmethod:
+
+      
+      normalize the kde with respect to the maximum value and map value to 0-1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: kde_plot(phi, v1, v2, v3, cmap=cmap_kde, vels='Vp', n=64)
+
+      
+      plot field data or measurements as 2D probability density functions in the elastic bounds cross plot
+
+      :param phi: porosity
+      :type phi: array
+      :param vp1: lower bound velocities modeled using friable sandstone model by default .
+      :type vp1: array
+      :param vp2: upper bound velocities modeled using MUSH model by default.
+      :type vp2: array
+      :param vp3: upper bound velocities modeled using contact cement model by default.
+      :type vp3: array
+      :param cmap: colormap, can be default colormaps in matplotlib, by default using the customized colormap: cmap_kde
+      :type cmap: string, optional
+      :param vels: choose either P wave or S wave velocity for plotting, by default 'Vp'
+      :type vels: str, optional
+      :param n: grid parameter used in KDE-diffusion, by default 64
+      :type n: int, optional
+
+      :returns: *object* -- KDE plot with elastic bounds
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: cst_vels(phi_b, K0, D0, G0, phi, phi_c, Cn, Kc, Gc, Db, Kb, scheme, vsh, Dsh, Dqz, Dc)
+      :staticmethod:
+
+      
+      compute velocities using constant cement model at different cement amounts
+
+      :param phi_b: adjusted porosity for constant cemnet model
+      :type phi_b: float
+      :param K0: Bulk modulus of grain material in GPa
+      :type K0: float
+      :param D0: Density of grain material
+      :type D0: float
+      :param G0: Shear modulus of grain material in GPa
+      :type G0: float
+      :param phi: porosity
+      :type phi: float
+      :param phi_c: Critical Porosity
+      :type phi_c: float
+      :param Cn: critical porosity
+      :type Cn: float
+      :param Kc: Bulk modulus of cement
+      :type Kc: float
+      :param Gc: Shear modulus of cement
+      :type Gc: float
+      :param Db: density of the pore fluid
+      :type Db: float
+      :param Kb: bulk modulus of the pore fluid
+      :type Kb: float
+      :param scheme:
+                     Scheme of cement deposition
+                             1=cement deposited at grain contacts
+                             2=cement deposited at grain surfaces
+      :type scheme: int
+      :param vsh: shale content
+      :type vsh: float
+      :param Dsh: density the clay
+      :type Dsh: float
+      :param Dqz: Density of the grain. not limited to quartz grain
+      :type Dqz: float
+      :param Dc: density of the cement
+      :type Dc: float
+
+      :returns: *array* -- vp,vs: velocities given by constant cement model
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: cst_plot(Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phib, phib_p, phi_c, sigma, vsh, Cn, scheme, f)
+      :staticmethod:
+
+      
+      Diagnostic plot with constant cement model lines
+
+      :param Dqz: Density of the grain. not limited to quartz grain
+      :type Dqz: float
+      :param Kqz: Bulk modulus of grain material in GPa
+      :type Kqz: float
+      :param Gqz: Shear modulus of grain material in GPa
+      :type Gqz: float
+      :param Dsh: density the clay
+      :type Dsh: float
+      :param Ksh: bulk modulus of the clay
+      :type Ksh: float
+      :param Gsh: shear modulus of the clay
+      :type Gsh: float
+      :param Dc: density of the cement
+      :type Dc: float
+      :param Kc: Bulk modulus of cement
+      :type Kc: float
+      :param Gc: Shear modulus of cement
+      :type Gc: float
+      :param Db: density of the pore fluid
+      :type Db: float
+      :param Kb: bulk modulus of the pore fluid
+      :type Kb: float
+      :param phib: adjusted high porosity end memeber for constant cement model
+      :type phib: float
+      :param phib_p: posoities used to drawing the constant cement lines
+      :type phib_p: array or list
+      :param phi_c: Critical Porosity
+      :type phi_c: float
+      :param sigma: effective stress
+      :type sigma: float
+      :param vsh: shale content
+      :type vsh: float
+      :param Cn: coordination number
+      :type Cn: float
+      :param scheme:
+                     Scheme of cement deposition
+                             1=cement deposited at grain contacts
+                             2=cement deposited at grain surfaces
+      :type scheme: int
+      :param f:
+                reduced shear factor between 0 and 1
+                    0=dry pack with inifinitely rough spheres;
+                    1=dry pack with infinitely smooth spheres
+      :type f: float
+
+      :returns: *object* -- fig,ax: constant cement diagnostic plot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: cal_v_const(Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phi_b, phi_c, vsh, phi, scheme)
+      :staticmethod:
+
+      
+      input real data porosity and caculate the theoretical constant cement model velocity value.  Note: input porosity cannot be zero, otherwise the returned velocities are Nan.
+
+      :param Dqz: Density of the grain. not limited to quartz grain
+      :type Dqz: float
+      :param Kqz: Bulk modulus of grain material in GPa
+      :type Kqz: float
+      :param Gqz: Shear modulus of grain material in GPa
+      :type Gqz: float
+      :param Dsh: density the clay
+      :type Dsh: float
+      :param Ksh: bulk modulus of the clay
+      :type Ksh: float
+      :param Gsh: shear modulus of the clay
+      :type Gsh: float
+      :param Dc: density of the cement
+      :type Dc: float
+      :param Kc: Bulk modulus of cement
+      :type Kc: float
+      :param Gc: Shear modulus of cement
+      :type Gc: float
+      :param Db: density of the pore fluid
+      :type Db: float
+      :param Kb: bulk modulus of the pore fluid
+      :type Kb: float
+      :param phi_b: _description_
+      :type phi_b: _type_
+      :param phi_c: Critical Porosity
+      :type phi_c: float
+      :param vsh: shale content
+      :type vsh: float
+      :param phi: porosity
+      :type phi: array
+      :param scheme:
+                     Scheme of cement deposition
+                             1=cement deposited at grain contacts
+                             2=cement deposited at grain surfaces
+      :type scheme: int
+
+      :returns: *array* -- vp,vs: constant cement velocities
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: estimate_cem(vcem_seeds, Kqz, Gqz, Ksh, Gsh, phi_c, Cn, Kc, Gc, Db, Kb, scheme, vsh, Dsh, Dqz, Dc)
+
+      
+      Estimate cement amount for well log data using constant cement model crossplot.
+
+      :param vcem_seeds: some predefined values at which constant cement lines are calculated
+      :type vcem_seeds: array or list
+      :param Kqz: Bulk modulus of grain material in GPa
+      :type Kqz: float
+      :param Gqz: Shear modulus of grain material in GPa
+      :type Gqz: float
+      :param Ksh: bulk modulus of the clay
+      :type Ksh: float
+      :param Gsh: shear modulus of the clay
+      :type Gsh: float
+      :param phi_c: Critical Porosity
+      :type phi_c: float
+      :param Cn: coordination number
+      :type Cn: float
+      :param Kc: Bulk modulus of cement
+      :type Kc: float
+      :param Gc: Shear modulus of cement
+      :type Gc: float
+      :param Db: density of the pore fluid
+      :type Db: float
+      :param Kb: bulk modulus of the pore fluid
+      :type Kb: float
+      :param scheme:
+                     Scheme of cement deposition
+                             1=cement deposited at grain contacts
+                             2=cement deposited at grain surfaces
+      :type scheme: int
+      :param vsh: shale content
+      :type vsh: float
+      :param Dsh: density the clay
+      :type Dsh: float
+      :param Dqz: Density of the grain. not limited to quartz grain
+      :type Dqz: float
+      :param Dc: density of the cement
+      :type Dc: float
+
+      :returns: *array* -- cement amount estimation for each well log data points
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: cement_diag_plot(vcem, Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phib, phib_p, phi_c, sigma, vsh, Cn, scheme, f)
+
+      
+      _summary_
+
+      :param vcem: _description_
+      :type vcem: _type_
+      :param Dqz: Density of the grain. not limited to quartz grain
+      :type Dqz: float
+      :param Kqz: Bulk modulus of grain material in GPa
+      :type Kqz: float
+      :param Gqz: Shear modulus of grain material in GPa
+      :type Gqz: float
+      :param Dsh: density the clay
+      :type Dsh: float
+      :param Ksh: bulk modulus of the clay
+      :type Ksh: float
+      :param Gsh: shear modulus of the clay
+      :type Gsh: float
+      :param Dc: density of the cement
+      :type Dc: float
+      :param Kc: Bulk modulus of cement
+      :type Kc: float
+      :param Gc: Shear modulus of cement
+      :type Gc: float
+      :param Db: density of the pore fluid
+      :type Db: float
+      :param Kb: bulk modulus of the pore fluid
+      :type Kb: float
+      :param phib: adjusted high porosity end memeber for constant cement model
+      :type phib: float
+      :param phib_p: posoities used to drawing the constant cement lines
+      :type phib_p: array or list
+      :param phi_c: Critical Porosity
+      :type phi_c: float
+      :param sigma: effective stress
+      :type sigma: float or array-like
+      :param vsh: shale content
+      :type vsh: float
+      :param Cn: coordination number
+      :type Cn: float
+      :param scheme:
+                     Scheme of cement deposition
+                             1=cement deposited at grain contacts
+                             2=cement deposited at grain surfaces
+      :type scheme: int
+      :param f:
+                reduced shear factor between 0 and 1
+                    0=dry pack with inifinitely rough spheres;
+                    1=dry pack with infinitely smooth spheres
+      :type f: float
+
+      :returns: *object* -- cross plot for cement estimation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: plot_rpt(Kdry, Gdry, K0, D0, Kb, Db, Khc, Dhc, phi, sw)
+      :staticmethod:
+
+      
+      Create RPT plot given computed Impedance and Vp/Vs ratio.
+
+      :param Kdry: effective bulk modulus given by rock physics model
+      :type Kdry: float or array
+      :param Gdry: effective shear modulus given by rock physics model
+      :type Gdry: float or array
+      :param K0: bulk modulus of grain
+      :type K0: float
+      :param D0: density of grain
+      :type D0: float
+      :param Kb: bulk moduluf of brine
+      :type Kb: float
+      :param Db: density of brine
+      :type Db: float
+      :param Khc: bulk modulus of HC
+      :type Khc: float
+      :param Dhc: density of HC
+      :type Dhc: float
+      :param phi: porosity
+      :type phi: float or array
+      :param sw: water saturation
+      :type sw: float or array
+
+      :returns: **python onject** (*fig*) -- rpt plot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
+.. py:class:: utils
+
+   
+   Basic calculations for velocities, moduli and stiffness matrix.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:method:: V(K, G, rho)
+      :staticmethod:
+
+      
+      Compute velocity given density and elastic moduli.
+
+      :param K: (GPa): bulk modulus
+      :type K: float or array
+      :param G: (GPa): shear moulus
+      :type G: float or array
+      :param rho: (g/m3): density of the frame
+      :type rho: float or array
+
+      :returns: *float or array* -- Vp, Vs (m/s): velocity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: poi(K, G)
+      :staticmethod:
+
+      
+      Compute poisson's ratio from K an G
+
+      :param K: (GPa): bulk modulus
+      :type K: float or array
+      :param G: (GPa): shear moulus
+      :type G: float or array
+
+      :returns: *float or array* -- Poisson's ratio
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: lame(K, G)
+      :staticmethod:
+
+      
+      Compute lame constant lamdba from K an G
+
+      :param K: (GPa): bulk modulus
+      :type K: float or array
+      :param G: (GPa): shear moulus
+      :type G: float or array
+
+      :returns: *float or array* -- Poisson's ratio
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: M_from_V(den, vp, vs)
+      :staticmethod:
+
+      
+      _summary_
+
+      :param den: (g/cm3): bulk density
+      :type den: float or array
+      :param vp: (m/s): p wave velocity
+      :type vp: float or array
+      :param vs: (m/s): s wave velocity
+      :type vs: float or array
+
+      :returns: *float or array* -- K, G (GPa):bulk and shear moduli
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: write_HTI_matrix(C11, C33, C13, C44, C55)
+      :staticmethod:
+
+      
+      formulate HTI stiffness matrix
+
+      :param C11: (GPa): stiffness
+      :type C11: float
+      :param C33: (GPa): stiffness
+      :type C33: float
+      :param C13: (GPa): stiffness
+      :type C13: float
+      :param C44: (GPa): stiffness
+      :type C44: float
+      :param C55: (GPa): stiffness
+      :type C55: float
+
+      :returns: *2d array* -- C: 6x6 stiffness matrix
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: write_VTI_compliance(S11, S12, S13, S33, S44)
+      :staticmethod:
+
+      
+      formulate VTI compliance matrix
+
+      :param S11: (GPa): stiffness
+      :type S11: float
+      :param S12: (GPa): stiffness
+      :type S12: float
+      :param S13: (GPa): stiffness
+      :type S13: float
+      :param S33: (GPa): stiffness
+      :type S33: float
+      :param S44: (GPa): stiffness
+      :type S44: float
+
+      :returns: *2d array* -- S: 6x6 compliance matrix
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: write_VTI_matrix(C11, C33, C13, C44, C66)
+      :staticmethod:
+
+      
+      formulate VTI stiffness matrix
+
+      :param C11: (GPa): stiffness
+      :type C11: float
+      :param C33: (GPa): stiffness
+      :type C33: float
+      :param C13: (GPa): stiffness
+      :type C13: float
+      :param C44: (GPa): stiffness
+      :type C44: float
+      :param C66: (GPa): stiffness
+      :type C66: float
+
+      :returns: *2d array* -- C: 6x6 stiffness matrix
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: write_matrix(C11, C22, C33, C12, C13, C23, C44, C55, C66)
+      :staticmethod:
+
+      
+      formulate general 6x6 stiffness matrix in Voigt notation
+
+      :param C11: (GPa): stiffness
+      :type C11: float
+      :param C22: (GPa): stiffness
+      :type C22: float
+      :param C33: (GPa): stiffness
+      :type C33: float
+      :param C12: (GPa): stiffness
+      :type C12: float
+      :param C13: (GPa): stiffness
+      :type C13: float
+      :param C23: (GPa): stiffness
+      :type C23: float
+      :param C44: (GPa): stiffness
+      :type C44: float
+      :param C55: (GPa): stiffness
+      :type C55: float
+      :param C66: (GPa): stiffness
+      :type C66: float
+
+      :returns: *2d array* -- C: 6x6 stiffness matrix
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: write_iso(K, G)
+      :staticmethod:
+
+      
+      formulate isotropic 6x6 stiffness matrix in Voigt notation
+
+      :param K:
+      :type K: float or array
+
+          (GPa): bulk modulus
+      G : float or array
+          (GPa): shear moulus
+
+      :returns: *2d array* -- C: 6x6 stiffness matrix
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: crack_por(crd, alpha)
+      :staticmethod:
+
+      
+      compute crack porosity from crack aspect ratio and crack density
+
+      :param crd: (unitless): crack density
+      :type crd: float or array
+      :param alpha: crack aspect ratio
+      :type alpha: float or array
+
+      :returns: *float or array* -- cpor (frac): crack porosity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: v_to_c_VTI(Vp0, Vp45, Vp90, Vs0, Vsh90, den)
+      :staticmethod:
+
+      
+      compute stiffness matrix given velocity measurements along different directions
+
+      :param Vp0: (km/s): incident angle dependent velocity measurements
+      :type Vp0: float or array
+      :param Vp45: (km/s): incident angle dependent velocity measurements
+      :type Vp45: float or array
+      :param Vp90: (km/s): incident angle dependent velocity measurements
+      :type Vp90: float or array
+      :param Vs0: (km/s): incident angle dependent velocity measurements
+      :type Vs0: float or array
+      :param Vsh90: (km/s): incident angle dependent velocity measurements
+      :type Vsh90: float or array
+      :param den: (g/cm3):density of the sample
+      :type den: float or array
+
+      :returns: *2d array* -- C: VTI stiffness matrix
 
 
 

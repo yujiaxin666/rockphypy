@@ -13,7 +13,7 @@ from rockphypy.Emp import Empirical
 from rockphypy.QI import QI
 from rockphypy.utils import utils
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __author__ = "jiaxinyu"
 
 __all__ = ['Anisotropy','AVO','BW','Permeability','Fluid','Empirical','QI','Emp',"EM", 'GM','Perm',"utils"]
