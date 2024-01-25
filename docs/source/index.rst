@@ -18,7 +18,6 @@ Installation
    ``$ pip install rockphypy``
 
 
-
 Overview
 --------
 ``rockphypy`` is a Python-based **open-source library** dedicated to rock physics modeling. It caters to individuals interested in rock physics and empowers them to apply rock physics tools in their work and research effectively.
@@ -26,6 +25,13 @@ Overview
 Built upon the foundations of `Stanford SRB tools  <https://github.com/StanfordRockPhysics/SRBToolbox>`_ , rockphypy has successfully migrated and optimized a wide range of rock physics models from Stanford SRB Matlab tools to Python. Additionally, it extends the functionality by introducing new functions and practical workflows. Notably, ``rockphypy`` offers a diverse set of valuable modules such as ``Anisotropy``, ``AVO``, ``BW`` (Batzle&Wang), ``EM`` (Effective Medium), ``Empirical``, ``Fluid``, ``GM`` (Granular Medium), ``Permeability``, ``QI`` (Quantitative Intepretation) and ``utils``. For a more detailed understanding of each module, please refer to the API Documentation.
 
 From the ground up, ``rockphypy`` is designed to be easily embedded in various workflows i.e, machine learning, probabilistic frameworks, bayesian inversion that leverage the rich resources of python open-source ecosystem.
+
+Citation
+--------
+
+This work can be cited as:
+
+Yu, J., Mukerji, T., & Avseth, P. (2023). rockphypy: An extensive Python library for rock physics modeling. SoftwareX, 24, 101567.
 
 
 Contribution and Development
