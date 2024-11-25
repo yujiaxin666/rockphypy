@@ -6,6 +6,20 @@
 
 # Release Note 
 
+## Note: Issues with NumPy 2.0 Compatibility 
+
+rockphypy relies on a dependency called ``KDEpy`` for generating KDE plots in the QI module. However, KDEpy uses the ``numpy.product`` function, which is deprecated in NumPy versions greater than 2.0. Consequently, if you have NumPy 2.0 or higher installed, importing rockphypy will result in an ImportError related to the KDEpy package.
+
+Workarounds:
+
+Downgrade NumPy: Install a NumPy version lower than 2.0.
+
+Use a Fresh Virtual Environment: Set up a new virtual environment and ensure that the NumPy version is less than 2.0 before installing rockphypy.
+
+We are actively working to remove the dependency on KDEpy, as only a single method in the QI module relies on it. 
+
+*********************************
+
 BUG Fixed In October. 
 
 The latest version, rockphypy 0.0.2, has been released. The "cannot import module name" bugs have been fixed. Additionally, new models, such as the varying patchiness cement model (VPCM), have been implemented. Please reinstall the package to fix the bugs and enjoy more useful functionalities.
