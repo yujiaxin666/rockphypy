@@ -783,7 +783,7 @@ class EM:
         K_eff,G_eff=y  # unpack current values of y
         Gi,Ki,alpha = params # unpack parameters 
         P, Q= EM.PQ(K_eff, G_eff, Ki, Gi, alpha)
-        derivs = [1/(1-t) * (Ki-K_eff) * P,  1/(1-t) * -G_eff * Q]
+        derivs = [1/(1-t) * (Ki-K_eff) * P,  1/(1-t) * (Gi-G_eff) * Q]
         return derivs
 
     @staticmethod
