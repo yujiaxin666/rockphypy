@@ -4,23 +4,46 @@
 
 # [rockphypy](https://rockphypy.readthedocs.io/en/latest/)
 
-# Release Note 
+If you have installed rockphypy before, upgrade to the latest version with:
 
-## Note: Issues with NumPy 2.0 Compatibility 
+```bash
+pip install -U rockphypy
+```
 
-NumPy 2.0: older versions of rockphypy could fail to import with NumPy ≥ 2.0 because of the dependency KDE-diffusion 1.0.4. From rockphypy 0.0.3 we require KDE-diffusion ≥ 1.0.5, which works with NumPy 2. If you have this problem, upgrade with pip install -U rockphypy KDE-diffusion.
+# Release Note rockphypy 0.0.3
 
-*********************************
+Bug fixes
+- `AVO.zoeppritz`: wrong results for nonzero angles (degree/radian bug and wrong medium in one term)
+- `EM.PQ`, `EM.PQ_vectorize`: wrong P and Q for prolate inclusions (alpha > 1)
+- `EM.PQ_vectorize`: no longer changes the input alpha array
+- `EM.hudson`, `hudson_rand`, `hudson_ortho`, `hudson_cone`: wrong M term for cracks filled with a solid
+- `EM.hudson_rand`: shear modulus correction was 15 times too large
+- `EM.DEM`, `EM.Berryman_DEM`: corrected parameter order and inclusion shear modulus
+- `Anisotropy.Bond_trans`: missing factor 2 in the Bond matrix
+- `Empirical.han`: clay coefficient for Vp is 2.18 (Han et al., 1986, 40 MPa)
+- `Fluid.White_Dutta_Ode`: numerically stable at very low and very high frequencies
+- `QI.estimate_cem`: works with pandas 3
 
-BUG Fixed In October. 
+Compatibility
+- Works with NumPy 2: requires KDE-diffusion >= 1.0.5
+NumPy 2.0: older versions of rockphypy could fail to import with NumPy ≥ 2.0 because of the dependency KDE-diffusion 1.0.4. From rockphypy 0.0.3 we require KDE-diffusion ≥ 1.0.5, which works with NumPy 2. 
 
-The latest version, rockphypy 0.0.2, has been released. The "cannot import module name" bugs have been fixed. Additionally, new models, such as the varying patchiness cement model (VPCM), have been implemented. Please reinstall the package to fix the bugs and enjoy more useful functionalities.
-
-
+Documentation
+- New documentation theme
 
 # About
 
-This Python 3.8+ package implements most of the rock physics models introduced in the Rock Physics Handbook. The package provides a bunch of usefel classes, i.e. ``Anisotropy``, ``AVO``, ``BW``, ``EM(Effective medium)``, ``Empirical``, ``Fluid``, ``GM(Granular Medium)``, ``Permeability``, ``QI`` and ``utils``. An exhaust list of methods in different classes are given in  the [API Documentation](https://rockphypy.readthedocs.io/en/latest/autoapi/index.html).
+**rockphypy** is a Python-based open-source library dedicated to rock physics modeling. It caters to individuals interested in rock physics and empowers them to apply rock physics tools in their work and research effectively.
+
+Built upon the foundations of Stanford SRB tools, rockphypy has successfully migrated and optimized a wide range of rock physics models from Stanford SRB Matlab tools to Python. Additionally, it extends the functionality by introducing new functions and practical workflows. Check the documentation and tutorials [here](https://rockphypy.readthedocs.io/).
+
+## Installation
+
+rockphypy is available through [PyPI] and may be installed using `pip`:
+
+```text
+pip install rockphypy
+```
 
 # Citation 
 
@@ -39,74 +62,7 @@ doi = {https://doi.org/10.1016/j.softx.2023.101567},<br>
 url = {https://www.sciencedirect.com/science/article/pii/S2352711023002637},<br>
 author = {Jiaxin Yu and Tapan Mukerji and Per Avseth}}
 
-
-## Installation
-
-rockphypy is available through [PyPI] and may be installed using `pip`:
-
-```text
-pip install rockphypy
-```
-
-
-## Example code and documentation
-
-Below is an simple example showing the comparison between critical porosity model and elastic bounds computed by  Hashin-Strikmann bounds. See the [documentation](https://rockphypy.readthedocs.io/en/latest/) for more examples.
-
-```python
-from rockphypy import EM
-from rockphypy import Fluid
-
-# specify model parameters
-phi=np.linspace(0,1,100,endpoint=True) # solid volume fraction = 1-phi
-K0, G0= 37,44 # moduli of grain material
-Kw, Gw= 2.2,0 # moduli of water 
-# VRH bounds
-volumes= np.vstack((1-phi,phi)).T
-M= np.array([K0,Kw])
-K_v,K_r,K_h=EM.VRH(volumes,M)
-# Hashin-Strikmann bound 
-K_UHS,G_UHS= EM.HS(1-phi, K0, Kw,G0,Gw, bound='upper')
-# Critical porosity model
-phic=0.4 # Critical porosity
-phi_=np.linspace(0.001,phic,100,endpoint=True) # solid volume fraction = 1-phi
-K_dry, G_dry= EM.cripor(K0, G0, phi_, phic)# Compute dry-rock moduli
-Ksat, Gsat = Fluid.Gassmann(K_dry,G_dry,K0,Kw,phi_)# saturate rock with water
-
-# plot
-plt.figure(figsize=(6,6))
-plt.xlabel('Porosity')
-plt.ylabel('Bulk modulus [GPa]')
-plt.title('V, R, VRH, HS bounds')
-plt.plot(phi, K_v,label='K Voigt')
-plt.plot(phi, K_r,label='K Reuss = K HS-')
-plt.plot(phi, K_h,label='K VRH')
-plt.plot(phi, K_UHS,label='K HS+')
-plt.plot(phi_, Ksat,label='K CriPor')
-plt.legend(loc='best')
-plt.grid(ls='--')
-```
-
-## Issues and contributing
-
-### Issues
-
-If you are having trouble using the package, please let me know by creating an [Issue on GitHub] and I'll get back to you.
-
-### Contributing
-
-Whatever your mathematical and Python background is, you are very welcome to contribute to rockphypy.
-To contribute, fork the project, create a branch and submit and Pull Request.
-Please follow these guidelines:
-
-- Import as few external dependencies as possible.
-- Use test driven development, have tests and docs for every method.
-- Cite literature and implement recent methods.
-- Unless it's a bottleneck computation, readability trumps speed.
-- Employ object orientation, but resist the temptation to implement many methods -- stick to the basics.
-- Follow PEP8.
-
-### Timeline 
+### Timeline of development
 
 ![2timeline](https://github.com/yujiaxin666/rockphypy/assets/45630390/5689968c-7683-41e4-864a-0dca791a38a0)
 

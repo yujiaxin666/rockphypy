@@ -32,9 +32,9 @@ setup(
     #url="https://pypi.org/project/RockPhyRoll/0.0.1/",
     author="Jiaxin Yu",
     author_email="yujiaxin666@outlook.com",
-    license="GNU GPLv3",
+    license="LGPL-3.0-or-later",
     classifiers=[
-        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
