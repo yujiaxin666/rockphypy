@@ -3,7 +3,42 @@
 from rockphypy import AVO
 
 import numpy as np
+import pytest
 
+
+
+
+
+def _zoeppritz_boundary_solution(vp1, vs1, rho1, vp2, vs2, rho2, theta):
+    """Solve displacement/traction continuity for a unit incident P wave.
+
+    Independent of the closed-form a/b/c/d/E/F/G/H implementation.
+    Matrix and sign convention: rockphypy's AVO theory documentation,
+    https://rockphypy.readthedocs.io/en/latest/getting_started/11_AVO.html
+    (M and the first column of N, attributed there to Aki & Richards, 1980).
+    Only real, subcritical solid/solid interfaces are used in these tests.
+    """
+    theta1 = np.deg2rad(theta)
+    p = np.sin(theta1) / vp1
+    assert max(abs(p * vp2), abs(p * vs1), abs(p * vs2)) < 1
+    theta2, phi1, phi2 = np.arcsin([p * vp2, p * vs1, p * vs2])
+    s1, c1 = np.sin(theta1), np.cos(theta1)
+    s2, c2 = np.sin(theta2), np.cos(theta2)
+    q1, d1 = np.sin(phi1), np.cos(phi1)
+    q2, d2 = np.sin(phi2), np.cos(phi2)
+    matrix = np.array([
+        [-s1, -d1, s2, d2],
+        [c1, -q1, c2, -q2],
+        [2*rho1*vs1*q1*c1, rho1*vs1*(1-2*q1*q1),
+         2*rho2*vs2*q2*c2, rho2*vs2*(1-2*q2*q2)],
+        [-rho1*vp1*(1-2*q1*q1), 2*rho1*vs1*q1*d1,
+         rho2*vp2*(1-2*q2*q2), -2*rho2*vs2*q2*d2],
+    ])
+    rhs = np.array([s1, c1, 2*rho1*vs1*q1*c1,
+                    rho1*vp1*(1-2*q1*q1)])
+    # Balance stress and displacement rows before solving.
+    scale = np.max(np.abs(matrix), axis=1)
+    return np.linalg.solve(matrix / scale[:, None], rhs / scale)
 
 
 class TestAVO: 
@@ -47,10 +82,41 @@ class TestAVO:
         theta= np.linspace(0,40,10)
         vp1, vs1, rho1, vp2, vs2, rho2, = 4400,3200,2500, 2500,1300,2200
         result= AVO.zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta)
-        expected_result= (np.array([-0.33333333,  0.63570799,  0.2306779 ,  0.49624365,  0.62297421,
-        -0.23233527,  0.58942721, -0.17987888,  0.558575  ,  0.46210946]), np.array([ 0.        ,  0.06837842,  0.3803706 ,  0.27702168, -0.05652195,
-        -0.24909291, -0.1180928 , -0.29264611, -0.10438406,  0.21227566]))
-        np.testing.assert_allclose(result, expected_result)
+        expected_result = np.array([
+            _zoeppritz_boundary_solution(vp1, vs1, rho1, vp2, vs2, rho2, angle)[:2]
+            for angle in theta
+        ]).T
+        np.testing.assert_allclose(result, expected_result, rtol=1e-12, atol=1e-12)
+
+    @pytest.mark.parametrize("properties", [
+        (2400., 1100., 2150., 3100., 1700., 2450.),
+        (3600., 2000., 2500., 2700., 1400., 2200.),
+        (3000., 1600., 2300., 3000., 1200., 2300.),
+    ])
+    @pytest.mark.parametrize("angle", [0., 7., 20., 35.])
+    def test_zoeppritz_boundary_conditions(self, properties, angle):
+        expected = _zoeppritz_boundary_solution(*properties, angle)
+        actual = AVO.zoeppritz(*properties, angle)
+        np.testing.assert_allclose(actual, expected[:2], rtol=1e-12, atol=1e-12)
+
+    def test_zoeppritz_physical_limits(self):
+        properties = (2400., 1100., 2150., 3100., 1700., 2450.)
+        rpp, rps = AVO.zoeppritz(*properties, 0.)
+        z1, z2 = properties[0] * properties[2], properties[3] * properties[5]
+        np.testing.assert_allclose([rpp, rps], [(z2-z1)/(z2+z1), 0.], atol=1e-12)
+        theta = np.array([0., 7., 20., 35.])
+        np.testing.assert_allclose(
+            AVO.zoeppritz(3000., 1600., 2300., 3000., 1600., 2300., theta),
+            np.zeros((2, theta.size)), atol=1e-12)
+
+    def test_zoeppritz_angle_symmetry(self):
+        properties = (2400., 1100., 2150., 3100., 1700., 2450.)
+        theta = np.array([7., 20., 35.])
+        positive = AVO.zoeppritz(*properties, theta)
+        negative = AVO.zoeppritz(*properties, -theta)
+        np.testing.assert_allclose(positive[0], negative[0], atol=1e-12)
+        np.testing.assert_allclose(positive[1], -negative[1], atol=1e-12)
+
     def test_AVO_abe(self):
         vp1,vp2,vs1,vs2= np.linspace(1500,2000,3), np.linspace(2500,3000,3), np.linspace(900,1000,3), np.linspace(1000,1200,3)
         den1,den2= np.linspace(1.5,2.2,3),np.linspace(1.,2.2,3)

@@ -181,7 +181,7 @@ class AVO:
         """        
    
         theta1 = np.deg2rad(theta)
-        p = np.sin(theta)/vp1 # Ray parameter
+        p = np.sin(theta1)/vp1 # Ray parameter; theta1 is in radians
         # Transmission angle of P-wave
         theta2  =np.arcsin(p*vp2)
         phi1   = np.arcsin(p*vs1)# Reflection angle of converted S-wave
@@ -191,7 +191,7 @@ class AVO:
         b=rho2*(1-2*np.sin(phi2)**2)+2*rho1*np.sin(phi1)**2
         c=rho1*(1-2*np.sin(phi1)**2)+2*rho2*np.sin(phi2)**2
         d=2*(rho2*vs2**2-rho1*vs1**2)
-        H=a-d*np.cos(theta2)/vp2*np.cos(phi2)/vs2
+        H=a-d*np.cos(theta2)/vp2*np.cos(phi1)/vs1
         E=b*np.cos(theta1)/vp1+c*np.cos(theta2)/vp2
         F=b*np.cos(phi1)/vs1+c*np.cos(phi2)/vs2
         G=a-d*np.cos(theta1)/vp1*np.cos(phi2)/vs2
