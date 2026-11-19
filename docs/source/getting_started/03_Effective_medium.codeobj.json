@@ -1,0 +1,137 @@
+{
+ "EM.Dilute_crack": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "rockphypy.EM",
+   "module_short": "rockphypy.EM",
+   "name": "Dilute_crack"
+  }
+ ],
+ "EM.HS": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "rockphypy.EM",
+   "module_short": "rockphypy.EM",
+   "name": "HS"
+  }
+ ],
+ "EM.OConnell_Budiansky": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "rockphypy.EM",
+   "module_short": "rockphypy.EM",
+   "name": "OConnell_Budiansky"
+  }
+ ],
+ "EM.SC": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "rockphypy.EM",
+   "module_short": "rockphypy.EM",
+   "name": "SC"
+  }
+ ],
+ "EM.Swiss_cheese": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "rockphypy.EM",
+   "module_short": "rockphypy.EM",
+   "name": "Swiss_cheese"
+  }
+ ],
+ "np.arange": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "arange"
+  }
+ ],
+ "np.linspace": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "linspace"
+  }
+ ],
+ "plt.figure": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "figure"
+  }
+ ],
+ "plt.grid": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "grid"
+  }
+ ],
+ "plt.legend": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "legend"
+  }
+ ],
+ "plt.plot": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "plot"
+  }
+ ],
+ "plt.rcParams": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib",
+   "name": "rcParams"
+  }
+ ],
+ "plt.title": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "title"
+  }
+ ],
+ "plt.xlabel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "xlabel"
+  }
+ ],
+ "plt.ylabel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "ylabel"
+  }
+ ]
+}

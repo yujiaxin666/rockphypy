@@ -1,0 +1,137 @@
+{
+ "GM.MUHS": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "rockphypy.GM",
+   "module_short": "rockphypy.GM",
+   "name": "MUHS"
+  }
+ ],
+ "GM.constantcement": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "rockphypy.GM",
+   "module_short": "rockphypy.GM",
+   "name": "constantcement"
+  }
+ ],
+ "GM.contactcement": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "rockphypy.GM",
+   "module_short": "rockphypy.GM",
+   "name": "contactcement"
+  }
+ ],
+ "GM.softsand": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "rockphypy.GM",
+   "module_short": "rockphypy.GM",
+   "name": "softsand"
+  }
+ ],
+ "GM.stiffsand": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "rockphypy.GM",
+   "module_short": "rockphypy.GM",
+   "name": "stiffsand"
+  }
+ ],
+ "np.linspace": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "linspace"
+  }
+ ],
+ "np.nan": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "nan"
+  }
+ ],
+ "plt.figure": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "figure"
+  }
+ ],
+ "plt.grid": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "grid"
+  }
+ ],
+ "plt.legend": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "legend"
+  }
+ ],
+ "plt.plot": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "plot"
+  }
+ ],
+ "plt.rcParams": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib",
+   "name": "rcParams"
+  }
+ ],
+ "plt.title": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "title"
+  }
+ ],
+ "plt.xlabel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "xlabel"
+  }
+ ],
+ "plt.ylabel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "ylabel"
+  }
+ ]
+}

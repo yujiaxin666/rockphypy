@@ -1,0 +1,461 @@
+{
+ "rockphypy.AVO.Aki_Richards": [
+  [
+   "11_AVO.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Amplitute versus Offset (AVO)",
+   "Amplitute versus Offset (AVO)"
+  ]
+ ],
+ "rockphypy.Anisotropy.Backus": [
+  [
+   "06_Anisotropy.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Simple anisotropy",
+   "Simple anisotropy"
+  ]
+ ],
+ "rockphypy.Anisotropy.Thomsen": [
+  [
+   "06_Anisotropy.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Simple anisotropy",
+   "Simple anisotropy"
+  ]
+ ],
+ "rockphypy.BW.co2_brine": [
+  [
+   "CO2_seismic.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "CO2 seismic properties",
+   "CO2 seismic properties"
+  ]
+ ],
+ "rockphypy.BW.rho_K_brine": [
+  [
+   "CO2_modelling.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Improved CO2 properties modelling using Batzle-Wang",
+   "Improved CO2 properties modelling using Batzle-Wang"
+  ]
+ ],
+ "rockphypy.BW.rho_K_co2": [
+  [
+   "CO2_modelling.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Improved CO2 properties modelling using Batzle-Wang",
+   "Improved CO2 properties modelling using Batzle-Wang"
+  ]
+ ],
+ "rockphypy.BW.rho_K_gas": [
+  [
+   "CO2_modelling.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Improved CO2 properties modelling using Batzle-Wang",
+   "Improved CO2 properties modelling using Batzle-Wang"
+  ]
+ ],
+ "rockphypy.EM.Berryman_sc": [
+  [
+   "09_Berrymann_SC.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Berryman Self Consistent",
+   "Berryman Self Consistent"
+  ]
+ ],
+ "rockphypy.EM.Dilute_crack": [
+  [
+   "03_Effective_medium.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Inclusion models",
+   "Inclusion models"
+  ]
+ ],
+ "rockphypy.EM.HS": [
+  [
+   "02_Bounds.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "This example shows the comparison between different elastic bounds to Nur's cirtical porosity model: Voigt and Reuss Bounds, Voigt–Reuss–Hill Average,Hashin-Shtrikmann bounds ",
+   "Elastic bounds"
+  ],
+  [
+   "03_Effective_medium.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Inclusion models",
+   "Inclusion models"
+  ],
+  [
+   "14_Mori_Tanaka_scheme.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Modified Mori-Tanaka Scheme",
+   "Modified Mori-Tanaka Scheme"
+  ]
+ ],
+ "rockphypy.EM.MT_average": [
+  [
+   "14_Mori_Tanaka_scheme.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Modified Mori-Tanaka Scheme",
+   "Modified Mori-Tanaka Scheme"
+  ]
+ ],
+ "rockphypy.EM.OConnell_Budiansky": [
+  [
+   "03_Effective_medium.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Inclusion models",
+   "Inclusion models"
+  ]
+ ],
+ "rockphypy.EM.SC": [
+  [
+   "03_Effective_medium.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Inclusion models",
+   "Inclusion models"
+  ]
+ ],
+ "rockphypy.EM.Swiss_cheese": [
+  [
+   "03_Effective_medium.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Inclusion models",
+   "Inclusion models"
+  ]
+ ],
+ "rockphypy.EM.VRH": [
+  [
+   "02_Bounds.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "This example shows the comparison between different elastic bounds to Nur's cirtical porosity model: Voigt and Reuss Bounds, Voigt–Reuss–Hill Average,Hashin-Shtrikmann bounds ",
+   "Elastic bounds"
+  ],
+  [
+   "VPCM.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Varying Patchiness Cement Model(VPCM)",
+   "Varying Patchiness Cement Model(VPCM)"
+  ],
+  [
+   "patchy_cement_model.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Patchy cement model",
+   "Patchy cement model"
+  ]
+ ],
+ "rockphypy.EM.cripor": [
+  [
+   "01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "This pages gives a simple examples of using the classes EM and Fluid of rockphypy to compute Critical porosity model and perform Gassmann Fluid substitution. ",
+   "Critical porosity model and Gassmann Fluid substitution"
+  ],
+  [
+   "02_Bounds.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "This example shows the comparison between different elastic bounds to Nur's cirtical porosity model: Voigt and Reuss Bounds, Voigt–Reuss–Hill Average,Hashin-Shtrikmann bounds ",
+   "Elastic bounds"
+  ]
+ ],
+ "rockphypy.Fluid.Brie": [
+  [
+   "CO2_modelling.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Improved CO2 properties modelling using Batzle-Wang",
+   "Improved CO2 properties modelling using Batzle-Wang"
+  ]
+ ],
+ "rockphypy.Fluid.Gassmann": [
+  [
+   "01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "This pages gives a simple examples of using the classes EM and Fluid of rockphypy to compute Critical porosity model and perform Gassmann Fluid substitution. ",
+   "Critical porosity model and Gassmann Fluid substitution"
+  ],
+  [
+   "02_Bounds.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "This example shows the comparison between different elastic bounds to Nur's cirtical porosity model: Voigt and Reuss Bounds, Voigt–Reuss–Hill Average,Hashin-Shtrikmann bounds ",
+   "Elastic bounds"
+  ],
+  [
+   "08_Shaly_sand_modelling.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Sand-Shale mixture modelling",
+   "Sand-Shale mixture modelling"
+  ]
+ ],
+ "rockphypy.Fluid.vels": [
+  [
+   "CO2_modelling.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Improved CO2 properties modelling using Batzle-Wang",
+   "Improved CO2 properties modelling using Batzle-Wang"
+  ],
+  [
+   "CO2_seismic.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "CO2 seismic properties",
+   "CO2 seismic properties"
+  ]
+ ],
+ "rockphypy.GM.Digby": [
+  [
+   "15_Digby.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Digby model",
+   "Digby model"
+  ]
+ ],
+ "rockphypy.GM.MUHS": [
+  [
+   "07_Soft_Stiff_Cemented_sand_models.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Contact based models",
+   "Contact based models"
+  ]
+ ],
+ "rockphypy.GM.ThomasStieber": [
+  [
+   "08_Shaly_sand_modelling.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Sand-Shale mixture modelling",
+   "Sand-Shale mixture modelling"
+  ]
+ ],
+ "rockphypy.GM.Walton": [
+  [
+   "04_Hertz_Mindlin.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Hertz-Mindlin and reduced shear factor",
+   "Hertz-Mindlin and reduced shear factor"
+  ]
+ ],
+ "rockphypy.GM.constantcement": [
+  [
+   "07_Soft_Stiff_Cemented_sand_models.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Contact based models",
+   "Contact based models"
+  ]
+ ],
+ "rockphypy.GM.contactcement": [
+  [
+   "07_Soft_Stiff_Cemented_sand_models.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Contact based models",
+   "Contact based models"
+  ]
+ ],
+ "rockphypy.GM.diluting": [
+  [
+   "VPCM.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Varying Patchiness Cement Model(VPCM)",
+   "Varying Patchiness Cement Model(VPCM)"
+  ]
+ ],
+ "rockphypy.GM.hertzmindlin": [
+  [
+   "04_Hertz_Mindlin.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Hertz-Mindlin and reduced shear factor",
+   "Hertz-Mindlin and reduced shear factor"
+  ],
+  [
+   "08_Shaly_sand_modelling.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Sand-Shale mixture modelling",
+   "Sand-Shale mixture modelling"
+  ]
+ ],
+ "rockphypy.GM.pcm": [
+  [
+   "VPCM.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Varying Patchiness Cement Model(VPCM)",
+   "Varying Patchiness Cement Model(VPCM)"
+  ],
+  [
+   "patchy_cement_model.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Patchy cement model",
+   "Patchy cement model"
+  ]
+ ],
+ "rockphypy.GM.shaly_sand": [
+  [
+   "08_Shaly_sand_modelling.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Sand-Shale mixture modelling",
+   "Sand-Shale mixture modelling"
+  ]
+ ],
+ "rockphypy.GM.silty_shale": [
+  [
+   "08_Shaly_sand_modelling.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Sand-Shale mixture modelling",
+   "Sand-Shale mixture modelling"
+  ]
+ ],
+ "rockphypy.GM.softsand": [
+  [
+   "07_Soft_Stiff_Cemented_sand_models.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Contact based models",
+   "Contact based models"
+  ],
+  [
+   "CO2_modelling.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Improved CO2 properties modelling using Batzle-Wang",
+   "Improved CO2 properties modelling using Batzle-Wang"
+  ],
+  [
+   "CO2_seismic.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "CO2 seismic properties",
+   "CO2 seismic properties"
+  ],
+  [
+   "Rock_physics_template.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Rock Physics Template (RPT)",
+   "Rock Physics Template (RPT)"
+  ]
+ ],
+ "rockphypy.GM.stiffsand": [
+  [
+   "07_Soft_Stiff_Cemented_sand_models.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Contact based models",
+   "Contact based models"
+  ],
+  [
+   "Rock_physics_template.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Rock Physics Template (RPT)",
+   "Rock Physics Template (RPT)"
+  ]
+ ],
+ "rockphypy.GM.vpcm": [
+  [
+   "VPCM.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Varying Patchiness Cement Model(VPCM)",
+   "Varying Patchiness Cement Model(VPCM)"
+  ]
+ ],
+ "rockphypy.QI": [
+  [
+   "cement_volume_estimation.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Cement volume estimation",
+   "Cement volume estimation"
+  ],
+  [
+   "rock_physics_screening.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Rock physics data screening",
+   "Rock physics data screening"
+  ],
+  [
+   "rock_physics_screening_PDF.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Rock physics data screening: 2D probability density function (PDF)",
+   "Rock physics data screening: 2D probability density function (PDF)"
+  ]
+ ],
+ "rockphypy.QI.plot_rpt": [
+  [
+   "Rock_physics_template.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Rock Physics Template (RPT)",
+   "Rock Physics Template (RPT)"
+  ]
+ ],
+ "rockphypy.QI.screening": [
+  [
+   "cement_volume_estimation.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Cement volume estimation",
+   "Cement volume estimation"
+  ],
+  [
+   "rock_physics_screening.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Rock physics data screening",
+   "Rock physics data screening"
+  ],
+  [
+   "rock_physics_screening_PDF.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\advanced_examples",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\advanced_examples",
+   "Rock physics data screening: 2D probability density function (PDF)",
+   "Rock physics data screening: 2D probability density function (PDF)"
+  ]
+ ],
+ "rockphypy.utils.V": [
+  [
+   "15_Digby.py",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\..\\..\\examples\\getting_started",
+   "C:\\Users\\jiyu59138\\source\\rockphypy\\docs\\source\\getting_started",
+   "Digby model",
+   "Digby model"
+  ]
+ ]
+}
