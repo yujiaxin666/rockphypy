@@ -497,7 +497,7 @@ class EM:
 
         theta[alpha_<1]=alpha_[alpha_<1]/(1.0 - alpha_[alpha_<1]**2)**(3.0/2.0) * (np.arccos(alpha_[alpha_<1]) - alpha_[alpha_<1]*np.sqrt(1.0 - alpha_[alpha_<1]**2))
 
-        theta[alpha_>1]=alpha_[alpha_>1]/(alpha_[alpha_>1]**2-1)**(3.0/2.0) * ( alpha_[alpha_>1]*(alpha_[alpha_>1]**2-1)**0.5 -np.cosh(alpha_[alpha_>1])**-1)
+        theta[alpha_>1]=alpha_[alpha_>1]/(alpha_[alpha_>1]**2-1)**(3.0/2.0) * ( alpha_[alpha_>1]*(alpha_[alpha_>1]**2-1)**0.5 -np.arccosh(alpha_[alpha_>1]))
 
         f= alpha_**2*(3.0*theta - 2.0)/(1.0 - alpha_**2)
         A = Gi/Gm - 1.0
@@ -754,7 +754,7 @@ class EM:
             if alpha<1:
                 theta= alpha/(1.0 - alpha**2)**(3.0/2.0) * (np.arccos(alpha) - alpha*np.sqrt(1.0 - alpha**2))
             else:
-                theta= alpha/(alpha**2-1)**(3.0/2.0) * ( alpha*(alpha**2-1)**0.5 -np.cosh(alpha)**-1)
+                theta= alpha/(alpha**2-1)**(3.0/2.0) * ( alpha*(alpha**2-1)**0.5 -np.arccosh(alpha))
             f= alpha**2*(3.0*theta - 2.0)/(1.0 - alpha**2)
             A = Gi/Gm - 1.0
             B = (Ki/Km - Gi/Gm)/3.0
