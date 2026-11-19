@@ -65,7 +65,7 @@ class Empirical:
 
     @staticmethod
     def han(phi,C):
-        """Han (1986) found empirical regressions relating ultrasonic (laboratory) velocities to porosity and clay content.effective pressure is 20Mpa
+        """Han (1986) found empirical regressions relating ultrasonic (laboratory) velocities to porosity and clay content.effective pressure is 40Mpa
 
         Parameters
         ----------
@@ -79,7 +79,7 @@ class Empirical:
             P and S wave velocities
         """        
              
-        vp=5.59-6.93*phi-2.81*C
+        vp=5.59-6.93*phi-2.18*C
         vs=3.52-4.91*phi-1.89*C
         return vp*1000,vs*1000
 ########################################################## to do 

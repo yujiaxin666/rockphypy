@@ -249,7 +249,7 @@ class EM:
   
         lamda = K-2*G/3
         kapa = (Ki+4*Gi/3)*(lamda+2*G)/(np.pi*alpha*G*(lamda+G))
-        M = 4*Gi*(lamda+G)/(np.pi*alpha*G*(3*lamda+4*G))
+        M = 4*Gi*(lamda+2*G)/(np.pi*alpha*G*(3*lamda+4*G))
         U1 = 16*(lamda+2*G)/(3*(3*lamda+4*G)*(1+M))
         U3 = 4*(lamda+2*G)/(3*(lamda+G)*(1+kapa))
         # first order corrections
@@ -311,7 +311,7 @@ class EM:
         
         lamda = K-2*G/3
         kapa = (Ki+4*Gi/3)*(lamda+2*G)/(np.pi*alpha*G*(lamda+G))
-        M = 4*Gi*(lamda+G)/(np.pi*alpha*G*(3*lamda+4*G))
+        M = 4*Gi*(lamda+2*G)/(np.pi*alpha*G*(3*lamda+4*G))
         U1 = 16*(lamda+2*G)/(3*(3*lamda+4*G)*(1+M))
         U3 = 4*(lamda+2*G)/(3*(lamda+G)*(1+kapa))
         # first order corrections
@@ -353,7 +353,7 @@ class EM:
         crd= np.asanyarray(crd)
         lamda = K-2*G/3
         kapa = (Ki+4*Gi/3)*(lamda+2*G)/(np.pi*alpha*G*(lamda+G))
-        M = 4*Gi*(lamda+G)/(np.pi*alpha*G*(3*lamda+4*G))
+        M = 4*Gi*(lamda+2*G)/(np.pi*alpha*G*(3*lamda+4*G))
         U1 = 16*(lamda+2*G)/(3*(3*lamda+4*G)*(1+M))
         U3 = 4*(lamda+2*G)/(3*(lamda+G)*(1+kapa))
 
@@ -407,7 +407,7 @@ class EM:
         theta= np.deg2rad(theta)
         lamda = K-2*G/3
         kapa = (Ki+4*Gi/3)*(lamda+2*G)/(np.pi*alpha*G*(lamda+G))
-        M = 4*Gi*(lamda+G)/(np.pi*alpha*G*(3*lamda+4*G))
+        M = 4*Gi*(lamda+2*G)/(np.pi*alpha*G*(3*lamda+4*G))
         U1 = 16*(lamda+2*G)/(3*(3*lamda+4*G)*(1+M))
         U3 = 4*(lamda+2*G)/(3*(lamda+G)*(1+kapa))
 

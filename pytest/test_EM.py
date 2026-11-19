@@ -110,6 +110,19 @@ class TestEM:
        [ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
         44.6370931 ]])
         assert np.allclose(result, expected_result, rtol=1e-6, atol=1e-6)
+    def test_hudson_filled_cracks(self):
+        # cracks filled with a weak solid (Gi > 0), so the M term matters
+        K, G, Ki, Gi = 37., 44., 5., 3.
+        alpha, crd = 0.01, 0.05
+        lam = K - 2*G/3
+        # M and U1 from Hudson (1981), Rock Physics Handbook section 4.10
+        M = 4*Gi*(lam + 2*G)/(np.pi*alpha*G*(3*lam + 4*G))
+        U1 = 16*(lam + 2*G)/(3*(3*lam + 4*G)*(1 + M))
+        C = EM.hudson(K, G, Ki, Gi, alpha, crd, order=1, axis=3)
+        np.testing.assert_allclose(C[3,3], G - G*crd*U1, rtol=1e-12)
+        # one aligned crack set: hudson_cone (theta=0) and hudson_ortho must agree with hudson
+        np.testing.assert_allclose(EM.hudson_cone(K, G, Ki, Gi, alpha, crd, 0), C, atol=1e-12)
+        np.testing.assert_allclose(EM.hudson_ortho(K, G, Ki, Gi, np.array([alpha]*3), np.array([0, 0, crd])), C, atol=1e-12)
     def test_Berryman_sc(self):
         K= [47,35]
         G= [30,20]
