@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_getting_started_07_Soft_Stiff_Cemented_sand_models.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Contact based models
 
 .. GENERATED FROM PYTHON SOURCE LINES 7-14
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import numpy as np 
@@ -33,25 +33,13 @@ Contact based models
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 15-20
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import rockphypy # import the module 
     from rockphypy import GM
-
-
-
-
-
-
 
 
 
@@ -179,7 +167,7 @@ Let's compute effective bulk and shear moduli of a water saturated rock using di
 
 .. GENERATED FROM PYTHON SOURCE LINES 143-170
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -209,17 +197,6 @@ Let's compute effective bulk and shear moduli of a water saturated rock using di
     plt.grid(ls='--')
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_07_Soft_Stiff_Cemented_sand_models_001.png
-   :alt: 07 Soft Stiff Cemented sand models
-   :srcset: /getting_started/images/sphx_glr_07_Soft_Stiff_Cemented_sand_models_001.png
-   :class: sphx-glr-single-img
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 171-173
 
 From the figure we can see that the contact cement model will fail for small porosity sand, so we define a critical cement porosity :math:`\phi_b` below which constant cement model/increasing cement model can be applied. 
@@ -227,7 +204,7 @@ From the figure we can see that the contact cement model will fail for small por
 
 .. GENERATED FROM PYTHON SOURCE LINES 175-198
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -253,17 +230,6 @@ From the figure we can see that the contact cement model will fail for small por
 
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_07_Soft_Stiff_Cemented_sand_models_002.png
-   :alt: 07 Soft Stiff Cemented sand models
-   :srcset: /getting_started/images/sphx_glr_07_Soft_Stiff_Cemented_sand_models_002.png
-   :class: sphx-glr-single-img
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 199-205
 
 **References**:
@@ -274,27 +240,23 @@ From the figure we can see that the contact cement model will fail for small por
 
 
 
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.210 seconds)
-
-
 .. _sphx_glr_download_getting_started_07_Soft_Stiff_Cemented_sand_models.py:
 
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 07_Soft_Stiff_Cemented_sand_models.ipynb <07_Soft_Stiff_Cemented_sand_models.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 07_Soft_Stiff_Cemented_sand_models.py <07_Soft_Stiff_Cemented_sand_models.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: 07_Soft_Stiff_Cemented_sand_models.ipynb <07_Soft_Stiff_Cemented_sand_models.ipynb>`
+      :download:`Download zipped: 07_Soft_Stiff_Cemented_sand_models.zip <07_Soft_Stiff_Cemented_sand_models.zip>`
 
 
 .. only:: html

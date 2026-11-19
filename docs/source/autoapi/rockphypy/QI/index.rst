@@ -1,24 +1,11 @@
-:py:mod:`rockphypy.QI`
-======================
+rockphypy.QI
+============
 
 .. py:module:: rockphypy.QI
 
 
-Module Contents
----------------
-
-Classes
-~~~~~~~
-
-.. autoapisummary::
-
-   rockphypy.QI.QI
-
-
-
-
 Attributes
-~~~~~~~~~~
+----------
 
 .. autoapisummary::
 
@@ -27,17 +14,22 @@ Attributes
    rockphypy.QI.cmap_cem
 
 
-.. py:data:: cmap_sand
+Classes
+-------
 
-   
+.. autoapisummary::
+
+   rockphypy.QI.QI
+
+
+Module Contents
+---------------
+
+.. py:data:: cmap_sand
 
 .. py:data:: cmap_kde
 
-   
-
 .. py:data:: cmap_cem
-
-   
 
 .. py:class:: QI(Vp, phi, **kwargs)
 
@@ -68,8 +60,31 @@ Attributes
    ..
        !! processed by numpydoc !!
 
+
+   .. py:attribute:: Vp
+
+
+   .. py:attribute:: phi
+
+
+   .. py:attribute:: Vsh
+
+
+   .. py:attribute:: Vs
+
+
+   .. py:attribute:: den
+
+
+   .. py:attribute:: eff_stress
+
+
+   .. py:attribute:: TVD
+
+
    .. py:method:: matrix_modulus(vsh, phi_c, phi_0, M_sh, M_g, M_c)
       :staticmethod:
+
 
       
       Calculate the modulus of rock matrix as a function of porosity variation caused by cementation, Note that the rock matrix contains everything excluding pore space.
@@ -106,8 +121,10 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: den_matrix(vsh, phi_c, phi_0, den_sh, den_g, den_c)
       :staticmethod:
+
 
       
       Calculate the matrix density as a function of porosity variation caused by cementation.
@@ -144,8 +161,10 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: screening(Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phib_p, phi_c, sigma, vsh, scheme, f, Cn)
       :staticmethod:
+
 
       
       compute elastic bounds used for rock physics screening, the lower bound is computed using friable sand model, and the upper bound is contact cement model blend with increasing cement model.
@@ -216,6 +235,7 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: screening_plot(phi, vp1, vp2, vp3, cmap=cmap_sand)
 
       
@@ -251,8 +271,10 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: normalize(density)
       :staticmethod:
+
 
       
       normalize the kde with respect to the maximum value and map value to 0-1
@@ -274,6 +296,7 @@ Attributes
 
       ..
           !! processed by numpydoc !!
+
 
    .. py:method:: kde_plot(phi, v1, v2, v3, cmap=cmap_kde, vels='Vp', n=64)
 
@@ -314,8 +337,10 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: cst_vels(phi_b, K0, D0, G0, phi, phi_c, Cn, Kc, Gc, Db, Kb, scheme, vsh, Dsh, Dqz, Dc)
       :staticmethod:
+
 
       
       compute velocities using constant cement model at different cement amounts
@@ -375,8 +400,10 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: cst_plot(Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phib, phib_p, phi_c, sigma, vsh, Cn, scheme, f)
       :staticmethod:
+
 
       
       Diagnostic plot with constant cement model lines
@@ -445,8 +472,10 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: cal_v_const(Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phi_b, phi_c, vsh, phi, scheme)
       :staticmethod:
+
 
       
       input real data porosity and caculate the theoretical constant cement model velocity value.  Note: input porosity cannot be zero, otherwise the returned velocities are Nan.
@@ -505,6 +534,7 @@ Attributes
 
       ..
           !! processed by numpydoc !!
+
 
    .. py:method:: estimate_cem(vcem_seeds, Kqz, Gqz, Ksh, Gsh, phi_c, Cn, Kc, Gc, Db, Kb, scheme, vsh, Dsh, Dqz, Dc)
 
@@ -565,6 +595,7 @@ Attributes
 
       ..
           !! processed by numpydoc !!
+
 
    .. py:method:: cement_diag_plot(vcem, Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phib, phib_p, phi_c, sigma, vsh, Cn, scheme, f)
 
@@ -637,8 +668,10 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: plot_rpt(Kdry, Gdry, K0, D0, Kb, Db, Khc, Dhc, phi, sw)
       :staticmethod:
+
 
       
       Create RPT plot given computed Impedance and Vp/Vs ratio.

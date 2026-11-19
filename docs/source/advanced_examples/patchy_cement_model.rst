@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_advanced_examples_patchy_cement_model.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Patchy cement model
 
 .. GENERATED FROM PYTHON SOURCE LINES 7-17
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -36,26 +36,14 @@ Patchy cement model
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 18-24
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
     # import the module 
     from rockphypy import EM, GM
-
-
-
-
-
-
 
 
 
@@ -97,7 +85,7 @@ Rock-physics modeling of patchy cemented sandstone, for which the connected patc
 
 .. GENERATED FROM PYTHON SOURCE LINES 61-83
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -122,15 +110,9 @@ Rock-physics modeling of patchy cemented sandstone, for which the connected patc
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 84-118
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -167,26 +149,9 @@ Rock-physics modeling of patchy cemented sandstone, for which the connected patc
 
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_patchy_cement_model_001.png
-   :alt: Connected patchy cement model
-   :srcset: /advanced_examples/images/sphx_glr_patchy_cement_model_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    Text(0.5, 1.0, 'Connected patchy cement model')
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 119-151
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -221,23 +186,6 @@ Rock-physics modeling of patchy cemented sandstone, for which the connected patc
     plt.title('Disconnected patchy cement model')
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_patchy_cement_model_002.png
-   :alt: Disconnected patchy cement model
-   :srcset: /advanced_examples/images/sphx_glr_patchy_cement_model_002.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    Text(0.5, 1.0, 'Disconnected patchy cement model')
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 152-156
 
 Estimate stress sensitivity of sandstone using PCM 
@@ -247,7 +195,7 @@ By varing the effective stress at given porosity, the stress sensitivities of pa
 
 .. GENERATED FROM PYTHON SOURCE LINES 159-201
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -292,20 +240,9 @@ By varing the effective stress at given porosity, the stress sensitivities of pa
 
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_patchy_cement_model_003.png
-   :alt: Connected patchy cement \phi=0.36
-   :srcset: /advanced_examples/images/sphx_glr_patchy_cement_model_003.png
-   :class: sphx-glr-single-img
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 202-240
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -346,17 +283,6 @@ By varing the effective stress at given porosity, the stress sensitivities of pa
 
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_patchy_cement_model_004.png
-   :alt: Disconnected patchy cement \phi=0.36
-   :srcset: /advanced_examples/images/sphx_glr_patchy_cement_model_004.png
-   :class: sphx-glr-single-img
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 241-246
 
 **Reference** 
@@ -366,27 +292,23 @@ By varing the effective stress at given porosity, the stress sensitivities of pa
 - Yu, J., Duffaut, K., and Avseth, P. 2023, Stress sensitivity of elastic moduli in high-porosity-cemented sandstone — Heuristic models and experimental data, Geophysics, 88(4)
 
 
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.589 seconds)
-
-
 .. _sphx_glr_download_advanced_examples_patchy_cement_model.py:
 
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: patchy_cement_model.ipynb <patchy_cement_model.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: patchy_cement_model.py <patchy_cement_model.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: patchy_cement_model.ipynb <patchy_cement_model.ipynb>`
+      :download:`Download zipped: patchy_cement_model.zip <patchy_cement_model.zip>`
 
 
 .. only:: html

@@ -1,21 +1,19 @@
-:py:mod:`rockphypy.utils`
-=========================
+rockphypy.utils
+===============
 
 .. py:module:: rockphypy.utils
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    rockphypy.utils.utils
 
 
-
+Module Contents
+---------------
 
 .. py:class:: utils
 
@@ -39,8 +37,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: V(K, G, rho)
       :staticmethod:
+
 
       
       Compute velocity given density and elastic moduli.
@@ -71,8 +71,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: poi(K, G)
       :staticmethod:
+
 
       
       Compute poisson's ratio from K an G
@@ -101,8 +103,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: lame(K, G)
       :staticmethod:
+
 
       
       Compute lame constant lamdba from K an G
@@ -131,8 +135,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: M_from_V(den, vp, vs)
       :staticmethod:
+
 
       
       _summary_
@@ -163,8 +169,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: write_HTI_matrix(C11, C33, C13, C44, C55)
       :staticmethod:
+
 
       
       formulate HTI stiffness matrix
@@ -199,8 +207,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: write_VTI_compliance(S11, S12, S13, S33, S44)
       :staticmethod:
+
 
       
       formulate VTI compliance matrix
@@ -235,8 +245,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: write_VTI_matrix(C11, C33, C13, C44, C66)
       :staticmethod:
+
 
       
       formulate VTI stiffness matrix
@@ -271,8 +283,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: write_matrix(C11, C22, C33, C12, C13, C23, C44, C55, C66)
       :staticmethod:
+
 
       
       formulate general 6x6 stiffness matrix in Voigt notation
@@ -315,8 +329,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: write_iso(K, G)
       :staticmethod:
+
 
       
       formulate isotropic 6x6 stiffness matrix in Voigt notation
@@ -347,8 +363,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: crack_por(crd, alpha)
       :staticmethod:
+
 
       
       compute crack porosity from crack aspect ratio and crack density
@@ -377,8 +395,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: v_to_c_VTI(Vp0, Vp45, Vp90, Vs0, Vsh90, den)
       :staticmethod:
+
 
       
       compute stiffness matrix given velocity measurements along different directions

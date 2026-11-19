@@ -13,3 +13,23 @@
     padding-top: 10px;
 }
 
+/* larger text: the PyData theme sizes everything from this value (default 1rem = 16 px) */
+html {
+    --pst-font-size-base: 1.4rem;
+}
+
+/* home page: logo on the left, title and intro text on its right */
+img[alt="rockphypy logo"] {
+    margin-right: 2rem;
+    margin-bottom: 1rem;
+}
+/* start the Capabilities section below the logo */
+section#capabilities {
+    clear: both;
+}
+/* on phones: logo above the text again */
+@media (max-width: 600px) {
+    img[alt="rockphypy logo"] {
+        float: none;
+    }
+}

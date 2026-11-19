@@ -11,6 +11,28 @@ Examples using ``rockphypy.GM.stiffsand``
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Contact based models">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_07_Soft_Stiff_Cemented_sand_models_thumb.png
+    :alt:
+
+  :doc:`/getting_started/07_Soft_Stiff_Cemented_sand_models`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Contact based models</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/getting_started/07_Soft_Stiff_Cemented_sand_models`
 
 .. raw:: html
 
@@ -21,7 +43,7 @@ Examples using ``rockphypy.GM.stiffsand``
   .. image:: /advanced_examples/images/thumb/sphx_glr_Rock_physics_template_thumb.png
     :alt:
 
-  :ref:`sphx_glr_advanced_examples_Rock_physics_template.py`
+  :doc:`/advanced_examples/Rock_physics_template`
 
 .. raw:: html
 
@@ -31,7 +53,9 @@ Examples using ``rockphypy.GM.stiffsand``
 
 .. only:: not html
 
- * :ref:`sphx_glr_advanced_examples_Rock_physics_template.py`
+ * :doc:`/advanced_examples/Rock_physics_template`
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

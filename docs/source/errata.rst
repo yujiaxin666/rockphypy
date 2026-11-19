@@ -1,12 +1,11 @@
 Errata list
 ===========
 
-The following errata were submitted by careful readers and approved  as valid errors by authors of the RP Handbook. The original errata list for the first edition is archived `here. <https://pangea.stanford.edu/~mukerji/book.html>`_
+The following errata were submitted by careful readers and approved as valid errors by the authors of the Rock Physics Handbook. The original errata list for the first edition is archived `here <https://pangea.stanford.edu/~mukerji/book.html>`_.
 
+For the third edition, an incomplete errata list can be downloaded `here <https://www.cambridge.org/us/academic/subjects/earth-and-environmental-science/solid-earth-geophysics/rock-physics-handbook-3rd-edition?format=HB&isbn=9781108420266>`_.
 
-For the third edition, an incomplete errate can be downloaded `here. <https://www.cambridge.org/us/academic/subjects/earth-and-environmental-science/solid-earth-geophysics/rock-physics-handbook-3rd-edition?format=HB&isbn=9781108420266>`_
-
-Below more typographical errors are archived: 
+More typographical errors are archived below:
 
 Errata for the **3rd edition (2020)** of the Rock Physics Handbook
 ------------------------------------------------------------------

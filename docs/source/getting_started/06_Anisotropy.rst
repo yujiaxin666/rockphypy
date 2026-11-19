@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_getting_started_06_Anisotropy.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -24,7 +24,7 @@ This exampl shows how to use the ``rockphypy.Anisotropy`` class to compute Thoms
 
 .. GENERATED FROM PYTHON SOURCE LINES 8-16
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -35,25 +35,13 @@ This exampl shows how to use the ``rockphypy.Anisotropy`` class to compute Thoms
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 17-22
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import rockphypy # import the module
     from rockphypy import Anisotropy
-
-
-
-
-
-
 
 
 
@@ -201,7 +189,7 @@ Let's estimate angle dependent weak anisotropy of a layered medium using backus 
 
 .. GENERATED FROM PYTHON SOURCE LINES 166-186
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -224,15 +212,9 @@ Let's estimate angle dependent weak anisotropy of a layered medium using backus 
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 187-200
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -248,32 +230,10 @@ Let's estimate angle dependent weak anisotropy of a layered medium using backus 
 
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_06_Anisotropy_001.png
-   :alt: Anisotropy from layering
-   :srcset: /getting_started/images/sphx_glr_06_Anisotropy_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x0000018DCD4E4A00>
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 201-203
 
 **Reference** : Mavko, G., Mukerji, T. and Dvorkin, J., 2020. The rock physics handbook. Cambridge university press.
 
-
-
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.096 seconds)
 
 
 .. _sphx_glr_download_getting_started_06_Anisotropy.py:
@@ -282,16 +242,17 @@ Let's estimate angle dependent weak anisotropy of a layered medium using backus 
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 06_Anisotropy.ipynb <06_Anisotropy.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 06_Anisotropy.py <06_Anisotropy.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: 06_Anisotropy.ipynb <06_Anisotropy.ipynb>`
+      :download:`Download zipped: 06_Anisotropy.zip <06_Anisotropy.zip>`
 
 
 .. only:: html

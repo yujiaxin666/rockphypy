@@ -11,6 +11,7 @@ Examples using ``rockphypy.BW.rho_K_gas``
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -21,7 +22,7 @@ Examples using ``rockphypy.BW.rho_K_gas``
   .. image:: /advanced_examples/images/thumb/sphx_glr_CO2_modelling_thumb.png
     :alt:
 
-  :ref:`sphx_glr_advanced_examples_CO2_modelling.py`
+  :doc:`/advanced_examples/CO2_modelling`
 
 .. raw:: html
 
@@ -31,7 +32,9 @@ Examples using ``rockphypy.BW.rho_K_gas``
 
 .. only:: not html
 
- * :ref:`sphx_glr_advanced_examples_CO2_modelling.py`
+ * :doc:`/advanced_examples/CO2_modelling`
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

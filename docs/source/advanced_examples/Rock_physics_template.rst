@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_advanced_examples_Rock_physics_template.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Rock Physics Template (RPT)
 
 .. GENERATED FROM PYTHON SOURCE LINES 6-14
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import pandas as pd 
@@ -34,26 +34,14 @@ Rock Physics Template (RPT)
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 15-21
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
     #import rockphypy # import the module 
     from rockphypy import QI, GM, Fluid 
-
-
-
-
-
-
 
 
 
@@ -64,7 +52,7 @@ Rock physics models can be used to calculate elastic properties with various com
 
 .. GENERATED FROM PYTHON SOURCE LINES 26-43
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -84,12 +72,6 @@ Rock physics models can be used to calculate elastic properties with various com
     f=0.5
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 44-46
 
 - Case 1: create RPT for unconsolidated sand using softsand/friable sand model 
@@ -97,7 +79,7 @@ Rock physics models can be used to calculate elastic properties with various com
 
 .. GENERATED FROM PYTHON SOURCE LINES 49-59
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -110,26 +92,9 @@ Rock physics models can be used to calculate elastic properties with various com
 
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_Rock_physics_template_001.png
-   :alt: Softsand RPT-gas
-   :srcset: /advanced_examples/images/sphx_glr_Rock_physics_template_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    (1.4, 2.4)
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 60-68
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -140,23 +105,6 @@ Rock physics models can be used to calculate elastic properties with various com
     plt.ylim(1.4,2.4)
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_Rock_physics_template_002.png
-   :alt: Softsand RPT-oil
-   :srcset: /advanced_examples/images/sphx_glr_Rock_physics_template_002.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    (1.4, 2.4)
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 69-71
 
 - Case 2: create RPT for stiff sandstone using stiffsand model 
@@ -164,7 +112,7 @@ Rock physics models can be used to calculate elastic properties with various com
 
 .. GENERATED FROM PYTHON SOURCE LINES 73-82
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -176,26 +124,9 @@ Rock physics models can be used to calculate elastic properties with various com
 
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_Rock_physics_template_003.png
-   :alt: Stiffsand RPT-gas
-   :srcset: /advanced_examples/images/sphx_glr_Rock_physics_template_003.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    (1.4, 2.3)
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 83-91
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -204,23 +135,6 @@ Rock physics models can be used to calculate elastic properties with various com
     plt.title('Stiffsand RPT-oil')  
     plt.xlim(1000,14000)
     plt.ylim(1.4,2.3)
-
-
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_Rock_physics_template_004.png
-   :alt: Stiffsand RPT-oil
-   :srcset: /advanced_examples/images/sphx_glr_Rock_physics_template_004.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    (1.4, 2.3)
-
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 92-96
@@ -232,7 +146,7 @@ Let's import the same synthetic well log data and apply the rock physics screeni
 
 .. GENERATED FROM PYTHON SOURCE LINES 98-124
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # read data
@@ -261,23 +175,6 @@ Let's import the same synthetic well log data and apply the rock physics screeni
     #fig.savefig(path+'./rpt.png',dpi=600,bbox_inches='tight')
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_Rock_physics_template_005.png
-   :alt: Rock physics template
-   :srcset: /advanced_examples/images/sphx_glr_Rock_physics_template_005.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    (1.4, 2.4)
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 125-133
 
 **Reference**: 
@@ -290,27 +187,23 @@ Let's import the same synthetic well log data and apply the rock physics screeni
 
 
 
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.591 seconds)
-
-
 .. _sphx_glr_download_advanced_examples_Rock_physics_template.py:
 
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: Rock_physics_template.ipynb <Rock_physics_template.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: Rock_physics_template.py <Rock_physics_template.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: Rock_physics_template.ipynb <Rock_physics_template.ipynb>`
+      :download:`Download zipped: Rock_physics_template.zip <Rock_physics_template.zip>`
 
 
 .. only:: html

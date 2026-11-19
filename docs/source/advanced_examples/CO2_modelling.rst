@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_advanced_examples_CO2_modelling.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -28,7 +28,7 @@ Using the Batzle-Wang equations for gas to calculate CO2 properties is a common 
 
 .. GENERATED FROM PYTHON SOURCE LINES 11-26
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     from rockphypy import utils, BW, GM, Fluid
@@ -46,12 +46,6 @@ Using the Batzle-Wang equations for gas to calculate CO2 properties is a common 
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 27-30
 
 First we write a function that computes the the effective properties of :math:`CO_2`-brine mixture given different saturation, temperature, pressure and salinity of the brine. The :math:`CO_2` property as a function of temperature and pressure is modeled using the modified version of Batzle-Wang proposed by Xu 2006, see the documentation of ``BW.rho_K_co2``. The critical :math:`CO_2` property is better modeled using Xu's approach.
@@ -60,7 +54,7 @@ This method has been included in ``BW`` class, it can be called via ``BW.co2_bri
 
 .. GENERATED FROM PYTHON SOURCE LINES 32-71
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -102,12 +96,6 @@ This method has been included in ``BW`` class, it can be called via ``BW.co2_bri
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 72-74
 
 comparison between original BW and modified BW for CO2 properties at temperature = 57 degree.
@@ -115,7 +103,7 @@ comparison between original BW and modified BW for CO2 properties at temperature
 
 .. GENERATED FROM PYTHON SOURCE LINES 74-107
 
-.. code-block:: python3
+.. code-block:: Python
 
     temp = 57  # temperature
     G = 1.5349  # gas gravity of CO2
@@ -151,35 +139,6 @@ comparison between original BW and modified BW for CO2 properties at temperature
     # fig2.savefig(path+'/figure2.png',dpi=600,bbox_inches='tight')
 
 
-
-
-.. rst-class:: sphx-glr-horizontal
-
-
-    *
-
-      .. image-sg:: /advanced_examples/images/sphx_glr_CO2_modelling_001.png
-         :alt: CO2 modelling
-         :srcset: /advanced_examples/images/sphx_glr_CO2_modelling_001.png
-         :class: sphx-glr-multi-img
-
-    *
-
-      .. image-sg:: /advanced_examples/images/sphx_glr_CO2_modelling_002.png
-         :alt: CO2 modelling
-         :srcset: /advanced_examples/images/sphx_glr_CO2_modelling_002.png
-         :class: sphx-glr-multi-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    Text(-0.7361111111111107, 0.5, 'Density (g/${\\rm cm^3}$)')
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 108-110
 
 Bulk modulus (top rows) and density (bottom rows) of pure CO2 as a function of pressure and temperature.
@@ -187,7 +146,7 @@ Bulk modulus (top rows) and density (bottom rows) of pure CO2 as a function of p
 
 .. GENERATED FROM PYTHON SOURCE LINES 110-135
 
-.. code-block:: python3
+.. code-block:: Python
 
     pressure = np.linspace(0, 40, 100)
     temperature = np.linspace(20, 80, 100)
@@ -215,20 +174,9 @@ Bulk modulus (top rows) and density (bottom rows) of pure CO2 as a function of p
     cbar.set_label(r'Density (g/${\rm cm^3}$)', size=16, labelpad=10)
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_CO2_modelling_003.png
-   :alt: CO2 modelling
-   :srcset: /advanced_examples/images/sphx_glr_CO2_modelling_003.png
-   :class: sphx-glr-single-img
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 136-170
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -265,12 +213,6 @@ Bulk modulus (top rows) and density (bottom rows) of pure CO2 as a function of p
     vp1, vs1, rho1 = Fluid.vels(Kdry, Gdry, K0, D0, Kf_mix_1, den1, phi_c)
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 171-173
 
 compute the CO2 properties using modified BW
@@ -278,22 +220,16 @@ gaseous co2 mixed with brine, temp=17, pore pressure = 5Mpa
 
 .. GENERATED FROM PYTHON SOURCE LINES 173-177
 
-.. code-block:: python3
+.. code-block:: Python
 
     den2, Kf_mix_2 = co2_brine(temperature, pore_pressure,
                                salinity, sco2, brie_component=brie, bw=False)
     vp2, vs2, rho2 = Fluid.vels(Kdry, Gdry, K0, D0, Kf_mix_2, den2, phi_c)
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 178-195
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     fig = plt.figure(figsize=(5, 4))
@@ -313,23 +249,6 @@ gaseous co2 mixed with brine, temp=17, pore pressure = 5Mpa
 
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_CO2_modelling_004.png
-   :alt: CO2 modelling
-   :srcset: /advanced_examples/images/sphx_glr_CO2_modelling_004.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    (0.0, 1.0)
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 196-200
 
 **Reference**
@@ -338,27 +257,23 @@ gaseous co2 mixed with brine, temp=17, pore pressure = 5Mpa
 
 
 
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  2.314 seconds)
-
-
 .. _sphx_glr_download_advanced_examples_CO2_modelling.py:
 
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: CO2_modelling.ipynb <CO2_modelling.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: CO2_modelling.py <CO2_modelling.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: CO2_modelling.ipynb <CO2_modelling.ipynb>`
+      :download:`Download zipped: CO2_modelling.zip <CO2_modelling.zip>`
 
 
 .. only:: html

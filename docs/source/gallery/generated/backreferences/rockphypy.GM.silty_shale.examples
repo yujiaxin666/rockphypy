@@ -11,6 +11,7 @@ Examples using ``rockphypy.GM.silty_shale``
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -21,7 +22,7 @@ Examples using ``rockphypy.GM.silty_shale``
   .. image:: /getting_started/images/thumb/sphx_glr_08_Shaly_sand_modelling_thumb.png
     :alt:
 
-  :ref:`sphx_glr_getting_started_08_Shaly_sand_modelling.py`
+  :doc:`/getting_started/08_Shaly_sand_modelling`
 
 .. raw:: html
 
@@ -31,7 +32,9 @@ Examples using ``rockphypy.GM.silty_shale``
 
 .. only:: not html
 
- * :ref:`sphx_glr_getting_started_08_Shaly_sand_modelling.py`
+ * :doc:`/getting_started/08_Shaly_sand_modelling`
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

@@ -15,9 +15,11 @@ from sphinx_gallery.sorting import FileNameSortKey
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+import datetime
+
 
 project = 'rockphypy'
-copyright = '2023, jiaxin yu'
+copyright = f"{datetime.date.today().year}, Jiaxin Yu"
 author = 'jiaxin yu'
 # The short X.Y version
 #version = ""
@@ -42,7 +44,6 @@ extensions = [
     "sphinx.ext.extlinks",
     'sphinx_gallery.gen_gallery',
     "numpydoc",
-    "nbsphinx",
     #'matplotlib.sphinxext.only_directives',
     "matplotlib.sphinxext.plot_directive",
     "IPython.sphinxext.ipython_directive",
@@ -99,40 +100,36 @@ highlight_language = 'python3'
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'alabaster'
-html_theme_options = {
-    'logo_only': True,
-    'display_version': False,
-}
+html_theme = "pydata_sphinx_theme"
 html_static_path = ['_static']
-html_logo = "_static/logo.png"
+html_logo = "_static/icon.png"
 html_favicon = '_static/favicon.ico'
-## adjust the white space between functions 
-
+## adjust the white space between functions
 html_css_files = [
     'custom.css',
 ]
 
 html_theme_options = {
-    # 'logo': 'logo.png',
-    # 'logo': 'logo.png',
-    "github_user": "yujiaxin666",
-    "github_repo": "RockPhysicsPy",
-    "github_button": True,
-    "github_banner": True,
-    "travis_button": False,
-    "show_powered_by": False,
-    "font_family": '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,\
-        "Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"\
-        ,"Segoe UI Symbol"',
-    "font_size": "15px",
-    "code_font_size": "13px",
-    "head_font_family": '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,\
-        "Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"\
-        ,"Segoe UI Symbol"',
-    "page_width": "940px",
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/yujiaxin666/rockphypy",
+            "icon": "fa-brands fa-github",
+        },
+        {
+            "name": "PyPI",
+            "url": "https://pypi.org/project/rockphypy/",
+            "icon": "fa-brands fa-python",
+        },
+    ],
+    "external_links": [
+        {"name": "Issue Tracker", "url": "https://github.com/yujiaxin666/rockphypy/issues"},
+    ],
+    "navbar_align": "left",
+    "show_toc_level": 2,
+    "show_prev_next": False,
+    "navigation_with_keys": False,
 }
-
 html_show_sphinx = False
 
 

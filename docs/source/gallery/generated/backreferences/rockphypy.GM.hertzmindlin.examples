@@ -11,6 +11,7 @@ Examples using ``rockphypy.GM.hertzmindlin``
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -21,7 +22,7 @@ Examples using ``rockphypy.GM.hertzmindlin``
   .. image:: /getting_started/images/thumb/sphx_glr_04_Hertz_Mindlin_thumb.png
     :alt:
 
-  :ref:`sphx_glr_getting_started_04_Hertz_Mindlin.py`
+  :doc:`/getting_started/04_Hertz_Mindlin`
 
 .. raw:: html
 
@@ -31,7 +32,30 @@ Examples using ``rockphypy.GM.hertzmindlin``
 
 .. only:: not html
 
- * :ref:`sphx_glr_getting_started_04_Hertz_Mindlin.py`
+ * :doc:`/getting_started/04_Hertz_Mindlin`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Sand-Shale mixture modelling">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_08_Shaly_sand_modelling_thumb.png
+    :alt:
+
+  :doc:`/getting_started/08_Shaly_sand_modelling`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Sand-Shale mixture modelling</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/getting_started/08_Shaly_sand_modelling`
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

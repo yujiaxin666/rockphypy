@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_advanced_examples_CO2_seismic.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -48,7 +48,7 @@ Though the above modelling is quite simplified, we can learn how to use building
 
 .. GENERATED FROM PYTHON SOURCE LINES 31-55
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     from rockphypy import utils, BW, GM, Fluid
@@ -75,12 +75,6 @@ Though the above modelling is quite simplified, we can learn how to use building
     Cn = 6  # coordination number
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 56-60
 
 - initial state: 100% water saturation at specific temperature and pressure, the reservoir stress condition is predefined with a given overburden pressure 20Mpa.
@@ -90,7 +84,7 @@ Though the above modelling is quite simplified, we can learn how to use building
 
 .. GENERATED FROM PYTHON SOURCE LINES 62-81
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -112,12 +106,6 @@ Though the above modelling is quite simplified, we can learn how to use building
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 82-84
 
 - Case 2: uniform critical :math:`CO_2` mixed with brine.
@@ -125,7 +113,7 @@ Though the above modelling is quite simplified, we can learn how to use building
 
 .. GENERATED FROM PYTHON SOURCE LINES 86-102
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -144,15 +132,9 @@ Though the above modelling is quite simplified, we can learn how to use building
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 103-114
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     plt.figure()
@@ -166,23 +148,6 @@ Though the above modelling is quite simplified, we can learn how to use building
     plt.legend(loc='best')
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_CO2_seismic_001.png
-   :alt: Uniform saturation
-   :srcset: /advanced_examples/images/sphx_glr_CO2_seismic_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x000001823FA77EB0>
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 115-117
 
 - Case 3: patchy saturated critical :math:`CO_2` mixed with brine.
@@ -190,7 +155,7 @@ Though the above modelling is quite simplified, we can learn how to use building
 
 .. GENERATED FROM PYTHON SOURCE LINES 119-142
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # sphinx_gallery_thumbnail_number = 2
@@ -216,23 +181,6 @@ Though the above modelling is quite simplified, we can learn how to use building
 
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_CO2_seismic_002.png
-   :alt: Patchy saturation
-   :srcset: /advanced_examples/images/sphx_glr_CO2_seismic_002.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x0000018242D86730>
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 143-147
 
 **Reference**
@@ -241,27 +189,23 @@ Though the above modelling is quite simplified, we can learn how to use building
 
 
 
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.255 seconds)
-
-
 .. _sphx_glr_download_advanced_examples_CO2_seismic.py:
 
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: CO2_seismic.ipynb <CO2_seismic.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: CO2_seismic.py <CO2_seismic.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: CO2_seismic.ipynb <CO2_seismic.ipynb>`
+      :download:`Download zipped: CO2_seismic.zip <CO2_seismic.zip>`
 
 
 .. only:: html

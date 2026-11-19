@@ -11,6 +11,7 @@ Examples using ``rockphypy.AVO.Aki_Richards``
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -21,7 +22,7 @@ Examples using ``rockphypy.AVO.Aki_Richards``
   .. image:: /getting_started/images/thumb/sphx_glr_11_AVO_thumb.png
     :alt:
 
-  :ref:`sphx_glr_getting_started_11_AVO.py`
+  :doc:`/getting_started/11_AVO`
 
 .. raw:: html
 
@@ -31,7 +32,9 @@ Examples using ``rockphypy.AVO.Aki_Richards``
 
 .. only:: not html
 
- * :ref:`sphx_glr_getting_started_11_AVO.py`
+ * :doc:`/getting_started/11_AVO`
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

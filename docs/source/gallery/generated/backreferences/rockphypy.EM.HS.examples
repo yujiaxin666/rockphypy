@@ -11,6 +11,28 @@ Examples using ``rockphypy.EM.HS``
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the comparison between different elastic bounds to Nur&#x27;s cirtical porosity model: Voigt and Reuss Bounds, Voigt–Reuss–Hill Average,Hashin-Shtrikmann bounds ">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_02_Bounds_thumb.png
+    :alt:
+
+  :doc:`/getting_started/02_Bounds`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Elastic bounds</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/getting_started/02_Bounds`
 
 .. raw:: html
 
@@ -21,7 +43,7 @@ Examples using ``rockphypy.EM.HS``
   .. image:: /getting_started/images/thumb/sphx_glr_03_Effective_medium_thumb.png
     :alt:
 
-  :ref:`sphx_glr_getting_started_03_Effective_medium.py`
+  :doc:`/getting_started/03_Effective_medium`
 
 .. raw:: html
 
@@ -31,7 +53,30 @@ Examples using ``rockphypy.EM.HS``
 
 .. only:: not html
 
- * :ref:`sphx_glr_getting_started_03_Effective_medium.py`
+ * :doc:`/getting_started/03_Effective_medium`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Modified Mori-Tanaka Scheme">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_14_Mori_Tanaka_scheme_thumb.png
+    :alt:
+
+  :doc:`/getting_started/14_Mori_Tanaka_scheme`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Modified Mori-Tanaka Scheme</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/getting_started/14_Mori_Tanaka_scheme`
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

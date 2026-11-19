@@ -11,6 +11,7 @@ Examples using ``rockphypy.Anisotropy.Backus``
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -21,7 +22,7 @@ Examples using ``rockphypy.Anisotropy.Backus``
   .. image:: /getting_started/images/thumb/sphx_glr_06_Anisotropy_thumb.png
     :alt:
 
-  :ref:`sphx_glr_getting_started_06_Anisotropy.py`
+  :doc:`/getting_started/06_Anisotropy`
 
 .. raw:: html
 
@@ -31,7 +32,9 @@ Examples using ``rockphypy.Anisotropy.Backus``
 
 .. only:: not html
 
- * :ref:`sphx_glr_getting_started_06_Anisotropy.py`
+ * :doc:`/getting_started/06_Anisotropy`
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

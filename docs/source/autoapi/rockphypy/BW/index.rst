@@ -1,5 +1,5 @@
-:py:mod:`rockphypy.BW`
-======================
+rockphypy.BW
+============
 
 .. py:module:: rockphypy.BW
 
@@ -11,18 +11,16 @@
        !! processed by numpydoc !!
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    rockphypy.BW.BW
 
 
-
+Module Contents
+---------------
 
 .. py:class:: BW
 
@@ -46,8 +44,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: dz_dp(P_pr, T_pr)
       :staticmethod:
+
 
       
       Values for dZ/dPpr obtained from equation 10b in Batzle and Wang (1992).
@@ -70,8 +70,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: pseudo_p_t(P, T, G)
       :staticmethod:
+
 
       
       Calculate the pseudoreduced temperature and pressure according to Thomas et al. 1970.
@@ -104,8 +106,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_co2(P, T, G)
       :staticmethod:
+
 
       
       Compute CO2 properties as a function of temperature and pressure using modified Batzle-Wang equations
@@ -141,8 +145,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_gas(P, T, G)
       :staticmethod:
+
 
       
       Estimate the Gas density and bulk modulus at specific temperature and pressure.
@@ -174,8 +180,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_oil(P, T, den)
       :staticmethod:
+
 
       
       Estimate the oil density and bulk modulus at specific temperature and pressure.
@@ -207,8 +215,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_go(P, T, den, G, Rg)
       :staticmethod:
+
 
       
       compute density and bulk modulus of live oil.
@@ -244,8 +254,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_water(T, P)
       :staticmethod:
+
 
       
       Compute the density and bulk modulus of pure water as a function of temperature and pressure using Batzle and Wang (1992).
@@ -275,8 +287,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: v_water(T, P)
       :staticmethod:
+
 
       
       Acoustic velocity of pure water as a function of temperature
@@ -306,8 +320,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_brine(T, P, S)
       :staticmethod:
+
 
       
       Calculation of the density and bulk modulus of brine (NaCl) as a function of temperature, salinity and pressure using Batzle and Wang (1992).
@@ -339,8 +355,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: v_brine(T, P, S)
       :staticmethod:
+
 
       
       Calculte the acoustic velocity of brine as a function of temperature, salinity and pressure using Batzle and Wang (1992).
@@ -371,8 +389,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: co2_brine(temperature, pressure, salinity, Sco2, brie_component=None, bw=False)
       :staticmethod:
+
 
       
       compute the effective properties of critical Co2 brine mixture depending on temperature, pressure and salinity of the brine, as well as the saturation state.

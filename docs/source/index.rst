@@ -3,11 +3,35 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-About
-=====
-An extensive Python library for rock physics modelling
-******************************************************
+.. image:: _static/logo_banner.png
+   :width: 250px
+   :align: left
+   :alt: rockphypy logo
 
+An extensive Python library for rock physics modeling
+*****************************************************
+
+``rockphypy`` is a Python-based **open-source library** dedicated to rock physics modeling. It caters to individuals interested in rock physics and empowers them to apply rock physics tools in their work and research effectively.
+
+Built upon the foundations of `Stanford SRB tools <https://github.com/StanfordRockPhysics/SRBToolbox>`_, ``rockphypy`` has successfully migrated and optimized a wide range of rock physics models from Stanford SRB Matlab tools to Python. Additionally, it extends the functionality by introducing new functions and practical workflows. 
+
+Capabilities
+------------
+
+``rockphypy`` consists of the following modules:
+
+* :mod:`GM <rockphypy.GM>`: Granular medium models, e.g. Hertz-Mindlin, Walton, Digby, soft-sand, stiff-sand, contact-cement, constant-cement and patchy cement models, and shaly sand mixing
+* :mod:`EM <rockphypy.EM>`: Bounds (Voigt-Reuss-Hill, Hashin-Shtrikman) and inclusion models, e.g. Hudson cracks, self-consistent, DEM, Mori-Tanaka and O'Connell-Budiansky
+* :mod:`Fluid <rockphypy.Fluid>`: Fluid substitution (Gassmann, Brown-Korringa, Brie mixing) and velocity dispersion and attenuation (Biot, Geertsma-Smit, squirt flow, White and Dutta-Odé patchy saturation)
+* :mod:`QI <rockphypy.QI>`: Tools for quantitative interpretation: rock physics templates, rock physics screening, KDE cross plots with elastic bounds and cement volume estimation
+* :mod:`AVO <rockphypy.AVO>`: Exact (Zoeppritz) and approximate reflection coefficients for isotropic and anisotropic (HTI, orthorhombic) media, and elastic impedance
+* :mod:`Anisotropy <rockphypy.Anisotropy>`: Thomsen parameters, Backus averaging (also from well logs), Bond transformation and phase velocities in VTI and HTI media
+* :mod:`BW <rockphypy.BW>`: Original and modified Batzle-Wang equations for the density, bulk modulus and velocity of brine, oil, gas, CO2 and CO2-brine mixtures
+* :mod:`Empirical <rockphypy.Emp>`: Empirical velocity-porosity relations (e.g. Han, Krief, Greenberg-Castagna) and porosity- and velocity-depth trends
+* :mod:`Permeability <rockphypy.Perm>`: Permeability models, e.g. Kozeny-Carman, Panda-Lake, Revil, Fredrich, Bloch and Bernabé, and empirical relations from well logs
+* :mod:`utils <rockphypy.utils>`: Basic calculations: velocities and moduli, Poisson's ratio, Lamé parameters and stiffness matrices for isotropic, VTI and HTI media
+
+For a more detailed understanding of each module, please refer to the :doc:`API Reference <autoapi/index>`.
 
 Installation
 ------------
@@ -17,30 +41,21 @@ Installation
 
    ``$ pip install rockphypy``
 
+How to cite
+-----------
 
-Overview
---------
-``rockphypy`` is a Python-based **open-source library** dedicated to rock physics modeling. It caters to individuals interested in rock physics and empowers them to apply rock physics tools in their work and research effectively.
+If you use ``rockphypy`` in a publication, please add the following citation:
 
-Built upon the foundations of `Stanford SRB tools  <https://github.com/StanfordRockPhysics/SRBToolbox>`_ , rockphypy has successfully migrated and optimized a wide range of rock physics models from Stanford SRB Matlab tools to Python. Additionally, it extends the functionality by introducing new functions and practical workflows. Notably, ``rockphypy`` offers a diverse set of valuable modules such as ``Anisotropy``, ``AVO``, ``BW`` (Batzle&Wang), ``EM`` (Effective Medium), ``Empirical``, ``Fluid``, ``GM`` (Granular Medium), ``Permeability``, ``QI`` (Quantitative Intepretation) and ``utils``. For a more detailed understanding of each module, please refer to the API Documentation.
+.. admonition:: Citation
 
-From the ground up, ``rockphypy`` is designed to be easily embedded in various workflows i.e, machine learning, probabilistic frameworks, bayesian inversion that leverage the rich resources of python open-source ecosystem.
-
-Citation
---------
-
-This work can be cited as:
-
-Yu, J., Mukerji, T., & Avseth, P. (2023). rockphypy: An extensive Python library for rock physics modeling. SoftwareX, 24, 101567.
-
+    Yu, J., Mukerji, T., & Avseth, P. (2023). rockphypy: An extensive Python library for rock physics modeling. *SoftwareX*, 24, 101567.
+    `doi:10.1016/j.softx.2023.101567 <https://doi.org/10.1016/j.softx.2023.101567>`_
 
 Contribution and Development
 ----------------------------
 See the timeline of ``rockphypy`` `here <https://user-images.githubusercontent.com/45630390/259761842-5689968c-7683-41e4-864a-0dca791a38a0.png>`_  for more details about the development.
 
-Driven by a commitment to constant growth and development, rockphypy welcomes contributions from the community. Whether through `pull request <https://github.com/yujiaxin666/RockPhysicsPy/pulls>`_  or by raising questions and making requests via `issue creation <https://github.com/yujiaxin666/RockPhysicsPy/issues>`_. Your active involvement is highly encouraged. Together, we can foster a collaborative and thriving environment for rock physics enthusiasts.
-
-
+``rockphypy`` welcomes contributions from the community. Whether through `pull request <https://github.com/yujiaxin666/RockPhysicsPy/pulls>`_  or by raising questions and making requests via `issue creation <https://github.com/yujiaxin666/RockPhysicsPy/issues>`_. Your active involvement is highly encouraged. Together, we can foster a collaborative and thriving environment for rock physics enthusiasts.
 
 Example code
 ------------
@@ -83,39 +98,11 @@ Below is a simple example demonstrating the usage of the :class:`~rockphypy.EM` 
    plt.grid(ls='--')
 
 
-Motivation 
-----------
 
-The motivation behind the creation of this Python library stems from the Isabella's personal experience and passion for rock physics. As an avid fan of the Python language and the open-source community, Isabella embarked on her PhD journey in rock physics.
-
-Isabella encountered challenges in finding a user-friendly rock physics library to assist with their head-drain exercise when she began her PhD study at NTNU. This experience sparked the realization of a need for an accessible and convenient rock physics tool.
-
-Simultaneously, Isabella's fascination with the theoretical versatility of rock physics modeling grew, leading she to delve into classical papers and books on the subject. The rock physics handbook and other excellent books and papers (see **literature**) played a significant role in shaping her understanding of rock physics.
-
-Fortuitously, Isabella had the opportunity to visit Stanford during her PhD, where Isabella combined her passion for rock physics with her love for Python and open-source development. This led to the creation of this Python library, serving as the final piece of their PhD work.
-
-The library aims to provide an intuitive and practical solution for rock physics enthusiasts, drawing from the author's firsthand experience and knowledge gained through PhD research.
-
-
-Table of contents
-==================
-.. currentmodule:: rockphypy
 .. toctree::
-   
+   :hidden:
+
    getting_started/index
    advanced_examples/index
    autoapi/index
    errata
-   
-Contents:
-
-.. toctree::
-   :maxdepth: 3
-
-Indices
-=======
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-

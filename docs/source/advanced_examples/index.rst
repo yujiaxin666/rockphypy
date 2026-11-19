@@ -5,11 +5,16 @@ Applications
 
 Here you can see how to run apply rockphypy to solving practical questions. 
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -20,7 +25,7 @@ Here you can see how to run apply rockphypy to solving practical questions.
   .. image:: /advanced_examples/images/thumb/sphx_glr_CO2_modelling_thumb.png
     :alt:
 
-  :ref:`sphx_glr_advanced_examples_CO2_modelling.py`
+  :doc:`/advanced_examples/CO2_modelling`
 
 .. raw:: html
 
@@ -37,7 +42,7 @@ Here you can see how to run apply rockphypy to solving practical questions.
   .. image:: /advanced_examples/images/thumb/sphx_glr_CO2_seismic_thumb.png
     :alt:
 
-  :ref:`sphx_glr_advanced_examples_CO2_seismic.py`
+  :doc:`/advanced_examples/CO2_seismic`
 
 .. raw:: html
 
@@ -54,7 +59,7 @@ Here you can see how to run apply rockphypy to solving practical questions.
   .. image:: /advanced_examples/images/thumb/sphx_glr_Rock_physics_template_thumb.png
     :alt:
 
-  :ref:`sphx_glr_advanced_examples_Rock_physics_template.py`
+  :doc:`/advanced_examples/Rock_physics_template`
 
 .. raw:: html
 
@@ -71,7 +76,7 @@ Here you can see how to run apply rockphypy to solving practical questions.
   .. image:: /advanced_examples/images/thumb/sphx_glr_VPCM_thumb.png
     :alt:
 
-  :ref:`sphx_glr_advanced_examples_VPCM.py`
+  :doc:`/advanced_examples/VPCM`
 
 .. raw:: html
 
@@ -88,7 +93,7 @@ Here you can see how to run apply rockphypy to solving practical questions.
   .. image:: /advanced_examples/images/thumb/sphx_glr_cement_volume_estimation_thumb.png
     :alt:
 
-  :ref:`sphx_glr_advanced_examples_cement_volume_estimation.py`
+  :doc:`/advanced_examples/cement_volume_estimation`
 
 .. raw:: html
 
@@ -105,7 +110,7 @@ Here you can see how to run apply rockphypy to solving practical questions.
   .. image:: /advanced_examples/images/thumb/sphx_glr_patchy_cement_model_thumb.png
     :alt:
 
-  :ref:`sphx_glr_advanced_examples_patchy_cement_model.py`
+  :doc:`/advanced_examples/patchy_cement_model`
 
 .. raw:: html
 
@@ -122,7 +127,7 @@ Here you can see how to run apply rockphypy to solving practical questions.
   .. image:: /advanced_examples/images/thumb/sphx_glr_rock_physics_screening_thumb.png
     :alt:
 
-  :ref:`sphx_glr_advanced_examples_rock_physics_screening.py`
+  :doc:`/advanced_examples/rock_physics_screening`
 
 .. raw:: html
 
@@ -139,13 +144,15 @@ Here you can see how to run apply rockphypy to solving practical questions.
   .. image:: /advanced_examples/images/thumb/sphx_glr_rock_physics_screening_PDF_thumb.png
     :alt:
 
-  :ref:`sphx_glr_advanced_examples_rock_physics_screening_PDF.py`
+  :doc:`/advanced_examples/rock_physics_screening_PDF`
 
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Rock physics data screening: 2D probability density function (PDF)</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

@@ -1,21 +1,19 @@
-:py:mod:`rockphypy.AVO`
-=======================
+rockphypy.AVO
+=============
 
 .. py:module:: rockphypy.AVO
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    rockphypy.AVO.AVO
 
 
-
+Module Contents
+---------------
 
 .. py:class:: AVO
 
@@ -39,8 +37,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: AVO_HTI(D1, D2, C1, C2, theta, azimuth)
       :staticmethod:
+
 
       
       Compute azimuth dependent PP reflectivity for wealy anisotropic HTI media using Ruger's approximation
@@ -77,8 +77,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Aki_Richards(theta, vp1, vp2, vs1, vs2, den1, den2)
       :staticmethod:
+
 
       
       Aki-Richard approximation to PP reflectivity.
@@ -120,8 +122,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta)
       :staticmethod:
+
 
       
       Reflection & Transmission coefficients calculated using full Zoeppritz equations.
@@ -160,8 +164,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: AVO_abe(vp1, vs1, d1, vp2, vs2, d2)
       :staticmethod:
+
 
       
       Different approximations AVO terms
@@ -198,8 +204,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: EI_ref(Vp, Vs, rho, theta, SP, norm=True)
       :staticmethod:
+
 
       
       Compute elastic impedance of an isotropic, flat-layered Earth
@@ -246,8 +254,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: AVO_ortho(a1, b1, e11, d11, e12, d12, g1, rho1, a2, b2, e21, d21, e22, d22, g2, rho2, the)
       :staticmethod:
+
 
       
       calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media, refactered from srb toolbox written by Diana Sava.

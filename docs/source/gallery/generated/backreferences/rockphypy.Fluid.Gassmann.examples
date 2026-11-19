@@ -11,6 +11,49 @@ Examples using ``rockphypy.Fluid.Gassmann``
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This pages gives a simple examples of using the classes EM and Fluid of rockphypy to compute Critical porosity model and perform Gassmann Fluid substitution. ">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_01_Critical_Porosity_and_Gassmann_Fluidsubtitution_thumb.png
+    :alt:
+
+  :doc:`/getting_started/01_Critical_Porosity_and_Gassmann_Fluidsubtitution`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Critical porosity model and Gassmann Fluid substitution</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/getting_started/01_Critical_Porosity_and_Gassmann_Fluidsubtitution`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the comparison between different elastic bounds to Nur&#x27;s cirtical porosity model: Voigt and Reuss Bounds, Voigt–Reuss–Hill Average,Hashin-Shtrikmann bounds ">
+
+.. only:: html
+
+  .. image:: /getting_started/images/thumb/sphx_glr_02_Bounds_thumb.png
+    :alt:
+
+  :doc:`/getting_started/02_Bounds`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Elastic bounds</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/getting_started/02_Bounds`
 
 .. raw:: html
 
@@ -21,7 +64,7 @@ Examples using ``rockphypy.Fluid.Gassmann``
   .. image:: /getting_started/images/thumb/sphx_glr_08_Shaly_sand_modelling_thumb.png
     :alt:
 
-  :ref:`sphx_glr_getting_started_08_Shaly_sand_modelling.py`
+  :doc:`/getting_started/08_Shaly_sand_modelling`
 
 .. raw:: html
 
@@ -31,7 +74,9 @@ Examples using ``rockphypy.Fluid.Gassmann``
 
 .. only:: not html
 
- * :ref:`sphx_glr_getting_started_08_Shaly_sand_modelling.py`
+ * :doc:`/getting_started/08_Shaly_sand_modelling`
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 
