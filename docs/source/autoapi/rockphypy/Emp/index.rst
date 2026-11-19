@@ -1,21 +1,19 @@
-:py:mod:`rockphypy.Emp`
-=======================
+rockphypy.Emp
+=============
 
 .. py:module:: rockphypy.Emp
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    rockphypy.Emp.Empirical
 
 
-
+Module Contents
+---------------
 
 .. py:class:: Empirical
 
@@ -39,8 +37,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: krief(phi, Kg, Gg)
       :staticmethod:
+
 
       
       Compute porous background elastic constants as a function of porosity according to Krief model.
@@ -71,8 +71,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: esti_VS(Vp, vsh)
       :staticmethod:
+
 
       
       Estimate, using the Greenberg-Castagna empirical relations, the shearwave velocity in a brine-saturated shaly sandstone with vp
@@ -104,11 +106,13 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: han(phi, C)
       :staticmethod:
 
+
       
-      Han (1986) found empirical regressions relating ultrasonic (laboratory) velocities to porosity and clay content.effective pressure is 20Mpa
+      Han (1986) found empirical regressions relating ultrasonic (laboratory) velocities to porosity and clay content.effective pressure is 40Mpa
 
       :param phi: porosity
       :type phi: float or array-like
@@ -134,8 +138,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: ehrenberg(Z)
       :staticmethod:
+
 
       
       porosity reference trend for Norwegian Sea sandstone. Note that the functional form of the porosity model is not published in Ehrenberg (1990). It is obtained by linear regression of the digitized data point from the original plot in the paper.
@@ -166,8 +172,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: yu_segment_trend(Z)
       :staticmethod:
+
 
       
       Reference trend for Norwegian sea normally buried clean sandstones
@@ -194,8 +202,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: ramm_porosity(Z, HB=True)
       :staticmethod:
+
 
       
       porosity reference trend according to Ramm & Bjørlykke (1994)
@@ -224,8 +234,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: ramm_porosity_segment(Z)
       :staticmethod:
+
 
       
       segment porosity reference trend according to Ramm & Bjørlykke (1994) considering the mechanical and chemical compaction
@@ -252,8 +264,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: empirical_StPeter(Pe, sample=1)
       :staticmethod:
+
 
       
       compute the Vp and Vs for st peter sandstone using the empirical relationship in the form of V= A+KPe-Be^(-DPe)
@@ -282,8 +296,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Scherbaum(Z)
       :staticmethod:
+
 
       
       velocity depth trend for Lower and Middle Buntsandstein
@@ -314,8 +330,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Sclater(phi)
       :staticmethod:
+
 
       
       Sclater-Christie exponential curve for sandstone
@@ -342,8 +360,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Storvoll(Z)
       :staticmethod:
+
 
       
       Storvoll velocity compaction trend. The trend is for shale and shaly sediments but also used for siliciclastic rock like sandstone
@@ -370,8 +390,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Hillis(Z)
       :staticmethod:
+
 
       
       compaction trend for Bunter Sandstone in North sea
@@ -398,8 +420,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Japsen(Z)
       :staticmethod:
+
 
       
       a segmented linear velocity–depth function, These equations are considered as approximation for bunter sandstone trend although they are originally for bunter shale. proposed by Japsen 1999
@@ -426,8 +450,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: hjelstuen(Z)
       :staticmethod:
+
 
       
       Velocity-depth relationships for the Bjørna-Sørkapp margin deposits. note:  the seismic velocities are not directly comparable with velocities from sonic logs (because of the different frequencies), and the velocity-depth profile of Hjelstuen et al. (1996) has not been corrected for uplift and erosion
@@ -454,8 +480,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Cp(phi)
       :staticmethod:
+
 
       
       The coordination number n depends on porosity, as shown by

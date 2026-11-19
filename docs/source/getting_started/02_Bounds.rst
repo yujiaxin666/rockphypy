@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_getting_started_02_Bounds.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -25,7 +25,7 @@ This example shows the comparison between different elastic bounds to Nur's cirt
 
 .. GENERATED FROM PYTHON SOURCE LINES 8-16
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -36,26 +36,14 @@ This example shows the comparison between different elastic bounds to Nur's cirt
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 17-22
 
-.. code-block:: python3
+.. code-block:: Python
 
     import rockphypy # import the module for rock physics
     from rockphypy import EM # import the "effective medium" EM module 
     # import the 'Fluid' module 
     from rockphypy import Fluid
-
-
-
-
-
-
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 23-73
@@ -113,7 +101,7 @@ Here we also make a comparision with Nur's critical porosity model as introduced
 
 .. GENERATED FROM PYTHON SOURCE LINES 76-95
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -135,15 +123,9 @@ Here we also make a comparision with Nur's critical porosity model as introduced
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 96-112
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -162,26 +144,10 @@ Here we also make a comparision with Nur's critical porosity model as introduced
 
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_02_Bounds_001.png
-   :alt: V, R, VRH, HS bounds
-   :srcset: /getting_started/images/sphx_glr_02_Bounds_001.png
-   :class: sphx-glr-single-img
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 113-115
 
 **Reference**: Mavko, G., Mukerji, T. and Dvorkin, J., 2020. The rock physics handbook. Cambridge university press.
 
-
-
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.122 seconds)
 
 
 .. _sphx_glr_download_getting_started_02_Bounds.py:
@@ -190,16 +156,17 @@ Here we also make a comparision with Nur's critical porosity model as introduced
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 02_Bounds.ipynb <02_Bounds.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 02_Bounds.py <02_Bounds.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: 02_Bounds.ipynb <02_Bounds.ipynb>`
+      :download:`Download zipped: 02_Bounds.zip <02_Bounds.zip>`
 
 
 .. only:: html

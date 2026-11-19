@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_advanced_examples_rock_physics_screening.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Rock physics data screening
 
 .. GENERATED FROM PYTHON SOURCE LINES 7-17
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -36,26 +36,14 @@ Rock physics data screening
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 18-26
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
     # import the module 
     from rockphypy import QI
-
-
-
-
-
-
 
 
 
@@ -70,7 +58,7 @@ Avseth et al. (2020) proposed a rock physics model-based data screening approach
 
 .. GENERATED FROM PYTHON SOURCE LINES 33-54
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -94,12 +82,6 @@ Avseth et al. (2020) proposed a rock physics model-based data screening approach
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 55-59
 
 Applied to field data 
@@ -109,7 +91,7 @@ Let's import some synthetic well log data and apply the rock physics screening t
 
 .. GENERATED FROM PYTHON SOURCE LINES 61-79
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # read data
@@ -130,32 +112,10 @@ Let's import some synthetic well log data and apply the rock physics screening t
 
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_rock_physics_screening_001.png
-   :alt: rock physics screening
-   :srcset: /advanced_examples/images/sphx_glr_rock_physics_screening_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    (-0.01, 0.51)
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 80-82
 
 **Reference** 
 - Avseth, P., Lehocki, I., Kjøsnes, Ø., & Sandstad, O. (2021). Data‐driven rock physics analysis of North Sea tertiary reservoir sands. Geophysical Prospecting, 69(3), 608-621.
-
-
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.164 seconds)
 
 
 .. _sphx_glr_download_advanced_examples_rock_physics_screening.py:
@@ -164,16 +124,17 @@ Let's import some synthetic well log data and apply the rock physics screening t
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: rock_physics_screening.ipynb <rock_physics_screening.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: rock_physics_screening.py <rock_physics_screening.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: rock_physics_screening.ipynb <rock_physics_screening.ipynb>`
+      :download:`Download zipped: rock_physics_screening.zip <rock_physics_screening.zip>`
 
 
 .. only:: html

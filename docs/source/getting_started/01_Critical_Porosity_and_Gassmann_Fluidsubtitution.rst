@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_getting_started_01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -25,7 +25,7 @@ This pages gives a simple examples of using the classes ``EM`` and ``Fluid`` of 
 
 .. GENERATED FROM PYTHON SOURCE LINES 8-15
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # Importing aux libraries
@@ -35,26 +35,14 @@ This pages gives a simple examples of using the classes ``EM`` and ``Fluid`` of 
     plt.rcParams['font.family']='arial'
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 16-22
 
-.. code-block:: python3
+.. code-block:: Python
 
     import rockphypy # import the module for rock physics
     from rockphypy import EM # import the "effective medium" EM module 
     # import the 'Fluid' module 
     from rockphypy import Fluid
-
-
-
-
-
-
 
 
 
@@ -105,7 +93,7 @@ critical porosity.
 
 .. GENERATED FROM PYTHON SOURCE LINES 68-76
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # specify model parameters
@@ -116,15 +104,9 @@ critical porosity.
     Kg = 0.5
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 77-83
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # Compute dry-rock moduli
@@ -133,15 +115,9 @@ critical porosity.
     Ksat, Gsat = Fluid.Gassmann(K_dry,G_dry,K0,Kw,phi)
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 84-97
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # plot
@@ -157,27 +133,11 @@ critical porosity.
     plt.grid(ls='--')
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_01_Critical_Porosity_and_Gassmann_Fluidsubtitution_001.png
-   :alt: V, R, VRH, HS bounds
-   :srcset: /getting_started/images/sphx_glr_01_Critical_Porosity_and_Gassmann_Fluidsubtitution_001.png
-   :class: sphx-glr-single-img
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 98-101
 
 We can see from the figure that effective bulk modulus increases when the 
 rock is saturated.
 
-
-
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.144 seconds)
 
 
 .. _sphx_glr_download_getting_started_01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py:
@@ -186,16 +146,17 @@ rock is saturated.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 01_Critical_Porosity_and_Gassmann_Fluidsubtitution.ipynb <01_Critical_Porosity_and_Gassmann_Fluidsubtitution.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py <01_Critical_Porosity_and_Gassmann_Fluidsubtitution.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: 01_Critical_Porosity_and_Gassmann_Fluidsubtitution.ipynb <01_Critical_Porosity_and_Gassmann_Fluidsubtitution.ipynb>`
+      :download:`Download zipped: 01_Critical_Porosity_and_Gassmann_Fluidsubtitution.zip <01_Critical_Porosity_and_Gassmann_Fluidsubtitution.zip>`
 
 
 .. only:: html

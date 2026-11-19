@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_getting_started_03_Effective_medium.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Inclusion models
 
 .. GENERATED FROM PYTHON SOURCE LINES 10-17
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import numpy as np 
@@ -33,27 +33,15 @@ Inclusion models
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 21-29
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import rockphypy # import the module for rock physics
     from rockphypy import EM # import the "effective medium" EM module 
     # import the 'Fluid' module 
     from rockphypy import Fluid
-
-
-
-
-
-
 
 
 
@@ -146,7 +134,7 @@ Let's compare between different effective medium models for spherical pores
 
 .. GENERATED FROM PYTHON SOURCE LINES 115-133
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # specify model parameters
@@ -167,15 +155,9 @@ Let's compare between different effective medium models for spherical pores
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 134-148
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # plot
@@ -192,20 +174,9 @@ Let's compare between different effective medium models for spherical pores
 
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_03_Effective_medium_001.png
-   :alt: EM models for spherical pores
-   :srcset: /getting_started/images/sphx_glr_03_Effective_medium_001.png
-   :class: sphx-glr-single-img
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 149-157
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # O’Connell and Budiansky
@@ -216,15 +187,9 @@ Let's compare between different effective medium models for spherical pores
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 158-170
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # plot
@@ -237,17 +202,6 @@ Let's compare between different effective medium models for spherical pores
 
     plt.legend(loc='best')
     plt.grid(ls='--')
-
-
-
-
-.. image-sg:: /getting_started/images/sphx_glr_03_Effective_medium_002.png
-   :alt: 03 Effective medium
-   :srcset: /getting_started/images/sphx_glr_03_Effective_medium_002.png
-   :class: sphx-glr-single-img
-
-
-
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 171-183
@@ -266,27 +220,23 @@ For SC approach: Because the cavities are isolated with respect to flow, this ap
 **Reference** : Mavko, G., Mukerji, T. and Dvorkin, J., 2020. The rock physics handbook. Cambridge university press.
 
 
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.765 seconds)
-
-
 .. _sphx_glr_download_getting_started_03_Effective_medium.py:
 
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 03_Effective_medium.ipynb <03_Effective_medium.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 03_Effective_medium.py <03_Effective_medium.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: 03_Effective_medium.ipynb <03_Effective_medium.ipynb>`
+      :download:`Download zipped: 03_Effective_medium.zip <03_Effective_medium.zip>`
 
 
 .. only:: html

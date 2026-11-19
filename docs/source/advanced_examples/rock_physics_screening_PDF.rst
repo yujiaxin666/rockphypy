@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_advanced_examples_rock_physics_screening_PDF.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Rock physics data screening: 2D probability density function (PDF)
 
 .. GENERATED FROM PYTHON SOURCE LINES 7-17
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -36,26 +36,14 @@ Rock physics data screening: 2D probability density function (PDF)
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 18-26
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
     # import the module 
     from rockphypy import QI
-
-
-
-
-
-
 
 
 
@@ -68,7 +56,7 @@ When data points cluster or overlap, it can be challenging to visualize their di
 
 .. GENERATED FROM PYTHON SOURCE LINES 31-52
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -92,12 +80,6 @@ When data points cluster or overlap, it can be challenging to visualize their di
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 53-57
 
 Applied to field data 
@@ -107,7 +89,7 @@ Let's import the same synthetic well log data and apply the rock physics screeni
 
 .. GENERATED FROM PYTHON SOURCE LINES 59-76
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # read data: fork the repo to get the dataset first and run this example. 
@@ -127,23 +109,6 @@ Let's import the same synthetic well log data and apply the rock physics screeni
     plt.yticks(np.arange(2000,6200, 1000),[2,3,4,5,6])
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_rock_physics_screening_PDF_001.png
-   :alt: rock physics screening PDF
-   :srcset: /advanced_examples/images/sphx_glr_rock_physics_screening_PDF_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    ([<matplotlib.axis.YTick object at 0x000001957FEA58E0>, <matplotlib.axis.YTick object at 0x000001957FD10C70>, <matplotlib.axis.YTick object at 0x000001957FE89B20>, <matplotlib.axis.YTick object at 0x000001951C072A30>, <matplotlib.axis.YTick object at 0x000001951C0901C0>], [Text(0, 2000, '2'), Text(0, 3000, '3'), Text(0, 4000, '4'), Text(0, 5000, '5'), Text(0, 6000, '6')])
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 77-78
 
 As shown by the figure, using a 2D PDF can provide a clearer visualization of the data distribution compared to a normal scatter plot.
@@ -155,27 +120,23 @@ As shown by the figure, using a 2D PDF can provide a clearer visualization of th
 - Kernel density estimation via diffusion in 1d and 2d: https://kde-diffusion.readthedocs.io/en/stable/
 
 
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.159 seconds)
-
-
 .. _sphx_glr_download_advanced_examples_rock_physics_screening_PDF.py:
 
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: rock_physics_screening_PDF.ipynb <rock_physics_screening_PDF.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: rock_physics_screening_PDF.py <rock_physics_screening_PDF.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: rock_physics_screening_PDF.ipynb <rock_physics_screening_PDF.ipynb>`
+      :download:`Download zipped: rock_physics_screening_PDF.zip <rock_physics_screening_PDF.zip>`
 
 
 .. only:: html

@@ -558,21 +558,18 @@ class QI:
             VP,VS=QI.cal_v_const(Dqz,Kqz,Gqz,Dsh,Ksh,Gsh,Dc,Kc,Gc,Db,Kb,phi_c-i,phi_c,vsh,self.phi,scheme)
             df['vcem_vp'+str(i)]=VP
         # decide if Vcem is 0 or not, otherwise, interpolate between two closet velocities
-        df['vcem']=np.nan
+        vcem = np.zeros(len(df))
         for i, val in enumerate(self.Vp):
-            array= np.array(df.iloc[i, :-1])
+            array= df.iloc[i, :].to_numpy()
             if val <= array[0]:
-                df.vcem.values[i]=0
-                #df.iloc[i]['vcem']=0
+                vcem[i]=0
             elif val >=array[-1]:
-                df.vcem.values[i]=0.1
-                #df.iloc[i]['vcem']=0.1
+                vcem[i]=0.1
             else:
                 big =  array[array<val].max()# the largest element of myArr less than myNumber
                 small = array[array>val].min()# the smallest element of myArr greater than myNumber
-                #df.vcem.values[i]
-                df.vcem.values[i]=(val-small)/(big-small)*(vcem_seeds[array==big]-vcem_seeds[array==small])+vcem_seeds[array==small]
-        return df.vcem.values
+                vcem[i]=((val-small)/(big-small)*(vcem_seeds[array==big]-vcem_seeds[array==small])+vcem_seeds[array==small])[0]
+        return vcem
     def cement_diag_plot(self,vcem,Dqz,Kqz,Gqz,Dsh,Ksh,Gsh,Dc,Kc,Gc,Db,Kb,phib,phib_p,phi_c,sigma,vsh,Cn, scheme,f):
         """_summary_
 

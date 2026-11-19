@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_getting_started_15_Digby.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Digby model
 
 .. GENERATED FROM PYTHON SOURCE LINES 7-16
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import numpy as np 
@@ -35,27 +35,15 @@ Digby model
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 17-23
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
     import rockphypy # import the module 
     from rockphypy import GM
     from rockphypy import  utils
-
-
-
-
-
-
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 24-47
@@ -86,7 +74,7 @@ Example
 
 .. GENERATED FROM PYTHON SOURCE LINES 49-76
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -116,15 +104,9 @@ Example
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 77-94
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -144,26 +126,9 @@ Example
 
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_15_Digby_001.png
-   :alt: 15 Digby
-   :srcset: /getting_started/images/sphx_glr_15_Digby_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x000001F4F04FD550>
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 95-110
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     plt.figure(figsize=(8,7))
@@ -181,32 +146,10 @@ Example
     plt.legend(loc='best', bbox_to_anchor=(0.06,0.5, 1., .102)) #  (x, y, width, height) 
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_15_Digby_002.png
-   :alt: 15 Digby
-   :srcset: /getting_started/images/sphx_glr_15_Digby_002.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x000001F4F1A97790>
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 111-113
 
 This indicates that when the bounding radius decreases, the Vp/Vs ratio will increase. when the ratio of boundin raidus to the grain radius increases, which can be used to describe the increasing contact cement saturation, we can see the stress dependency of the Vp/Vs ratio will vanishes. 
 
-
-
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.261 seconds)
 
 
 .. _sphx_glr_download_getting_started_15_Digby.py:
@@ -215,16 +158,17 @@ This indicates that when the bounding radius decreases, the Vp/Vs ratio will inc
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 15_Digby.ipynb <15_Digby.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 15_Digby.py <15_Digby.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: 15_Digby.ipynb <15_Digby.ipynb>`
+      :download:`Download zipped: 15_Digby.zip <15_Digby.zip>`
 
 
 .. only:: html

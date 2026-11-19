@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_getting_started_08_Shaly_sand_modelling.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Sand-Shale mixture modelling
 
 .. GENERATED FROM PYTHON SOURCE LINES 7-15
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import numpy as np 
@@ -34,26 +34,14 @@ Sand-Shale mixture modelling
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 16-22
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import rockphypy # import the module 
     from rockphypy import GM
     from rockphypy import Fluid
-
-
-
-
-
-
 
 
 
@@ -123,7 +111,7 @@ Let's make a plot showing Porosity versus shale volume in the Thomas–Stieber m
 
 .. GENERATED FROM PYTHON SOURCE LINES 87-112
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -151,23 +139,6 @@ Let's make a plot showing Porosity versus shale volume in the Thomas–Stieber m
 
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_08_Shaly_sand_modelling_001.png
-   :alt: Thomas–Stieber model
-   :srcset: /getting_started/images/sphx_glr_08_Shaly_sand_modelling_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    Text(0.0, 0.1, 'V_disp')
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 113-115
 
 From A to B, the amount of dispersed shale increases. :math:`V_{disp}` is the volume of dispersed shale in the sand pore space. The minimum porosity occurs at point B when the sand porosity is completely filled with shale
@@ -175,7 +146,7 @@ From A to B, the amount of dispersed shale increases. :math:`V_{disp}` is the vo
 
 .. GENERATED FROM PYTHON SOURCE LINES 117-167
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # plot
@@ -226,23 +197,6 @@ From A to B, the amount of dispersed shale increases. :math:`V_{disp}` is the vo
     ax.add_patch(arrow1)
     arrow2= mpatches.FancyArrowPatch((0.2,0.3), (0.8, 0.24),mutation_scale=30)
     ax.add_patch(arrow2)
-
-
-
-
-.. image-sg:: /getting_started/images/sphx_glr_08_Shaly_sand_modelling_002.png
-   :alt: 08 Shaly sand modelling
-   :srcset: /getting_started/images/sphx_glr_08_Shaly_sand_modelling_002.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.patches.FancyArrowPatch object at 0x00000215F57F1D60>
-
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 168-243
@@ -325,7 +279,7 @@ Let's visualize the Dvorkin–Gutierrez models for a complete sandy shale to sha
 
 .. GENERATED FROM PYTHON SOURCE LINES 245-277
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -360,15 +314,9 @@ Let's visualize the Dvorkin–Gutierrez models for a complete sandy shale to sha
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 278-291
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -384,23 +332,6 @@ Let's visualize the Dvorkin–Gutierrez models for a complete sandy shale to sha
 
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_08_Shaly_sand_modelling_003.png
-   :alt: 08 Shaly sand modelling
-   :srcset: /getting_started/images/sphx_glr_08_Shaly_sand_modelling_003.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x00000215F59C8340>
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 292-300
 
 **Reference**:
@@ -413,27 +344,23 @@ Let's visualize the Dvorkin–Gutierrez models for a complete sandy shale to sha
 
 
 
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.582 seconds)
-
-
 .. _sphx_glr_download_getting_started_08_Shaly_sand_modelling.py:
 
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 08_Shaly_sand_modelling.ipynb <08_Shaly_sand_modelling.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 08_Shaly_sand_modelling.py <08_Shaly_sand_modelling.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: 08_Shaly_sand_modelling.ipynb <08_Shaly_sand_modelling.ipynb>`
+      :download:`Download zipped: 08_Shaly_sand_modelling.zip <08_Shaly_sand_modelling.zip>`
 
 
 .. only:: html

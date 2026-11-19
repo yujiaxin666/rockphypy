@@ -1,21 +1,19 @@
-:py:mod:`rockphypy.Fluid`
-=========================
+rockphypy.Fluid
+===============
 
 .. py:module:: rockphypy.Fluid
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    rockphypy.Fluid.Fluid
 
 
-
+Module Contents
+---------------
 
 .. py:class:: Fluid
 
@@ -39,8 +37,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: Brie(Kw, Kgas, Sw, e)
       :staticmethod:
+
 
       
       Brie empirical fluid mixing law
@@ -73,8 +73,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Biot(Kdry, Gdry, K0, Kfl, rho0, rhofl, eta, phi, kapa, a, alpha, freq)
       :staticmethod:
+
 
       
       Compute Biot dispersion and velocity attenuation
@@ -128,8 +130,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Biot_HF(Kdry, Gdry, K0, Kfl, rho0, rhofl, phi, alpha)
       :staticmethod:
+
 
       
       Biot high-frequency limiting velocities in the notation of Johnson and Plona (1982)
@@ -170,8 +174,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Geertsma_Smit_HF(Kdry, Gdry, K0, Kfl, rho0, rhofl, phi, alpha)
       :staticmethod:
+
 
       
       Approximation of Biot high-frequency limit of the fast P-wave velocity given by Geertsma and Smit (1961), This form predicts velocities that are too high (by about 3%–6%) compared with the actual high-frequency limit.
@@ -212,8 +218,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Geertsma_Smit_LF(Vp0, Vpinf, freq, phi, rhofl, kapa, eta)
       :staticmethod:
+
 
       
       Low and middle-frequency approximations of Biot wave given by Geertsma and Smit (1961). Noticed that mathematically this approximation is valid at moderate-to-low seismic frequencies, i.e. f<fc
@@ -252,8 +260,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Gassmann(K_dry, G_dry, K_mat, Kf, phi)
       :staticmethod:
+
 
       
       Computes saturated elastic moduli of rock via Gassmann equation given dry-rock moduli.
@@ -288,8 +298,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Gassmann_sub(phi, K0, Ksat1, Kfl1, Kfl2)
       :staticmethod:
+
 
       
       Fluid subsititution using Gassmann equation, thr rock is initially saturated with a fluid, compute the saturated moduli for tge rock saturated with a different fluid
@@ -324,8 +336,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: vels(K_dry, G_dry, K0, D0, Kf, Df, phi)
       :staticmethod:
+
 
       
       Computes Vp,Vs and densities of saturated rock using Gassmann relations from elastic moduli of rock. See also `Gassmann_vels`.
@@ -364,8 +378,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Gassmann_vels(Vp1, Vs1, rho1, rhofl1, Kfl1, rhofl2, Kfl2, K0, phi)
       :staticmethod:
+
 
       
       Gassmann fluid substituion with velocities
@@ -408,8 +424,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Gassmann_approx(Msat1, M0, Mfl1, phi, Mfl2)
       :staticmethod:
+
 
       
       Perform gassmann fluid subsititution using p wave modulus only
@@ -444,8 +462,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Brown_Korringa_dry2sat(Sdry, K0, G0, Kfl, phi)
       :staticmethod:
+
 
       
       Compute fluid saturated compliances from dry compliance for anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper.
@@ -480,8 +500,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Brown_Korringa_sat2dry(Ssat, K0, G0, Kfl, phi)
       :staticmethod:
+
 
       
       Compute dry compliance from fluid saturated compliances for arbitrarily anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper.
@@ -516,8 +538,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Brown_Korringa_sub(Csat, K0, G0, Kfl1, Kfl2, phi)
       :staticmethod:
+
 
       
       Fluid substitution in arbitrarily anisotropic rock using Brown and Korringa (1975). the rock is originally saturated by fluid 1. After fluid subsititution, the rock is finally saturated by fluid 2.
@@ -554,8 +578,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Mavko_Jizba(Vp_hs, Vs_hs, Vpdry, Vsdry, K0, rhodry, rhofl, Kfl, phi)
       :staticmethod:
+
 
       
       Predicting the very high-frequency moduli and velocities of saturated rocks from dry rock properties using the Squirt flow model derived by Mavko and Jizba (1991).
@@ -601,8 +627,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Squirt_anisotropic(Sdry, Sdry_hp)
       :staticmethod:
+
 
       
       Predict wet unrelaxed frame compliances at very high frequency from dry frame compliances for transversely isotropic rocks using theoretical formula derived by Mukerji and Mavko, (1994)
@@ -631,8 +659,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: White_Dutta_Ode(Kdry, Gdry, K0, phi, rho0, rhofl1, rhofl2, Kfl1, Kfl2, eta1, eta2, kapa, a, sg, freq)
       :staticmethod:
+
 
       
       Dispersion and Attenuation of partial saturation using White and Dutta–Odé Model.

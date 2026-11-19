@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_getting_started_14_Mori_Tanaka_scheme.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Modified Mori-Tanaka Scheme
 
 .. GENERATED FROM PYTHON SOURCE LINES 7-15
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -34,26 +34,14 @@ Modified Mori-Tanaka Scheme
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 16-22
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
     import rockphypy # import the module 
     from rockphypy import EM
-
-
-
-
-
-
 
 
 
@@ -146,7 +134,7 @@ Let's see if the modified mori-Tanaka scheme will yield the same result as given
 
 .. GENERATED FROM PYTHON SOURCE LINES 110-123
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -162,15 +150,9 @@ Let's see if the modified mori-Tanaka scheme will yield the same result as given
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 124-139
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -188,33 +170,11 @@ Let's see if the modified mori-Tanaka scheme will yield the same result as given
 
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_14_Mori_Tanaka_scheme_001.png
-   :alt: mMT and HS bound
-   :srcset: /getting_started/images/sphx_glr_14_Mori_Tanaka_scheme_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x000001C8085FAB50>
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 140-143
 
 **Reference** 
 Iwakuma, T. and Koyama, S., 2005. An estimate of average elastic moduli of composites and polycrystals. Mechanics of materials, 37(4), pp.459-472.
 
-
-
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.100 seconds)
 
 
 .. _sphx_glr_download_getting_started_14_Mori_Tanaka_scheme.py:
@@ -223,16 +183,17 @@ Iwakuma, T. and Koyama, S., 2005. An estimate of average elastic moduli of compo
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 14_Mori_Tanaka_scheme.ipynb <14_Mori_Tanaka_scheme.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 14_Mori_Tanaka_scheme.py <14_Mori_Tanaka_scheme.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: 14_Mori_Tanaka_scheme.ipynb <14_Mori_Tanaka_scheme.ipynb>`
+      :download:`Download zipped: 14_Mori_Tanaka_scheme.zip <14_Mori_Tanaka_scheme.zip>`
 
 
 .. only:: html

@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_getting_started_09_Berrymann_SC.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -24,7 +24,7 @@ Berryman Self consistent approach for calculating the elastic moduli of N phase 
 
 .. GENERATED FROM PYTHON SOURCE LINES 8-15
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import numpy as np 
@@ -34,26 +34,14 @@ Berryman Self consistent approach for calculating the elastic moduli of N phase 
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 16-21
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import rockphypy # import the module 
     from rockphypy import EM 
     from rockphypy import Fluid
-
-
-
-
-
-
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 22-31
@@ -78,7 +66,7 @@ There are three phases in the composite, i.e. quartz grain, water filled spheric
 
 .. GENERATED FROM PYTHON SOURCE LINES 41-55
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # three phase K=[K1,K2,K3]
@@ -95,31 +83,13 @@ There are three phases in the composite, i.e. quartz grain, water filled spheric
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 56-60
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
     print('K_eff and G_eff of the composite are {:.2f} GPa and {:.2f} GPa, respectively'.format(K_sc,G_sc))
-
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    K_eff and G_eff of the composite are 16.80 GPa and 11.56 GPa, respectively
-
-
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 61-63
@@ -129,7 +99,7 @@ The effective moduli of the two phase composite as a function of the volume frac
 
 .. GENERATED FROM PYTHON SOURCE LINES 63-77
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # two phase K=[K1,K2]
@@ -146,15 +116,9 @@ The effective moduli of the two phase composite as a function of the volume frac
         K_eff[i],G_eff[i]= EM.Berryman_sc(K,G,X,Alpha)
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 78-87
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # sphinx figure 
@@ -166,33 +130,11 @@ The effective moduli of the two phase composite as a function of the volume frac
     plt.ylabel('Effective modulus')
     plt.legend()
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_09_Berrymann_SC_001.png
-   :alt: 09 Berrymann SC
-   :srcset: /getting_started/images/sphx_glr_09_Berrymann_SC_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x000002BF89AEAFA0>
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 88-91
 
 As can be shown in the figure, the effective shear modulus of the two phase composite becomes 0 when the volume fraction of the soft phase is approximately 45% for an aspect ratio of 0.1. this prediction is very similar to the critical porosity model which predicts a suspension of grain in the fluid when the porosity exceeds about 0.4. 
 
 However, feel free to change the aspect ratio for the soft phase from 0.1 to 0.01, then the modelling results of the effective shear modulus becomes zero when the volume fraction of the soft phase is approximately 12%. 
-
-
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.966 seconds)
 
 
 .. _sphx_glr_download_getting_started_09_Berrymann_SC.py:
@@ -201,16 +143,17 @@ However, feel free to change the aspect ratio for the soft phase from 0.1 to 0.0
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 09_Berrymann_SC.ipynb <09_Berrymann_SC.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 09_Berrymann_SC.py <09_Berrymann_SC.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: 09_Berrymann_SC.ipynb <09_Berrymann_SC.ipynb>`
+      :download:`Download zipped: 09_Berrymann_SC.zip <09_Berrymann_SC.zip>`
 
 
 .. only:: html

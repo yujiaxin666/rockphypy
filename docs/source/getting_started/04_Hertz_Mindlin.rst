@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_getting_started_04_Hertz_Mindlin.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Hertz-Mindlin and reduced shear factor
 
 .. GENERATED FROM PYTHON SOURCE LINES 9-17
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -34,25 +34,13 @@ Hertz-Mindlin and reduced shear factor
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 18-23
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import rockphypy # import the module for rock physics
     from rockphypy import GM # import the "effective medium" GM module 
-
-
-
-
-
-
 
 
 
@@ -89,7 +77,7 @@ The effect of reduced shear factor on HM modelling
 
 .. GENERATED FROM PYTHON SOURCE LINES 54-66
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # specify model parameters
@@ -104,15 +92,9 @@ The effect of reduced shear factor on HM modelling
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 67-84
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -130,23 +112,6 @@ The effect of reduced shear factor on HM modelling
         _,G= GM.hertzmindlin(K0, G0, phic, Cn, sigma, val)
         plt.plot(sigma, G, color=colors[i])
     plt.legend(loc='best')
-
-
-
-
-.. image-sg:: /getting_started/images/sphx_glr_04_Hertz_Mindlin_001.png
-   :alt: 04 Hertz Mindlin
-   :srcset: /getting_started/images/sphx_glr_04_Hertz_Mindlin_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x000001F826587C70>
-
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 85-102
@@ -171,25 +136,12 @@ Noticed that the function ``GM.hertzmindlin`` and ``GM.walton`` yield exactly th
 
 .. GENERATED FROM PYTHON SOURCE LINES 104-109
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
     print('HM result:', GM.hertzmindlin(30,20,0.4,6,10,0.5))
     print('Walton result:',GM.Walton(30,20,0.4,6,10,0.5))
-
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    HM result: (0.7876744416165334, 0.7816154074502524)
-    Walton result: (0.7876744416165333, 0.7816154074502523)
-
-
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 110-126
@@ -212,27 +164,23 @@ those between perfectly spherical particles. Hertz–Mindlin theory also fails t
 
 
 
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.163 seconds)
-
-
 .. _sphx_glr_download_getting_started_04_Hertz_Mindlin.py:
 
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 04_Hertz_Mindlin.ipynb <04_Hertz_Mindlin.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 04_Hertz_Mindlin.py <04_Hertz_Mindlin.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: 04_Hertz_Mindlin.ipynb <04_Hertz_Mindlin.ipynb>`
+      :download:`Download zipped: 04_Hertz_Mindlin.zip <04_Hertz_Mindlin.zip>`
 
 
 .. only:: html

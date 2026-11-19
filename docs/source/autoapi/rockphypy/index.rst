@@ -1,32 +1,29 @@
-:py:mod:`rockphypy`
-===================
+rockphypy
+=========
 
 .. py:module:: rockphypy
 
 
 Submodules
 ----------
+
 .. toctree::
-   :titlesonly:
    :maxdepth: 1
 
-   AVO/index.rst
-   Anisotropy/index.rst
-   BW/index.rst
-   EM/index.rst
-   Emp/index.rst
-   Fluid/index.rst
-   GM/index.rst
-   Perm/index.rst
-   QI/index.rst
-   utils/index.rst
+   /autoapi/rockphypy/AVO/index
+   /autoapi/rockphypy/Anisotropy/index
+   /autoapi/rockphypy/BW/index
+   /autoapi/rockphypy/EM/index
+   /autoapi/rockphypy/Emp/index
+   /autoapi/rockphypy/Fluid/index
+   /autoapi/rockphypy/GM/index
+   /autoapi/rockphypy/Perm/index
+   /autoapi/rockphypy/QI/index
+   /autoapi/rockphypy/utils/index
 
-
-Package Contents
-----------------
 
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
@@ -42,7 +39,8 @@ Classes
    rockphypy.utils
 
 
-
+Package Contents
+----------------
 
 .. py:class:: Anisotropy
 
@@ -66,8 +64,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: Thomsen(C11, C33, C13, C44, C66, den, theta)
       :staticmethod:
+
 
       
       Compute thomsen parameters and three phase velocities for weak anisotropic TI media with vertical symmetry axis.
@@ -98,8 +98,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Thomsen_Tsvankin(C11, C22, C33, C12, C13, C23, C44, C55, C66)
       :staticmethod:
+
 
       
       Elastic constants of an orthorhombic elastic medium defined by Tsvankin’s notation for weak elastic anisotropy assuming the vertical symmetry axis is along the x3 direction.
@@ -126,8 +128,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Backus(V, lamda, G)
       :staticmethod:
+
 
       
       Computes stiffnesses of a layered medium using backus average model.
@@ -158,8 +162,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Backus_log(Vp, Vs, Den, Depth)
       :staticmethod:
+
 
       
       Computes Backus Average from log data, notice that the Depth is 1d Vector including each top depth of layer and also the bottom of last layer.
@@ -192,8 +198,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: vel_azi_HTI(C, Den, azimuth)
       :staticmethod:
+
 
       
       Given stiffnesses and density of the HTI medium, compute the azimuth dependent phase velocities.
@@ -224,8 +232,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: vel_azi_VTI(C, Den, azimuth)
       :staticmethod:
+
 
       
       Given stiffnesses and density of the VTI medium, compute the azimuth dependent phase velocities.
@@ -256,8 +266,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Bond_trans(C, theta, axis=3)
       :staticmethod:
+
 
       
       Coordinate Transformations for stiffness matrix in 6x6 Voigt notation using Bond transformation matrix.
@@ -316,8 +328,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: AVO_HTI(D1, D2, C1, C2, theta, azimuth)
       :staticmethod:
+
 
       
       Compute azimuth dependent PP reflectivity for wealy anisotropic HTI media using Ruger's approximation
@@ -354,8 +368,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Aki_Richards(theta, vp1, vp2, vs1, vs2, den1, den2)
       :staticmethod:
+
 
       
       Aki-Richard approximation to PP reflectivity.
@@ -397,8 +413,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta)
       :staticmethod:
+
 
       
       Reflection & Transmission coefficients calculated using full Zoeppritz equations.
@@ -437,8 +455,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: AVO_abe(vp1, vs1, d1, vp2, vs2, d2)
       :staticmethod:
+
 
       
       Different approximations AVO terms
@@ -475,8 +495,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: EI_ref(Vp, Vs, rho, theta, SP, norm=True)
       :staticmethod:
+
 
       
       Compute elastic impedance of an isotropic, flat-layered Earth
@@ -523,8 +545,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: AVO_ortho(a1, b1, e11, d11, e12, d12, g1, rho1, a2, b2, e21, d21, e22, d22, g2, rho2, the)
       :staticmethod:
+
 
       
       calculates the reflectivity in the symmetry plane for interfaces between 2 orthorhombic media, refactered from srb toolbox written by Diana Sava.
@@ -606,8 +630,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: dz_dp(P_pr, T_pr)
       :staticmethod:
+
 
       
       Values for dZ/dPpr obtained from equation 10b in Batzle and Wang (1992).
@@ -630,8 +656,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: pseudo_p_t(P, T, G)
       :staticmethod:
+
 
       
       Calculate the pseudoreduced temperature and pressure according to Thomas et al. 1970.
@@ -664,8 +692,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_co2(P, T, G)
       :staticmethod:
+
 
       
       Compute CO2 properties as a function of temperature and pressure using modified Batzle-Wang equations
@@ -701,8 +731,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_gas(P, T, G)
       :staticmethod:
+
 
       
       Estimate the Gas density and bulk modulus at specific temperature and pressure.
@@ -734,8 +766,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_oil(P, T, den)
       :staticmethod:
+
 
       
       Estimate the oil density and bulk modulus at specific temperature and pressure.
@@ -767,8 +801,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_go(P, T, den, G, Rg)
       :staticmethod:
+
 
       
       compute density and bulk modulus of live oil.
@@ -804,8 +840,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_water(T, P)
       :staticmethod:
+
 
       
       Compute the density and bulk modulus of pure water as a function of temperature and pressure using Batzle and Wang (1992).
@@ -835,8 +873,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: v_water(T, P)
       :staticmethod:
+
 
       
       Acoustic velocity of pure water as a function of temperature
@@ -866,8 +906,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: rho_K_brine(T, P, S)
       :staticmethod:
+
 
       
       Calculation of the density and bulk modulus of brine (NaCl) as a function of temperature, salinity and pressure using Batzle and Wang (1992).
@@ -899,8 +941,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: v_brine(T, P, S)
       :staticmethod:
+
 
       
       Calculte the acoustic velocity of brine as a function of temperature, salinity and pressure using Batzle and Wang (1992).
@@ -931,8 +975,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: co2_brine(temperature, pressure, salinity, Sco2, brie_component=None, bw=False)
       :staticmethod:
+
 
       
       compute the effective properties of critical Co2 brine mixture depending on temperature, pressure and salinity of the brine, as well as the saturation state.
@@ -993,8 +1039,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: Kozeny_Carman(phi, d)
       :staticmethod:
+
 
       
       Describe the permeability in a porous medium using Kozeny-Carman equation assuming the turtuosity tau=sqrt(2), 1/B=2.5 for unconsolidated monomodal sphere pack.
@@ -1030,8 +1078,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Kozeny_Carman_Percolation(phi, phic, d, B)
       :staticmethod:
+
 
       
       The Kozeny−Carman relations incorporating the percolation effect
@@ -1064,8 +1114,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Owolabi(phi, Swi)
       :staticmethod:
+
 
       
       Estimate the permeability in uncosonlidated sands of Pleistocene to Oligocene age in Eastern Niger Delta from log derived porosityand irreducible water saturation.
@@ -1094,8 +1146,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Perm_logs(phi, Swi)
       :staticmethod:
+
 
       
       Various empirical correlations of between permeability, porosity and irreducible water-saturation from welllogs. Models includs Tixier, Timur, Coates and Coates-Dumanoir.
@@ -1129,8 +1183,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Panda_Lake(d, C, S, tau, phi)
       :staticmethod:
+
 
       
       Modified Kozeny-carman relation incorpating the contribution of grain size variation and sorting using Manmath N. Panda and Larry W. Lake relation.
@@ -1169,8 +1225,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Panda_Lake_cem(phi, d)
       :staticmethod:
+
 
       
       Quantify the effects of cements on the single phase permeability estimate of unconsolidated sand using Panda & Lake model
@@ -1199,8 +1257,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Revil(phi, d)
       :staticmethod:
+
 
       
       Estimate permeability in very shaly rock using Revil et al. 1997
@@ -1229,8 +1289,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Fredrich(phi, d, b)
       :staticmethod:
+
 
       
       Compute permability considering Pore Geometry and Transport Properties of Fontainebleau Sandstone
@@ -1263,8 +1325,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Bloch(S, C, D)
       :staticmethod:
+
 
       
       Predict porosity and permeability in sandstones prior to drilling using Bloch empirical relations obtain in Yacheng field.
@@ -1295,8 +1359,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Bernabe(phi, crf, w, r)
       :staticmethod:
+
 
       
       Bernabe models permit to compute the permeability and porosity of strongly pressure dependent pores such as cracks and approximately constant pores associated with tubes and nodal pores.
@@ -1354,8 +1420,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: ThomasStieber(phi_sand, phi_sh, vsh)
       :staticmethod:
+
 
       
       Thomas-Stieber porosity model for sand-shale system.
@@ -1386,8 +1454,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: silty_shale(C, Kq, Gq, Ksh, Gsh)
       :staticmethod:
+
 
       
       Dvorkin–Gutierrez silty shale model: model the elastic moduli of decreasing clay content for shale.
@@ -1422,8 +1492,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: shaly_sand(phis, C, Kss, Gss, Kcc, Gcc)
       :staticmethod:
+
 
       
       Modeling elastic moduli for sand with increasing clay content using LHS bound rather than using Gassmann relation.
@@ -1460,8 +1532,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: contactcement(K0, G0, Kc, Gc, phi, phic, Cn, scheme)
       :staticmethod:
+
 
       
       Compute dry elastic moduli of cemented sandstone via Contact cement model by Dvorkin &Nur (1996).
@@ -1509,8 +1583,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: hertzmindlin(K0, G0, phic, Cn, sigma, f)
       :staticmethod:
+
 
       
       Compute effective dry elastic moduli of granular packing under hydrostatic pressure condition via Hertz-Mindlin approach. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented.
@@ -1552,8 +1628,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: softsand(K0, G0, phi, phic, Cn, sigma, f)
       :staticmethod:
+
 
       
       Soft-sand (unconsolidated sand) model: model the porosity-sorting effects using the lower Hashin-Shtrikman-Walpole bound. (Also referred to as the 'friable-sand model' in Avseth et al. (2010).
@@ -1597,8 +1675,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Walton(K0, G0, phic, Cn, sigma, f)
       :staticmethod:
+
 
       
       Compute dry rock elastic moduli of sphere packs based on the Walton (1987)' thoery. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented.
@@ -1641,8 +1721,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: johnson(K0, G0, n, phi, epsilon, epsilon_axial, path='together')
       :staticmethod:
+
 
       
       effective theory for stress-induced anisotropy in sphere packs. The transversely isotropic strain is considered as a combination of hydrostatic strain and uniaxial strain.
@@ -1688,8 +1770,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: stiffsand(K0, G0, phi, phic, Cn, sigma, f)
       :staticmethod:
+
 
       
       Stiff-sand model:  Modified Hashin-Shtrikman upper bound with Hertz-Mindlin end point, counterpart to soft sand model.
@@ -1731,8 +1815,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: constantcement(phi_b, K0, G0, Kc, Gc, phi, phic, Cn, scheme)
       :staticmethod:
+
 
       
       Constant cement (constant depth) model according to Avseth (2000)
@@ -1780,8 +1866,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: MUHS(K0, G0, Kc, Gc, phi, phi_b, phic, Cn, scheme)
       :staticmethod:
+
 
       
       Increasing cement model: Modified Hashin-Strikmann upper bound blend with contact cement model. For elastically stiff sandstone modelling.
@@ -1829,8 +1917,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Digby(K0, G0, phi, Cn, sigma, a_R)
       :staticmethod:
+
 
       
       Compute Keff and Geff using Digby's model
@@ -1869,8 +1959,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: pcm(f, sigma, K0, G0, phi, phic, v_cem, v_ci, Kc, Gc, Cn, mode, scheme, f_)
       :staticmethod:
+
 
       
       Computes effective elastic moduli of patchy cemented sandstone according to Avseth (2016).
@@ -1929,8 +2021,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: diluting(k, sigma0, sigma, m)
       :staticmethod:
+
 
       
       stress dependent diluting parameter used in varying patchiness cement model.
@@ -1963,8 +2057,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: vpcm(alpha, f, sigma, K0, G0, phi, phic, v_cem, v_ci, Kc, Gc, Cn, scheme, f_)
       :staticmethod:
+
 
       
       Compute effective elastic moduli using varying patchiness cement model (VPCM) as proposed by Yu et al. (2023).
@@ -2043,8 +2139,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: Brie(Kw, Kgas, Sw, e)
       :staticmethod:
+
 
       
       Brie empirical fluid mixing law
@@ -2077,8 +2175,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Biot(Kdry, Gdry, K0, Kfl, rho0, rhofl, eta, phi, kapa, a, alpha, freq)
       :staticmethod:
+
 
       
       Compute Biot dispersion and velocity attenuation
@@ -2132,8 +2232,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Biot_HF(Kdry, Gdry, K0, Kfl, rho0, rhofl, phi, alpha)
       :staticmethod:
+
 
       
       Biot high-frequency limiting velocities in the notation of Johnson and Plona (1982)
@@ -2174,8 +2276,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Geertsma_Smit_HF(Kdry, Gdry, K0, Kfl, rho0, rhofl, phi, alpha)
       :staticmethod:
+
 
       
       Approximation of Biot high-frequency limit of the fast P-wave velocity given by Geertsma and Smit (1961), This form predicts velocities that are too high (by about 3%–6%) compared with the actual high-frequency limit.
@@ -2216,8 +2320,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Geertsma_Smit_LF(Vp0, Vpinf, freq, phi, rhofl, kapa, eta)
       :staticmethod:
+
 
       
       Low and middle-frequency approximations of Biot wave given by Geertsma and Smit (1961). Noticed that mathematically this approximation is valid at moderate-to-low seismic frequencies, i.e. f<fc
@@ -2256,8 +2362,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Gassmann(K_dry, G_dry, K_mat, Kf, phi)
       :staticmethod:
+
 
       
       Computes saturated elastic moduli of rock via Gassmann equation given dry-rock moduli.
@@ -2292,8 +2400,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Gassmann_sub(phi, K0, Ksat1, Kfl1, Kfl2)
       :staticmethod:
+
 
       
       Fluid subsititution using Gassmann equation, thr rock is initially saturated with a fluid, compute the saturated moduli for tge rock saturated with a different fluid
@@ -2328,8 +2438,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: vels(K_dry, G_dry, K0, D0, Kf, Df, phi)
       :staticmethod:
+
 
       
       Computes Vp,Vs and densities of saturated rock using Gassmann relations from elastic moduli of rock. See also `Gassmann_vels`.
@@ -2368,8 +2480,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Gassmann_vels(Vp1, Vs1, rho1, rhofl1, Kfl1, rhofl2, Kfl2, K0, phi)
       :staticmethod:
+
 
       
       Gassmann fluid substituion with velocities
@@ -2412,8 +2526,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Gassmann_approx(Msat1, M0, Mfl1, phi, Mfl2)
       :staticmethod:
+
 
       
       Perform gassmann fluid subsititution using p wave modulus only
@@ -2448,8 +2564,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Brown_Korringa_dry2sat(Sdry, K0, G0, Kfl, phi)
       :staticmethod:
+
 
       
       Compute fluid saturated compliances from dry compliance for anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper.
@@ -2484,8 +2602,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Brown_Korringa_sat2dry(Ssat, K0, G0, Kfl, phi)
       :staticmethod:
+
 
       
       Compute dry compliance from fluid saturated compliances for arbitrarily anisotropic rock using Brown and Korringa (1975). See eq. 32 in the paper.
@@ -2520,8 +2640,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Brown_Korringa_sub(Csat, K0, G0, Kfl1, Kfl2, phi)
       :staticmethod:
+
 
       
       Fluid substitution in arbitrarily anisotropic rock using Brown and Korringa (1975). the rock is originally saturated by fluid 1. After fluid subsititution, the rock is finally saturated by fluid 2.
@@ -2558,8 +2680,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Mavko_Jizba(Vp_hs, Vs_hs, Vpdry, Vsdry, K0, rhodry, rhofl, Kfl, phi)
       :staticmethod:
+
 
       
       Predicting the very high-frequency moduli and velocities of saturated rocks from dry rock properties using the Squirt flow model derived by Mavko and Jizba (1991).
@@ -2605,8 +2729,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Squirt_anisotropic(Sdry, Sdry_hp)
       :staticmethod:
+
 
       
       Predict wet unrelaxed frame compliances at very high frequency from dry frame compliances for transversely isotropic rocks using theoretical formula derived by Mukerji and Mavko, (1994)
@@ -2635,8 +2761,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: White_Dutta_Ode(Kdry, Gdry, K0, phi, rho0, rhofl1, rhofl2, Kfl1, Kfl2, eta1, eta2, kapa, a, sg, freq)
       :staticmethod:
+
 
       
       Dispersion and Attenuation of partial saturation using White and Dutta–Odé Model.
@@ -2716,8 +2844,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: VRH(volumes, M)
       :staticmethod:
+
 
       
       Computes Voigt, Reuss, and Hill Average Moduli Estimate.
@@ -2748,8 +2878,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: cripor(K0, G0, phi, phic)
       :staticmethod:
+
 
       
       Critical porosity model according to Nur’s modified Voigt average.
@@ -2782,8 +2914,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: cripor_reuss(M0, Mf, phic, den=False)
       :staticmethod:
+
 
       
       In the suspension domain, the effective bulk and shear moduli of the rock can be estimated by using the Reuss (isostress) average.
@@ -2820,8 +2954,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: HS(f, K1, K2, G1, G2, bound='upper')
       :staticmethod:
+
 
       
       Compute effective moduli of two-phase composite using hashin-strikmann bounds.
@@ -2858,8 +2994,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Eshelby_Cheng(K, G, phi, alpha, Kf, mat=False)
       :staticmethod:
+
 
       
       Compute the effective anisotropic moduli of a cracked isotropic rock with single set fracture using Eshelby–Cheng Model.
@@ -2900,8 +3038,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: hudson(K, G, Ki, Gi, alpha, crd, order=1, axis=3)
       :staticmethod:
+
 
       
       Hudson’s effective crack model assuming weak inclusion for media with single crack set with all normals aligned along 1 or 3-axis. First and Second order corrections are both implemented. Notice that the second order correction has limitation. See Cheng (1993).
@@ -2950,8 +3090,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: hudson_rand(K, G, Ki, Gi, alpha, crd)
       :staticmethod:
+
 
       
       Hudson's crack model of a material containing randomly oriented inclusions. The model results agree with the consistent results of Budiansky and O’Connell (1976).
@@ -2988,8 +3130,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: hudson_ortho(K, G, Ki, Gi, alpha, crd)
       :staticmethod:
+
 
       
       Hudson’s first order effective crack model assuming weak inclusion for media with three crack sets with normals aligned along 1 2, and 3-axis respectively.  Model is valid for small crack density and aspect ratios.
@@ -3026,8 +3170,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: hudson_cone(K, G, Ki, Gi, alpha, crd, theta)
       :staticmethod:
+
 
       
       Hudson’s first order effective crack model assuming weak inclusion for media with crack normals randomly distributed at a fixed angle from the TI symmetry axis 3 forming a cone;
@@ -3066,8 +3212,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Berryman_sc(K, G, X, Alpha)
       :staticmethod:
+
 
       
       Effective elastic moduli for multi-component composite using Berryman's Consistent (Coherent Potential Approximation) method.See also: PQ_vectorize, Berryman_func
@@ -3100,8 +3248,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: PQ_vectorize(Km, Gm, Ki, Gi, alpha)
       :staticmethod:
+
 
       
       compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980).See also: Berryman_sc, Berryman_func
@@ -3136,8 +3286,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Berryman_func(params, K, G, X, Alpha)
       :staticmethod:
+
 
       
       Form the system of equastions to solve. See 4.11.14 and 4.11.15 in Rock physics handbook 2020. See also: Berryman_sc
@@ -3171,8 +3323,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Swiss_cheese(Ks, Gs, phi)
       :staticmethod:
+
 
       
       Compute effective elastic moduli via "Swiss cheese" model with spherical pores. "Swiss cheese" model assumes a dilute distribution of spherical inclusions embedded in an * *unbounded* * homogenous solid.  It takes the "noninteracting assumption" in which all cavities (pores) are independent so that their contributions can be added.
@@ -3203,8 +3357,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: SC(phi, Ks, Gs, iter_n)
       :staticmethod:
+
 
       
       Self-Consistent(SC) model with spherical pores considering the critical porosity and the interaction effect between inclusions.
@@ -3237,8 +3393,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Dilute_crack(Ks, Gs, cd)
       :staticmethod:
+
 
       
       The non-iteracting randomly oriented crack model.
@@ -3269,8 +3427,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: OConnell_Budiansky(K0, G0, crd)
       :staticmethod:
+
 
       
       O’Connell and Budiansky (1974) presented equations for effective bulk and shear moduli of a cracked medium with randomly oriented dry penny-shaped cracks (in the limiting case when the aspect ratio α goes to 0)
@@ -3301,8 +3461,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: OConnell_Budiansky_fl(K0, G0, Kfl, crd, alpha)
       :staticmethod:
+
 
       
       Saturated effective elastic moduli using the O’Connell and Budiansky Consistent (SC) formulations under the constraints of small aspect ratio cracks with soft-fluid saturation.
@@ -3339,8 +3501,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: OC_R_funcs(params, crd, nu_0, w)
       :staticmethod:
+
 
       
       Form the system of equastions to solve. Given crack density and w, solve for the D and nu_eff simulaneously using equations 23 and 25 in O’Connell and Budiansky, (1974)
@@ -3372,8 +3536,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: PQ(Km, Gm, Ki, Gi, alpha)
       :staticmethod:
+
 
       
       compute geometric strain concentration factors P and Q for prolate and oblate spheroids according to Berymann (1980). See also PQ_vectorize
@@ -3408,8 +3574,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: DEM(y, t, params)
       :staticmethod:
+
 
       
       ODE solver tutorial: https://physics.nyu.edu/pine/pymanual/html/chap9/chap9_scipy.html.
@@ -3432,8 +3600,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Berryman_DEM(Km, Gm, Ki, Gi, alpha, phi)
       :staticmethod:
+
 
       
       Compute elastic moduli of two-phase composites by incrementally adding inclusions of one phase (phase 2) to the matrix phase using Berryman DEM theory
@@ -3468,8 +3638,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: SC_dilute(Km, Gm, Ki, Gi, f, mode)
       :staticmethod:
+
 
       
       Elastic solids with elastic micro-inclusions. Random distribution of dilute spherical micro-inclusions in a two phase composite.
@@ -3510,8 +3682,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: SC_flex(f, iter_n, Km, Ki, Gm, Gi)
       :staticmethod:
+
 
       
       iteratively solving self consistent model for a two phase compposite consisting random distribution of spherical inclusion, not limited to pore.
@@ -3552,8 +3726,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: MT_average(f, Kmat, Gmat, K1, G1, K2, G2)
       :staticmethod:
+
 
       
       Compute Two-phase composite without matrix using modified Mori-Takana Scheme according to  Iwakuma 2003, one of the inhomogeneities must be considered as a matrix in the limiting model.
@@ -3615,8 +3791,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: krief(phi, Kg, Gg)
       :staticmethod:
+
 
       
       Compute porous background elastic constants as a function of porosity according to Krief model.
@@ -3647,8 +3825,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: esti_VS(Vp, vsh)
       :staticmethod:
+
 
       
       Estimate, using the Greenberg-Castagna empirical relations, the shearwave velocity in a brine-saturated shaly sandstone with vp
@@ -3680,11 +3860,13 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: han(phi, C)
       :staticmethod:
 
+
       
-      Han (1986) found empirical regressions relating ultrasonic (laboratory) velocities to porosity and clay content.effective pressure is 20Mpa
+      Han (1986) found empirical regressions relating ultrasonic (laboratory) velocities to porosity and clay content.effective pressure is 40Mpa
 
       :param phi: porosity
       :type phi: float or array-like
@@ -3710,8 +3892,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: ehrenberg(Z)
       :staticmethod:
+
 
       
       porosity reference trend for Norwegian Sea sandstone. Note that the functional form of the porosity model is not published in Ehrenberg (1990). It is obtained by linear regression of the digitized data point from the original plot in the paper.
@@ -3742,8 +3926,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: yu_segment_trend(Z)
       :staticmethod:
+
 
       
       Reference trend for Norwegian sea normally buried clean sandstones
@@ -3770,8 +3956,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: ramm_porosity(Z, HB=True)
       :staticmethod:
+
 
       
       porosity reference trend according to Ramm & Bjørlykke (1994)
@@ -3800,8 +3988,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: ramm_porosity_segment(Z)
       :staticmethod:
+
 
       
       segment porosity reference trend according to Ramm & Bjørlykke (1994) considering the mechanical and chemical compaction
@@ -3828,8 +4018,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: empirical_StPeter(Pe, sample=1)
       :staticmethod:
+
 
       
       compute the Vp and Vs for st peter sandstone using the empirical relationship in the form of V= A+KPe-Be^(-DPe)
@@ -3858,8 +4050,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Scherbaum(Z)
       :staticmethod:
+
 
       
       velocity depth trend for Lower and Middle Buntsandstein
@@ -3890,8 +4084,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Sclater(phi)
       :staticmethod:
+
 
       
       Sclater-Christie exponential curve for sandstone
@@ -3918,8 +4114,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Storvoll(Z)
       :staticmethod:
+
 
       
       Storvoll velocity compaction trend. The trend is for shale and shaly sediments but also used for siliciclastic rock like sandstone
@@ -3946,8 +4144,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Hillis(Z)
       :staticmethod:
+
 
       
       compaction trend for Bunter Sandstone in North sea
@@ -3974,8 +4174,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Japsen(Z)
       :staticmethod:
+
 
       
       a segmented linear velocity–depth function, These equations are considered as approximation for bunter sandstone trend although they are originally for bunter shale. proposed by Japsen 1999
@@ -4002,8 +4204,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: hjelstuen(Z)
       :staticmethod:
+
 
       
       Velocity-depth relationships for the Bjørna-Sørkapp margin deposits. note:  the seismic velocities are not directly comparable with velocities from sonic logs (because of the different frequencies), and the velocity-depth profile of Hjelstuen et al. (1996) has not been corrected for uplift and erosion
@@ -4030,8 +4234,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Cp(phi)
       :staticmethod:
+
 
       
       The coordination number n depends on porosity, as shown by
@@ -4089,8 +4295,31 @@ Classes
    ..
        !! processed by numpydoc !!
 
+
+   .. py:attribute:: Vp
+
+
+   .. py:attribute:: phi
+
+
+   .. py:attribute:: Vsh
+
+
+   .. py:attribute:: Vs
+
+
+   .. py:attribute:: den
+
+
+   .. py:attribute:: eff_stress
+
+
+   .. py:attribute:: TVD
+
+
    .. py:method:: matrix_modulus(vsh, phi_c, phi_0, M_sh, M_g, M_c)
       :staticmethod:
+
 
       
       Calculate the modulus of rock matrix as a function of porosity variation caused by cementation, Note that the rock matrix contains everything excluding pore space.
@@ -4127,8 +4356,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: den_matrix(vsh, phi_c, phi_0, den_sh, den_g, den_c)
       :staticmethod:
+
 
       
       Calculate the matrix density as a function of porosity variation caused by cementation.
@@ -4165,8 +4396,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: screening(Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phib_p, phi_c, sigma, vsh, scheme, f, Cn)
       :staticmethod:
+
 
       
       compute elastic bounds used for rock physics screening, the lower bound is computed using friable sand model, and the upper bound is contact cement model blend with increasing cement model.
@@ -4237,6 +4470,7 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: screening_plot(phi, vp1, vp2, vp3, cmap=cmap_sand)
 
       
@@ -4272,8 +4506,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: normalize(density)
       :staticmethod:
+
 
       
       normalize the kde with respect to the maximum value and map value to 0-1
@@ -4295,6 +4531,7 @@ Classes
 
       ..
           !! processed by numpydoc !!
+
 
    .. py:method:: kde_plot(phi, v1, v2, v3, cmap=cmap_kde, vels='Vp', n=64)
 
@@ -4335,8 +4572,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: cst_vels(phi_b, K0, D0, G0, phi, phi_c, Cn, Kc, Gc, Db, Kb, scheme, vsh, Dsh, Dqz, Dc)
       :staticmethod:
+
 
       
       compute velocities using constant cement model at different cement amounts
@@ -4396,8 +4635,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: cst_plot(Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phib, phib_p, phi_c, sigma, vsh, Cn, scheme, f)
       :staticmethod:
+
 
       
       Diagnostic plot with constant cement model lines
@@ -4466,8 +4707,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: cal_v_const(Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phi_b, phi_c, vsh, phi, scheme)
       :staticmethod:
+
 
       
       input real data porosity and caculate the theoretical constant cement model velocity value.  Note: input porosity cannot be zero, otherwise the returned velocities are Nan.
@@ -4526,6 +4769,7 @@ Classes
 
       ..
           !! processed by numpydoc !!
+
 
    .. py:method:: estimate_cem(vcem_seeds, Kqz, Gqz, Ksh, Gsh, phi_c, Cn, Kc, Gc, Db, Kb, scheme, vsh, Dsh, Dqz, Dc)
 
@@ -4586,6 +4830,7 @@ Classes
 
       ..
           !! processed by numpydoc !!
+
 
    .. py:method:: cement_diag_plot(vcem, Dqz, Kqz, Gqz, Dsh, Ksh, Gsh, Dc, Kc, Gc, Db, Kb, phib, phib_p, phi_c, sigma, vsh, Cn, scheme, f)
 
@@ -4658,8 +4903,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: plot_rpt(Kdry, Gdry, K0, D0, Kb, Db, Khc, Dhc, phi, sw)
       :staticmethod:
+
 
       
       Create RPT plot given computed Impedance and Vp/Vs ratio.
@@ -4727,8 +4974,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: V(K, G, rho)
       :staticmethod:
+
 
       
       Compute velocity given density and elastic moduli.
@@ -4759,8 +5008,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: poi(K, G)
       :staticmethod:
+
 
       
       Compute poisson's ratio from K an G
@@ -4789,8 +5040,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: lame(K, G)
       :staticmethod:
+
 
       
       Compute lame constant lamdba from K an G
@@ -4819,8 +5072,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: M_from_V(den, vp, vs)
       :staticmethod:
+
 
       
       _summary_
@@ -4851,8 +5106,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: write_HTI_matrix(C11, C33, C13, C44, C55)
       :staticmethod:
+
 
       
       formulate HTI stiffness matrix
@@ -4887,8 +5144,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: write_VTI_compliance(S11, S12, S13, S33, S44)
       :staticmethod:
+
 
       
       formulate VTI compliance matrix
@@ -4923,8 +5182,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: write_VTI_matrix(C11, C33, C13, C44, C66)
       :staticmethod:
+
 
       
       formulate VTI stiffness matrix
@@ -4959,8 +5220,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: write_matrix(C11, C22, C33, C12, C13, C23, C44, C55, C66)
       :staticmethod:
+
 
       
       formulate general 6x6 stiffness matrix in Voigt notation
@@ -5003,8 +5266,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: write_iso(K, G)
       :staticmethod:
+
 
       
       formulate isotropic 6x6 stiffness matrix in Voigt notation
@@ -5035,8 +5300,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: crack_por(crd, alpha)
       :staticmethod:
+
 
       
       compute crack porosity from crack aspect ratio and crack density
@@ -5065,8 +5332,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: v_to_c_VTI(Vp0, Vp45, Vp90, Vs0, Vsh90, den)
       :staticmethod:
+
 
       
       compute stiffness matrix given velocity measurements along different directions

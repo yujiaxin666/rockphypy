@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_advanced_examples_VPCM.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Varying Patchiness Cement Model(VPCM)
 
 .. GENERATED FROM PYTHON SOURCE LINES 6-13
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import pandas as pd 
@@ -33,25 +33,13 @@ Varying Patchiness Cement Model(VPCM)
     plt.rcParams['font.family']='arial'
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 14-20
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     #import rockphypy # import the module 
     from rockphypy import GM, EM
-
-
-
-
-
-
 
 
 
@@ -66,7 +54,7 @@ To understand the idea of varying patchiness cement model, we can start by looki
 
 .. GENERATED FROM PYTHON SOURCE LINES 28-68
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # specify model parameters
@@ -109,23 +97,6 @@ To understand the idea of varying patchiness cement model, we can start by looki
     plt.legend(loc='best')
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_VPCM_001.png
-   :alt: PCM at $\phi$=0.36
-   :srcset: /advanced_examples/images/sphx_glr_VPCM_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x000001CCB7DCDFD0>
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 69-71
 
 Between these two curves, there is a noticeable gap, and VPCM seeks to clarify what it represents within that range.
@@ -163,7 +134,7 @@ The VPCM has been implemented in the ``GM`` module by calling the GM.vpcm. for t
 
 .. GENERATED FROM PYTHON SOURCE LINES 103-129
 
-.. code-block:: python3
+.. code-block:: Python
 
     k=1 # full diluting no cement crushing 
     sigma0 = sigma.max()
@@ -192,23 +163,6 @@ The VPCM has been implemented in the ``GM`` module by calling the GM.vpcm. for t
 
 
 
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_VPCM_002.png
-   :alt: VPCM
-   :srcset: /advanced_examples/images/sphx_glr_VPCM_002.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x000001CCBA090B50>
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 130-134
 
 **Reference**: 
@@ -217,27 +171,23 @@ The VPCM has been implemented in the ``GM`` module by calling the GM.vpcm. for t
 
 
 
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  1.094 seconds)
-
-
 .. _sphx_glr_download_advanced_examples_VPCM.py:
 
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: VPCM.ipynb <VPCM.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: VPCM.py <VPCM.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: VPCM.ipynb <VPCM.ipynb>`
+      :download:`Download zipped: VPCM.zip <VPCM.zip>`
 
 
 .. only:: html

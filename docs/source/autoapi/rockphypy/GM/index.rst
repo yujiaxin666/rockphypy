@@ -1,21 +1,19 @@
-:py:mod:`rockphypy.GM`
-======================
+rockphypy.GM
+============
 
 .. py:module:: rockphypy.GM
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    rockphypy.GM.GM
 
 
-
+Module Contents
+---------------
 
 .. py:class:: GM
 
@@ -39,8 +37,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: ThomasStieber(phi_sand, phi_sh, vsh)
       :staticmethod:
+
 
       
       Thomas-Stieber porosity model for sand-shale system.
@@ -71,8 +71,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: silty_shale(C, Kq, Gq, Ksh, Gsh)
       :staticmethod:
+
 
       
       Dvorkin–Gutierrez silty shale model: model the elastic moduli of decreasing clay content for shale.
@@ -107,8 +109,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: shaly_sand(phis, C, Kss, Gss, Kcc, Gcc)
       :staticmethod:
+
 
       
       Modeling elastic moduli for sand with increasing clay content using LHS bound rather than using Gassmann relation.
@@ -145,8 +149,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: contactcement(K0, G0, Kc, Gc, phi, phic, Cn, scheme)
       :staticmethod:
+
 
       
       Compute dry elastic moduli of cemented sandstone via Contact cement model by Dvorkin &Nur (1996).
@@ -194,8 +200,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: hertzmindlin(K0, G0, phic, Cn, sigma, f)
       :staticmethod:
+
 
       
       Compute effective dry elastic moduli of granular packing under hydrostatic pressure condition via Hertz-Mindlin approach. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented.
@@ -237,8 +245,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: softsand(K0, G0, phi, phic, Cn, sigma, f)
       :staticmethod:
+
 
       
       Soft-sand (unconsolidated sand) model: model the porosity-sorting effects using the lower Hashin-Shtrikman-Walpole bound. (Also referred to as the 'friable-sand model' in Avseth et al. (2010).
@@ -282,8 +292,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Walton(K0, G0, phic, Cn, sigma, f)
       :staticmethod:
+
 
       
       Compute dry rock elastic moduli of sphere packs based on the Walton (1987)' thoery. Reduced shear factor that honours the non-uniform contacts in the granular media is implemented.
@@ -326,8 +338,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: johnson(K0, G0, n, phi, epsilon, epsilon_axial, path='together')
       :staticmethod:
+
 
       
       effective theory for stress-induced anisotropy in sphere packs. The transversely isotropic strain is considered as a combination of hydrostatic strain and uniaxial strain.
@@ -373,8 +387,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: stiffsand(K0, G0, phi, phic, Cn, sigma, f)
       :staticmethod:
+
 
       
       Stiff-sand model:  Modified Hashin-Shtrikman upper bound with Hertz-Mindlin end point, counterpart to soft sand model.
@@ -416,8 +432,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: constantcement(phi_b, K0, G0, Kc, Gc, phi, phic, Cn, scheme)
       :staticmethod:
+
 
       
       Constant cement (constant depth) model according to Avseth (2000)
@@ -465,8 +483,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: MUHS(K0, G0, Kc, Gc, phi, phi_b, phic, Cn, scheme)
       :staticmethod:
+
 
       
       Increasing cement model: Modified Hashin-Strikmann upper bound blend with contact cement model. For elastically stiff sandstone modelling.
@@ -514,8 +534,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Digby(K0, G0, phi, Cn, sigma, a_R)
       :staticmethod:
+
 
       
       Compute Keff and Geff using Digby's model
@@ -554,8 +576,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: pcm(f, sigma, K0, G0, phi, phic, v_cem, v_ci, Kc, Gc, Cn, mode, scheme, f_)
       :staticmethod:
+
 
       
       Computes effective elastic moduli of patchy cemented sandstone according to Avseth (2016).
@@ -614,8 +638,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: diluting(k, sigma0, sigma, m)
       :staticmethod:
+
 
       
       stress dependent diluting parameter used in varying patchiness cement model.
@@ -648,8 +674,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: vpcm(alpha, f, sigma, K0, G0, phi, phic, v_cem, v_ci, Kc, Gc, Cn, scheme, f_)
       :staticmethod:
+
 
       
       Compute effective elastic moduli using varying patchiness cement model (VPCM) as proposed by Yu et al. (2023).

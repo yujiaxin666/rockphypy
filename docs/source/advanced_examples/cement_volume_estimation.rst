@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_advanced_examples_cement_volume_estimation.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Cement volume estimation
 
 .. GENERATED FROM PYTHON SOURCE LINES 7-17
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -36,26 +36,14 @@ Cement volume estimation
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 18-23
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
     # import the module 
     from rockphypy import QI
-
-
-
-
-
-
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 24-29
@@ -68,7 +56,7 @@ Notice that, this method is not strictly valid for cement volume estimation for 
 
 .. GENERATED FROM PYTHON SOURCE LINES 31-48
 
-.. code-block:: python3
+.. code-block:: Python
 
 
 
@@ -88,12 +76,6 @@ Notice that, this method is not strictly valid for cement volume estimation for 
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 49-53
 
 Applied to field data 
@@ -103,7 +85,7 @@ Let's import the same synthetic well log data and apply the cement volum estimat
 
 .. GENERATED FROM PYTHON SOURCE LINES 55-76
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # read data
@@ -127,15 +109,9 @@ Let's import the same synthetic well log data and apply the cement volum estimat
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 77-87
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # color_coding cement volume in the porosity and velocity cross plot. 
@@ -145,23 +121,6 @@ Let's import the same synthetic well log data and apply the cement volum estimat
     plt.yticks(np.arange(2000,6200, 1000),[2,3,4,5,6])
     plt.xlim(-0.01,0.51)
 
-
-
-
-
-
-.. image-sg:: /advanced_examples/images/sphx_glr_cement_volume_estimation_001.png
-   :alt: cement volume estimation
-   :srcset: /advanced_examples/images/sphx_glr_cement_volume_estimation_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    (-0.01, 0.51)
 
 
 
@@ -176,27 +135,23 @@ As shown by the figure, using a 2D PDF can provide a clearer visualization of th
 - Avseth, P.; Mukerji, T.; Mavko, G. & Dvorkin, J. Rock-physics diagnostics of depositional texture, diagenetic alterations, and reservoir heterogeneity in high-porosity siliciclastic sediments and rocks—A review of selected models and suggested work flows  Geophysics, Society of Exploration Geophysicists, 2010, 75, 75A31-75A47
 
 
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  0.367 seconds)
-
-
 .. _sphx_glr_download_advanced_examples_cement_volume_estimation.py:
 
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: cement_volume_estimation.ipynb <cement_volume_estimation.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: cement_volume_estimation.py <cement_volume_estimation.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: cement_volume_estimation.ipynb <cement_volume_estimation.ipynb>`
+      :download:`Download zipped: cement_volume_estimation.zip <cement_volume_estimation.zip>`
 
 
 .. only:: html

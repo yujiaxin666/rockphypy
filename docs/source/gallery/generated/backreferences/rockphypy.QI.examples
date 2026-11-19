@@ -11,6 +11,49 @@ Examples using ``rockphypy.QI``
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Cement volume estimation">
+
+.. only:: html
+
+  .. image:: /advanced_examples/images/thumb/sphx_glr_cement_volume_estimation_thumb.png
+    :alt:
+
+  :doc:`/advanced_examples/cement_volume_estimation`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Cement volume estimation</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/advanced_examples/cement_volume_estimation`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Rock physics data screening">
+
+.. only:: html
+
+  .. image:: /advanced_examples/images/thumb/sphx_glr_rock_physics_screening_thumb.png
+    :alt:
+
+  :doc:`/advanced_examples/rock_physics_screening`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rock physics data screening</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/advanced_examples/rock_physics_screening`
 
 .. raw:: html
 
@@ -21,7 +64,7 @@ Examples using ``rockphypy.QI``
   .. image:: /advanced_examples/images/thumb/sphx_glr_rock_physics_screening_PDF_thumb.png
     :alt:
 
-  :ref:`sphx_glr_advanced_examples_rock_physics_screening_PDF.py`
+  :doc:`/advanced_examples/rock_physics_screening_PDF`
 
 .. raw:: html
 
@@ -31,7 +74,9 @@ Examples using ``rockphypy.QI``
 
 .. only:: not html
 
- * :ref:`sphx_glr_advanced_examples_rock_physics_screening_PDF.py`
+ * :doc:`/advanced_examples/rock_physics_screening_PDF`
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

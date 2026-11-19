@@ -67,8 +67,8 @@ for i in range(a_R.size):
 
         Keff, Geff= GM.Digby(K0, G0, phi, Cn, val, a_R[i] )
 
-        K_dry[i,j]= Keff
-        G_dry[i,j]= Geff
+        K_dry[i,j]= Keff[0]
+        G_dry[i,j]= Geff[0]
 
 Vp, Vs= utils.V(K_dry, G_dry, D)
 

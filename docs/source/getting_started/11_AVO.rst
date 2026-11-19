@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_getting_started_11_AVO.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -23,7 +23,7 @@ Amplitute versus Offset (AVO)
 
 .. GENERATED FROM PYTHON SOURCE LINES 8-15
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import numpy as np 
@@ -33,26 +33,14 @@ Amplitute versus Offset (AVO)
 
 
 
-
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 16-23
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     import rockphypy # import the module 
     from rockphypy import AVO 
     from rockphypy import Fluid
-
-
-
-
-
-
 
 
 
@@ -135,7 +123,7 @@ Assume constant vertical velocity in the overburden above a horizontal reflector
 
 .. GENERATED FROM PYTHON SOURCE LINES 101-124
 
-.. code-block:: python3
+.. code-block:: Python
 
 
     # the clay rich layer is denoted as 1 and the wet sandstone layer is denoted as 2
@@ -161,32 +149,10 @@ Assume constant vertical velocity in the overburden above a horizontal reflector
 
 
 
-
-
-.. image-sg:: /getting_started/images/sphx_glr_11_AVO_001.png
-   :alt: 11 AVO
-   :srcset: /getting_started/images/sphx_glr_11_AVO_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <matplotlib.legend.Legend object at 0x000001957FD19730>
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 125-127
 
 **Reference**: Mavko, G., Mukerji, T. and Dvorkin, J., 2020. The rock physics handbook. Cambridge university press.
 
-
-
-.. rst-class:: sphx-glr-timing
-
-   **Total running time of the script:** ( 0 minutes  1.389 seconds)
 
 
 .. _sphx_glr_download_getting_started_11_AVO.py:
@@ -195,16 +161,17 @@ Assume constant vertical velocity in the overburden above a horizontal reflector
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 11_AVO.ipynb <11_AVO.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 11_AVO.py <11_AVO.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: 11_AVO.ipynb <11_AVO.ipynb>`
+      :download:`Download zipped: 11_AVO.zip <11_AVO.zip>`
 
 
 .. only:: html

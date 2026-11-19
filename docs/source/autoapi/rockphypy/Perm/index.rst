@@ -1,5 +1,5 @@
-:py:mod:`rockphypy.Perm`
-========================
+rockphypy.Perm
+==============
 
 .. py:module:: rockphypy.Perm
 
@@ -11,18 +11,16 @@
        !! processed by numpydoc !!
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    rockphypy.Perm.Permeability
 
 
-
+Module Contents
+---------------
 
 .. py:class:: Permeability
 
@@ -46,8 +44,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
    .. py:method:: Kozeny_Carman(phi, d)
       :staticmethod:
+
 
       
       Describe the permeability in a porous medium using Kozeny-Carman equation assuming the turtuosity tau=sqrt(2), 1/B=2.5 for unconsolidated monomodal sphere pack.
@@ -83,8 +83,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Kozeny_Carman_Percolation(phi, phic, d, B)
       :staticmethod:
+
 
       
       The Kozeny−Carman relations incorporating the percolation effect
@@ -117,8 +119,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Owolabi(phi, Swi)
       :staticmethod:
+
 
       
       Estimate the permeability in uncosonlidated sands of Pleistocene to Oligocene age in Eastern Niger Delta from log derived porosityand irreducible water saturation.
@@ -147,8 +151,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Perm_logs(phi, Swi)
       :staticmethod:
+
 
       
       Various empirical correlations of between permeability, porosity and irreducible water-saturation from welllogs. Models includs Tixier, Timur, Coates and Coates-Dumanoir.
@@ -182,8 +188,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Panda_Lake(d, C, S, tau, phi)
       :staticmethod:
+
 
       
       Modified Kozeny-carman relation incorpating the contribution of grain size variation and sorting using Manmath N. Panda and Larry W. Lake relation.
@@ -222,8 +230,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Panda_Lake_cem(phi, d)
       :staticmethod:
+
 
       
       Quantify the effects of cements on the single phase permeability estimate of unconsolidated sand using Panda & Lake model
@@ -252,8 +262,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Revil(phi, d)
       :staticmethod:
+
 
       
       Estimate permeability in very shaly rock using Revil et al. 1997
@@ -282,8 +294,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Fredrich(phi, d, b)
       :staticmethod:
+
 
       
       Compute permability considering Pore Geometry and Transport Properties of Fontainebleau Sandstone
@@ -316,8 +330,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Bloch(S, C, D)
       :staticmethod:
+
 
       
       Predict porosity and permeability in sandstones prior to drilling using Bloch empirical relations obtain in Yacheng field.
@@ -348,8 +364,10 @@ Classes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: Bernabe(phi, crf, w, r)
       :staticmethod:
+
 
       
       Bernabe models permit to compute the permeability and porosity of strongly pressure dependent pores such as cracks and approximately constant pores associated with tubes and nodal pores.
