@@ -3,6 +3,8 @@ from rockphypy import EM
 
 import numpy as np
 from scipy.integrate import solve_ivp
+from rockphypy.utils import utils
+
 
 class TestEM:
     def test_VRH(self): 
@@ -65,8 +67,25 @@ class TestEM:
         alpha= 0.1
         crd = 0.01
         result = EM.hudson_rand(K, G, Ki, Gi, alpha, crd)
-        expected_result = (36.407517410762416, 34.5451882169223)
+        expected_result = (36.407517410762416, 44.30301254779482)
         assert np.allclose(result, expected_result, rtol=1e-6, atol=1e-6)
+    def test_hudson_rand_orientation_average(self):
+        # First-order corrections are linear in crack density, so randomly oriented
+        # cracks must give the aligned correction (EM.hudson) averaged over all orientations.
+        K, G, alpha, crd = 37., 44., 0.01, 0.01
+        voigt = {(0,0):0, (1,1):1, (2,2):2, (1,2):3, (2,1):3, (0,2):4, (2,0):4, (0,1):5, (1,0):5}
+        for Ki, Gi in ((0., 0.), (2.25, 0.), (5., 3.)):
+            C1 = EM.hudson(K, G, Ki, Gi, alpha, crd, order=1, axis=3) - utils.write_iso(K, G)
+            T = np.zeros((3, 3, 3, 3))
+            for (i, j), I in voigt.items():
+                for (k, l), J in voigt.items():
+                    T[i, j, k, l] = C1[I, J]
+            # orientation average of a 4th-rank tensor = its isotropic part
+            iijj, ijij = np.einsum('iijj', T), np.einsum('ijij', T)
+            dG = (3*ijij - iijj)/30
+            dK = (2*iijj - ijij)/15 + 2*dG/3
+            K_eff, G_eff = EM.hudson_rand(K, G, Ki, Gi, alpha, crd)
+            np.testing.assert_allclose([K_eff - K, G_eff - G], [dK, dG], rtol=1e-10)
     def test_hudson_ortho(self):
         K, G= 37,45
         Ki, Gi = 2.1, 0
