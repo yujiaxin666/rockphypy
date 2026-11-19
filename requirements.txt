@@ -5,7 +5,7 @@
 numpy>=1.14.2
 numpydoc>=0.7.0
 scipy>=1.0.1
-nbsphinx>=0.3.2
+pydata-sphinx-theme==0.24.0
 pytest>=3.6.2
 matplotlib>=2.2.2
 ipython>=6.4.0
