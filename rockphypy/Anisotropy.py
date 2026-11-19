@@ -267,7 +267,7 @@ class Anisotropy:
         # Bond matrix M
         
         M1 = np.array([b11**2, b12**2, b13**2, b21**2, b22**2, b23**2, b31**2, b32**2, b33**2]).reshape((3,3))
-        M2 = np.array([b12*b13, b13*b11, b11*b12,
+        M2 = 2*np.array([b12*b13, b13*b11, b11*b12,
             b22*b23, b23*b21, b21*b22, 
             b32*b33, b33*b31, b31*b32]).reshape((3,3))
         M3 = np.array([b21*b31, b22*b32, b23*b33,
