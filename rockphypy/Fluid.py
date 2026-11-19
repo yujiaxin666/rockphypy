@@ -3,6 +3,28 @@ import numpy as np
 from rockphypy.utils import utils
 #from utils import *
 
+def _x_minus_tanh(x):
+    """Helper function to solve the precision issue in White_Dutta_Ode method
+    Return x - tanh(x) for complex x, accurate also when |x| is small.
+
+    For small |x| the direct difference loses most of its digits, so the
+    numerator of (x*cosh(x) - sinh(x))/cosh(x) is summed as a power series,
+    x*cosh(x) - sinh(x) = sum_{n>=1} 2n x^(2n+1)/(2n+1)!
+    """
+    x = np.asarray(x, dtype=complex)
+    shape = x.shape
+    x = x.ravel()
+    out = x - np.tanh(x)
+    small = np.abs(x) < 1
+    if np.any(small):
+        xs = x[small]
+        term = xs.copy()
+        series = np.zeros_like(xs)
+        for n in range(1, 13):
+            term = term*xs**2/((2*n)*(2*n + 1))
+            series += 2*n*term
+        out[small] = series/np.cosh(xs)
+    return out.reshape(shape)[()]
 
 class Fluid:
     """
@@ -658,9 +680,11 @@ class Fluid:
         KE2=(1-Kfl2*(1-K2/K0)*(1-Kdry/K0)/(phi*K2*(1-Kfl2/K0)))*KA2
         alpha1=(1j*omega*eta1/(kapa*KE1))**(1/2)
         alpha2=(1j*omega*eta2/(kapa*KE2))**(1/2)
-
-        Z1=eta1*a/kapa *(1-np.exp(-2*alpha1*a))/((alpha1*a-1)+(alpha1*a+1)*np.exp(-2*alpha1*a)   )
-        Z2=-eta2*a/kapa *(   (alpha2*b+1) +(alpha2*b-1)*np.exp(2*alpha2*(b-a) ) )/(  (alpha2*b+1)* (alpha2*a-1)- (alpha2*b-1)*(alpha2*a+1)*np.exp(2*alpha2*(b-a))  )
+        x1=alpha1*a
+        u2=alpha2*(b-a)
+        Z1=eta1*a/kapa *np.tanh(x1)/_x_minus_tanh(x1)        # Z1, Z2 are the exp expressions of the model rewritten with tanh(x) and
+        # x - tanh(x). Same values, but no loss of precision when alpha*a is small.
+        Z2=eta2*a/kapa *(alpha2*a+_x_minus_tanh(u2))/(alpha2**2*a*b*np.tanh(u2)+_x_minus_tanh(u2))
         Q1= (1-Kdry/K0)*KA1/K1
         Q2= (1-Kdry/K0)*KA2/K2
         W=3*a**2*(R1-R2)*(-Q1+Q2)/ (b**3*1j*omega*(Z1+Z2) )

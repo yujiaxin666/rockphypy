@@ -204,3 +204,15 @@ class TestFluid:
         np.testing.assert_allclose(a_w, [1.9442463977e-08, 8.9735783941e-06, 1.3060960105e-03, 6.4526343269e-03], rtol=1e-6)
         np.testing.assert_allclose(K_star, [14.5846836597+3.4332042281e-06j, 14.5846890407+7.3549689390e-05j,
                                             14.5853743382+4.9691235595e-04j, 14.5858980091+1.1395302791e-04j], rtol=1e-6)
+    def test_White_Dutta_Ode_low_frequency_limit(self,fluid_input):
+        # Small alpha*a (about 1e-5 to 1e-3 here), where Z1 and Z2 used to lose precision.
+        # The model must reduce to Gassmann with Wood's average of the two fluids,
+        # and the attenuation must not be negative.
+        Kdry,Gdry,K0,Kfl,rho0,_,_,phi,_,a,_,freq= fluid_input
+        rhofl1, rhofl2, Kfl1, Kfl2 = 1.05, 1.2, 2.3, 2.4
+        eta1, eta2, kapa, a, sg = 0.001, 0.002, 0.01, 0.0001, 0.5
+        Vp, a_w, K_star = Fluid.White_Dutta_Ode(Kdry, Gdry, K0, phi, rho0, rhofl1,rhofl2, Kfl1, Kfl2,eta1,eta2,kapa,a,sg,freq )
+        Kwood = 1/(sg/Kfl1 + (1-sg)/Kfl2)
+        K_gassmann_wood = Kdry + (1-Kdry/K0)**2/(phi/Kwood + (1-phi)/K0 - Kdry/K0**2)
+        np.testing.assert_allclose(K_star.real, K_gassmann_wood, rtol=1e-10)
+        assert np.all(a_w >= 0)
