@@ -204,4 +204,7 @@ poetry.toml
 .history
 .ionide
 
+docs/source/getting_started/
+docs/source/advanced_examples/
+
 # End of https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks,visualstudiocode
