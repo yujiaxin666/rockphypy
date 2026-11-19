@@ -137,6 +137,14 @@ class TestEM:
         result= EM.PQ_vectorize(Km,Gm, Ki,Gi, alpha)
         expected_result = (np.array([15.72732627, 15.39575083, 11.02069818,  3.90846602]), np.array([ 55.03822226, 250.79531002,  29.06865426,   4.82746831]))
         assert np.allclose(result, expected_result, rtol=1e-6, atol=1e-6)
+    def test_PQ_vectorize_does_not_change_input(self):
+        Km, Gm = 37., 44.
+        Ki, Gi = np.zeros(2), np.zeros(2)
+        for alpha in (np.array([1.0, 0.1]), np.array([1, 2])):
+            alpha_in = alpha.copy()
+            P, Q = EM.PQ_vectorize(Km, Gm, Ki, Gi, alpha)
+            np.testing.assert_array_equal(alpha, alpha_in)                      # input unchanged
+            np.testing.assert_allclose((P[0], Q[0]), EM.PQ(Km, Gm, 0., 0., 1))  # exact sphere values
     def test_Swiss_cheese(self):
         Ks=np.array([30,40,50])
         Gs=np.array([10,20,30])

@@ -492,8 +492,9 @@ class EM:
         P = np.empty(dim)
         Q = np.empty(dim)
         theta = np.empty(dim)
-        alpha_ = alpha # copy and modfiy
-        alpha_[alpha==1]=0.999 # when alpha_ is 1, the f is nan
+        alpha = np.asarray(alpha, dtype=float)
+        alpha_ = alpha.copy() # copy, so the input array is not changed # copy and modfiy
+        alpha_[alpha==1]=0.999 # placeholder to avoid 0/0; P and Q for alpha==1 are replaced by the exact sphere formulas below
 
         theta[alpha_<1]=alpha_[alpha_<1]/(1.0 - alpha_[alpha_<1]**2)**(3.0/2.0) * (np.arccos(alpha_[alpha_<1]) - alpha_[alpha_<1]*np.sqrt(1.0 - alpha_[alpha_<1]**2))
 
