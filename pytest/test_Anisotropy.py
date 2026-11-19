@@ -4,6 +4,23 @@ from rockphypy import Anisotropy
 
 import numpy as np
 
+
+def _rotate_tensor(C, a):
+    """Rotate a 6x6 Voigt stiffness matrix with the full tensor formula
+    C'_ijkl = a_ip a_jq a_kr a_ls C_pqrs, independent of the Bond matrix."""
+    voigt = {(0,0):0, (1,1):1, (2,2):2, (1,2):3, (2,1):3, (0,2):4, (2,0):4, (0,1):5, (1,0):5}
+    T = np.zeros((3, 3, 3, 3))
+    for (i, j), I in voigt.items():
+        for (k, l), J in voigt.items():
+            T[i, j, k, l] = C[I, J]
+    T = np.einsum('ip,jq,kr,ls,pqrs->ijkl', a, a, a, a, T)
+    C_rot = np.zeros((6, 6))
+    for (i, j), I in voigt.items():
+        for (k, l), J in voigt.items():
+            C_rot[I, J] = T[i, j, k, l]
+    return C_rot
+
+
 #%%
 class TestAnisotropy:
     def test_Thomsen(self):
@@ -75,25 +92,27 @@ class TestAnisotropy:
                 2.47875838, 2.33126202, 2.20372982, 2.11634805, 2.08514414]), np.array([2.94883912, 2.78776315, 2.5204093 , 2.31672139, 2.2449314 ,
                 2.31857393, 2.49718983, 2.71023847, 2.88224921, 2.94883912]))    
         np.testing.assert_allclose(result, expected_result)   
+
     def test_Bond_trans(self):
+        # a VTI medium rotated about its own symmetry axis (axis 3) must not change
         C =  np.array([[50, 30, 15,  0,  0,  0],
                     [30, 50, 15,  0,  0,  0],
                     [15, 15, 30,  0,  0,  0],
                     [ 0,  0,  0, 20,  0,  0],
                     [ 0,  0,  0,  0, 20,  0],
                     [ 0,  0,  0,  0,  0, 10]])
-        theta=30
-        result = Anisotropy.Bond_trans(C, theta, axis=3)
-        expected_result=np.array([[ 4.43750000e+01,  3.56250000e+01,  1.50000000e+01,
-          0.00000000e+00,  0.00000000e+00, -2.16506351e+00],
-        [ 3.56250000e+01,  4.43750000e+01,  1.50000000e+01,
-          0.00000000e+00,  0.00000000e+00,  2.16506351e+00],
-        [ 1.50000000e+01,  1.50000000e+01,  3.00000000e+01,
-          0.00000000e+00,  0.00000000e+00,  3.88578059e-16],
-        [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
-          2.00000000e+01,  1.52242806e-15,  0.00000000e+00],
-        [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
-          2.06956853e-15,  2.00000000e+01,  0.00000000e+00],
-        [-2.16506351e+00,  2.16506351e+00,  3.88578059e-16,
-          0.00000000e+00,  0.00000000e+00,  1.00000000e+01]])
-        np.testing.assert_allclose(result, expected_result)  
+        result = Anisotropy.Bond_trans(C, 30, axis=3)
+        np.testing.assert_allclose(result, C, atol=1e-12)
+    def test_Bond_trans_tensor_rotation(self):
+        # Bond transformation must give the same result as rotating the full
+        # 4th-rank tensor, for a general anisotropic C, both axes and several angles
+        rng = np.random.default_rng(0)
+        A = rng.normal(size=(6, 6))
+        C = 10*A@A.T + 50*np.eye(6)
+        for theta in (17., 30., 90., 135.):
+            t = np.deg2rad(theta)
+            c, s = np.cos(t), np.sin(t)
+            a3 = np.array([[c, s, 0], [-s, c, 0], [0, 0, 1]])   # axis 3 fixed, same direction cosines as Bond_trans
+            a1 = np.array([[1, 0, 0], [0, c, -s], [0, s, c]])   # axis 1 fixed
+            np.testing.assert_allclose(Anisotropy.Bond_trans(C, theta, axis=3), _rotate_tensor(C, a3), atol=1e-10)
+            np.testing.assert_allclose(Anisotropy.Bond_trans(C, theta, axis=1), _rotate_tensor(C, a1), atol=1e-10)
