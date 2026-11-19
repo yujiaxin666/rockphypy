@@ -116,8 +116,19 @@ class TestEM:
         X= [0.3,0.7]
         Alpha = [0.1,1.2]
         result= EM.Berryman_sc(K,G,X,Alpha)
-        expected_result = (38.20809896060306, 22.544608086722757)
+        expected_result = (38.20950220104562, 22.605875876194837)
         assert np.allclose(result, expected_result, rtol=1e-6, atol=1e-6)
+    def test_PQ_prolate_limits(self):
+        Km, Gm, Ki, Gi = 37., 44., 2.25, 0.
+        # P and Q must be continuous across alpha = 1 (sphere)
+        P1, Q1 = EM.PQ(Km, Gm, Ki, Gi, 1)
+        np.testing.assert_allclose(EM.PQ(Km, Gm, Ki, Gi, 0.999), (P1, Q1), rtol=1e-5)
+        np.testing.assert_allclose(EM.PQ(Km, Gm, Ki, Gi, 1.001), (P1, Q1), rtol=1e-5)
+        # very long prolate spheroids -> needle formulas (Mavko et al., Rock Physics Handbook)
+        gam = Gm*(3*Km + Gm)/(3*Km + 7*Gm)
+        P_needle = (Km + Gm + Gi/3)/(Ki + Gm + Gi/3)
+        Q_needle = (4*Gm/(Gm + Gi) + 2*(Gm + gam)/(Gi + gam) + (Ki + 4*Gm/3)/(Ki + Gm + Gi/3))/5
+        np.testing.assert_allclose(EM.PQ(Km, Gm, Ki, Gi, 1e4), (P_needle, Q_needle), rtol=1e-6)
     def test_PQ_vectorize(self):
         Km, Gm = 37,44
         Ki= np.linspace(2,3,4)
