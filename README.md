@@ -8,15 +8,7 @@
 
 ## Note: Issues with NumPy 2.0 Compatibility 
 
-rockphypy relies on a dependency called ``KDEpy`` for generating KDE plots in the QI module. However, KDEpy uses the ``numpy.product`` function, which is deprecated in NumPy versions greater than 2.0. Consequently, if you have NumPy 2.0 or higher installed, importing rockphypy will result in an ImportError related to the KDEpy package.
-
-Workarounds:
-
-Downgrade NumPy: Install a NumPy version lower than 2.0.
-
-Use a Fresh Virtual Environment: Set up a new virtual environment and ensure that the NumPy version is less than 2.0 before installing rockphypy.
-
-We are actively working to remove the dependency on KDEpy, as only a single method in the QI module relies on it. 
+NumPy 2.0: older versions of rockphypy could fail to import with NumPy ≥ 2.0 because of the dependency KDE-diffusion 1.0.4. From rockphypy 0.0.3 we require KDE-diffusion ≥ 1.0.5, which works with NumPy 2. If you have this problem, upgrade with pip install -U rockphypy KDE-diffusion.
 
 *********************************
 
