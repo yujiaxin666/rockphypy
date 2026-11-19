@@ -315,7 +315,7 @@ class EM:
         U1 = 16*(lamda+2*G)/(3*(3*lamda+4*G)*(1+M))
         U3 = 4*(lamda+2*G)/(3*(lamda+G)*(1+kapa))
         # first order corrections
-        G_1 = -2*G*crd*(3*U1+2*U3)
+        G_1 = -2*G*crd*(3*U1+2*U3)/15
         lamda_1 = (1/3)*(-(3*lamda+2*G)**2*crd*U3/(3*G) - 2*G_1)
         lamda_eff = lamda+lamda_1
         G_eff = G+G_1
