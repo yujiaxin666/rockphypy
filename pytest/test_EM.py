@@ -2,6 +2,7 @@
 from rockphypy import EM
 
 import numpy as np
+from scipy.integrate import solve_ivp
 
 class TestEM:
     def test_VRH(self): 
@@ -178,12 +179,28 @@ class TestEM:
         Km, Gm = 37,44
         phi =  0.1#np.arange(0,phic,0.001)
         result = EM.Berryman_DEM(Km,Gm, Ki, Gi, alpha,phi)
-        expected_result = (np.array([37.        , 36.30333795, 35.61335154, 34.93004012, 34.2534029 ,
-        33.58343942, 32.92014877, 32.26353014, 31.6135827 , 30.97030572,
-        30.3336984 ]), np.array([44.        , 43.11432154, 42.23763304, 41.36993471, 40.51122677,
-        39.66150938, 38.82078278, 37.98904724, 37.16630299, 36.35255026,
-        35.54778928]), np.array([0.  , 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1 ]))
+        # values checked against an independent ODE solve, see test_Berryman_DEM_sphere_reference
+        expected_result = (np.array([37.          , 36.3980156421, 35.7987912512, 35.2023676466,
+        34.6087847931, 34.0180832062, 33.4303041747, 32.8454896867,
+        32.2636823319, 31.6849253783, 31.1092627245]), np.array([44.          , 43.0835020317, 42.1774950805, 41.2819511623,
+        40.3968433271, 39.5221446883, 38.6578282172, 37.8038668939,
+        36.9602337064, 36.1269016502, 35.3038437337]), np.array([0.  , 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1 ]))
         assert np.allclose(result, expected_result, rtol=1e-6, atol=1e-6)
+    def test_Berryman_DEM_sphere_reference(self):
+        # Independent check: integrate the DEM equations for dry spherical pores
+        # with solve_ivp, using the closed-form P and Q for spheres
+        # (not EM.PQ or EM.DEM).
+        Km, Gm, Ki, Gi, phi = 37., 44., 0., 0., 0.1
+        def rhs(t, y):
+            K, G = y
+            P = (K + 4*G/3) / (Ki + 4*G/3)
+            zeta = G/6 * (9*K + 8*G) / (K + 2*G)
+            Q = (G + zeta) / (Gi + zeta)
+            return [(Ki - K)*P/(1 - t), (Gi - G)*Q/(1 - t)]
+        K, G, t = EM.Berryman_DEM(Km, Gm, Ki, Gi, 1, phi)
+        ref = solve_ivp(rhs, (0, t[-1]), [Km, Gm], t_eval=t, rtol=1e-10, atol=1e-12)
+        np.testing.assert_allclose(K, ref.y[0], rtol=1e-6)
+        np.testing.assert_allclose(G, ref.y[1], rtol=1e-6)
     def test_SC_dilute(self):
         ro=13/6
         Km, Gm=3*ro, 3 #

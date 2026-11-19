@@ -194,10 +194,13 @@ class TestFluid:
         Kfl2=2.4
         eta1= 0.001
         eta2= 0.002
-        kapa= 0.01
-        a= 0.0001
+        # kapa and a chosen so that |alpha*a| is about 0.2-20 over freq.
+        # For very small alpha*a, Z1 and Z2 lose precision and the result is rounding noise.
+        kapa= 1e-6
+        a= 0.02
         sg= 0.5
-        result = Fluid.White_Dutta_Ode(Kdry, Gdry, K0, phi, rho0, rhofl1,rhofl2, Kfl1, Kfl2,eta1,eta2,kapa,a,sg,freq )
-        expected_result = (np.array([2.83876535, 2.83876095, 2.83876095, 2.83876095]), np.array([ 3.50342118e-07,  6.29187915e-09, -4.37822267e-09,  6.70571512e-09]), np.array([14.58474426+6.18646709e-05j, 14.5846837 +5.15697916e-08j,
-        14.58468365-1.66563376e-09j, 14.58468365+1.18411378e-10j]))
-        assert np.allclose(result, expected_result, rtol=1e-6, atol=1e-6)
+        Vp, a_w, K_star = Fluid.White_Dutta_Ode(Kdry, Gdry, K0, phi, rho0, rhofl1,rhofl2, Kfl1, Kfl2,eta1,eta2,kapa,a,sg,freq )
+        np.testing.assert_allclose(Vp, [2.838760946, 2.8387613368, 2.8388111118, 2.8388491456], rtol=1e-6)
+        np.testing.assert_allclose(a_w, [1.9442463977e-08, 8.9735783941e-06, 1.3060960105e-03, 6.4526343269e-03], rtol=1e-6)
+        np.testing.assert_allclose(K_star, [14.5846836597+3.4332042281e-06j, 14.5846890407+7.3549689390e-05j,
+                                            14.5853743382+4.9691235595e-04j, 14.5858980091+1.1395302791e-04j], rtol=1e-6)
