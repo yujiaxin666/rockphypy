@@ -9,6 +9,13 @@ If you have installed rockphypy before, upgrade to the latest version with:
 ```bash
 pip install -U rockphypy
 ```
+# Release Note rockphypy 0.0.4
+
+Bug fixes
+- `import rockphypy` failed with matplotlib 3.11.0 (colormap `cmap_cem` in `QI`)
+
+Testing
+- Import tests for all modules, and weekly automatic tests on GitHub with the newest dependency versions
 
 # Release Note rockphypy 0.0.3
 
