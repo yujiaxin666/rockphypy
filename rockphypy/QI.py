@@ -2,8 +2,15 @@
 import matplotlib.colors
 cmap_sand = matplotlib.colors.LinearSegmentedColormap.from_list("", ["green","orange","yellow"])
 cmap_kde=matplotlib.colors.LinearSegmentedColormap.from_list("", ['white','grey','#4895d9','#65d698',"yellow",'yellow'])
-# colormap  
-cmap_cem=matplotlib.colors.LinearSegmentedColormap.from_list("", [(0,'blue'),(0.05,'#0a75ad'),(0.05,'#4ca3dd'),(0.1,'#20b2aa'),(0.4,"#008000"),(0.6,"yellow"),(1,"red")])
+
+# colormap for cement volume, with a sharp colour change at 0.05.
+# Written as segment data (value, colour below, colour above) instead of from_list with a
+# repeated value, which matplotlib 3.11.0 rejects.
+_cem_stops = [(0, 'blue', 'blue'), (0.05, '#0a75ad', '#4ca3dd'), (0.1, '#20b2aa', '#20b2aa'),
+              (0.4, '#008000', '#008000'), (0.6, 'yellow', 'yellow'), (1, 'red', 'red')]
+cmap_cem = matplotlib.colors.LinearSegmentedColormap("", {
+    ch: [(x, matplotlib.colors.to_rgba(c0)[i], matplotlib.colors.to_rgba(c1)[i]) for x, c0, c1 in _cem_stops]
+    for i, ch in enumerate(('red', 'green', 'blue', 'alpha'))})
 
 import numpy as np
 import pandas as pd
